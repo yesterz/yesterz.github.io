@@ -2,6 +2,7 @@
 # the default layout is 'page'
 icon: fas fa-info-circle
 order: 4
+mermaid: true
 ---
 
   **Night watcher swear** <br/>
@@ -73,12 +74,12 @@ order: 4
 
 
 第一个图
-<div class="mermaid">
+```mermaid
 flowchart LR
      id1((a)) --> id2((b)) & c--> d
-</div>
+```
 第二个图
-<div class="mermaid">
+```mermaid
 flowchart LR
 	 A[The JVM Run-Time Data Areas]
 	 A --> A1[Shared Data Areas]
@@ -89,9 +90,9 @@ flowchart LR
 	 A1 --> E[Heap]
    A2 --> F[Program Counter Register]
    A1 --> G[Run-Time Constant Pool]
-</div>
+```
 第三个图
-<div class="mermaid">
+```mermaid
 mindmap
   root((mindmap))
     Origins
@@ -109,11 +110,11 @@ mindmap
     Tools
       Pen and paper
       Mermaid
-</div>
+```
 第四个图
-<div class="mermaid">
+```mermaid
 sequenceDiagram
     Alice->>John: Hello John, how are you?
     John-->>Alice: Great!
     Alice-)John: See you later!
-</div>
+```
