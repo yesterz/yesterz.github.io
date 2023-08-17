@@ -8,12 +8,16 @@ tags:
   - 五种I/O模型
 toc: true
 ---
-# OSI模型
-## 理解两个词 ISO & OSI
+
+## OSI模型
+
+### 理解两个词 ISO & OSI
 
 1. **ISO** International Organizational for Standardization 国际标准化组织
 2. **OSI** Open System Interconnection 计算机通信开放系统互连
-## 图解：OSI模型和网际协议族中的各层
+
+### 图解：OSI模型和网际协议族中的各层
+
 OSI模型就是描述一个网络中各个协议层的，中文是计算机通信开放系统互连（OSI）模型，是一个七层模型
 ![OSI模型和网际协议族中的各层](https://cdn.nlark.com/yuque/0/2023/png/22241519/1689684032849-f2d0ae00-5ffb-4960-86bb-a7af7e520c96.png#averageHue=%23f3f3f3&clientId=ub548144e-fd56-4&from=paste&height=451&id=ubbb409f8&originHeight=451&originWidth=797&originalType=binary&ratio=1&rotation=0&showTitle=true&size=85821&status=done&style=none&taskId=ubaab4875-5553-4d5e-8401-aeded4174d5&title=OSI%E6%A8%A1%E5%9E%8B%E5%92%8C%E7%BD%91%E9%99%85%E5%8D%8F%E8%AE%AE%E6%97%8F%E4%B8%AD%E7%9A%84%E5%90%84%E5%B1%82&width=797 "OSI模型和网际协议族中的各层")
 网络层由IPv4和IPv6这两个协议处理。传输层有TCP和UDP协议。注意TCP和UDP中间用间隙，表明应用层的网络应用可以绕过传输层直接使用IPv4和IPv6，即使用原始套接字（row socket）
@@ -21,7 +25,8 @@ OSI模型就是描述一个网络中各个协议层的，中文是计算机通�
 所谓的套接字编程接口：从顶上三层（网际协议的应用层）进入传输层的接口。本书聚焦于怎么使用套接字编写使用TCP或UDP的网络应用程序。
 > 图1-14中，XTI是啥？XTI（X/Open Transport Interface，X/Open传输接口）是一个面向连接的网络编程接口规范，由X/Open组织定义。它提供了一种独立于网络协议的编程接口，使应用程序能够在不同的操作系统和网络环境中进行网络通信。
 
-## Q：为什么套接字提供的是从OSI模型的顶上三层进入传输层的接口？
+### Q：为什么套接字提供的是从OSI模型的顶上三层进入传输层的接口？
+
 Ans：
 
 1.  顶上三层处理具体网络应用（FTP、Telnet、HTTP）的所有细节，对通信细节了解很少；相反，对应底下四层对具体网络应用了解不多，但可以处理所有通信细节。
@@ -29,8 +34,11 @@ Ans：
 2. 顶上三层通常构成所谓的用户进程（user process），底下四层却通常作为操作系统内核的一部分提供。
    1. Unix与其他Unix-like系统都提供了分隔用户进程与内核的机制，就是所谓用户态和内核态。
    2. 用户态和内核态有安全性和隔离性，同时提供了高度可编程的接口。通过系统调用，应用程序可以请求内核执行特权操作，例如创建新的进程、读写文件、分配内存等。内核在收到系统调用请求后，会切换到内核态，并根据请求执行相应的操作。完成后，内核将结果返回给应用程序，并将控制权重新交还给应用程序，使其继续在用户态执行。【扩展】
-# 传输层：TCP、UDP 和 SCTP
-## 传输层概述
+
+## 传输层：TCP、UDP 和 SCTP
+
+### 传输层概述
+
 传输层包括TCP、UDP和SCTP
 这些传输层协议都转而使用网络层协议IP：IPv4或者IPv6
 
@@ -41,12 +49,15 @@ Q：需要理解什么
 Ans：1 这些传输层协议提供给应用进程的服务是啥？弄清这些协议处理什么？应用进程中又需要处理什么？重点理解TCP
 
 - 调试工具：调试客户和服务器程序用`netstat`
-## 总图：传输层协议一览表
+
+### 总图：传输层协议一览表
+
 协议族被称为“TCP/IP”，但是除了TCP、IP这俩主要协议外还要其他的，如图
 > 协议族（Protocol family）是指一组相关的网络协议的集合
 
 ![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1689686633870-bb13202a-07ab-4183-9a34-152bfd33d3a4.png#averageHue=%23f5f5f5&clientId=ub548144e-fd56-4&from=paste&height=610&id=ue8e8c912&originHeight=610&originWidth=908&originalType=binary&ratio=1&rotation=0&showTitle=false&size=150131&status=done&style=none&taskId=u9671a78c-65ec-44d2-8f35-00f0b1845f2&title=&width=908)
-### 从最左边说起tcpdump
+
+#### 从最左边说起tcpdump
 
 1. 命令 `**tcpdump**`
    1. 使用BSD分组过滤器（BSD packet filter, BPF），或者使用数据链路提供者接口（datalink provider interface, DLPI）直接与数据链路进行通信
@@ -56,7 +67,8 @@ Ans：1 这些传输层协议提供给应用进程的服务是啥？弄清这些
 4. **命令**`**traceroute**`
    1. 使用两种套接字：1 IP套接字 2 ICMP套接字
    2. IP套接字用于访问IP，ICMP套接字用于访问ICMP
-### 简单解释图中每个协议框
+
+#### 简单解释图中每个协议框
 
 1. `IPv4` 网际版本协议（Internet Protocol version 4），IPv4给TCP、UDP、SCTP、ICMP和IGMP提供**分组递送服务，使用32位地址。**
 > 分组递送服务（Packet Delivery Service）是一种网络服务，用于在计算机网络中将数据分组从源节点传送到目标节点。它是指网络层提供的基本传输服务，负责将数据包按照网络协议规定的路由路径进行传输和交付。 
@@ -81,7 +93,8 @@ Ans：1 这些传输层协议提供给应用进程的服务是啥？弄清这些
 12. `DLPI`数据链路提供者接口（datalink provider interface），同样提供了对数据链路层的访问能力。
 
 这些网际协议由一个或多个称为请求批注（Request for Comments, RFC）的文档定义，这些RFC就是它们的正式规范。
-## 传输控制协议（TCP）特点介绍
+
+### 传输控制协议（TCP）特点介绍
 
 1. TCP提供客户与服务器之间的连接（connection）。
 2. **TCP客户与某个给定服务器建立一个连接，再跨该连接与那个服务器交换数据，然后终止这个连接。**
@@ -90,7 +103,9 @@ Ans：1 这些传输层协议提供给应用进程的服务是啥？弄清这些
 5. TCP会对所发送的数据进行排序：每个字节关联一个序列号，根据序列号判定数据重复，根据序列号来排序，排序后再传递给接收应用。
 6. TCP提供流量控制（flow control）：TCP总是告知对端在任何时刻它一次能够从对端接收多少字节的数据，这称为通告窗口（advertised window）。在任何时刻，该窗口指出接收缓冲区中当前可用的空间量，从而确保发送端发送的数据不会让接收缓冲区溢出。
 7. TCP连接时全双工的（full-duplex），这意味着在一个给定的连接上应用可以在任何时刻在进出两个方向上既发送数据又接收数据。
-## TCP连接的建立和终止
+
+### TCP连接的建立和终止
+
 完整的TCP连接：1 连接TCP建立 2 数据传送 3 释放TCP连接
 > 物理层：二进制比特流传输；bit（比特流）；
 > 数据链路层：：介质访问控制；frame（帧）；
@@ -98,7 +113,8 @@ Ans：1 这些传输层协议提供给应用进程的服务是啥？弄清这些
 > 传输层：端到端连接；也叫作数据包。但是谈论TCP等具体协议时有特殊叫法，TCP的数据单元叫数据段，segment（段），而UDP协议的数据单元称为数据报（datagram）
 > 会话层、表示层、应用层：一般就称呼为消息（message)
 
-### TCP连接建立：三次握手
+#### TCP连接建立：三次握手
+
 建立一个TCP连接时会发生：
 
 1. **Server **必须ready，服务器已经准备好接受外来的连接。
@@ -121,12 +137,15 @@ Ans：1 这些传输层协议提供给应用进程的服务是啥？弄清这些
    1. SYN占据1字节
    2. 所以每个SYN的ACK中的确认号是 SYN的初始序列号加1
 3. 同样的，每一个FIN（表示结束）的ACK中的确认号就是FIN的序列号加1
-### TCP选项
+
+#### TCP选项
 
 - MSS选项：发送SYN的TCP一端使用MSS告诉对端的最大分节大小（maximum segment size, MSS），就是指明连接中每个TCP分节传输可接受的最大数据量。
 - 窗口规模选项：TCP连接任何一端能够通告对端的最大窗口大小是65535
 - 时间戳选项：防止失而复现的分组可能造成的数据损坏。
-### TCP连接终止：四次挥手
+
+#### TCP连接终止：四次挥手
+
 TCP建立一个连接需要3个分节，终止一个连接则需要4个分节
 
 1. 某个应用进程首先调用`close`，该端的TCP于是乎发送一个FIN分节
@@ -142,7 +161,9 @@ TCP建立一个连接需要3个分节，终止一个连接则需要4个分节
 
 ![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1689693383444-ed3d33e0-ce67-48a6-982f-e6794eb61423.png#averageHue=%23f4f4f4&clientId=ub548144e-fd56-4&from=paste&height=350&id=u6f7d17d6&originHeight=350&originWidth=659&originalType=binary&ratio=1&rotation=0&showTitle=false&size=65901&status=done&style=none&taskId=u243ed0bd-a127-449a-a3b8-b18f4cd540f&title=&width=659)
 **NOTES：**图片中是客户执行主动关闭的，其实无论客户还是服务器都可以执行主动关闭。
-### TCP状态转换图
+
+#### TCP状态转换图
+
 TCP为一个连接定义了11中状态。也叫TCP有限状态机【研究生课程的学习的内容？？】
 > 有限状态机（英语：finite-state machine，缩写：FSM）又称有限状态自动机，简称状态机， 是表示有限个状态以及在这些状态之间的转移和动作等行为的数学模型。 有限状态机是一种用来进行对象行为建模的工具，其作用主要是描述对象在它的生命周期内所经历的状态序列， 以及如何响应来自外界的各种事件。 在计算机科学中，有限状态机被广泛用于建模应用行为、硬件电路系统设计、软件工程， 编译器、网络协议、和计算与语言的研究。比如非常有名的 TCP 协议状态机。
 
@@ -168,18 +189,24 @@ TCP为一个连接定义了11中状态。也叫TCP有限状态机【研究生课
    9. **CLOSING：两边同时尝试关闭**
    10. **TIME_WAIT：另一边已初始化一个释放**
    11. **LAST_ACK：等待所有分组死掉**
-### 图示一个完整的TCP连接所发生的实际分组交换情况
+
+#### 图示一个完整的TCP连接所发生的实际分组交换情况
+
 ![TCP连接的分组交换](https://cdn.nlark.com/yuque/0/2023/png/22241519/1689694485497-15bc7fc2-748d-48ae-bc05-ddd7eeecf76c.png#averageHue=%23f2f2f2&clientId=ub548144e-fd56-4&from=paste&height=562&id=u4c57b77c&originHeight=562&originWidth=604&originalType=binary&ratio=1&rotation=0&showTitle=true&size=137600&status=done&style=none&taskId=ua138caa6-5629-4639-bc74-ec839b47914&title=TCP%E8%BF%9E%E6%8E%A5%E7%9A%84%E5%88%86%E7%BB%84%E4%BA%A4%E6%8D%A2&width=604 "TCP连接的分组交换")
-## TIME_WAIT 状态
+
+### TIME_WAIT 状态
+
 【`TIME_WAIT`状态是TCP中网络编程最不容易理解的部分】
 等待
 **执行主动关闭的一端**经历了这个状态。该端点停留在这个状态的持续时间是MSL的两倍，有时候也称之为2MSL。
 MSL是任何IP数据报能够在因特网中存活的最长时间。这个时间是有限的，因为每个数据报含有一个称为跳限的8位字段（最大值255）。跳数有限制。
-### 解释两个概念MSL&TTL
+
+#### 解释两个概念MSL&TTL
 
 - MSL 最长分节生命周期（maximum segment lifetime, MSL）
 - TTL Time to Live 跳限 hop limit   生存时间(_TTL_) _是_指数据包被设置为在被路由器丢弃之前存在于网络中的时间或“_跳_数”
-### TIME_WAIT状态存在的理由
+
+#### TIME_WAIT状态存在的理由
 
 1. 可靠地实现TCP全双工连接的终止：**防止连接关闭时四次挥手中的最后一次ACK丢失**
 
@@ -192,8 +219,11 @@ TCP需要保证每一包数据都可靠的到达对端，包括正常连接状�
 
  	TCP使用四元组区分一个连接（源端口、目的端口、源IP、目的IP），如果新、旧连接的IP与端口号完全一致，则内核协议栈无法区分这两条连接。
  	2*MSL 的时间足以保证两个方向上的数据都被丢弃，使得原来连接的数据包在网络中都自然消失，再出现的数据包一定是新连接上产生的。
-## 端口号，TCP端口号与并发服务器
-### 端口号 port number
+
+### 端口号，TCP端口号与并发服务器
+
+#### 端口号 port number
+
 客户与服务器通信用端口号（port number）来标识进程。端口号16位整数。
 
 1. 众所周知的端口（well-known port）为0~1023。
@@ -203,11 +233,15 @@ TCP需要保证每一包数据都可靠的到达对端，包括正常连接状�
    1. 这些端口由IANA登记过
 3. 动态的（dynamic）或者私用的（private）端口：49152~65535
    1. IANA不管这些，这些都是临时端口
-### 套接字对 socket pair
+
+#### 套接字对 socket pair
+
 定义：一个TCP连接的套接字对是一个定义该连接的两个端点的四元组：本地IP地址、本地TCP端口号、外地IP地址、外地TCP端口号。
 套接字对唯一标识一个网络上的每个TCP连接。
 **标识每个端点的两个值（IP地址和端口号）通常称为一个套接字。**
-### TCP端口号与并发服务器
+
+#### TCP端口号与并发服务器
+
 并发服务器中主服务器循环会派生一个子进程来处理每个新的连接。
 **记号{*:21, *:*}指出服务器的套接字对。**
 
@@ -242,8 +276,11 @@ TCP需要保证每一包数据都可靠的到达对端，包括正常连接状�
 4. 主机B接收并接受客户2的连接，并fork出一个自身的副本子进程2来处理这个TCP连接
    1. 主机B fork 出来的子进程2的已连接套接字变为`{12.106.32.254:21, 206.168.112.219:1501}`
    2. 所有目的端口为21的其他TCP分节都被递送给拥有监听套接字的最初的那个父进程来处理
-## 缓冲区大小及限制
-### 影响IP数据报大小的一些限制
+
+### 缓冲区大小及限制
+
+#### 影响IP数据报大小的一些限制
+
 影响IP数据包大小的限制，进而会影响应用进程能够传送的数据
 
 1. IPv4数据报的最大大小时65535字节，包括IPv4首部。
@@ -263,7 +300,9 @@ TCP需要保证每一包数据都可靠的到达对端，包括正常连接状�
 6. IPv4首部的“不分片（don't fragment）”位（即DF位）若被设置，那么不管是发送数据报的主机还是转发数据报的路由器，都不允许对它们分片。
 7. IPv4和IPv6都定义了最小重组缓冲区大小（minimum reassembly buffer size），它是IPv4或IPv6的任何实现都必须保证支持的最小数据报大小。
 8. TCP有一个MSS（maximum segment size，最大分节大小），用于向对端TCP通告对端在每个分节中能发送的最大TCP数据量。
-### TCP输出
+
+#### TCP输出
+
 某个应用进程写数据到一个TCP套接字中发生的步骤如下图
 ![应用进程写TCP套接字时涉及的步骤和缓冲区](https://cdn.nlark.com/yuque/0/2023/png/22241519/1689744371062-4685ba9c-2881-4827-8931-dd1c32a602ee.png#averageHue=%23f5f5f5&clientId=u5afcfbca-2f92-4&from=paste&height=603&id=ubeb12186&originHeight=603&originWidth=941&originalType=binary&ratio=1&rotation=0&showTitle=true&size=128860&status=done&style=none&taskId=u8e337c54-dbb5-4b02-93bc-fb120e70fe8&title=%E5%BA%94%E7%94%A8%E8%BF%9B%E7%A8%8B%E5%86%99TCP%E5%A5%97%E6%8E%A5%E5%AD%97%E6%97%B6%E6%B6%89%E5%8F%8A%E7%9A%84%E6%AD%A5%E9%AA%A4%E5%92%8C%E7%BC%93%E5%86%B2%E5%8C%BA&width=941 "应用进程写TCP套接字时涉及的步骤和缓冲区")
 对步骤进行说明：
@@ -290,7 +329,9 @@ TCP需要保证每一包数据都可靠的到达对端，包括正常连接状�
    1. 从数据链路到IP，再从IP到TCP。
    2. TCP看到这个错误后，就在后面某时刻重传对应的分节。
    3. 这时候应用进程并不知道这个暂时的情况。
-# 基本的TCP连接过程函数
+
+## 基本的TCP连接过程函数
+
 这里整理套接字API，从套接字地址结构开始。
 
 - 这些结构可以在两个方向上传递：
@@ -308,9 +349,13 @@ TCP需要保证每一包数据都可靠的到达对端，包括正常连接状�
 2. 假设客户给服务器发送一个请求，服务器处理该请求，并且给客户发回一个响应。
 3. 这个过程一致持续下去，直到客户关闭连接的客户端，从而给服务器发送一个EOF（文件结束）通知为止。
 4. 服务器接着也关闭连接的服务器端，然后结束运行或者等待新的客户连接。
-## 套接字地址结构
+
+### 套接字地址结构
+
 大多数套接字函数都需要一个指向套接字地址结构的指针来做参数。
-### IPv4套接字地址结构
+
+#### IPv4套接字地址结构
+
 也叫“网际套接字地址结构”，命名为`sockaddr_in`
 网际（IPv4）套接字地址结构：`sockaddr_in`POSIX定义如下
 ```protobuf
@@ -334,28 +379,38 @@ struct sockaddr_in {
 2. 套接字地址结构仅在给定主机上使用
    1. 某些字段用在不同主机之间通信
    2. 结构本身并不在主机之间传递
-### 通用套接字地址结构
+
+#### 通用套接字地址结构
+
 一个参数传递进任何套接字函数时，套接字地址结构总是以引用形式（指向该结构的指针）来传递。
 
 - **问题：**套接字函数需要处理不同的支持任何协议族的套接字地址结构。
 - **解决：**将传入的参数指向一个通用的套接字地址结构
 
 所有这个通用套接字地址结构的唯一用途就是对指向特定协议的套接字地址结构的指针执行类型强制转换。
-### IPv6套接字地址结构
+
+#### IPv6套接字地址结构
+
 书上说了几点注意
 
 1. IPv6的地址族是`AF_INET6`，IPv4的地址族是`AF_INET`
 2. 略
-### 新的通用套接字地址结构
+
+#### 新的通用套接字地址结构
+
 新的同样套接字地址结构：`struct sockaddr_storage`足以容纳系统所支持的任何套接字地址结构。
 对比`sockaddr`有2点区别
 
 1. 如果系统支持的任何套接字地址结构有对齐需要，那么`sockaddr_storage`**能满足最苛刻的对齐要求**。
 2. `sockaddr_storage`足够大，能够容纳系统支持的任何套接字地址结构。
-### 套接字地址结构的比较，一张图来解释
+
+#### 套接字地址结构的比较，一张图来解释
+
 IPv4、IPv6、Unix域、数据链路和存储对比
 ![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1689752300475-2798bcba-eb6e-4ab1-876f-0bcce1ce630f.png#averageHue=%23e9e9e9&clientId=ufed1eac9-eea6-4&from=paste&height=603&id=u9eb2b9a1&originHeight=603&originWidth=809&originalType=binary&ratio=1&rotation=0&showTitle=false&size=252876&status=done&style=none&taskId=u742d2731-ac02-4536-bac6-733bec32fe3&title=&width=809)
-## socket函数
+
+### socket函数
+
 要执行网络I/O，一个进程必须做的第一件事情就是调用`socket`函数，指定期望的通信协议类型（使用IPv4的TCP、使用IPv6的UDP、Unix域字节流协议等）
 ```
 # include <sys/socket.h>
@@ -379,7 +434,9 @@ int socket(int family, int type, int protocol);
 看函数原型可知socket函数只制订了协议族和套接字类型，并没指定本地协议地址或远程协议地址。
 
 对比`AF_XXX`和`PF_XXX`：AF_前缀表示地址族（Address Family）、PF_前缀表示协议族（Protocol Family）
-## connect函数
+
+### connect函数
+
 TCP客户用`connect`函数来建立与TCP服务器端连接。
 ```
 #include <sys/socket.h>
@@ -414,7 +471,9 @@ int connect(int sockfd, const struct sockaddr *servaddr, socklen_t addrlen);
    1. 成功，再转移到`ESTABLISHED`状态
    2. 失败，则该套接字不再可用，必须关闭，这个套接字就不能再次调用connect函数来。
    3. 所以在每次`connect`失败后，都必须`close`当前的套接字描述符并重新调用`socket`
-## bind函数
+
+### bind函数
+
 `bind`函数把本地协议地址**赋予一个套接字**。
 协议地址：32位的IPv4地址（或128位的IPv6地址）与16位的TCP（或UDP端口号）组合
 ```
@@ -428,7 +487,9 @@ int bind(int sockdf, const struct sockaddr *myaddr, socklen_t addrlen);
 
 对于TCP，调用`bind`函数可以指定一个端口号，或指定一个IP地址，也能都指定，或者都不指定。
 常见返回的错误`EADDRINUSE`（“Address already in use”，地址已使用）
-## listen函数
+
+### listen函数
+
 `listen`函数仅由TCP服务器调用，做2件事情：
 当`socket`函数创建一个套接字时，假定为一个主动套接字（就是将会调用`connect`发起连接的客户套接字）
 
@@ -459,7 +520,9 @@ int listen(int sockfd, int backlog);
 2. 这一项一直保留在未完成连接队列中，直到三路握手的第三个分节（客户对服务器SYN的ACK）到达或者该项超时为止。
 3. 如果三路握手正常完成，该项从未完成队列移到已完成连接队列的队尾。
 4. 当进程调用accept时，已完成连接队列中的队头项将返回给进程，或者如果该队列为空，那么进程将被投入睡眠，直到TCP在该队列放入一项才唤醒它。
-## accept函数
+
+### accept函数
+
 accept函数由TCP服务器调用，用于从已完成队列队头返回下一个已完成连接。
 如果已完成队列为空，那么进程将被投入睡眠（假定套接字为默认的阻塞方式）
 ```protobuf
@@ -483,7 +546,9 @@ int accept(int sockfd, struct sockaddr *cliaddr, socklen_t *addrlen);
 1. 一个服务器通常仅仅创建1个监听套接字，在服务器的生命期内一直存在。
 2. 内核为每个服务器进程接受的客户连接创建一个已连接套接字（对于它的TCP三次握手已完成）。
 3. 当服务器完成对某个给定客户的服务时，相应的已连接套接字就被关闭（关闭指调用`close`）。
-## fork和exec函数
+
+### fork和exec函数
+
 `fork`是Unix中派生新进程的唯一办法。
 ```protobuf
 #include <unistd.h>
@@ -493,7 +558,9 @@ pid_t fork(void)
 - 返回值：在子进程中为0，在父进程中为子进程ID，出错-1
    - 在调用进程（父进程）返回一次，返回值是新派生进程（子进程）的PID；
    - 在子进程又返回一次，返回值是0.
-### Q：fork在子进程返回0而不是父进程的PID？
+
+#### Q：fork在子进程返回0而不是父进程的PID？
+
 Ans：任何子进程只有一个父进程，子进程总是可以getppid获得父进程PID。相反，父进程可以只有许多子进程，而且无法获取各个子进程的PID。
 如果父进程想要跟踪所有子进程的PID，则必须记录每次调用fork的返回值。
 父进程中调用fork之前打开的所有描述符在fork返回之后由子进程分享。
@@ -501,17 +568,22 @@ Ans：任何子进程只有一个父进程，子进程总是可以getppid获得�
 1. 父进程调用accept之后调用fork。
 2. 所接受的已连接套接字随后就在父进程与子进程之间共享。
 3. 一般，子进程接着读写这个已连接套接字，父进程则关闭这个已连接套接字（关闭是指调用`close`）。
-### fork两个典型用法
+
+#### fork两个典型用法
 
 1. 一个进程创建一个自身的副本，每个副本都可以在另一个副本执行其他任务的同时处理各自的某个操作。
 2. 一个进程想要执行另一个程序，就创建新进程的唯一办法是调用fork，该进程于是首先调用fork创建一个自身副本，然后其中一个副本（通常为子进程）调用exec把自身替换成新的程序。（像shell之类程序的典型用法）
-### 介绍exec函数
+
+#### 介绍exec函数
+
 存放在硬盘上的可执行程序文件能够被Unix执行的唯一办法：由现有进程调用6个exec函数中的一个。
 exec把当前进程映像替换成新的程序文件，而且该新程序通常从main函数开始执行。进程ID不改变。
 称调用exec的进程为调用进程（calling process），称新执行的程序为新程序（new program）
 ![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1689776601567-92140b12-1684-4b33-a42e-db78ffb9af14.png#averageHue=%23f3f3f3&clientId=uda2ebabe-7b59-4&from=paste&height=252&id=u8eac372a&originHeight=252&originWidth=856&originalType=binary&ratio=1&rotation=0&showTitle=false&size=64718&status=done&style=none&taskId=ud71ecd57-9be2-466e-90bd-027047ac1fc&title=&width=856)
 一般只有execve是内核中的系统调用，其他是调用execve的库函数。
-## close函数
+
+### close函数
+
 通常的Unix `close`函数也用来关闭套接字，并终止TCP连接。
 ```protobuf
 #include <unistd.h>
@@ -521,14 +593,19 @@ int close(int sockfd);
 - 返回值：成功0，出错-1
 
 close一个TCP套接字的默认行为是把该套接字标记成已关闭，然后立即返回到调用进程。可以用SO_LINGER套接字选项来改变这个默认行为。
-### 描述符引用计数
+
+#### 描述符引用计数
+
 并发服务器中父进程关闭已连接套接字只会让对应描述符的引用计数减1。
 引用计数大于0，close调用并不引发TCP的四分组连接终止序列。
 如果我们确实想关闭某个TCP连接，发送一个FIN，用shutdown函数，不用close。
 如果父进程对每个由accept返回的已连接套接字都不调用close，那么TCP的四次挥手永远也不会发生，引用计数永远大于0，没有客户连接会被终止。
-## 并发服务器
+
+### 并发服务器
+
 大多数TCP服务器是并发的，来一个客户连接就调用`fork`派生一个子进程。
-### 并发服务器程序大致过程
+
+#### 并发服务器程序大致过程
 
 1. 当一个连接建立时，accept返回，服务器接着调用fork，
    1. 连接被内核接受，新的套接字connfd（已连接套接字）被创建，由此跨连接读写数据。
@@ -538,7 +615,9 @@ close一个TCP套接字的默认行为是把该套接字标记成已关闭，然
    1. 这里父进程关闭已连接套接字，子进程关闭监听套接字，分别close。
    2. 引用计数减1
 3. 此时新的客户由子进程服务，父进程就关闭已连接套接字（close）。
-# I/O 复用：select和poll函数
+
+## I/O 复用：select和poll函数
+
 TCP客户会同时处理两个输入：1标准输入（fgets） 2 TCP套接字
 **出现的问题：**客户将阻塞在fgets期间，另一个客户数据到达，服务器忙不过来无法及时处理。
 解决：I/O 多路复用，即同时监听N个客户，解决对多个I/O监听时，一个I/O阻塞影响其他I/O的问题。
@@ -550,7 +629,9 @@ I/O复用的典型应用：
 3. 一个TCP服务器既要处理监听套接字，又要处理已连接套接字
 4. 一个服务器既要处理TCP，又要处理UDP
 5. 如果服务器要处理多个服务或者多个协议
-## 五种I/O模型
+
+### 五种I/O模型
+
 **一个输入操作通常包括两个不同的阶段：**
 
 1. 等待数据准备好 
@@ -566,32 +647,44 @@ I/O复用的典型应用：
 3. I/O multiplexing
 4. signal-driven I/O
 5. asynchronous I/O
-### 1 阻塞式I/O模型
+
+#### 1 阻塞式I/O模型
+
 默认情况，所有的套接字都是阻塞的。图示如下
 ![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1689779357438-84d3c65a-7160-4222-b597-4d646c057dad.png#averageHue=%23f7f7f7&clientId=uda2ebabe-7b59-4&from=paste&height=386&id=u80bca29e&originHeight=386&originWidth=678&originalType=binary&ratio=1&rotation=0&showTitle=false&size=64900&status=done&style=none&taskId=u1abee93f-4460-49ad-ac68-23af4d10a44&title=&width=678)
 
-### 2 非阻塞式I/O模型
+#### 2 非阻塞式I/O模型
+
 把套接字设置为非阻塞就是通知内核，所请求的I/O操作需要将进程投入睡眠时候才能完成，不要投入睡眠，而是返回一个错误。
 如图，当一个进程像这样对一个非阻塞描述符循环调用recvfrom时，就叫轮询（polling）
 ![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1689779566129-f3a456b0-e9c0-4515-90ee-5152167798aa.png#averageHue=%23f2f2f2&clientId=uda2ebabe-7b59-4&from=paste&height=422&id=ubb7e2d26&originHeight=422&originWidth=757&originalType=binary&ratio=1&rotation=0&showTitle=false&size=111294&status=done&style=none&taskId=u281a9ed4-205b-4eb2-bfd0-728f22d8c5b&title=&width=757)
-### 3 I/O复用模型
+
+#### 3 I/O复用模型
+
 调用select或poll，阻塞在这两个系统调用某一个之上，而不是阻塞在真正的I/O系统调用上。
 ![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1689779665235-7589f4ba-c9d0-4518-8409-270a75bac450.png#averageHue=%23f2f2f2&clientId=uda2ebabe-7b59-4&from=paste&height=416&id=u05c6084a&originHeight=416&originWidth=759&originalType=binary&ratio=1&rotation=0&showTitle=false&size=109642&status=done&style=none&taskId=u69fb4df4-e794-47fb-b868-756c1bab5b5&title=&width=759)
 阻塞于select调用，等待数据报套接字可读。当返回可读时，就调用recvfrom把所读数据报复制到应用进程缓冲区。
 select的优势在于可以等待多个描述符就绪。
-### 4 信号驱动式I/O模型
+
+#### 4 信号驱动式I/O模型
+
 用信号，让内核在描述符就绪时发送SIGIO信号通知。
 ![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1689779828775-ef31656a-e365-4418-bb9c-4f86cc243d7c.png#averageHue=%23f7f7f7&clientId=uda2ebabe-7b59-4&from=paste&height=451&id=uf8a48e80&originHeight=451&originWidth=804&originalType=binary&ratio=1&rotation=0&showTitle=false&size=93108&status=done&style=none&taskId=u38d4c13b-670a-43c5-8b85-9b3a983f201&title=&width=804)
-### 5 异步I/O模型
+
+#### 5 异步I/O模型
+
 异步I/O模型是指内核会在I/O操作完成时通知你，等待I/O完成期间你不会被阻塞。
 ![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1689780316848-9829e959-d6aa-462b-9fe7-e23aaf65b9c0.png#averageHue=%23f8f8f8&clientId=ufe7ed435-70df-4&from=paste&height=482&id=ua442647b&originHeight=482&originWidth=773&originalType=binary&ratio=1&rotation=0&showTitle=false&size=71826&status=done&style=none&taskId=u24f9f6a0-5691-4f1f-b0c9-ce01ae4ca4f&title=&width=773)
-### 各种I/O模型对比
+
+#### 各种I/O模型对比
 
 - 同步I/O操作（synchronous I/O opetaion）导致请求进程阻塞，直到I/O操作完成；
 - 异步I/O操作（asynchronous I/O opetaion）不导致请求进程阻塞。
 
 ![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1689780447961-cad2a9a0-664e-4d94-bbe6-7efdecfed838.png#averageHue=%23f3f3f3&clientId=ufe7ed435-70df-4&from=paste&height=464&id=ua9677cf0&originHeight=464&originWidth=863&originalType=binary&ratio=1&rotation=0&showTitle=false&size=112557&status=done&style=none&taskId=u12b70622-4b75-4cb0-911d-14b165976d7&title=&width=863)
-## select函数
+
+### select函数
+
 `select`函数允许进程指示内核等待多个事件中的任何一个发生，并只在有一个或多个事件发生或经历一段指定的事件后才唤醒它。
 **讲个例子：**
 我们调用`select`，告知内核出现下面的几种情况的时候返回：
@@ -616,7 +709,9 @@ int select(int maxfdpl, fd_set *readset, fd_set *writeset, fd_set *exceptset,
 - readset、writeset、exceptset：让内核测试读、写和异常条件的描述符。支持的异常条件只有俩
    - 某个套接字的带外数据的到达；
    - 某个已置为分组模式的伪终端存在可从其主端读取的控制状态信息。
-### 描述符就绪条件
+
+#### 描述符就绪条件
+
 满足下列4个条件中的任何一个时，一个套接字准备好**读**
 
 1. 该套接字接收缓冲区中的**数据字节数**大于等于套接字接收缓冲区低水位标记的当前大小。
@@ -642,10 +737,14 @@ int select(int maxfdpl, fd_set *readset, fd_set *writeset, fd_set *exceptset,
 如果一个套接字存在带外数据或者还处于带外标记，那么它有异常条件待处理。
 下图汇总了上述导致`select`返回某个套接字就绪的条件：
 ![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1689866089469-b86ec7df-c884-47a1-a520-2bcf1342d700.png#averageHue=%23ebebeb&clientId=ucb60fe23-2424-4&from=paste&height=255&id=u3295e7a7&originHeight=255&originWidth=639&originalType=binary&ratio=1&rotation=0&showTitle=false&size=60769&status=done&style=none&taskId=u90892e30-58f0-48d7-975a-39284357188&title=&width=639)
-### `select`的最大描述符数
+
+#### `select`的最大描述符数
+
 大多数应用不会用到很多描述符，如果有那他也往往用`select`来复选描述符。
 现在Unix版本允许每个进程使用事实上无限制的描述符（会受限于内存总量和管理性限制）
-## poll函数
+
+### poll函数
+
 `poll`函数可用工作在任何描述符上。
 `poll`函数提供的功能与`select`类似，不过在处理流设备时，它能提供额外的信息。
 **一个进程或线程同时监视多个文件描述符的状态，以确定是否有可读、可写或异常等事件发生，而无需阻塞在单个I/O操作上。**
