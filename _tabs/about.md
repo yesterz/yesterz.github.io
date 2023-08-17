@@ -1,11 +1,7 @@
 ---
 # the default layout is 'page'
 icon: fas fa-info-circle
-categories: [README]
-tags: [README]
 order: 4
-toc: true
-mermaid: true
 ---
 
 # yesterz.github.io
@@ -103,14 +99,14 @@ mermaid: true
 * /workspaces/yesterz.github.io/_sass/minimal-mistakes/_page.scss 65行已注释，拉长页面宽度 X 这个办法不行
 
 
-第一个图
+## 第一个图
 
 ```mermaid
 flowchart LR
      id1((a)) --> id2((b)) & c--> d
 ```
 
-第二个图
+## 第二个图
 
 ```mermaid
 flowchart LR
@@ -125,7 +121,7 @@ flowchart LR
    A1 --> G[Run-Time Constant Pool]
 ```
 
-第三个图
+## 第三个图
 
 ```mermaid
 mindmap
@@ -147,11 +143,21 @@ mindmap
       Mermaid
 ```
 
-第四个图
+## 第四个图
 
 ```mermaid
 sequenceDiagram
     Alice->>John: Hello John, how are you?
     John-->>Alice: Great!
     Alice-)John: See you later!
+```
+
+## 第五个图
+
+```mermaid
+ gantt
+  title  Adding GANTT diagram functionality to mermaid
+  apple :a, 2017-07-20, 1w
+  banana :crit, b, 2017-07-23, 1d
+  cherry :active, c, after b a, 1d
 ```
