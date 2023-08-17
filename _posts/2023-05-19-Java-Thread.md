@@ -356,6 +356,8 @@ So JVM 进程中，如果没有一个非守护线程，JVM会退出。
 
 ### 五种状态，从操作系统层面来描述
 
+![img]({{ site.url }}/assets/images/wps4.jpg) 
+
 ![五种状态]({{ site.url }}/assets/images/JavaThread1.png)
 
 【初始状态】仅是在语言层面创建了线程对象，还未与操作系统线程关联
