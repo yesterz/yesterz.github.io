@@ -6,9 +6,10 @@ tags:
   - 分布式
 toc: true
 ---
-#一、ZooKeeper基础
 
-## 1.1 为什么使用ZooKeeper？
+## 一、ZooKeeper基础
+
+### 1.1 为什么使用ZooKeeper？
 
 1. Nginx作为负载均衡管理大量服务器时，管理起来比较麻烦，可以通过zookeeper注册服务与发现服务协作管理。
 
@@ -26,9 +27,9 @@ toc: true
 
 
 
-## 1.2 ZooKeeper概述
+### 1.2 ZooKeeper概述
 
-### 1.2.1 ZooKeeper简介
+#### 1.2.1 ZooKeeper简介
 
 ZooKeeper：动物园管理员
 
@@ -38,7 +39,7 @@ ZooKeeper是分布式应用程序的协调服务框架，是Hadoop的重要组�
 
 《The Chubby lock service for loosely coupled distributed systems》
 
-### 1.2.2 具体应用场景
+#### 1.2.2 具体应用场景
 
 1. Hadoop,使用ZooKeeper的事件处理确保整个集群只有一个NameNode,存储配置信息等.
 
@@ -70,7 +71,7 @@ ZooKeeper是分布式应用程序的协调服务框架，是Hadoop的重要组�
 
 
 
-## 1.3 分布式编程容易出现的问题
+### 1.3 分布式编程容易出现的问题
 
 分布式的思想就是人多干活快，即用多台机器同时处理一个任务。分布式的编程和单机的编程 思想是不同的，随之也带来新的问题和挑战。
 
@@ -86,13 +87,13 @@ ZooKeeper是分布式应用程序的协调服务框架，是Hadoop的重要组�
 
 5.分布式锁的实现，用之前学的重入锁，同步代码块是做不了的
 
-## 1.4 拜占庭将军问题
+### 1.4 拜占庭将军问题
 
 那么ZooKeeper最基础的东西是什么呢？不得不提Paxos，它是一个基于消息传递的一致性算法，Leslie Lamport（莱斯利·兰伯特）在1990年提出，近几年被广泛应用于分布式计算中，Google的Chubby，Apache的ZooKeeper都是基于它的理论来实现的，Paxos还被认为是到目前为止唯一的分布式一致性算法，其它的算法都是Paxos的改进或简化。有个问题要提一下，Paxos有一个前提：没有拜占庭将军问题。就是说Paxos只有在一个可信的计算环境中才能成立，这个环境是不会被入侵所破坏的。
 
 ![]({{ site.url }}/assets/images/pzt.jpg)
 
-##1.5 Paxos的小岛的故事
+### 1.5 Paxos的小岛的故事
 
 Paxos描述了这样一个场景，有一个叫做Paxos的小岛(Island)上面住了一批居民，岛上面所有的事情由一些特殊的人决定，他们叫做议员(Senator)。议员的总数(Senator Count)是确定的，不能更改。岛上每次环境事务的变更都需要通过一个提议(Proposal)，每个提议都有一个编号(PID)，这个编号是一直增长的，不能倒退。每个提议都需要超过半数((Senator Count/2)+1)的议员同意才能生效。每个议员只会同意大于当前编号的提议，包括已生效的和未生效的。如果议员收到小于等于当前编号的提议，他会拒绝，并告知对方：你的提议已经有人提过了。这里的当前编号是每个议员在自己记事本上面记录的编号，他不断更新这个编号。整个议会不能保证所有议员记事本上的编号总是相同的。现在议会有一个目标：保证所有的议员对于提议都能达成一致的看法。
 
@@ -126,9 +127,9 @@ Paxos描述了这样一个场景，有一个叫做Paxos的小岛(Island)上面�
 
  
 
-## 1.6 集群架构剖析
+### 1.6 集群架构剖析
 
-###1.6.1 ZooKeeper之攘其外
+####1.6.1 ZooKeeper之攘其外
 
 >  ZooKeeper服务端有两种不同的运行模式。单机的称为"**独立模式**"(standalone mode),但是独立模式存在单点故障的问题，所以在实际开发使用较少；集群的称为“**仲裁模式**(quorum mode)”，不存在单点故障的问题，实际开发中使用较多。
 
@@ -154,7 +155,7 @@ Paxos描述了这样一个场景，有一个叫做Paxos的小岛(Island)上面�
 
 ![]({{ site.url }}/assets/images/queue.jpg)
 
-### 1.6.2 ZooKeeper之安其内
+#### 1.6.2 ZooKeeper之安其内
 
 1. 思考一下这个架构有什么问题？
 
@@ -220,7 +221,7 @@ Paxos描述了这样一个场景，有一个叫做Paxos的小岛(Island)上面�
 
 	![]({{ site.url }}/assets/images/xuanju2.png)
 
-###1.6.3 脑裂和服务器数量选取
+#### 1.6.3 脑裂和服务器数量选取
 
 1. 服务器数量选取
 
@@ -232,9 +233,9 @@ Paxos描述了这样一个场景，有一个叫做Paxos的小岛(Island)上面�
 
 	![]({{ site.url }}/assets/images/naolie.jpg)
 
-# 二、集群分布式安装
+## 二、集群分布式安装
 
-## 2.1 四台服务器之间免密登录
+### 2.1 四台服务器之间免密登录
 
 规划：需要三台服务器node2、node3、node4
 
@@ -309,7 +310,7 @@ exit # 退出
 
  
 
-## 2.2 JDK安装和环境变量配置
+### 2.2 JDK安装和环境变量配置
 
 node1-node4上目录的创建目录/opt/apps
 
@@ -352,9 +353,9 @@ scp /etc/profile node[234]:`pwd`
 
  
 
-## 2.3 Zookeeper集群搭建
+### 2.3 Zookeeper集群搭建
 
-###2.3.1 下载地址
+#### 2.3.1 下载地址
 
 官网页面：https://zookeeper.apache.org
 
@@ -381,7 +382,7 @@ scp /etc/profile node[234]:`pwd`
 
 
 
-###2.3.2 搭建步骤
+#### 2.3.2 搭建步骤
 
 **a)** 将apache-zookeeper-3.5.7-bin.tar.gz上传到node2
 
@@ -470,7 +471,7 @@ echo 4 > /opt/zooKeeper-3.5.7/data/myid
 4 
 ```
 
-###2.3.3 启动和关闭
+#### 2.3.3 启动和关闭
 
 **a)** 分别启动ZooKeeper
 
@@ -501,9 +502,9 @@ quit
 
 
 
-# 三、ZooKeeper进阶
+## 三、ZooKeeper进阶
 
-## 3.1 Znode数据结构
+### 3.1 Znode数据结构
 
 ![img](image\wps8.jpg) 
 
@@ -523,7 +524,7 @@ quit
 
 8. 每个路径名都是唯一的。
 
-### 3.1.1 目录结构
+#### 3.1.1 目录结构
 
 层次的，目录型结构，便于管理逻辑关系
 
@@ -534,7 +535,7 @@ znode信息
 - 记录了zxid等元数据信息
 
 
-### 3.1.2 节点类型
+#### 3.1.2 节点类型
 
 znode有两种类型，临时的（ephemeral）和持久的（persistent）
 
@@ -571,7 +572,7 @@ znode支持序列SEQUENTIAL
 
 ./zkCli.sh：启动zk客户端
 
-## 3.2 客户端命令行操作
+### 3.2 客户端命令行操作
 
 | 命令基本语法 | 功能描述                                                     |
 | ------------ | ------------------------------------------------------------ |
@@ -806,7 +807,7 @@ znode支持序列SEQUENTIAL
 
  
 
-## 3.3 会话(Session)
+### 3.3 会话(Session)
 
 ![]({{ site.url }}/assets/images/zk2.png)
 
@@ -837,7 +838,7 @@ Leader：产生一个唯一的session，放到消息队列，让所有server知�
 
  
 
-## 3.4 事件监听原理剖析
+### 3.4 事件监听原理剖析
 
 问题：客户端如何获取Zookeeper服务器上最新数据？
 
@@ -872,7 +873,7 @@ JavaAPI:
 
 
 
-## 3.5 工作原理
+### 3.5 工作原理
 
 ZooKeeper的核心是原子广播，这个机制保证了各个server之间的信息同步。实现这个机制的协议叫做ZAB协议。
 
@@ -905,7 +906,7 @@ epoch也称为纪元数字。实现中zxid是一个64位的数字，它高32位�
 5. Leader将结果汇总后如果需要写入，则开始写入同时把写入操作通知给Follwer，然后commit
 6. Follwer把请求结果返回给Client
 
-## 3.6 Zookeeper集群的特点
+### 3.6 Zookeeper集群的特点
 
 ![img](image\wps13.jpg) 
 
@@ -913,9 +914,9 @@ epoch也称为纪元数字。实现中zxid是一个64位的数字，它高32位�
 
  
 
-# 四、ZK API实战
+## 四、ZK API实战
 
-## 4.1 IDEA环境搭建
+### 4.1 IDEA环境搭建
 
 1. 创建一个Maven工程zookeeper
 
@@ -971,7 +972,7 @@ epoch也称为纪元数字。实现中zxid是一个64位的数字，它高32位�
 
 
 
-## 4.2 创建ZooKeeper客户端
+### 4.2 创建ZooKeeper客户端
 
 ```java
 package com.itbaizhan.zookeeper.curd;
@@ -1016,7 +1017,7 @@ public class ZKCurd {
 
 
 
-## 4.3 创建节点
+### 4.3 创建节点
 
 ```java
 /**创建节点
@@ -1046,7 +1047,7 @@ public void create(){
 }
 ```
 
-##4.4 判断节点是否存在
+### 4.4 判断节点是否存在
 
 ```java
 @Test
@@ -1066,7 +1067,7 @@ public void exists(){
 
 
 
-##4.5查询节点值和状态信息
+### 4.5查询节点值和状态信息
 
 ```java
 @Test
@@ -1099,7 +1100,7 @@ public void getDataStat(){
 }
 ```
 
-## 4.6 获取子节点信息
+### 4.6 获取子节点信息
 
 ```java
 //获取子节点的名称
@@ -1138,7 +1139,7 @@ public void getChildrenData(){
 
 
 
-##4.7 修改节点值
+### 4.7 修改节点值
 
 ```java
 @Test
@@ -1157,7 +1158,7 @@ public void setData(){
 }
 ```
 
-## 4.8 删除节点
+### 4.8 删除节点
 
 ```java
 @Test
@@ -1172,7 +1173,7 @@ public void delete(){
 }
 ```
 
-##4.9 验证注册事件被触发的一次性
+### 4.9 验证注册事件被触发的一次性
 
 ```java
 @Test
@@ -1229,7 +1230,7 @@ public void getDataWatcher(){
 
  
 
-# 五、分布式协调案例
+## 五、分布式协调案例
 
 如何实现“跨虚拟机”的调用，它就是 RMI（Remote Method Invocation，远程方法调用）。例如，服务A 在 JVM1 中运行，服务B 在 JVM2 中运行，服务A 与 服务B 可相互进行远程调用，就像调用本地方法一样，这就是 RMI。在分布式系统中，我们使用 RMI 技术可轻松将 服务提供者（Service Provider）与 服务消费者（Service Consumer）进行分离，充分体现组件之间的弱耦合，系统架构更易于扩展。
 
@@ -1239,11 +1240,11 @@ public void getDataWatcher(){
 
 下面我们就从一个最简单的 RMI 示例开始吧！
 
-## 5.1 Java原生RMI实现
+### 5.1 Java原生RMI实现
 
  ![img](image\wps19.jpg)
 
-### 5.1.1 发布 RMI 服务
+#### 5.1.1 发布 RMI 服务
 
 发布一个 RMI 服务，我们只需做三件事情：
 
@@ -1253,7 +1254,7 @@ public void getDataWatcher(){
 
 3. 通过 JNDI 发布 RMI 服务
 
-### 5.1.2 定义一个 RMI 接口
+#### 5.1.2 定义一个 RMI 接口
 
 RMI 接口实际上还是一个普通的 Java 接口，只是 RMI 接口必须继承 java.rmi.Remote，此外，每个 RMI 接口的方法必须声明抛出一个 java.rmi.RemoteException 异常，就像下面这样：
 
@@ -1270,7 +1271,7 @@ public interface HelloService extends Remote {
 
  
 
-### 5.1.3 编写 RMI 接口的实现类
+#### 5.1.3 编写 RMI 接口的实现类
 
 实现以上的 HelloService 是一件非常简单的事情，但需要注意的是，我们必须让实现类继承 java.rmi.server.UnicastRemoteObject 类，此外，必须提供一个构造器，并且构造器必须抛出 java.rmi.RemoteException 异常。我们既然使用 JVM 提供的这套 RMI 框架，那么就必须按照这个要求来实现，否则是无法成功发布 RMI 服务的，一句话：我们得按规矩出牌！
 
@@ -1296,7 +1297,7 @@ public class HelloServiceImpl extends UnicastRemoteObject implements HelloServic
 
  
 
-### 5.1.4 通过 JNDI 发布 RMI 服务
+#### 5.1.4 通过 JNDI 发布 RMI 服务
 
 发布 RMI 服务，我们需要告诉 JNDI 三个基本信息：
 
@@ -1346,7 +1347,7 @@ public class RmiServer {
 
  
 
-### 5.1.5 调用 RMI 服务
+#### 5.1.5 调用 RMI 服务
 
 同样我们也使用一个 main() 方法来调用 RMI 服务，相比发布而言，调用会更加简单，我们只需要知道两个东西：1. RMI 请求路径、2. RMI 接口（一定不需要 RMI 实现类，否则就是本地调用了）。数行代码就能调用刚才发布的 RMI 服务，就像下面这样：
 
@@ -1381,7 +1382,7 @@ public class RmiClient {
 
  
 
-### 5.1.6 RMI 服务的局限性
+#### 5.1.6 RMI 服务的局限性
 
 可见，借助 JNDI 这个所谓的命名与目录服务，我们成功地发布并调用了 RMI 服务。实际上，JNDI 就是一个注册表，服务端将服务对象放入到注册表中，客户端从注册表中获取服务对象。在服务端我们发布了 RMI 服务，并在 JNDI 中进行了注册，此时就在服务端创建了一个 Skeleton（骨架），当客户端第一次成功连接 JNDI 并获取远程服务对象后，立马就在本地创建了一个 Stub（存根），远程通信实际上是通过 Skeleton 与 Stub 来完成的，数据是基于 TCP/IP 协议，在“传输层”上发送的。毋庸置疑，理论上 RMI 一定比 WebService 要快，毕竟 WebService 是基于 HTTP 的，而 HTTP 所携带的数据是通过“应用层”来传输的，传输层较应用层更为底层，越底层越快。
 
@@ -1403,9 +1404,9 @@ public class RmiClient {
 
  
 
-## 5.2 ZooKeeper 提供高可用的 RMI 服务
+### 5.2 ZooKeeper 提供高可用的 RMI 服务
 
-###5.2.1 高可用RMI原理分析
+#### 5.2.1 高可用RMI原理分析
 
 要想解决 RMI 服务的高可用性问题，我们需要利用 ZooKeeper 充当一个 服务注册表（Service Registry），让多个 服务提供者（Service Provider）形成一个集群，让 服务消费者（Service Consumer）通过服务注册表获取具体的服务访问地址（也就是 RMI 服务地址）去访问具体的服务提供者。如下图所示：
 
@@ -1429,7 +1430,7 @@ ZooKeeper 与生俱来的集群能力（例如：数据同步与领导选举特�
 
 
 
-### 5.2.2 服务生产者
+#### 5.2.2 服务生产者
 
 ![]({{ site.url }}/assets/images/zkrmi.jpg)
 
@@ -1547,7 +1548,7 @@ public class ServiceProvider {
 create /registry null
 ```
 
-###5.2.3 发布服务
+#### 5.2.3 发布服务
 
 我们需要调用 ServiceProvider 的 publish() 方法来发布 RMI 服务，发布成功后也会自动在 ZooKeeper 中注册 RMI 地址。
 
@@ -1572,7 +1573,7 @@ public class Server {
 
 注意：在运行 Server 类的 main() 方法后，修改port值11215并再次运行,运行两个 Server 程序，当然也可以同时运行更多的 Server 程序，只要 port 不同就行。
 
-### 5.2.4 服务消费者
+#### 5.2.4 服务消费者
 
 服务消费者需要在创建的时候连接 ZooKeeper，同时监听 /registry 节点的 NodeChildrenChanged 事件，也就是说，一旦该节点的子节点有变化，就需要重新获取最新的子节点。这里提到的子节点，就是存放服务提供者发布的 RMI 地址。需要强调的是，这些子节点都是临时性的，当服务提供者与 ZooKeeper 服务注册表的 Session 中断后，该临时性节会被自动删除。
 
@@ -1695,7 +1696,7 @@ public class ServiceConsumer {
 }
 ```
 
-### 5.2.5 调用服务
+#### 5.2.5 调用服务
 
 通过调用 ServiceConsumer 的 lookup() 方法来查找 RMI 远程服务对象。我们使用一个“死循环”来模拟每隔 3 秒钟调用一次远程方法。
 
@@ -1715,7 +1716,7 @@ public class Client {
 }
 ```
 
-### 5.2.6 使用方法
+#### 5.2.6 使用方法
 
 根据以下步骤验证 RMI 服务的高可用性：
 
@@ -1730,6 +1731,6 @@ public class Client {
 - 先后停止所有的 Server 程序，还是观察 Client 控制台变化（Client 会重试连接，多次连接失败后，自动关闭）。
 
 
-### 5.2.7 总结
+#### 5.2.7 总结
 
 通过使用 ZooKeeper 实现了一个简单的 RMI 服务高可用性解决方案，通过 ZooKeeper 注册所有服务提供者发布的 RMI 服务，让服务消费者监听 ZooKeeper 的 Znode，从而获取当前可用的 RMI 服务。此方案不局限于 RMI 服务，对于任何形式的服务都可以（比如：WebService），也提供了一定参考。
