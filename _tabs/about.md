@@ -5,6 +5,7 @@ categories: [README]
 tags: [README]
 order: 4
 toc: true
+mermaid: true
 ---
 
 # yesterz.github.io
@@ -103,11 +104,14 @@ toc: true
 
 
 第一个图
+
 ```mermaid
 flowchart LR
      id1((a)) --> id2((b)) & c--> d
 ```
+
 第二个图
+
 ```mermaid
 flowchart LR
 	 A[The JVM Run-Time Data Areas]
@@ -120,7 +124,9 @@ flowchart LR
    A2 --> F[Program Counter Register]
    A1 --> G[Run-Time Constant Pool]
 ```
+
 第三个图
+
 ```mermaid
 mindmap
   root((mindmap))
@@ -140,7 +146,9 @@ mindmap
       Pen and paper
       Mermaid
 ```
+
 第四个图
+
 ```mermaid
 sequenceDiagram
     Alice->>John: Hello John, how are you?
