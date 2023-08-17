@@ -1,9 +1,41 @@
 ---
-# the default layout is 'page'
-icon: fas fa-info-circle
-order: 4
-mermaid: true
+title: README
+author: someone
+date: 2023-08-17 11:33:00 +0800
+categories: [README]
+tags: [README]
+toc: true
+pin: false
+math: false
+mermaid: false
 ---
+
+# yesterz.github.io
+> 日常学习笔记记录，学习（狗头）互联网上的优秀博客笔记内化成自己的知识（欢迎围观~）<https://yesterz.github.io>
+{: .prompt-tip }
+
+<h1 class="mt-5">Getting Things DONE</h1>
+
+### Todo
+- [ ] 首页还需要设计
+- [ ] 404 页面，现在404页面有一个跳转
+- [ ] about 页面
+  + [ ] 应该是修改博客主体为宽屏模式
+  - [ ] 上传之前的一些笔记
+
+
+
+  ### In Progress
+  - [ ] 分布式知识笔记记录
+  - [ ] Dubbo的知识
+  - [ ] RPC的一些东西
+  - [ ] to be continued
+        
+        ### Done ✓
+        - [x] 页面的总体自适应宽屏幕（这个还没有头绪怎么，是不是要改CSS）
+        - [x] 跑通流程 GitHub Pages 博客站点，提交并同步远程仓库
+        - [x] 图片显示问题，用这种方式`![有帮助的截图]({{ site.url }}/assets/screenshot.jpg)`来引用显示
+          + [x] Meimaid渲染出流
 
   **Night watcher swear** <br/>
   <br/>
