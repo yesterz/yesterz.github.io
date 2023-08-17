@@ -4,14 +4,16 @@ author: someone
 date: 2023-05-15 11:33:00 +0800
 categories: [多线程, 线程]
 tags: [多线程, 笔记]
-pin: true
-toc: true
-math: true
+pin: false
+math: false
 mermaid: false
 ---
-# ch2 进程与线程
+一行内容
+ch2 进程与线程
 
 ## 1. 进程与线程
+
+一行内容
 
 ### 1.1 进程 process
 
