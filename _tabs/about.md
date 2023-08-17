@@ -1,13 +1,10 @@
 ---
-title: README
-author: someone
-date: 2023-08-17 11:33:00 +0800
+# the default layout is 'page'
+icon: fas fa-info-circle
 categories: [README]
 tags: [README]
+order: 4
 toc: true
-pin: false
-math: false
-mermaid: false
 ---
 
 # yesterz.github.io
