@@ -18,9 +18,9 @@ timezone:
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 # ↓ --------------------------
 
-title: 这后面想好再写 # the main title
+title: 先用QQ头像 # the main title
 
-tagline: 这里也是还没想好怎么写  # it will display as the sub-title
+tagline: 后面再改这里  # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
   Winter is coming.
@@ -76,7 +76,7 @@ theme_mode: # [light|dark]
 img_cdn:
 
 # the avatar on sidebar, support local or CORS resources
-avatar: # assets/images/avatar.png 这里线注释掉
+avatar: assets/images/QQTouxiang.jpg # assets/images/avatar.png 这里线注释掉
 
 # boolean type, the global switch for TOC in posts.
 toc: true
