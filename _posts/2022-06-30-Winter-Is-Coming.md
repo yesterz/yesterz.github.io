@@ -1,6 +1,6 @@
 ---
 title: Winter Is Coming
-author: It's Arya
+author: Arya
 date: 2022-06-30 11:33:00 +0800
 categories: [Blogging, Demo]
 tags: [typography]
