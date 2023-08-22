@@ -2,7 +2,7 @@
 title: 进程与线程
 author: someone
 date: 2023-05-15 11:33:00 +0800
-categories: [多线程, 线程]
+categories: [多线程]
 tags: [多线程, 笔记]
 pin: false
 math: false
