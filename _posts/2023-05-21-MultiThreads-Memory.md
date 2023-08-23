@@ -1,3 +1,14 @@
+---
+title: 共享模型之内存
+author: someone
+date: 2023-05-20 11:33:00 +0800
+categories: [多线程]
+tags: [多线程, 笔记]
+pin: false
+math: false
+mermaid: false
+---
+
 # ch5 共享模型之内存
 
 # Java 内存模型
