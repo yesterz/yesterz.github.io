@@ -34,7 +34,7 @@ public void withdraw(Integer amount) {
 
 其中的关键是 compareAndSet，它的简称就是 CAS （也有 Compare And Swap 的说法），它必须是原子操作。
 
-![Untitled](ch6%20%E5%85%B1%E4%BA%AB%E6%A8%A1%E5%9E%8B%E4%B9%8B%E6%97%A0%E9%94%81%20f77599edf90a4801b5cabf205afe4201/Untitled.png)
+![Untitled](/assets/images/lockFreeImages/Untitled.png)
 
 > **注意** 其实 CAS 的底层是 lock cmpxchg 指令（X86架构），在单核 CPU 和多核 CPU 下都能保证【比较-交换】的原子性。
 > 
@@ -59,7 +59,7 @@ CAS 必须借助 volatile 才能读取到共享变量的最新值来实现 【�
 2. 打个比喻，线程好像高速跑道上的赛车，高速运行时，速度超快，一但发生上下文切换，就好比赛车要减速、熄火，等被唤醒又得重新打火、启动、加速…恢复到高速运行，代价比较大
 3. 但无锁情况下，因为线程要保持运行，需要额外 CPU 的支持，CPU 在这里就好比高速跑道，没有额外的跑道，线程想高速运行也无从谈起，虽然不会进入阻塞，但由于没有分到时间片，仍然会进入可运行状态，还是会导致上下文切换。
 
-![Untitled](ch6%20%E5%85%B1%E4%BA%AB%E6%A8%A1%E5%9E%8B%E4%B9%8B%E6%97%A0%E9%94%81%20f77599edf90a4801b5cabf205afe4201/Untitled%201.png)
+![Untitled](/assets/images/lockFreeImages/Untitled%201.png)
 
 ### CAS 的特点
 
@@ -261,7 +261,7 @@ public void add(long x) {
 
 add 流程图
 
-![Untitled](ch6%20%E5%85%B1%E4%BA%AB%E6%A8%A1%E5%9E%8B%E4%B9%8B%E6%97%A0%E9%94%81%20f77599edf90a4801b5cabf205afe4201/Untitled%202.png)
+![Untitled](/assets/images/lockFreeImages/Untitled%202.png)
 
 ```java
 final void longAccumulate(long x, LongBinaryOperator fn,
@@ -320,13 +320,13 @@ if ((a = as[(n - 1) & h]) == null) {
 
 longAccumulate 流程图
 
-![Untitled](ch6%20%E5%85%B1%E4%BA%AB%E6%A8%A1%E5%9E%8B%E4%B9%8B%E6%97%A0%E9%94%81%20f77599edf90a4801b5cabf205afe4201/Untitled%203.png)
+![Untitled](/assets/images/lockFreeImages/Untitled%203.png)
 
-![Untitled](ch6%20%E5%85%B1%E4%BA%AB%E6%A8%A1%E5%9E%8B%E4%B9%8B%E6%97%A0%E9%94%81%20f77599edf90a4801b5cabf205afe4201/Untitled%204.png)
+![Untitled](/assets/images/lockFreeImages/Untitled%204.png)
 
 每个线程刚进入 longAccumulate 时，会尝试对应一个 cell 对象（找到一个坑位）
 
-![Untitled](ch6%20%E5%85%B1%E4%BA%AB%E6%A8%A1%E5%9E%8B%E4%B9%8B%E6%97%A0%E9%94%81%20f77599edf90a4801b5cabf205afe4201/Untitled%205.png)
+![Untitled](/assets/images/lockFreeImages/Untitled%205.png)
 
 获取最终结果通过 sum 方法
 
@@ -368,4 +368,4 @@ public class UnsafeAccessor {
 
 ## ch6 本章总结 如图
 
-![Untitled](ch6%20%E5%85%B1%E4%BA%AB%E6%A8%A1%E5%9E%8B%E4%B9%8B%E6%97%A0%E9%94%81%20f77599edf90a4801b5cabf205afe4201/Untitled%206.png)
+![Untitled](/assets/images/lockFreeImages/Untitled%206.png)
