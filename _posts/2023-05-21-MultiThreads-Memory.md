@@ -9,9 +9,9 @@ math: false
 mermaid: false
 ---
 
-# ch5 共享模型之内存
+## ch5 共享模型之内存
 
-# Java 内存模型
+## Java 内存模型
 
 JMM 即 Java Memory Model，它定义了主存，工作内存抽象概念，底层对应着 CPU寄存器、缓存、硬件内存、CPU 指令优化等。
 
@@ -21,7 +21,7 @@ JMM 体现在以下几个方面
 - 可见性 - 保证指令不会受 CPU 缓存影响
 - 有序性 - 保证指令不会受 CPU 指令并行优化的影响
 
-# 可见性
+## 可见性
 
 - 退不出的循环
 
@@ -53,7 +53,7 @@ public static void main(String[] args) {
 
 它用来修饰成员变量和静态成员变量，他可以避免线程从自己的工作缓存中查找变量的值，必须到主存中获取它的值，线程操作 volatile 变量都是之间操作主存
 
-## 可见性 VS 原子性
+### 可见性 VS 原子性
 
 前面例子体现的实际就是可见性，它保证的是在多个线程之间，一个线程对 volatile 变量的修改对另一个线程可见，不能保证原子性，仅用在一个写线程，多个读线程的情况
 
@@ -95,9 +95,9 @@ putstatic i // 线程2-将修改后的值存入静态变量i 静态变量i=-1
 
 为了确保线程之间的可见性和正确性，建议使用**`volatile`**修饰符或其他同步机制（如**`synchronized`**、**`Lock`**等），这样可以明确地指示线程在访问共享变量时进行同步操作，而不依赖于隐含的同步操作。这样可以更可靠地保证多线程之间的通信和数据一致性。
 
-## 原理之 CPU 缓存结构
+### 原理之 CPU 缓存结构
 
-### CPU 缓存结构
+#### CPU 缓存结构
 
 ![Untitled](/assets/images/MemoryImages/Untitled.png)
 
@@ -137,7 +137,7 @@ CPU 拿到的内存地址格式是这样的
 
 ![Untitled](/assets/images/MemoryImages/Untitled%204.png)
 
-### CPU 缓存读
+#### CPU 缓存读
 
 读取数据流程如下
 
@@ -148,7 +148,7 @@ CPU 拿到的内存地址格式是这样的
         1. 一致，根据偏移量返回缓存数据
         2. 不一致，去内存读取新数据更新缓存行
 
-### CPU 缓存原理
+#### CPU 缓存原理
 
 MESI 协议
 
@@ -166,7 +166,7 @@ MESI 协议
 
 没看懂的两张图
 
-## 内存屏障
+### 内存屏障
 
 Memory Barrier（Memory Fence）
 
@@ -179,7 +179,7 @@ Memory Barrier（Memory Fence）
 
 ![Untitled](/assets/images/MemoryImages/Untitled%207.png)
 
-# 有序性
+## 有序性
 
 JVM 会在不影响正确性的前提下，可以调整语句的执行顺序，思考下面一段代码
 
@@ -208,18 +208,18 @@ i = ...;
 
 这种特性称之为“指令重排”，多线程下“指令重排”会影响正确性。为什么要有指令重排这项优化呢？从 CPU 执行指令的原理来理解
 
-## 原理之指令级并行【TODO】
+### 原理之指令级并行【TODO】
 
-## volatile 修饰的变量，可以禁用指令重排
+### volatile 修饰的变量，可以禁用指令重排
 
-## 原理之 volatile
+### 原理之 volatile
 
 volatile 的底层实现原理是内存屏障，Memory Barrier（Memory Fence）
 
 1. 对 volatile 变量的写指令后会加入写屏障
 2. 对 volatile 变量的读指令前会加入读屏障
 
-### **如何保证可见性**
+#### **如何保证可见性**
 
 写屏障（sfence）保证在该屏障之前的，对共享变量的改动，都同步到主存当中
 
@@ -247,7 +247,7 @@ public void actor1(I_Result r) {
 
 ![Untitled](/assets/images/MemoryImages/Untitled%208.png)
 
-### 如何保证有序性
+#### 如何保证有序性
 
 写屏障会确保指令重排序时，不会将写屏障之前的代码排在屏障之后
 
@@ -282,7 +282,7 @@ public void actor1(I_Reasult) {
 
 ![Untitled](/assets/images/MemoryImages/Untitled%2010.png)
 
-### dcl问题 (double-check locking)
+#### dcl问题 (double-check locking)
 
 以著名的 double-checked locking 单例模式为例
 
@@ -312,7 +312,7 @@ public final class Singleton {
 
 但在多线程环境下，上面代码有问题 INSTANCE 的读取值什么的操作会发生指令重排
 
-### double-checked locking 解决
+#### double-checked locking 解决
 
 ```java
 public final class Singleton {
@@ -375,7 +375,7 @@ public final class Singleton {
 
 ![Untitled](/assets/images/MemoryImages/Untitled%2011.png)
 
-## happens-before 原则
+### happens-before 原则
 
 happens-before 规定了对共享变量的**写**操作对其它线程的**读**操作可见，它是可见性与有序性的一套规则总结，抛开以下 happens-before 规则，JMM 并不能保证一个线程对共享变量的写，对于其它线程对该共享变量的读可见
 
@@ -523,6 +523,6 @@ happens-before关系可以通过以下方式建立：
 
 "happens-before" 关系是并发编程中的一个重要概念，它帮助我们理解和推断多线程程序中各个操作之间的顺序关系，以确保程序的正确性和可靠性。
 
-# ch5 章节小结 如图
+## ch5 章节小结 如图
 
 ![Untitled](/assets/images/MemoryImages/Untitled%2012.png)
