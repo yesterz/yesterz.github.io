@@ -4,7 +4,6 @@ categories:
   - Redis
 tags:
   - Redis
-  - Java
 toc: true
 ---
 

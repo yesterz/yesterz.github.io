@@ -8,10 +8,11 @@ tags:
 toc: true
 ---
 
+Redis 官网：<https://redis.io/docs/management/replication>
+Redis 翻译站：<http://www.redis.cn/topics/replication.html>
+
 ## 复制
 
-Redis 官网：[https://redis.io/docs/management/replication/](https://redis.io/docs/management/replication/)
-Redis 翻译站：[http://www.redis.cn/topics/replication.html](http://www.redis.cn/topics/replication.html)
 概念：
 
 1. 在 Redis 中，用户可以通过执行 `SLAVEOF`命令或者设置 slaveof 选项，让一个服务器去复制（replicate）另一个服务器，其中被复制的服务器为主服务器 master，对主服务器进行复制的服务器称为从服务器（slave）。

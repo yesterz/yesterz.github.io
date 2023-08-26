@@ -2,9 +2,9 @@
 title: "Netty通信框架笔记"
 categories:
   - Netty
-  - Network
 tags:
   - 网络编程
+  - Netty
 toc: true
 ---
 
