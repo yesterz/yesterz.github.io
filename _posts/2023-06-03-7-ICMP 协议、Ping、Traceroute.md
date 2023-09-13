@@ -1,6 +1,16 @@
+---
+title: ICMP 协议、Ping、Traceroute ✅
+date: 2023-06-03 21:09:00 +0800
+categories: [计算机网络]
+tags: [计算机网络]
+pin: false
+math: false
+mermaid: false
+---
+
 # 【网络协议 7】ICMP 协议、Ping、Traceroute ✅
 
-# **ICMP 协议**
+## **ICMP 协议**
 
 ICMP 经常被认为是IP层的一个组成部分，它是网络层的一个协议，它传递差错报文以及其他需要注意的信息，ICMP 报文通常被 IP 层或更高层（TCP、UDP等）使用，它是在 IP 数据报内传输的。
 
@@ -24,7 +34,7 @@ ICMP 报文大致分为两类：查询报文和差错报文。
 - 时间戳查询；
 - ping查询。
 
-# **ping 程序**
+## **ping 程序**
 
 ping 是 ICMP 的一个很著名的应用。ping 程序时对两个 TCP/IP 系统连通性进行测试的基本工具，它只利用 ICMP 回显请求和回显应答报文，而不用经过传输层，ping 服务器一般在内核中试下 ICMP 的功能。当某一个网站访问不了时，我们就可以 ping 一下这个网站，看下连通情况。比如下图：
 
@@ -32,6 +42,6 @@ ping 是 ICMP 的一个很著名的应用。ping 程序时对两个 TCP/IP 系�
 
 这里先 ping 到 google 的服务器，我们可以看到连通性不是很好，丢包率为50%，而我们又 ping 了下 Github 的服务器，连通性比较好，丢包率为0%。
 
-**Traceroute 程序**
+## **Traceroute 程序**
 
 Traceroute 是 ICMP 协议的另一个重要应用，主要用来侦测源主机到目的主机之间所经过的路由的情况。Traceroute 使用 ICMP 报文和 IP 首部中的 TTL 字段，其原理很简单，开始时发送一个 TTL 字段为 1 的 UDP 数据报，而后每次收到ICMP超时报文后，再发送一个 TTL 字段加 1 的 UDP 数据报，以确定路径中的每个路由器，而每个路由器在丢弃 UDP 数据报时都会返回一个 ICMP 超时报文，最终到达目的主机后，由于 ICMP 选择了一个不可能的值作为 UDP 端口（大于30000）。这样目的主机就会发送一个端口不可达的ICMP差错报文。
