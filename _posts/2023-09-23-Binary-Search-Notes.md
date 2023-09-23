@@ -16,39 +16,56 @@ mermaid: false
 3. Binary Search in Rotated Sorted Array
 
 拿到一个数据首先要 sorted 要排好序，两个指针
+
 start/low 和 end/high 分别指向数组的开头和结尾
+
 每次做一件事情，取二者之间的中点middle，找一个target，找得到就返回下标，找不到就返回-1，每次和middle来比较。
+
 如果target小于middle，那么右边的部分去掉，移动end/high指针到middle-1，然后再取middle来比较，这个操作是O(1)
+
 最好的情况是第一次middle就找到了，就是O(1)
+
 最坏的情况则O(logn)
 
 ## Binary Search
 
 Given an sorted integer array - nums, and an integer - target.
+
 Find the **any/first/last** position of target in nums
+
 Return **-1** if target doesn't exist.
 
 What's the difference?
+
 [https://leetcode.cn/problems/binary-search](https://leetcode.cn/problems/binary-search)
+
 [https://leetcode.cn/problems/find-first-and-last-position-of-element-in-sorted-array](https://leetcode.cn/problems/find-first-and-last-position-of-element-in-sorted-array/description/)
 
 ## Time Complexity
 
 T(n) = T(n/2) + O(1) = O(longn)
+
 通过O(1)的时间，把规模为n的问题变为n/2
+
 思考：通过O(n)的时间，把规模为n的问题变为n/2？
 
 > 基本上只有二分法可以达到O(logn)
-
+{: .prompt-tip }
 
 ## Recursion or While-loop?
 
 Recursion? While-loop? Both OK?
+
 直接问面试官，你要我写什么方法？？
+
 什么不能问/少问，我可不可以运行我的代码呀（你运行就运行呗，为什么要问呀。。。。）
+
 如果我只想到了while-loop，就问下面试官我能不能用while-loop呀？
+
 Recursion cost too much function stack 工程开发中尽量避免recursion，必须尽量避免。
+
 搜索类的问题需要用recursion，如果面试官不特意要求就不要用非递归的方法来写。
+
 如果递归和非递归都很简单，那就非递归的方法。
 
 ## 二分法程序实现中的常见的问题
@@ -146,6 +163,7 @@ class Solution {
 ```
 
 start + 1 < end 就可以退出条件，永远不会死循环。
+
 start + 1 < end 的意思是相邻就退出，好处就是永远不会死循环。如果中间不隔着数的时候就会退出。
 
 ```java
@@ -154,9 +172,13 @@ while (start + 1 < end) {
     
 } // end while loop
 ```
+
 再找last position of target的时候很容易出现死循环。
+
 给定的数组是升序的。
+
 为什么模板里面不写成start = mid + 1; 或者 end = mid -1这样子？
+
 **先闭着眼睛写出来这个模板。**
 
 ## When & How
@@ -179,15 +201,19 @@ while (start + 1 < end) {
 ## Sqrt(x)
 
 Last number that number^2 <= x
+
 Solution [https://www.jiuzhang.com/solutions/sqrtx](https://www.jiuzhang.com/solutions/sqrtx)
+
 Leetcode [https://leetcode.cn/problems/sqrtx](https://leetcode.cn/problems/sqrtx)
 
 ### Description
 
 Implement int sqrt(int x).
+
 Compute and return the square root of _x_.
 
 lintcode [http://www.lintcode.com/problem/sqrtx](http://www.lintcode.com/problem/sqrtx/)
+
 leetcode [https://leetcode.cn/problems/sqrtx](https://leetcode.cn/problems/sqrtx/)
 
 ### Solutions
@@ -225,9 +251,11 @@ class Solution {
 ### Follow Up
 
 What if return a double, not integer?
+
 double sqrt(int x)
 
 这个就不适合这个二分法模板了，因为这个double是实数
+
 ```java
 public double sqrt(int x) {
 	// start 和 end 之间的距离 > 10^(-6)
@@ -264,29 +292,40 @@ public double sqrt(int x) {
 ## Search a 2D  Matrix
 
 Lintcode [http://www.lintcode.com/problem/search-a-2d-matrix/](http://www.lintcode.com/problem/search-a-2d-matrix/)
+
 Leetcode [https://leetcode.cn/problems/search-a-2d-matrix](https://leetcode.cn/problems/search-a-2d-matrix)
+
 Solusiton [http://www.jiuzhang.com/solutions/search-a-2d-matrix/](http://www.jiuzhang.com/solutions/search-a-2d-matrix/)
+
 **_Last_ **row that matrix[row][0] <= target
 
 ### Description
 
 Write an efficient algorithm that searches for a target value in an _m_ x _n_ matrix.
+
 This matrix has the following properties:
 
 - Integers in each row are sorted from left to right.
 - The first integer of each row is greater than the last integer of the previous row.
 
 时间复杂度：log(m+n) 即log(m) + log(n)
+
 search a 2D Matrix 2
+
 把二维矩阵当成一维矩阵来处理 `int number = matrix[mid / column][mid % column];`
 
 ### Solutions
 
 Write an efficient algorithm that searches for a value in an m x n matrix. This matrix has the following properties:
+
 Integers in each row are sorted from left to right. The first integer of each row is greater than the last integer of the previous row. For example,
+
 Consider the following matrix:
+
 [ 1, 3, 5, 7, 10, 11, 16, 20, 23, 30, 34, 50 ] Given target = 3, return true.
+
 可以看作是一个有序数组被分成了n段，每段就是一行。因此依然可以二分求解。 对每个数字，根据其下标i，j进行编号，每个数字可被编号为0～n*n-1
+
 相当于是在一个数组中的下标。然后直接像在数组中二分一样来做。取的mid要还原成二位数组中的下标，i = mid/n, j = mid%n
 
 ```java
@@ -438,7 +477,9 @@ O(log(n) + log(m)) time
 ## Search Insert Position
 
 Lintcode [http://www.lintcode.com/problem/search-insert-position/](http://www.lintcode.com/problem/search-insert-position/)
+
 Leetcode [https://leetcode.cn/problems/search-insert-position/](https://leetcode.cn/problems/search-insert-position/)
+
 Solution [http://www.jiuzhang.com/solutions/search-insert-position/](http://www.jiuzhang.com/solutions/search-insert-position/)
 
 - **_First_** posistion >= target 
@@ -467,8 +508,11 @@ Solution [http://www.jiuzhang.com/solutions/search-insert-position/](http://www.
 ## First Bad Version
 
 Lintcode [https://www.lintcode.com/problem/74/](https://www.lintcode.com/problem/74/)
+
 Leetcode [https://leetcode.cn/problems/first-bad-version/](https://leetcode.cn/problems/first-bad-version/)
+
 Solustion [https://www.jiuzhang.com/solutions/find-bad-version/](https://www.jiuzhang.com/solutions/find-bad-version/)
+
 First version that is bad version
 
 first postion of version
@@ -476,10 +520,15 @@ first postion of version
 ## Find Minimum in Rotated Sorted Array
 
 Lintcode [http://www.lintcode.com/problem/find-minimum-in-rotated-sorted-array/](http://www.lintcode.com/problem/find-minimum-in-rotated-sorted-array/)
+
 Leetcode [https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/)
+
 Solution [http://www.jiuzhang.com/solutions/find-minimum-in-rotated-sorted-array/](http://www.jiuzhang.com/solutions/find-minimum-in-rotated-sorted-array/)
+
 **_First _**position <= Last Number
+
 (**WRONG:** First position <= or < First Number)
+
 旋转数组？
 
 - [x] 找一下力扣的一样的题目。
@@ -487,25 +536,60 @@ Solution [http://www.jiuzhang.com/solutions/find-minimum-in-rotated-sorted-array
 ## Keep the part that must have target in it
 
 99% 的二分法题目是 Find the first/last position
+
 下面的题目是另外的一种类型
 
 ## Search in Rotated Sorted Array
 
 Lintcode [http://www.lintcode.com/problem/search-in-rotated-sorted-array/](http://www.lintcode.com/problem/search-in-rotated-sorted-array/)
+
 Leetcode [https://leetcode.com/problems/search-in-rotated-sorted-array](https://leetcode.com/problems/search-in-rotated-sorted-array)
+
 Solution [http://www.jiuzhang.com/solutions/search-in-rotated-sorted-array/](http://www.jiuzhang.com/solutions/search-in-rotated-sorted-array/)
+
 **You may assume no duplicate exists in the array. （特别重要）**
+
 还有一种思维上更简单的解法
+
 用Find Minimum in Rotated Sorted Array这道题的来解决。
 
 **两种方法都要掌握**
+
 **遇到的面试题目需要你排序的话，可以用系统的排序函数ArrayList.sort()！！！**
+
+```java
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class ArrayListSortExample {
+    public static void main(String[] args) {
+        // 创建一个 ArrayList
+        ArrayList<Integer> numbers = new ArrayList<Integer>();
+        numbers.add(5);
+        numbers.add(2);
+        numbers.add(8);
+        numbers.add(1);
+        numbers.add(3);
+
+        // 使用 Collections.sort() 方法对 ArrayList 进行排序
+        Collections.sort(numbers);
+
+        // 打印排序后的 ArrayList
+        for (Integer number : numbers) {
+            System.out.print(number + " ");
+        }
+    }
+}
+```
+
 **一定要会用。**
 
 ## Find Peak Element
 
 Lintcode [http://www.lintcode.com/problem/find-peak-element/](http://www.lintcode.com/problem/find-peak-element/)
+
 Leetcode [https://leetcode.com/problems/find-peak-element](https://leetcode.com/problems/find-peak-element)
+
 Solution [http://www.jiuzhang.com/solutions/find-peak-element/](http://www.jiuzhang.com/solutions/find-peak-element/)
 
 ### Description
@@ -554,23 +638,39 @@ Find Peak Element ii
 ### Required
 
 60 Search Insert Position
+
 28 Search a 2D Matrix
+
 14 First Position of Target
+
 447 Search in a Big Sorted Array
+
 159 Find Minimum in Rotated Sorted Array
+
 75 Find Peak Element
+
 74 First Bad Version
+
 62 Search in Rotated Sorted Array
+
 61 Search for a Range
 
 ### Optional
 
 462 Total Occurrence of Target
+
 459 Closest Number in Sorted Array
+
 458 Last Position of Target
+
 457 Classical Binary Search
+
 460 K Closest Numbers In Sorted Array
+
 183 Wood Cut
+
 160 Find Minimum in Rotated Sorted Array ii
+
 63 Search in Rotated Sorted Array ii
+
 38 Search a 2D Matrix ii
