@@ -38,8 +38,7 @@ mermaid: false
 
 ## Preorder Postorder Inorder
 
-![image.png](/assets/images/BinaryTreeAndDivideConquer/Lecture-3-image-4.png){: width="211" height="296" .w-50 .left}
-
+![image.png](/assets/images/BinaryTreeAndDivideConquer/Lecture-3-image-4.png){: width="211" height="210" .w-50 .left}
 - Preorder 前序遍历
    - 1 245 3 根左右
 - Inorder 中序遍历
