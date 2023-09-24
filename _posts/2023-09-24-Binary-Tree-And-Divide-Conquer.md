@@ -14,7 +14,7 @@ mermaid: false
 1. DFS in Binary Tree
    1. Preorder / Inorder / Postorder
    2. Introduce Divide Conquer Algorithm
-   3. Non-recursion **vs **Traverse **vs **Divide Conquer
+   3. Non-recursion **vs** Traverse **vs** Divide Conquer
 2. BFS in Binary Tree
 3. Binary Search Tree
    1. Insert / Remove / Find / Validate
@@ -38,7 +38,7 @@ mermaid: false
 
 ## Preorder Postorder Inorder
 
-![image.png](/assets/images/BinaryTreeAndDivideConquer/Lecture-3-image-4.png)
+![image.png](/assets/images/BinaryTreeAndDivideConquer/Lecture-3-image-4.png){: width="211" height="296" .w-50 .left}
 
 - Preorder 前序遍历
    - 1 245 3 根左右
@@ -225,8 +225,8 @@ public class Solution {
 
 - Traverse vs Divide Conquer
    - They are both Recursion Algorithm
-   - Result in parameter **vs **Result in return value
-   - Top down **vs **Bottom up
+   - Result in parameter **vs** Result in return value
+   - Top down **vs** Bottom up
 - Merge Sort / Quick Sort
 - 90% Binary Tree Problems!
 
@@ -344,7 +344,7 @@ Lintcode [http://www.lintcode.com/problem/lowest-common-ancestor/](http://www.li
 
 Solution [http://www.jiuzhang.com/solutions/lowest-common-ancestor/](http://www.jiuzhang.com/solutions/lowest-common-ancestor/)
 
-with parent pointer **vs **no parent pointer
+with parent pointer **vs** no parent pointer
 
 这是一道非常非常经典的题目，如果变点新东西进去，会出的很难。
 
@@ -787,7 +787,7 @@ Lintcode [http://www.lintcode.com/problem/validate-binary-search-tree/](http://w
 
 Solution [http://www.jiuzhang.com/solutions/validate-binary-search-tree/](http://www.jiuzhang.com/solutions/validate-binary-search-tree/)
 
-Traverse **vs **Divide Conquer
+Traverse **vs** Divide Conquer
 
 ### Description
 
@@ -1002,7 +1002,7 @@ Lintcode 	[http://www.lintcode.com/en/problem/binary-search-tree-iterator/](http
 
 Solution [http://www.jiuzhang.com/solutions/binary-search-tree-iterator/](http://www.jiuzhang.com/solutions/binary-search-tree-iterator/)
 
-Iterator **vs **Inorder with non-recursion
+Iterator **vs** Inorder with non-recursion
 
 ## Related Questions
 
@@ -1034,12 +1034,12 @@ other links
 增和查一定要会
 
 - DFS in Binary Tree
-   - Traverse **vs **Divide Conquer
+   - Traverse **vs** Divide Conquer
    - Non Recursion for Preorder + Inorder
 - BFS in Binary Tree
    - 1 Queue
 - Binary Search Tree
-   - Inorder **vs **BST
+   - Inorder **vs** BST
 
 ## Homework
 
