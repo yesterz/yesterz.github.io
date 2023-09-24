@@ -13,20 +13,20 @@ mermaid: false
 
 ## 第一章 对象数组
 
-数组是容器，即可以存储基本数据类型也可以存储引用数据类，存储了引用数据类型的数组称为对象数组，例如：String[]，Person[]，Student[]。
+数组是容器，既可以存储**基本数据类型**也可以存储**引用数据类型**，存储了引用数据类型的数组称为**对象数组**，例如：String[]，Person[]，Student[]。
 
 ```java
 public static void main(String[] args){
-    //创建存储Person对象的数组
+    // 创建存储Person对象的数组
     Person[] persons = {
-        new Person("张三",20),
-        new Person("李四",21),
-        new Person("王五",22),
+        new Person("张三", 20),
+        new Person("李四", 21),
+        new Person("王五", 22),
     };
-    //遍历数组
+    // 遍历数组
     for(int i = 0 ; i < persons.length; i++){
-    	Person person = persons[i];
-    	System.out.println(person.getName()+"::"+person.getAge());
+        Person person = persons[i];
+        System.out.println(person.getName() + "::" + person.getAge());
     }
 }
 ```
@@ -38,11 +38,48 @@ public static void main(String[] args){
 
 ## 第二章 Collection集合
 
+### Previously On ArrayList
+
+#### 1.1ArrayList类概述【理解】
+
+- 什么是集合
+
+  ​    提供一种存储空间可变的存储模型，存储的数据容量可以发生改变
+
+- ArrayList集合的特点
+
+  ​    底层是数组实现的，长度可以变化
+
+- 泛型的使用
+
+  ​    用于约束集合中存储元素的数据类型
+
+#### 1.2ArrayList类常用方法【应用】
+
+#### 1.2.1构造方法
+
+| 方法名             | 说明                 |
+| ------------------ | -------------------- |
+| public ArrayList() | 创建一个空的集合对象 |
+
+#### 1.2.2成员方法
+
+| 方法名                                   | 说明                                   |
+| ---------------------------------------- | -------------------------------------- |
+| public boolean   remove(Object o)        | 删除指定的元素，返回删除是否成功       |
+| public E   remove(int   index)           | 删除指定索引处的元素，返回被删除的元素 |
+| public E   set(int index,E   element)    | 修改指定索引处的元素，返回被修改的元素 |
+| public E   get(int   index)              | 返回指定索引处的元素                   |
+| public int   size()                      | 返回集合中的元素的个数                 |
+| public boolean   add(E e)                | 将指定的元素追加到此集合的末尾         |
+| public void   add(int index,E   element) | 在此集合中的指定位置插入指定的元素     |
+
+
 ### 2.1 概述
 
-在前面基础班我们已经学习过并使用过集合ArrayList<E> ,那么集合到底是什么呢?
+在前面基础我们已经学习过并使用过集合ArrayList<E> ,那么集合到底是什么呢?
 
-- **集合**：集合是java中提供的一种容器，可以用来存储多个数据。
+- **集合**：集合是Java中提供的一种容器，可以用来存储多个数据。
 
 集合和数组既然都是容器，它们有什么区别呢？
 
@@ -51,11 +88,12 @@ public static void main(String[] args){
 
 ### 2.2 集合类的继承体系
 
-Collection：单列集合类的根接口，用于存储一系列符合某种规则的元素，它有两个重要的子接口，分别是`java.util.List`和`java.util.Set`。其中，`List`的特点是元素有序、元素可重复。`Set`的特点是元素不可重复。`List`接口的主要实现类有`java.util.ArrayList`和`java.util.LinkedList`，`Set`接口的主要实现类有`java.util.HashSet`和`java.util.LinkedHashSet`。
+Collection：单列集合类的根接口，用于存储一系列符合某种规则的元素，它有两个重要的子接口，分别是`java.util.List`和`java.util.Set`。其中，`List`的特点是元素有序、元素可重复。`Set`的特点是**元素不可重复**。`List`接口的主要实现类有`java.util.ArrayList`和`java.util.LinkedList`，`Set`接口的主要实现类有`java.util.HashSet`和`java.util.LinkedHashSet`。
 
 ![集合继承图-2](/assets/images/CollectionImagesHere/Collection-1-img/集合继承图-2.jpg)
 
-注意:这张图只是我们常用的集合有这些，不是说就只有这些集合。
+> 注意: 这张图只是我们常用的集合有这些，不是说就只有这些集合。
+{: .prompt-tip }
 
 集合本身是一个工具，它存放在java.util包中。在`Collection`接口定义着单列集合框架中最最共性的内容。
 
@@ -63,9 +101,9 @@ Collection：单列集合类的根接口，用于存储一系列符合某种规�
 
 Collection是所有单列集合的父接口，因此在Collection中定义了单列集合(List和Set)通用的一些方法，这些方法可用于操作所有的单列集合。方法如下：
 
-- `public boolean add(E e)`：  把给定的对象添加到当前集合中 。
-- `public boolean addAll(Collection<? extends E>)`将另一个集合元素添加到当前集合中。
-- `public void clear()` :清空集合中所有的元素。
+- `public boolean add(E e)`: 把给定的对象添加到当前集合中 。
+- `public boolean addAll(Collection<? extends E>)`: 将另一个集合元素添加到当前集合中。
+- `public void clear()`: 清空集合中所有的元素。
 - `public boolean remove(E e)`: 把给定的对象在当前集合中删除。
 - `public boolean contains(Object obj)`: 判断当前集合中是否包含给定的对象。
 - `public boolean isEmpty()`: 判断当前集合是否为空。
@@ -88,8 +126,8 @@ Collection是所有单列集合的父接口，因此在Collection中定义了单
 
 Iterator接口的常用方法如下：
 
-- `public E next()`:返回迭代的下一个元素。
-- `public boolean hasNext()`:如果仍有元素可以迭代，则返回 true。
+- `public E next()`: 返回迭代的下一个元素。
+- `public boolean hasNext()`: 如果仍有元素可以迭代，则返回 true。
 
 接下来我们通过案例学习如何使用Iterator迭代集合中元素：
 
@@ -106,15 +144,15 @@ public static void main(String[] args) {
     Iterator<String> it = coll.iterator();
     //  泛型指的是 迭代出 元素的数据类型
     while(it.hasNext()){ //判断是否有迭代元素
-    	String s = it.next();//获取迭代出的元素
-    	System.out.println(s);
+        String s = it.next();//获取迭代出的元素
+        System.out.println(s);
     }
 }
 ```
 
 ### 3.2 迭代器的实现原理
 
-我们在之前案例已经完成了Iterator遍历集合的整个过程。当遍历集合时，首先通过调用t集合的iterator()方法获得迭代器对象，然后使用hashNext()方法判断集合中是否存在下一个元素，如果存在，则调用next()方法将元素取出，否则说明已到达了集合末尾，停止遍历元素。
+我们在之前案例已经完成了Iterator遍历集合的整个过程。当遍历集合时，首先通过调用coll集合的iterator()方法获得迭代器对象it，然后使用hashNext()方法判断集合中是否存在下一个元素，如果存在，则调用next()方法将元素取出，否则说明已到达了集合末尾，停止遍历元素。
 
 Iterator迭代器对象在遍历集合时，内部采用指针的方式来跟踪集合中的元素，为了让初学者能更好地理解迭代器的工作原理，接下来通过一个图例来演示Iterator对象迭代元素的过程：
 
@@ -132,8 +170,8 @@ Iterator迭代器对象在遍历集合时，内部采用指针的方式来跟踪
 
 ```java
 public interface Iterator<E> {
-	boolean hasNext();
-	E next();
+    boolean hasNext();
+    E next();
 }
 ```
 
@@ -143,21 +181,20 @@ public interface Iterator<E> {
 public class ArrayList<E> extends AbstractList<E>
         implements List<E>, RandomAccess, Cloneable, java.io.Serializable{
    /*
-	*  ArrayList实现接口Collection
+    *  ArrayList实现接口Collection
     *  重写方法iterator()
     *  返回Iterator接口实现类 Itr类的对象
-	*/
-	public Iterator<E> iterator() {
+    */
+    public Iterator<E> iterator() {
         return new Itr();
     }
     
    /*
     * ArrayList中定义内部类Itr,实现接口Iterator
-    * 重写hasNext(),next()方法
+    * 重写hasNext(), next()方法
     */
     private class Itr implements Iterator<E> {
-    	public boolean hasNext() { }
-        
+        public boolean hasNext() { } 
         public E next() { }
     }
 }
@@ -220,7 +257,7 @@ public static void main(String[] args){
 
 ### 队列
 
-- **队列**：**queue**,简称队，它同堆栈一样，也是一种运算受限的线性表，其限制是仅允许在表的一端进行插入，而在表的另一端进行删除。
+- **队列**：**queue**，简称队，它同堆栈一样，也是一种运算受限的线性表，其限制是仅允许在表的一端进行插入，而在表的另一端进行删除。
 
 简单的说，采用该结构的集合，对元素的存取有如下的特点：
 
@@ -231,7 +268,7 @@ public static void main(String[] args){
 
 ### 数组
 
-- **数组**:**Array**,是有序的元素序列，数组是在内存中开辟一段连续的空间，并在此空间存放元素。就像是一排出租屋，有100个房间，从001到100每个房间都有固定编号，通过编号就可以快速找到租房子的人。
+- **数组**：**Array**，是有序的元素序列，数组是在内存中开辟一段连续的空间，并在此空间存放元素。就像是一排出租屋，有100个房间，从001到100每个房间都有固定编号，通过编号就可以快速找到租房子的人。
 
 简单的说,采用该结构的集合，对元素的存取有如下的特点：
 
@@ -243,13 +280,13 @@ public static void main(String[] args){
 
 ### 链表
 
-- **链表**:**linked list**,由一系列结点node（链表中每一个元素称为结点）组成，结点可以在运行时i动态生成。每个结点包括两个部分：一个是存储数据元素的数据域，另一个是存储下一个结点地址的指针域。我们常说的链表结构有单向链表与双向链表，那么这里给大家介绍的是**单向链表**。
+- **链表**：**linked list**，由一系列结点node（链表中每一个元素称为结点）组成，结点可以在运行时动态生成。每个结点包括两个部分：一个是存储数据元素的数据域，另一个是存储下一个结点地址的指针域。我们常说的链表结构有单向链表与双向链表，那么这里给大家介绍的是**单向链表**。
 
 简单的说，采用该结构的集合，对元素的存取有如下的特点：
 
 - 多个结点之间，通过地址进行连接。例如，多个人手拉手，每个人使用自己的右手拉住下个人的左手，依次类推，这样多个人就连在一起了。
-- 查找元素慢：想查找某个元素，需要通过连接的节点，依次向后查找指定元素
-- 增删元素快：
+- 查找元素慢：O(n) 想查找某个元素，需要通过连接的节点，依次向后查找指定元素
+- 增删元素快：O(1)
 
 ![链表](/assets/images/CollectionImagesHere/Collection-1-img/链表.png)
 
@@ -257,7 +294,7 @@ public static void main(String[] args){
 
 ## 第四章 List集合
 
-`java.util.List`接口，继承Collection接口，有序的 collection（也称为*序列*）。此接口的用户可以对列表中每个元素的插入位置进行精确地控制。用户可以根据元素的整数索引（在列表中的位置）访问元素，并搜索列表中的元素。与Set接口不同，List接口通常允许重复元素。
+`java.util.List`接口，继承Collection接口，有序的 collection（也称为**序列**）。此接口的用户可以对列表中每个元素的插入位置进行精确地控制。用户可以根据元素的整数索引（在列表中的位置）访问元素，并搜索列表中的元素。与Set接口不同，List接口通常**允许重复元素**。
 
 ### 4.1 List接口特点
 
@@ -269,14 +306,14 @@ public static void main(String[] args){
 
 ### 4.2 List接口特有方法（带有索引）
 
-- `public void add(int index,E element)`在列表的指定位置上插入元素。
+- `public void add(int index,E element)` 在列表的指定位置上插入元素。
 - `public E get(int index)` 返回列表中指定位置的元素。
 - `public E set(int index,E element)` 用指定元素替换列表中指定位置的元素，并返回替换前的元素。
 - `public E remove(int index)` 移除列表中指定位置的元素，并返回被移除之前的元素。
 
 ## 第五章 ArrayList集合
 
-### 5. 1 概述
+### 5.1 概述
 
 `java.util.ArrayList`集合数据存储的结构是数组结构。元素增删慢，查找快，线程不安全，运行速度快。由于日常开发中使用最多的功能为查询数据、遍历数据，所以`ArrayList`是最常用的集合。
 
@@ -296,17 +333,17 @@ transient Object[] elementData;
 
 
 ```java
-new ArrayList(); //默认长度为10
-new ArrayList(int initialCapacity); //指定长度
+new ArrayList(); // 默认长度为10
+new ArrayList(int initialCapacity); // 指定长度
 ```
 
 - ArrayList无参数构造方法分析：
 
 ```java
-//定义Object对象类型的空数组，数组在内存中存在，但长度为0
+// 定义Object对象类型的空数组，数组在内存中存在，但长度为0
 private static final Object[] DEFAULTCAPACITY_EMPTY_ELEMENTDATA = {}; 
 public ArrayList() {
-	this.elementData = DEFAULTCAPACITY_EMPTY_ELEMENTDATA;
+    this.elementData = DEFAULTCAPACITY_EMPTY_ELEMENTDATA;
  }
 ```
 
@@ -315,7 +352,7 @@ public ArrayList() {
 - ArrayList添加元素add方法分析：
 
 ```java
-//ArrayList的成员变量size，默认为0，统计集合中元素的个数
+// ArrayList的成员变量size，默认为0，统计集合中元素的个数
 private int size;
 public boolean add(E e) {
     ensureCapacityInternal(size + 1);  
@@ -330,7 +367,7 @@ public boolean add(E e) {
 
 ```java
 private void ensureCapacityInternal(int minCapacity) {
-	ensureExplicitCapacity(calculateCapacity(elementData, minCapacity));
+    ensureExplicitCapacity(calculateCapacity(elementData, minCapacity));
 }
 ```
 
@@ -348,11 +385,11 @@ private static int calculateCapacity(Object[] elementData, int minCapacity) {
 }
 ```
 
-**解析**：方法中判断elementData是否和DEFAULTCAPACITY_EMPTY_ELEMENTDATA数组相等，在构造方法中：
+**解析**：方法中判断`elementData`是否和`DEFAULTCAPACITY_EMPTY_ELEMENTDATA`数组相等，在构造方法中：
 
-this.elementData = DEFAULTCAPACITY_EMPTY_ELEMENTDATA;因此结果为true，方法将会返回参数DEFAULT_CAPACITY（=10）和 minCapacity（=1）中最大的值，return 10;
+`this.elementData = DEFAULTCAPACITY_EMPTY_ELEMENTDATA;`因此结果为true，方法将会返回参数DEFAULT_CAPACITY（=10）和 minCapacity（=1）中最大的值，return 10;
 
-此时方法calculateCapacity()结束，继续执行() ensureExplicitCapacity()，传递参数10
+此时方法`calculateCapacity()`结束，继续执行`ensureExplicitCapacity()`，传递参数10
 
 - ensureExplicitCapacity()保证明确容量方法分析：
 
@@ -373,16 +410,16 @@ private void grow(int minCapacity) {
     int oldCapacity = elementData.length;
     int newCapacity = oldCapacity + (oldCapacity >> 1);
     if (newCapacity - minCapacity < 0)
-        //**将10赋值给变量newCapacity
-    	newCapacity = minCapacity;
+        // 将10赋值给变量newCapacity
+        newCapacity = minCapacity;
     if (newCapacity - MAX_ARRAY_SIZE > 0)
-    	newCapacity = hugeCapacity(minCapacity);
-    //**数组复制， Arrays.copyOf底层实现是System.arrayCopy()
+        newCapacity = hugeCapacity(minCapacity);
+    // 数组复制，Arrays.copyOf底层实现是System.arrayCopy()
     elementData = Arrays.copyOf(elementData, newCapacity);
 }
 ```
 
-**解析**：方法grow()接收到参数10，进过计算，执行newCapacity = minCapacity;这行程序，此时变量newCapacity的值为10，然后进行数组复制操作，复制新数组的长度为10，为此ArrayList集合初始化创建过程完毕。
+**解析**：方法`grow()`接收到参数10，进过计算，执行`newCapacity = minCapacity;`这行程序，此时变量`newCapacity`的值为10，然后进行数组复制操作，复制新数组的长度为10，为此`ArrayList`集合初始化创建过程完毕。
 
 #### 创建ArrayList对象分析：带有初始化容量构造方法
 
@@ -390,13 +427,13 @@ private void grow(int minCapacity) {
 
 ```java
 public ArrayList(int initialCapacity) {
-	if (initialCapacity > 0) {
-		this.elementData = new Object[initialCapacity];
-	} else if (initialCapacity == 0) {
-		this.elementData = EMPTY_ELEMENTDATA;
-	} else {
-		throw new IllegalArgumentException("Illegal Capacity: "+initialCapacity);
-	}
+    if (initialCapacity > 0) {
+        this.elementData = new Object[initialCapacity];
+    } else if (initialCapacity == 0) {
+        this.elementData = EMPTY_ELEMENTDATA;
+    } else {
+        throw new IllegalArgumentException("Illegal Capacity: "+initialCapacity);
+    }
 }
 ```
 
@@ -424,9 +461,9 @@ private void grow(int minCapacity) {
     //右移是二进制位计算，相等于除以2,得出新容量=老容量+老容量/2
     int newCapacity = oldCapacity + (oldCapacity >> 1);
     if (newCapacity - minCapacity < 0)
-    	newCapacity = minCapacity;
+        newCapacity = minCapacity;
     if (newCapacity - MAX_ARRAY_SIZE > 0)
-    	newCapacity = hugeCapacity(minCapacity);
+        newCapacity = hugeCapacity(minCapacity);
     elementData = Arrays.copyOf(elementData, newCapacity);
 }
 ```
@@ -449,17 +486,17 @@ LinkedList是一个双向链表，那么双向链表是什么样子的呢，我�
 
 实际开发中对一个集合元素的添加与删除经常涉及到首尾操作，而LinkedList提供了大量首尾操作的方法。这些方法我们作为**了解即可**：
 
-- `public void addFirst(E e)`:将指定元素插入此列表的开头。
-- `public void addLast(E e)`:将指定元素添加到此列表的结尾。
-- `public E getFirst()`:返回此列表的第一个元素。
-- `public E getLast()`:返回此列表的最后一个元素。
-- `public E removeFirst()`:移除并返回此列表的第一个元素。
-- `public E removeLast()`:移除并返回此列表的最后一个元素。
-- `public E pop()`:从此列表所表示的堆栈处弹出一个元素。
-- `public void push(E e)`:将元素推入此列表所表示的堆栈。
-- `public boolean isEmpty()`：如果列表不包含元素，则返回true。
+- `public void addFirst(E e)`: 将指定元素插入此列表的开头。
+- `public void addLast(E e)`: 将指定元素添加到此列表的结尾。
+- `public E getFirst()`: 返回此列表的第一个元素。
+- `public E getLast()`: 返回此列表的最后一个元素。
+- `public E removeFirst()`: 移除并返回此列表的第一个元素。
+- `public E removeLast()`: 移除并返回此列表的最后一个元素。
+- `public E pop()`: 从此列表所表示的堆栈处弹出一个元素。
+- `public void push(E e)`: 将元素推入此列表所表示的堆栈。
+- `public boolean isEmpty()`: 如果列表不包含元素，则返回true。
 
-LinkedList是List的子类，List中的方法LinkedList都是可以使用，这里就不做详细介绍，我们只需要了解LinkedList的特有方法即可。在开发时，LinkedList集合也可以作为堆栈，队列的结构使用。
+LinkedList是List的子类，List中的方法LinkedList都是可以使用，这里就不做详细介绍，我们只需要了解LinkedList的特有方法即可。**在开发时，LinkedList集合也可以作为堆栈，队列的结构使用。**
 
 ### 6.3 LinkedList源代码分析
 
@@ -467,7 +504,7 @@ LinkedList是List的子类，List中的方法LinkedList都是可以使用，这�
 
 ```java
 public class LinkedList<E> extends AbstractSequentialList<E> implements List<E>, Deque<E>, Cloneable, java.io.Serializable{
-	transient int size = 0;
+    transient int size = 0;
     transient Node<E> first;
     transient Node<E> last;
 }
@@ -483,11 +520,11 @@ private static class Node<E> {
     Node<E> next;
     Node<E> prev;
 
-	Node(Node<E> prev, E element, Node<E> next) {
-		this.item = element;
-		this.next = next;
-		this.prev = prev;
-	}
+    Node(Node<E> prev, E element, Node<E> next) {
+        this.item = element;
+        this.next = next;
+        this.prev = prev;
+    }
 }
 ```
 
@@ -503,8 +540,8 @@ private static class Node<E> {
 
 ```java
 public boolean add(E e) {
-	linkLast(e);
-	return true;
+    linkLast(e);
+    return true;
 }
 ```
 
@@ -514,9 +551,9 @@ void linkLast(E e) {
     final Node<E> newNode = new Node<>(l, e, null);
     last = newNode;
     if (l == null)
-    	first = newNode;
+        first = newNode;
     else
-    	l.next = newNode;
+        l.next = newNode;
     size++;
     modCount++;
 }
@@ -531,12 +568,12 @@ void linkLast(E e) {
 - `size++` ：记录了集合中元素的个数。
 - `modCount++`：记录了集合被操作的次数。
 
-#### LinkedList获取元#素方法get()分析：
+#### LinkedList获取元素方法get()分析：
 
 ```java
 public E get(int index) {
-	checkElementIndex(index);
-	return node(index).item;
+    checkElementIndex(index);
+    return node(index).item;
 }
 ```
 
@@ -545,20 +582,20 @@ Node<E> node(int index) {
     if (index < (size >> 1)) {
     Node<E> x = first;
     for (int i = 0; i < index; i++)
-    	x = x.next;
-    	return x;
+        x = x.next;
+        return x;
     } else {
     Node<E> x = last;
     for (int i = size - 1; i > index; i--)
-    	x = x.prev;
+        x = x.prev;
     return x;
-	}
+    }
 }
 ```
 
-**解析**：index < (size >> 1)采用二分法，如果要获取元素的索引小于长度的一般，那么就从0开始，找到集合长度的一半，如果要获取的元素的长度大于集合的一半，那么就从最大索引开始，找到集合长度的一半。
+**解析**：index < (size >> 1)采用二分法，如果要获取元素的索引小于长度的一半，那么就从0开始，找到集合长度的一半，如果要获取的元素的长度大于集合的一半，那么就从最大索引开始，找到集合长度的一半。
 
-**结论**：链表本身并没有索引，当我们通过索引获取的时候，内部采用了循环到集合长度的方式依次查找的。
+**结论**：链表本身并没有索引，**当我们通过索引获取的时候，内部采用了循环到集合长度的方式依次查找的。**
 
 ## 第七章：集合模拟斗地主案例
 
@@ -593,15 +630,15 @@ public class Poker {
         /*
         * 1: 准备牌操作
         */
-        //1.1 创建牌盒 将来存储牌面的 
+        // 1.1 创建牌盒 将来存储牌面的 
         ArrayList<String> pokerBox = new ArrayList<String>();
-        //1.2 创建花色集合
+        // 1.2 创建花色集合
         ArrayList<String> colors = new ArrayList<String>();
 
-        //1.3 创建数字集合
+        // 1.3 创建数字集合
         ArrayList<String> numbers = new ArrayList<String>();
 
-        //1.4 分别给花色 以及 数字集合添加元素
+        // 1.4 分别给花色 以及 数字集合添加元素
         colors.add("♥");
         colors.add("♦");
         colors.add("♠");
@@ -614,7 +651,7 @@ public class Poker {
         numbers.add("Q");
         numbers.add("K");
         numbers.add("A");
-        //1.5 创造牌  拼接牌操作
+        // 1.5 创造牌  拼接牌操作
         // 拿出每一个花色  然后跟每一个数字 进行结合  存储到牌盒中
         for (int i =0 ; i<colors.size() : i++) {
             //color每一个花色 guilian
@@ -626,49 +663,49 @@ public class Poker {
                 pokerBox.add(card);
             }
         }
-        //1.6大王小王
+        // 1.6大王小王
         pokerBox.add("小☺");
-        pokerBox.add("大☠");	  
+        pokerBox.add("大☠");      
         // System.out.println(pokerBox);
-        //洗牌 是不是就是将  牌盒中 牌的索引打乱 
+        // 洗牌 是不是就是将  牌盒中 牌的索引打乱 
         // Collections类  工具类  都是 静态方法
         // shuffer方法   
         /*
          * static void shuffle(List<?> list) 
          *     使用默认随机源对指定列表进行置换。 
          */
-        //2:洗牌
+        // 2:洗牌
         Collections.shuffle(pokerBox);
-        //3 发牌
-        //3.1 创建 三个 玩家集合  创建一个底牌集合
+        // 3 发牌
+        // 3.1 创建 三个 玩家集合  创建一个底牌集合
         ArrayList<String> player1 = new ArrayList<String>();
         ArrayList<String> player2 = new ArrayList<String>();
         ArrayList<String> player3 = new ArrayList<String>();
-        ArrayList<String> dipai = new ArrayList<String>();	  
+        ArrayList<String> dipai = new ArrayList<String>();      
 
-        //遍历 牌盒  必须知道索引   
+        // 遍历 牌盒  必须知道索引   
         for(int i = 0;i<pokerBox.size();i++){
-            //获取 牌面
+            // 获取 牌面
             String card = pokerBox.get(i);
-            //留出三张底牌 存到 底牌集合中
+            // 留出三张底牌 存到 底牌集合中
             if(i>=51){//存到底牌集合中
                 dipai.add(card);
             } else {
-                //玩家1   %3  ==0
+                // 玩家1   %3  ==0
                 if(i%3==0){
-                  	player1.add(card);
-                }else if(i%3==1){//玩家2
-                  	player2.add(card);
-                }else{//玩家3
-                  	player3.add(card);
+                      player1.add(card);
+                }else if(i%3==1){// 玩家2
+                      player2.add(card);
+                }else{// 玩家3
+                      player3.add(card);
                 }
             }
         }
-        //看看
+        // 看看
         System.out.println("令狐冲："+player1);
         System.out.println("田伯光："+player2);
         System.out.println("绿竹翁："+player3);
         System.out.println("底牌："+dipai);  
-	}
+    }
 }
 ```
