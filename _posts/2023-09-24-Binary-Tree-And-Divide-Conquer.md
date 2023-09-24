@@ -39,12 +39,15 @@ mermaid: false
 ## Preorder Postorder Inorder
 
 ![image.png](/assets/images/BinaryTreeAndDivideConquer/Lecture-3-image-4.png){: width="211" height="210" .w-50 .left}
+
 - Preorder 前序遍历
    - 1 245 3 根左右
 - Inorder 中序遍历
    - 425 1 3 左 根 右
 - Postorder 后序遍历
    - 452 3 1 左 右 根
+
+---
 
 ## DFS in Binary Tree
 
