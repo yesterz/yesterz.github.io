@@ -1,9 +1,9 @@
 ---
 title: 剑指Offer的链表题目
-author: someone
+author: Algorithms-Notes
 date: 2023-08-23 11:33:00 +0800
-categories: [剑指Offer]
-tags: [剑指Offer, 数据结构与算法, 链表]
+categories: [Algorithms]
+tags: [剑指Offer, Linked List]
 pin: false
 math: false
 mermaid: false

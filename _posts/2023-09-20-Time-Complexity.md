@@ -1,8 +1,8 @@
 ---
 title: 时空复杂度分析方法
 date: 2023-09-20 22:50:00 +0800
-author: ltfy
-categories: [数据结构与算法]
+author: Algorithms-Notes
+categories: [Algorithms]
 tags: [算法]
 pin: false
 math: true
