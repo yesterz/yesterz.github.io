@@ -544,7 +544,7 @@ docker exec –it c_mysql /bin/bash
 
 5. 使用Navicat连接容器中的mysql
 
- ### 5.2 Tomcat部署
+### 5.2 Tomcat部署
 
 #### **实现步骤：**
 
@@ -723,32 +723,32 @@ Dockerfile 是一个文本文件，包含了构建镜像文件的指令，每一
 
 1. 在IDEA中编辑Dockerfile文件
 
-   - ```dockerfile
-     # 定义基础镜像
-     FROM java:8
-     # 定义作者信息
-     MAINTAINER  itheima-hero-brother <itheima@itcast.cn>
-     # 添加jar包文件到镜像中
-     ADD springboot.jar app.jar
-     # 定义当前镜像启动容器时，执行命令
-     CMD java –jar app.jar
-     ```
+```dockerfile
+# 定义基础镜像
+FROM java:8
+# 定义作者信息
+MAINTAINER  itheima-hero-brother <itheima@itcast.cn>
+# 添加jar包文件到镜像中
+ADD springboot.jar app.jar
+# 定义当前镜像启动容器时，执行命令
+CMD java –jar app.jar
+```
 
 2. 在宿主机中，构建镜像
 
-   - ```shell
-     docker bulid –f {dockerfile的文件路径} –t {镜像名称:版本} {构建文件所在路径}
-     # 举例
-     docker build -f Dockerfile -t myspringboot:1.0 ./
-     # -f:指定要使用的Dockerfile路径；
-     # -t:镜像的名字及标签，通常 name:tag 或者 name 格式,不设置为latest
-     ```
+```shell
+docker bulid –f {dockerfile的文件路径} –t {镜像名称:版本} {构建文件所在路径}
+# 举例
+docker build -f Dockerfile -t myspringboot:1.0 ./
+# -f:指定要使用的Dockerfile路径；
+# -t:镜像的名字及标签，通常 name:tag 或者 name 格式,不设置为latest
+```
 
 3. 基于镜像，启动容器
 
-   ```shell
-   docker run -di --name=myspringboot -p 9000:8080 myspringboot:1.0
-   ```
+```shell
+docker run -di --name=myspringboot -p 9000:8080 myspringboot:1.0
+```
 
 4. 测试
 
