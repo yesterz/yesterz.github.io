@@ -38,7 +38,7 @@ public static void main(String[] args){
 
 ## 第二章 Collection集合
 
-### Previously On ArrayList
+### 2.0 Previously On ArrayList
 
 #### 1.1ArrayList类概述【理解】
 
@@ -239,7 +239,7 @@ public static void main(String[] args){
 
 数据存储的常用结构有：栈、队列、数组、链表和红黑树。我们分别来了解一下：
 
-### 栈
+#### 栈
 
 - **栈**：**stack**,又称堆栈，它是运算受限的线性表，其限制是仅允许在标的一端进行插入和删除操作，不允许在其他任何位置进行添加、查找、删除等操作。
 
@@ -255,7 +255,7 @@ public static void main(String[] args){
 - **压栈**：就是存元素。即，把元素存储到栈的顶端位置，栈中已有元素依次向栈底方向移动一个位置。
 - **弹栈**：就是取元素。即，把栈的顶端位置元素取出，栈中已有元素依次向栈顶方向移动一个位置。
 
-### 队列
+#### 队列
 
 - **队列**：**queue**，简称队，它同堆栈一样，也是一种运算受限的线性表，其限制是仅允许在表的一端进行插入，而在表的另一端进行删除。
 
@@ -266,7 +266,7 @@ public static void main(String[] args){
 
 ![队列](/assets/images/CollectionImagesHere/Collection-1-img/队列.png)
 
-### 数组
+#### 数组
 
 - **数组**：**Array**，是有序的元素序列，数组是在内存中开辟一段连续的空间，并在此空间存放元素。就像是一排出租屋，有100个房间，从001到100每个房间都有固定编号，通过编号就可以快速找到租房子的人。
 
@@ -278,7 +278,7 @@ public static void main(String[] args){
 
 ![数组](/assets/images/CollectionImagesHere/Collection-1-img/数组.png)
 
-### 链表
+#### 链表
 
 - **链表**：**linked list**，由一系列结点node（链表中每一个元素称为结点）组成，结点可以在运行时动态生成。每个结点包括两个部分：一个是存储数据元素的数据域，另一个是存储下一个结点地址的指针域。我们常说的链表结构有单向链表与双向链表，那么这里给大家介绍的是**单向链表**。
 
@@ -654,12 +654,12 @@ public class Poker {
         // 1.5 创造牌  拼接牌操作
         // 拿出每一个花色  然后跟每一个数字 进行结合  存储到牌盒中
         for (int i =0 ; i<colors.size() : i++) {
-            //color每一个花色 guilian
-            //遍历数字集合
+            // color每一个花色 guilian
+            // 遍历数字集合
             for(int j = 0; j <numbers.size() : j++){
-                //结合
+                // 结合
                 String card = colors.get(i)+numbers.get(j);
-                //存储到牌盒中
+                // 存储到牌盒中
                 pokerBox.add(card);
             }
         }
