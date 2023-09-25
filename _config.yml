@@ -20,13 +20,13 @@ timezone:
 
 title: 先用QQ头像 # the main title
 
-tagline: 后面再改这里  # it will display as the sub-title
+tagline: All too well  # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
   Winter is coming.
 
 # fill in the protocol & hostname for your site, e.g., 'https://username.github.io'
-url: ""
+url: "https://yesterz.github.io"
 
 github:
   username: yesterz # change to your github username
