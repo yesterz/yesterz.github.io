@@ -25,14 +25,14 @@ mermaid: false
 
 ```java
 public static void main(String[] args) {
-	ArrayList<Integer> list = new ArrayList<Integer>();
+    ArrayList<Integer> list = new ArrayList<Integer>();
     list.add(100);
     list.add(300);
     list.add(200);
     list.add(50);
-	//排序方法 
-	Collections.sort(list);
-	System.out.println(list);
+    //排序方法 
+    Collections.sort(list);
+    System.out.println(list);
 }
 ```
 
@@ -46,9 +46,9 @@ Student 类
 public class Student{
     private String name;
     private int age;
-	//构造方法
+    //构造方法
     //get/set
- 	//toString
+     //toString
 }
 ```
 
@@ -63,18 +63,18 @@ public static void main(String[] args) {
     Collections.sort(list, new Comparator<Student>() {
         @Override
         public int compare(Student o1, Student o2) {
-        return o1.getAge()-o2.getAge();//以学生的年龄升序
+        return o1.getAge()-o2.getAge();// 以学生的年龄升序
         }
         });
     }
 
     for (Student student : list) {
-    	System.out.println(student);
+        System.out.println(student);
     }
  }
-Student{name='jack', age=16}
-Student{name='rose', age=18}
-Student{name='abc', age=20}
+Student{name="jack", age=16}
+Student{name="rose", age=18}
+Student{name="abc", age=20}
 ```
 
 ## 第二章 增强for循环
@@ -87,7 +87,7 @@ Student{name='abc', age=20}
 
 ```java
 for(元素的数据类型  变量 : Collection集合or数组){ 
-  	//写操作代码
+      //写操作代码
 }
 ```
 
@@ -100,7 +100,7 @@ public static void main(String[] args) {
     int[] arr = {3,5,6,87};
     //使用增强for遍历数组
     for(int a : arr){//a代表数组中的每个元素
-    	System.out.println(a);
+        System.out.println(a);
     }
 
     Collection<String> coll = new ArrayList<String>();
@@ -109,7 +109,7 @@ public static void main(String[] args) {
     coll.add("神婆");
 
     for(String s :coll){
-    	System.out.println(s);
+        System.out.println(s);
     }
 }
 ```
@@ -168,7 +168,7 @@ public static void main(String[] args) {
     while(it.hasNext()){
     String str = it.next();
     //当使用Iterator<String>控制元素类型后，就不需要强转了。获取到的元素直接就是String类型
-    	System.out.println(str.length());
+        System.out.println(str.length());
     }
 }
 ```
@@ -196,7 +196,7 @@ class ArrayList<E>{
     public boolean add(E e){ }
 
     public E get(int index){ }
-   	....
+       ....
 }
 ```
 
@@ -241,13 +241,13 @@ class ArrayList<Integer> {
 例如，
 
 ```java
-public class MyGenericMethod {	  
+public class MyGenericMethod {      
     public <MVP> void show(MVP mvp) {
-    	System.out.println(mvp.getClass());
+        System.out.println(mvp.getClass());
     }
     
-    public <MVP> MVP show2(MVP mvp) {	
-    	return mvp;
+    public <MVP> MVP show2(MVP mvp) {    
+        return mvp;
     }
 }
 ```
@@ -271,9 +271,9 @@ public static void main(String[] args) {
 
 ```java
 public interface MyGenericInterface<E>{
-	public abstract void add(E e);
-	
-	public abstract E getE();  
+    public abstract void add(E e);
+    
+    public abstract E getE();  
 }
 ```
 
@@ -285,15 +285,15 @@ public interface MyGenericInterface<E>{
 
 ```java
 public class MyImp1 implements MyGenericInterface<String> {
-	@Override
+    @Override
     public void add(String e) {
         // 省略...
     }
 
-	@Override
-	public String getE() {
-		return null;
-	}
+    @Override
+    public String getE() {
+        return null;
+    }
 }
 ```
 
@@ -305,15 +305,15 @@ public class MyImp1 implements MyGenericInterface<String> {
 
 ```java
 public class MyImp2<E> implements MyGenericInterface<E> {
-	@Override
-	public void add(E e) {
-       	 // 省略...
-	}
+    @Override
+    public void add(E e) {
+            // 省略...
+    }
 
-	@Override
-	public E getE() {
-		return null;
-	}
+    @Override
+    public E getE() {
+        return null;
+    }
 }
 ```
 
@@ -321,8 +321,8 @@ public class MyImp2<E> implements MyGenericInterface<E> {
 
 ```java
 public static void main(String[] args) {
-	MyImp2<String>  my = new MyImp2<String>();  
-	my.add("aa");
+    MyImp2<String>  my = new MyImp2<String>();  
+    my.add("aa");
 }
 ```
 
@@ -446,11 +446,11 @@ public static void main(String[] args) throws UnsupportedEncodingException {
         getElement(teacherList);
         getElement(managerList);
     }
-	//定义方法，参数为List集合，泛型被限定为Employee，可以接收的泛型为Employee或者子类！
+    //定义方法，参数为List集合，泛型被限定为Employee，可以接收的泛型为Employee或者子类！
     public static void getElement(List<? extends  Employee> list){
         Iterator<? extends Employee> it = list.iterator();
         while (it.hasNext()){
-            Employee employee = it.next();	
+            Employee employee = it.next();    
             System.out.println(employee.getName()+"::"+employee.getAge());
             employee.work();
         }
@@ -477,7 +477,7 @@ public static void main(String[] args) throws UnsupportedEncodingException {
 
 ![红黑树](/assets/images/CollectionImagesHere/Collection-2-img/红黑树.png)
 
-红黑树可以通过红色节点和黑色节点尽可能的保证二叉树的平衡，从而来提高效率。	
+红黑树可以通过红色节点和黑色节点尽可能的保证二叉树的平衡，从而来提高效率。    
 
 红黑树的约束:
 
@@ -489,7 +489,7 @@ public static void main(String[] args) throws UnsupportedEncodingException {
 
 红黑树的特点:
 
-​	速度特别快,趋近平衡树。
+​    速度特别快,趋近平衡树。
 
 ## 第五章 Set集合
 
@@ -514,10 +514,10 @@ public static void main(String[] args)  {
     Iterator<String> it = set.iterator();
     while (it.hasNext()){
     String str = it.next();
-    	System.out.println(str);
+        System.out.println(str);
     }
     for(String str : set){
-   	 System.out.println(str);
+        System.out.println(str);
     }
 }
 ```
@@ -536,8 +536,8 @@ public class Person{}
 
 ```java
 public static void main(String[] args){
-	Person person = new Person();
-	int code = person.hashCode();
+    Person person = new Person();
+    int code = person.hashCode();
 }
 ```
 
@@ -549,7 +549,7 @@ Person类重写hashCode()方法：直接返回0
 
 ```java
 public int hashCode(){
-	return 0;
+    return 0;
 }
 ```
 
@@ -586,12 +586,12 @@ private final char value[];
 public int hashCode() {
     int h = hash;
     if (h == 0 && value.length > 0) {
-    	char val[] = value;
+        char val[] = value;
 
         for (int i = 0; i < value.length; i++) {
             h = 31 * h + val[i];
         }
-    	hash = h;
+        hash = h;
     }
     return h;
 }
@@ -650,7 +650,7 @@ public class Student {
     private String name;
     private int age;
 
-	//get/set
+    //get/set
     @Override
     public boolean equals(Object o) {
         if (this == o)
@@ -682,7 +682,7 @@ public static void main(String[] args) {
     stuSet.add(new Student("郭麒麟", 23));
 
     for (Student stu2 : stuSet) {
-    	System.out.println(stu2);
+        System.out.println(stu2);
     }
  }
 ```
@@ -714,12 +714,12 @@ public HashMap() {
 ```java
 public HashMap(int initialCapacity, float loadFactor) {
     if (initialCapacity < 0)
-    	throw new IllegalArgumentException("Illegal initial capacity: " +
+        throw new IllegalArgumentException("Illegal initial capacity: " +
     initialCapacity);
     if (initialCapacity > MAXIMUM_CAPACITY)
-    	initialCapacity = MAXIMUM_CAPACITY;
+        initialCapacity = MAXIMUM_CAPACITY;
     if (loadFactor <= 0 || Float.isNaN(loadFactor))
-    	throw new IllegalArgumentException("Illegal load factor: " +
+        throw new IllegalArgumentException("Illegal load factor: " +
     loadFactor);
     this.loadFactor = loadFactor;
     this.threshold = tableSizeFor(initialCapacity);
@@ -783,7 +783,7 @@ static final int tableSizeFor(int cap) {
 
 ```java
 public V put(K key, V value) {
-	return putVal(hash(key), key, value, false, true);
+    return putVal(hash(key), key, value, false, true);
 }
 ```
 
@@ -796,8 +796,8 @@ public V put(K key, V value) {
 
 ```java
 Node<K,V>[] tab; Node<K,V> p; int n, i;
-	if ((tab = table) == null || (n = tab.length) == 0)
-		n = (tab = resize()).length;
+    if ((tab = table) == null || (n = tab.length) == 0)
+        n = (tab = resize()).length;
 ```
 
 解析：方法中进行Node对象数组的判断，如果数组是null或者长度等于0，那么就会调研resize()方法进行数组的扩容。
@@ -822,7 +822,7 @@ Node<K,V>[] tab; Node<K,V> p; int n, i;
 
 ```java
 if ((p = tab[i = (n - 1) & hash]) == null)
-	 tab[i] = newNode(hash, key, value, null);
+     tab[i] = newNode(hash, key, value, null);
 ```
 
 解析：i = (数组长度 - 1) & 对象的哈希值，会得到一个索引，然后在此索引下tab[i]，创建链表对象。
@@ -834,8 +834,8 @@ if ((p = tab[i = (n - 1) & hash]) == null)
 ```java
  Node<K,V> e; K k;
  if (p.hash == hash &&
- 	((k = p.key) == key || (key != null && key.equals(k))))
-		 e = p;
+     ((k = p.key) == key || (key != null && key.equals(k))))
+         e = p;
 ```
 
 解析：如果对象的哈希值相同，对象的equals方法返回true，判断为一个对象，进行覆盖操作。
@@ -843,11 +843,11 @@ if ((p = tab[i = (n - 1) & hash]) == null)
 ```java
  else {
      for (int binCount = 0; ; ++binCount) {
-     	if ((e = p.next) == null) {
-     		p.next = newNode(hash, key, value, null);
-     	if (binCount >= TREEIFY_THRESHOLD - 1) // -1 for 1st
-     		treeifyBin(tab, hash);
-     	break;
+         if ((e = p.next) == null) {
+             p.next = newNode(hash, key, value, null);
+         if (binCount >= TREEIFY_THRESHOLD - 1) // -1 for 1st
+             treeifyBin(tab, hash);
+         break;
  }
 ```
 
@@ -868,10 +868,10 @@ public static void main(String[] args) {
     set.add("bbc");
     Iterator<String> it = set.iterator();
     while (it.hasNext()) {
-    	System.out.println(it.next());
+        System.out.println(it.next());
     }
     for(String s : set){
-    	System.out.println(s);
+        System.out.println(s);
     }
 }
 ```

@@ -166,7 +166,7 @@ public static void main(String[] args) {
     Set<Student> keySet = map.keySet();
     for(Student key: keySet){
     String value = map.get(key);
-    	System.out.println(key.toString()+"....."+value);
+        System.out.println(key.toString()+"....."+value);
     }
 }
 ```
@@ -188,7 +188,7 @@ public static void main(String[] args) {
     map.put("刘德华", "朱丽倩");
     Set<Entry<String, String>> entrySet = map.entrySet();
     for (Entry<String, String> entry : entrySet) {
-   		System.out.println(entry.getKey() + "  " + entry.getValue());
+           System.out.println(entry.getKey() + "  " + entry.getValue());
     }
 }
 ```
@@ -227,7 +227,7 @@ public static void main(String[] args){
     //所有的键存储到Set集合
     Set<String> set = properties.stringPropertyNames();
     for(String key : set){
-    	System.out.println(key+"=="+properties.getProperty(key));
+        System.out.println(key+"=="+properties.getProperty(key));
     }
 }
 ```
@@ -267,14 +267,14 @@ private static void findChar(String line) {
         char c = line.charAt(i);
         //判断 该字符 是否在键集中
         if (!map.containsKey(c)) {//说明这个字符没有出现过
-        	//那就是第一次
-        	map.put(c, 1);
+            //那就是第一次
+            map.put(c, 1);
         } else {
-       	 	//先获取之前的次数
-        	Integer count = map.get(c);
-        	//count++;
-        	//再次存入  更新
-        	map.put(c, ++count);
+                //先获取之前的次数
+            Integer count = map.get(c);
+            //count++;
+            //再次存入  更新
+            map.put(c, ++count);
         }
     }
     System.out.println(map);
@@ -303,7 +303,7 @@ public static void main(String[] args) {
 public static int getSum(int... arr) {
     int sum = 0;
     for (int a : arr) {
-    	sum += a;
+        sum += a;
     }
     return sum;
 }
@@ -397,15 +397,15 @@ public static void main(String[] args) {
 
     int index = 2;
     for(String num : nums){
-    	for(String color : colors){
-    		String thisPooker = color+num;
+        for(String color : colors){
+            String thisPooker = color+num;
    
-    		//将扑克牌放入Map集合
-   			pookerMap.put(index, thisPooker);
-    		//将牌号放入到pookerList集合中
-   		 pookerList.add(index);
-    	 index++;
-    	}
+            //将扑克牌放入Map集合
+               pookerMap.put(index, thisPooker);
+            //将牌号放入到pookerList集合中
+            pookerList.add(index);
+         index++;
+        }
     }
 
     //将大王小王添加到集合
@@ -436,7 +436,7 @@ public static void main(String[] args) {
             player3.add(pookerNum);
         }
     }
-    //		排序
+    //        排序
     Collections.sort(player1);
     Collections.sort(player2);
     Collections.sort(player3);
@@ -495,7 +495,7 @@ public static void main(String[] args)  {
         List<String> little = iterator.next();
         Iterator<String> littleIterator = little.iterator();
         while (littleIterator.hasNext()){
-        	System.out.println(littleIterator.next());
+            System.out.println(littleIterator.next());
         }
     }
 }
@@ -575,9 +575,9 @@ public static void main(String[] args) {
     //keySet0(czbk);
     entrySet0(czbk);
 }
-	/*
-	 * 定义方法，实现迭代Map集合嵌套，entrySet
-	 */
+    /*
+     * 定义方法，实现迭代Map集合嵌套，entrySet
+     */
 public static void entrySet0(HashMap<String,HashMap<String,String>> czbk){
     //集合方法 czbk entrySet() 获取集合键值对关系对象Map.Entry存储到Set集合
     Set<Map.Entry<String, HashMap<String,String>>> set = czbk.entrySet();
@@ -604,7 +604,7 @@ public static void entrySet0(HashMap<String,HashMap<String,String>> czbk){
         }
     }
 }
-	
+    
 /*
  * 定义方法，实现迭代Map嵌套集合，keySet
  */
