@@ -3,8 +3,7 @@ title: "Tmux优秀的终端复用工具"
 categories:
   - Linux
 tags:
-  - tmux
-  - tools
+  - Linux
 toc: true
 ---
 ### tmux使用学习文档
