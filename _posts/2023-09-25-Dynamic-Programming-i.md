@@ -77,7 +77,7 @@ Output: -10
 - 1 <= triangle.length <= 200
 - triangle[0].length == 1
 - triangle[i].length == triangle[i - 1].length + 1
-- -10^4 <= triangle[i][j] <= 10^4
+- -104 <= triangle[i][j] <= 104
 
 ### Follow up
 
@@ -113,9 +113,11 @@ traverse(0, 0, 0);
 如果我们想把所有路径都找出来的话，可以用这个递归的方法。
 
 这个复杂度仍然是O(2^n)
-
+![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1695563552614-61756513-10c7-4dcd-b601-86a7c07a281e.png#averageHue=%23dbd7d5&clientId=ua50fe1aa-058f-4&from=paste&height=900&id=ucdd634dd&originHeight=900&originWidth=1440&originalType=binary&ratio=1&rotation=0&showTitle=false&size=627804&status=done&style=none&taskId=ub9cc7a5f-a76b-4337-9c5b-8032523cbe7&title=&width=1440)
 (1, 0) 和 (1, 1) 的有很多重复的地方，太多重复。
+![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1695563868517-c1e1842e-5b16-45f2-bb2f-c2bc28b1a35c.png#averageHue=%23dcdad9&clientId=ua50fe1aa-058f-4&from=paste&height=900&id=u40f9e614&originHeight=900&originWidth=1440&originalType=binary&ratio=1&rotation=0&showTitle=false&size=475735&status=done&style=none&taskId=u4f37402b-dc31-478f-b6a8-9541ceeccfb&title=&width=1440)
 
+![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1695563928372-529e6041-8dd8-45ac-b08a-f1557c83748a.png#averageHue=%23dedddc&clientId=ua50fe1aa-058f-4&from=paste&height=900&id=u50211cec&originHeight=900&originWidth=1440&originalType=binary&ratio=1&rotation=0&showTitle=false&size=373688&status=done&style=none&taskId=u9306ce56-273f-4759-8be6-3a05a0e1ad9&title=&width=1440)
 看对这个规律就一定是2^n(1, 2, 4, 8, ...)
 
 这个解法超时，有一个用例超时了！
@@ -156,7 +158,6 @@ class Solution {
     }
 }
 ```
-
 ## DFS: Divide Conquer
 
 A - O(n^2) / B - O(2^n) / C - (n!) / D - I don't know.
@@ -182,6 +183,8 @@ divideConquer(0, 0);
 
 答案仍然是 O(2^n)
 
+
+![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1695564424092-863d87c4-f979-4cc2-8c7c-39e758eeaea9.png#averageHue=%23dfdddb&clientId=ua50fe1aa-058f-4&from=paste&height=900&id=ucca20708&originHeight=900&originWidth=1440&originalType=binary&ratio=1&rotation=0&showTitle=false&size=405228&status=done&style=none&taskId=ucac29d65-d089-4e71-b1b8-240a201894d&title=&width=1440)
 我们想到的一个优化，分治就可以用这个优化。我们用哈希表来记住这个已经访问过的值比如上图的7这个值。
 
 那么现在的时间复杂度降为了O(n^2)
@@ -520,6 +523,8 @@ public class Solution {
 - intialize: 起点
 - answer: 终点
 
+![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1695646538741-80a020b7-4877-4d7a-accf-d317690a3a16.png#averageHue=%23e0dfde&clientId=u0b7c7590-df6c-4&from=paste&height=900&id=ud1dc5b1a&originHeight=900&originWidth=1440&originalType=binary&ratio=1&rotation=0&showTitle=false&size=513238&status=done&style=none&taskId=u0fd9fcad-ea44-4fc2-b4e9-0f86f99ce3f&title=&width=1440)
+
 初始化还初始化第0列和第0行
 
 凡是二维的动态规划，反正都初始化f[i][0] 和 f[0][i]
@@ -537,12 +542,15 @@ Solution [http://www.jiuzhang.com/solutions/minimum-path-sum/](http://www.jiuzha
 Given a m x n grid filled with non-negative numbers, find a path from top left to bottom right, which minimizes the sum of all numbers along its path.
 
 > **Note:** You can only move either down or right at any point in time.
-{: .prompt-tip }
+
 
 **Example 1:**
 
 ```java
 Input: grid = [[1,3,1],[1,5,1],[4,2,1]] 
+[[1, 3, 1],
+ [1, 5, 1],
+ [4, 2, 1]]
 Output: 7 
 Explanation: Because the path 1 → 3 → 1 → 1 → 1 minimizes the sum. 
 ```
@@ -722,7 +730,21 @@ public class Solution {
 
 Lintcode [http://www.lintcode.com/problem/unique-paths/](http://www.lintcode.com/problem/unique-paths/)
 
+Leetcode [https://leetcode.com/problems/unique-paths/](https://leetcode.com/problems/unique-paths/)
+
 Solution [http://www.jiuzhang.com/solutions/unique-paths/](http://www.jiuzhang.com/solutions/unique-paths/)
+
+![](https://cdn.nlark.com/yuque/0/2023/png/22241519/1695688782048-dd4ff9e4-9a5c-4620-8217-5241875c3674.png#averageHue=%23f2e82c&clientId=u407d708a-29ec-4&from=paste&id=u95c1e2fe&originHeight=183&originWidth=400&originalType=url&ratio=1&rotation=0&showTitle=false&status=done&style=none&taskId=uaa07672a-2f57-4274-bf0e-38905114386&title=)
+
+### Description
+
+There is a robot on an m x n grid. The robot is initially located at the **top-left corner** (i.e., grid[0][0]). The robot tries to move to the **bottom-right corner** (i.e., grid[m - 1][n - 1]). The robot can only move either down or right at any point in time.
+
+Given the two integers m and n, return _the number of possible unique paths that the robot can take to reach the bottom-right corner_.
+
+The test cases are generated so that the answer will be less than or equal to 2 * 10^9.
+
+### Solutions
 
 - state: f[x][y]从起点到 x, y 的路径数  
 - function: (研究倒数第一步) f[x][y] = f[x - 1][y] + f[x][y - 1]  
@@ -731,29 +753,212 @@ Solution [http://www.jiuzhang.com/solutions/unique-paths/](http://www.jiuzhang.c
 
 Related Question: Unique Path II  
 
+**解法1:** 数学模型：在n-1 + m-1长度的序列中，有n-1个D，和m-1个R组成。 其中D表示向下，R表示向右。 因此满足组合数：C(n+m-2, n-1), 从n+m-2个位置中选n-1个位置放D的方案数。
+
+
+
+```java
+public class Solution {
+    public int uniquePaths(int m, int n) {
+        if (m == 0 || n == 0) {
+            return 1;
+        }
+        
+        int[][] sum = new int[m][n];
+        for (int i = 0; i < m; i++) {
+            sum[i][0] = 1;
+        }
+        for (int i = 0; i < n; i++) {
+            sum[0][i] = 1;
+        }
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                sum[i][j] = sum[i - 1][j] + sum[i][j - 1];
+            }
+        }
+        return sum[m - 1][n - 1];
+    }
+}
+```
+
+**解法2:** 可以用Dp过程来求解： Dp[i](https://www.jiuzhang.com/solutions/unique-paths/) 表示走到(i,j)的路径数， 考虑最后一步是从上往下走，还是从左往右走。 Dp[i](https://www.jiuzhang.com/solutions/unique-paths/) = Dp[i-1](https://www.jiuzhang.com/solutions/unique-paths/) + Dp[i](https://www.jiuzhang.com/solutions/unique-paths/);
+
+```java
+// 方法二
+public class Solution {
+    /**
+     * @param n, m: positive integer (1 <= n ,m <= 100)
+     * @return an integer
+     */
+    public int uniquePaths(int m, int n) {
+        int[][] f = new int[m][n];
+        int i, j;
+        for (i = 0; i < m; ++i) {
+            for (j = 0; j < n; ++j) {
+                if (i == 0 || j == 0) {
+                    f[i][j] = 1;
+                }
+                else {
+                    f[i][j] = f[i-1][j] + f[i][j-1];
+                }
+            }
+        }
+        
+        return f[m-1][n-1];
+    }
+}
+```
+
+
+
 - [ ] 完备性的
 
 ## Climing Stairs
 
-更简单的问题
+更简单的问题，爬楼梯
 
 Lintcode [http://www.lintcode.com/problem/climbing-stairs/](http://www.lintcode.com/problem/climbing-stairs/)
 
+Leetcode [https://leetcode.cn/problems/climbing-stairs/](https://leetcode.cn/problems/climbing-stairs/)
+
 Solution [http://www.jiuzhang.com/solutions/climbing-stairs/](http://www.jiuzhang.com/solutions/climbing-stairs/)
+
+### Description
+
+You are climbing a staircase. It takes n steps to reach the top.
+
+Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
+
+Example 1:
+
+```java
+Input: n = 2
+Output: 2
+Explanation: There are two ways to climb to the top.
+1. 1 step + 1 step
+2. 2 steps
+```
+
+Example 2:
+
+```java
+Input: n = 3
+Output: 3
+Explanation: There are three ways to climb to the top.
+1. 1 step + 1 step + 1 step
+2. 1 step + 2 steps
+3. 2 steps + 1 step
+```
+
+Constraints:
+
+1 <= n <= 45
+
+### Solutions
 
 - state: f[i]表示跳到第i个位置的方案总数
 - function: f[i] = f[i-1] + f[i-2]
 - intialize: f[0] = 1
 - answer: f[n]  
 
+考虑最后一步走1阶还是走2阶。 方案数Dp[n](https://www.jiuzhang.com/solutions/climbing-stairs/) = 最后一步走1阶的方案数 + 最后一步走2阶的方案数。 Dp[n](https://www.jiuzhang.com/solutions/climbing-stairs/) = Dp[n-1](https://www.jiuzhang.com/solutions/climbing-stairs/) + Dp[n-2](https://www.jiuzhang.com/solutions/climbing-stairs/).
 
+类比斐波那契数列
+
+```java
+public class Solution {
+    public int climbStairs(int n) {
+        if (n <= 1) {
+            return n;
+        }
+        int last = 1, lastlast = 1;
+        int now = 0;
+        for (int i = 2; i <= n; i++) {
+            now = last + lastlast;
+            lastlast = last;
+            last = now;
+        }
+        return now;
+    }
+}
+```
+
+记忆化搜索版本
+
+```java
+// 记忆化搜索
+public class Solution {
+    /**
+     * @param n: An integer
+     * @return: An integer
+     */
+    int[] result = null;
+
+    void f(int X) {
+         if (result[X] != -1) return;                                                 
+         if (X == 0 || X == 1) {
+            result[X] = 1;
+            return;
+         }
+         
+         f(X - 1);
+         f(X - 2);
+         result[X] = result[X - 1] + result[X - 2];
+    }
+
+    public int climbStairs(int n) {
+        if (n == 0) {
+            return 0;
+        }
+        
+        result  = new int[n + 1];
+        for (int i = 0; i <= n; ++i) {
+            result[i] = -1;
+        }
+        
+        f(n);
+        return result[n];
+    }
+}
+```
 ## Jump Game
 
 看一个稍微复杂一点的例子
 
 Lintcode [http://www.lintcode.com/problem/jump-game/](http://www.lintcode.com/problem/jump-game/)
 
+Leetcode [https://leetcode.com/problems/jump-game/](https://leetcode.com/problems/jump-game/)
+
 Solution [http://www.jiuzhang.com/solutions/jump-game/](http://www.jiuzhang.com/solutions/jump-game/)
+
+### Description
+
+You are given an integer array nums. You are initially positioned at the array's **first index**, and each element in the array represents your maximum jump length at that position.
+
+Return true_ if you can reach the last index, or _false_ otherwise_.
+
+**Example 1:**
+
+```java
+Input: nums = [2,3,1,1,4]
+Output: true
+Explanation: Jump 1 step from index 0 to 1, then 3 steps to the last index.
+```
+
+**Example 2:**
+
+```java
+Input: nums = [3,2,1,0,4]
+Output: false
+Explanation: You will always arrive at index 3 no matter what. 
+Its maximum jump length is 0, which makes it impossible to reach the last index.
+```
+
+**Constraints:**
+
+- 1 <= nums.length <= 104
+- 0 <= nums[i] <= 105
+
 
 其实这个贪心法的O(n)，这是一个一定不要学的东西，不是所有的题目都能用贪心能解决。
 
@@ -772,6 +977,8 @@ Solution [http://www.jiuzhang.com/solutions/jump-game/](http://www.jiuzhang.com/
 - initialize: f[0] = true;  
 - answer: f[n-1]  
 
+![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1695648128109-cb7e72d8-5750-4ac4-aeb8-c758c7c49553.png#averageHue=%23807f7d&clientId=u0b7c7590-df6c-4&from=paste&height=900&id=ufe7821fb&originHeight=900&originWidth=1440&originalType=binary&ratio=1&rotation=0&showTitle=false&size=463341&status=done&style=none&taskId=uff2d3fab-4710-4586-b424-cdf0b1b7c8c&title=&width=1440)
+
 在1的基础上，不仅问能不能跳的到，还问你最小用几步跳过去
 
 如果有一个点跳不到怎么办？
@@ -784,8 +991,43 @@ Solution [http://www.jiuzhang.com/solutions/jump-game/](http://www.jiuzhang.com/
 
 Lintcode [http://www.lintcode.com/problem/jump-game-ii/](http://www.lintcode.com/problem/jump-game-ii/)
 
+Leetcode [https://leetcode.cn/problems/jump-game-ii/](https://leetcode.cn/problems/jump-game-ii/)
+
 Solution [http://www.jiuzhang.com/solutions/jump-game-ii/](http://www.jiuzhang.com/solutions/jump-game-ii/)
 
+
+### Description
+
+You are given a **0-indexed** array of integers nums of length n. You are initially positioned at nums[0].
+
+Each element nums[i] represents the maximum length of a forward jump from index i. In other words, if you are at nums[i], you can jump to any nums[i + j] where:
+
+- 0 <= j <= nums[i] and
+- i + j < n
+
+Return _the minimum number of jumps to reach _nums[n - 1]. The test cases are generated such that you can reach nums[n - 1].
+
+**Example 1:**
+
+```java
+Input: nums = [2,3,1,1,4]
+Output: 2
+Explanation: The minimum number of jumps to reach the last index is 2. 
+Jump 1 step from index 0 to 1, then 3 steps to the last index.
+```
+
+**Example 2:**
+
+```java
+Input: nums = [2,3,0,1,4]
+Output: 2
+```
+
+**Constraints:**
+
+- 1 <= nums.length <= 104
+- 0 <= nums[i] <= 1000
+- It's guaranteed that you can reach nums[n - 1].
 
 ### Solutions
 
@@ -806,23 +1048,23 @@ Solution [http://www.jiuzhang.com/solutions/jump-game-ii/](http://www.jiuzhang.c
 
 ### Solutions
 
-
+![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1695649220968-bf09b375-7e91-4517-9a64-24b56e8d92d8.png#averageHue=%23979386&clientId=u0b7c7590-df6c-4&from=paste&height=900&id=u74fe5243&originHeight=900&originWidth=1440&originalType=binary&ratio=1&rotation=0&showTitle=false&size=560704&status=done&style=none&taskId=u0627e892-901f-46a9-a2c1-0f1c243d566&title=&width=1440)
 
 这道题比较难的是起点和终点是什么。
 
 状态方程再讲一下，如图
 
-
+![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1695649082437-4e2140ac-e6e2-4430-b178-ae8263c4f7d6.png#averageHue=%23dedad8&clientId=u0b7c7590-df6c-4&from=paste&height=900&id=u3dc6c49f&originHeight=900&originWidth=1440&originalType=binary&ratio=1&rotation=0&showTitle=false&size=565018&status=done&style=none&taskId=ub7327765-3c0a-430a-b59a-aca3cd6d693&title=&width=1440)
 
 跳这个桩子，能从什么地方开始，从什么地方结束呢？
 
-
+![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1695649369117-403bbeb6-5b46-4343-a43c-90d9052053b7.png#averageHue=%238f8c7d&clientId=u0b7c7590-df6c-4&from=paste&height=900&id=ub698b9fa&originHeight=900&originWidth=1440&originalType=binary&ratio=1&rotation=0&showTitle=false&size=573886&status=done&style=none&taskId=uad541d7e-a414-4fd7-b7a2-c9231af3254&title=&width=1440)
 
 这道题是一定要掌握的，典型的坐标型动态规划，非常经典的非常经典的一道题。
 
 如果让你给出具体方案呢，
 
-
+![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1695649613406-47150d95-6d07-468e-96de-5a11d6a4906b.png#averageHue=%23949183&clientId=u0b7c7590-df6c-4&from=paste&height=900&id=u28f45526&originHeight=900&originWidth=1440&originalType=binary&ratio=1&rotation=0&showTitle=false&size=570602&status=done&style=none&taskId=u2855fd9b-1acc-4ac3-963d-1dbc1200c08&title=&width=1440)
 
 动态规划的时候，面试的时候不大让你出方案。
 
