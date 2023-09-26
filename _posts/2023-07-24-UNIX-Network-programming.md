@@ -1,11 +1,9 @@
 ---
 title: "UNIX网络编程笔记"
 categories:
-  - Linux/Unix
-  - Network
+  - Computer Networking
 tags:
-  - 网络编程
-  - 五种I/O模型
+  - Computer Networking
 toc: true
 ---
 
