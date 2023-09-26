@@ -6,12 +6,15 @@ tags:
   - Linux
 toc: true
 ---
-### tmux使用学习文档
+
+## tmux使用学习文档
+
 1. Tmux 使用手册 [http://louiszhai.github.io/2017/09/30/tmux/](http://louiszhai.github.io/2017/09/30/tmux/)
 2. 基础教程 [https://www.ruanyifeng.com/blog/2019/10/tmux.html](https://www.ruanyifeng.com/blog/2019/10/tmux.html)
 3. tmux之道？Tao of Tmux [https://tao-of-tmux.readthedocs.io/zh_CN/latest/](https://tao-of-tmux.readthedocs.io/zh_CN/latest/)
 
-### 基本使用流程
+## 基本使用流程
+
 
     # step 1: 新建会话
     tmux new -s <my_session>
@@ -24,7 +27,9 @@ toc: true
     # step 4: 下次使用时，重新连接到会话
     tmux attach-session -t <my_session>
 
-### 快捷键速查表格
+
+## 快捷键速查表格
+
 
 | Ctrl+b       | 激活控制台；此时以下按键生效                                 |
 | ------------ | ------------------------------------------------------------ |
@@ -65,8 +70,10 @@ toc: true
 | Alt+o        | 逆时针旋转当前窗口的面板                                     |
 | Ctrl+o       | 顺时针旋转当前窗口的面板                                     |
 
+## 常用操作
 
 ### 建立新的 tmux 窗口
+
 
     # 默认编号命名
     tmux
@@ -77,13 +84,16 @@ toc: true
 
 ### 退出当前 tmux 窗口
 
+
     # 显式输入(窗口内使用)
     tmux dettach
     
     # 快捷键(linux)(窗口内使用)
     Ctrl+b　d
 
+
 ### 查看所有 tmux 窗口
+
 
     # 在窗口外显式输入
     tmux ls
@@ -96,7 +106,9 @@ toc: true
     # 在窗口内快捷键(linux)
     Ctrl+b s
 
+
 ### 接入窗口
+
 
     # 使用会话编号(窗口外使用)
     tmux attach -t 0
@@ -108,7 +120,9 @@ toc: true
     OR
     tmux at -t <session-name>
 
+
 ### 杀死、切换、重命名会话
+
 
     # 使用会话编号(窗口内外均可)
     tmux kill-session -t 0
@@ -131,6 +145,7 @@ toc: true
     
 
 ### 划分窗格
+
 
     # 划分上下两个窗格
     tmux split-window　# 显式输入
@@ -171,10 +186,11 @@ toc: true
 
 
 
-### 常用配置文件
+## 常用配置文件
 
 配置文件位于 ~/.tmux.conf
 
+```
     set -g prefix ^b
     set -g prefix2 F9
     bind ^b send-prefix
@@ -217,7 +233,4 @@ toc: true
     
     set-window-option -g utf8 on
     set -g default-terminal "screen-256color"
-    
-
-
-    
+```
