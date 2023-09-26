@@ -126,7 +126,7 @@ IDEA破解：https://tech.souyunku.com/?p=49115
 
 如果需要更换其他版本可在Idea中进行配置。
 
-![img](.\/assets/images/MavenImages\wps1.jpg)
+![img](/assets/images/MavenImages/wps1.jpg)
 
  
 
@@ -181,7 +181,7 @@ D:\devsoft\mvnRepo382\com\itbaizhan\mavenDemo\1.0-SNAPSHOT
 
   中央仓库是Maven官方提供的远程仓库，在本地仓库无法获取资源的时候，直接访问中央仓库。并将中央仓库中的资源下载到本地仓库，这样下次在其它maven项目中使用该资源便可以从本地仓库中获取了。但是由于中央仓库在国外的服务器上，下载速度太慢了，所以工作中通常使用国内的镜像仓库。
 
-  ![img](.\/assets/images/MavenImages\wps2.jpg)
+  ![img](/assets/images/MavenImages/wps2.jpg)
 
 3. 远程仓库-镜像仓库
 
@@ -248,19 +248,19 @@ D:\devsoft\mvnRepo382\com\itbaizhan\mavenDemo\1.0-SNAPSHOT
 
 破解版IDEA的Maven配置有时候会出现还原的情况，将D:\devsoft\apache-maven-3.8.2\conf\settings.xml复制一份，替换C:\Users\Administrator\.m2\settings.xml。
 
-##四、Maven项目创建和目录介绍
+## 四、Maven项目创建和目录介绍
 
 ### 4.1 在IDEA中创建Maven工程
 
-​		![](/assets/images/MavenImages/wps3_1.jpg)
+​![](/assets/images/MavenImages/wps3_1.jpg)
 
-![img](.\/assets/images/MavenImages\wps3.jpg) 
+![img](/assets/images/MavenImages/wps3.jpg) 
 
-![img](.\/assets/images/MavenImages\wps4.jpg) 
+![img](/assets/images/MavenImages/wps4.jpg) 
 
-![img](.\/assets/images/MavenImages\wps5.jpg)        
+![img](/assets/images/MavenImages/wps5.jpg)        
 
-![img](.\/assets/images/MavenImages\wps6.jpg)
+![img](/assets/images/MavenImages/wps6.jpg)
 
 ### 4.2 Maven项目目录介绍
 
@@ -1036,7 +1036,7 @@ http://maven.apache.org/guides/mini/guide-naming-conventions.html
 
 1. Tomcat权限介绍
 
-![img](.\/assets/images/MavenImages\wps42.jpg) 
+![img](/assets/images/MavenImages/wps42.jpg) 
 
 - `manager-gui` -允许访问HTML GUI和状态页面
 - `manager-script` - 允许访问文本界面和状态页面
