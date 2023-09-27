@@ -18,9 +18,9 @@ timezone:
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 # ↓ --------------------------
 
-title: 先用QQ头像 # the main title
+title: All too well # the main title
 
-tagline: All too well  # it will display as the sub-title
+tagline: Never say never ✅ # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
   Winter is coming.
@@ -37,7 +37,7 @@ twitter:
 social:
   # Change to your full name.
   # It will be displayed as the default author of the posts and the copyright owner in the Footer
-  name: your_full_name
+  name: 😇
   email: dp520v@gmail.com # change to your email address
   links:
     # The first element serves as the copyright owner's link
