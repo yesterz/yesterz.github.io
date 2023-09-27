@@ -2,8 +2,8 @@
 title: 共享模型之无锁
 author: someone
 date: 2023-05-22 11:33:00 +0800
-categories: [多线程]
-tags: [多线程, 笔记]
+categories: [Concurrent Programming]
+tags: [Concurrent Programming]
 pin: false
 math: false
 mermaid: false

@@ -1,8 +1,8 @@
 ---
 title: 8个经典的Java多线程编程题目
 date: 2023-08-17 22:13:00 +0800
-categories: [多线程]
-tags: [多线程]
+categories: [Concurrent Programming]
+tags: [Concurrent Programming]
 pin: false
 math: false
 mermaid: false

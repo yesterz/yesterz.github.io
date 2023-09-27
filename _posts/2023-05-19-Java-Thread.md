@@ -1,9 +1,7 @@
 ---
 title: Java中的线程
-categories:
-  - 多线程
-tags:
-  - 多线程
+categories: [Concurrent Programming]
+tags: [Concurrent Programming]
 toc: true
 ---
 

@@ -2,8 +2,8 @@
 title: 共享模型之内存
 author: someone
 date: 2023-05-21 11:33:00 +0800
-categories: [多线程]
-tags: [多线程, 笔记]
+categories: [Concurrent Programming]
+tags: [Concurrent Programming]
 pin: false
 math: false
 mermaid: false

@@ -2,8 +2,8 @@
 title: 共享模型之工具
 author: someone
 date: 2023-05-23 11:33:00 +0800
-categories: [多线程]
-tags: [多线程, 笔记, 线程池, JUC]
+categories: [Concurrent Programming]
+tags: [Concurrent Programming]
 pin: false
 math: false
 mermaid: false
