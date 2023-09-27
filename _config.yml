@@ -47,7 +47,7 @@ social:
     # - https://www.facebook.com/username
     # - https://www.linkedin.com/in/username
 
-google_site_verification: # fill in to your verification string
+google_site_verification: EeDLxotZEzgYNYYajwTvhQbfX7gf3QWrgydJ1xbQfUM # fill in to your verification string
 
 # ↑ --------------------------
 # The end of `jekyll-seo-tag` settings
@@ -193,6 +193,6 @@ jekyll-archives:
   permalinks:
     tag: /tags/:name/
     category: /categories/:name/
-    
+
 plugins:
   - jekyll-seo-tag
