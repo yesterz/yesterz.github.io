@@ -113,11 +113,11 @@ traverse(0, 0, 0);
 如果我们想把所有路径都找出来的话，可以用这个递归的方法。
 
 这个复杂度仍然是O(2^n)
-![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1695563552614-61756513-10c7-4dcd-b601-86a7c07a281e.png#averageHue=%23dbd7d5&clientId=ua50fe1aa-058f-4&from=paste&height=900&id=ucdd634dd&originHeight=900&originWidth=1440&originalType=binary&ratio=1&rotation=0&showTitle=false&size=627804&status=done&style=none&taskId=ub9cc7a5f-a76b-4337-9c5b-8032523cbe7&title=&width=1440)
+![image.png](dp1-1.png)
 (1, 0) 和 (1, 1) 的有很多重复的地方，太多重复。
-![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1695563868517-c1e1842e-5b16-45f2-bb2f-c2bc28b1a35c.png#averageHue=%23dcdad9&clientId=ua50fe1aa-058f-4&from=paste&height=900&id=u40f9e614&originHeight=900&originWidth=1440&originalType=binary&ratio=1&rotation=0&showTitle=false&size=475735&status=done&style=none&taskId=u4f37402b-dc31-478f-b6a8-9541ceeccfb&title=&width=1440)
+![image.png](dp1-2.png)
 
-![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1695563928372-529e6041-8dd8-45ac-b08a-f1557c83748a.png#averageHue=%23dedddc&clientId=ua50fe1aa-058f-4&from=paste&height=900&id=u50211cec&originHeight=900&originWidth=1440&originalType=binary&ratio=1&rotation=0&showTitle=false&size=373688&status=done&style=none&taskId=u9306ce56-273f-4759-8be6-3a05a0e1ad9&title=&width=1440)
+![image.png](dp1-3.png)
 看对这个规律就一定是2^n(1, 2, 4, 8, ...)
 
 这个解法超时，有一个用例超时了！
@@ -184,7 +184,7 @@ divideConquer(0, 0);
 答案仍然是 O(2^n)
 
 
-![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1695564424092-863d87c4-f979-4cc2-8c7c-39e758eeaea9.png#averageHue=%23dfdddb&clientId=ua50fe1aa-058f-4&from=paste&height=900&id=ucca20708&originHeight=900&originWidth=1440&originalType=binary&ratio=1&rotation=0&showTitle=false&size=405228&status=done&style=none&taskId=ucac29d65-d089-4e71-b1b8-240a201894d&title=&width=1440)
+![image.png](dp1-4.png)
 我们想到的一个优化，分治就可以用这个优化。我们用哈希表来记住这个已经访问过的值比如上图的7这个值。
 
 那么现在的时间复杂度降为了O(n^2)
@@ -523,8 +523,6 @@ public class Solution {
 - intialize: 起点
 - answer: 终点
 
-![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1695646538741-80a020b7-4877-4d7a-accf-d317690a3a16.png#averageHue=%23e0dfde&clientId=u0b7c7590-df6c-4&from=paste&height=900&id=ud1dc5b1a&originHeight=900&originWidth=1440&originalType=binary&ratio=1&rotation=0&showTitle=false&size=513238&status=done&style=none&taskId=u0fd9fcad-ea44-4fc2-b4e9-0f86f99ce3f&title=&width=1440)
-
 初始化还初始化第0列和第0行
 
 凡是二维的动态规划，反正都初始化f[i][0] 和 f[0][i]
@@ -552,7 +550,7 @@ Input: grid = [[1,3,1],[1,5,1],[4,2,1]]
  [1, 5, 1],
  [4, 2, 1]]
 Output: 7 
-Explanation: Because the path 1 → 3 → 1 → 1 → 1 minimizes the sum. 
+Explanation: Because the path 1 -> 3 -> 1 -> 1 -> 1 minimizes the sum. 
 ```
 
 **Example 2:**
@@ -734,7 +732,7 @@ Leetcode [https://leetcode.com/problems/unique-paths/](https://leetcode.com/prob
 
 Solution [http://www.jiuzhang.com/solutions/unique-paths/](http://www.jiuzhang.com/solutions/unique-paths/)
 
-![](https://cdn.nlark.com/yuque/0/2023/png/22241519/1695688782048-dd4ff9e4-9a5c-4620-8217-5241875c3674.png#averageHue=%23f2e82c&clientId=u407d708a-29ec-4&from=paste&id=u95c1e2fe&originHeight=183&originWidth=400&originalType=url&ratio=1&rotation=0&showTitle=false&status=done&style=none&taskId=uaa07672a-2f57-4274-bf0e-38905114386&title=)
+![](dp1-5.png)
 
 ### Description
 
@@ -977,8 +975,6 @@ Its maximum jump length is 0, which makes it impossible to reach the last index.
 - initialize: f[0] = true;  
 - answer: f[n-1]  
 
-![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1695648128109-cb7e72d8-5750-4ac4-aeb8-c758c7c49553.png#averageHue=%23807f7d&clientId=u0b7c7590-df6c-4&from=paste&height=900&id=ufe7821fb&originHeight=900&originWidth=1440&originalType=binary&ratio=1&rotation=0&showTitle=false&size=463341&status=done&style=none&taskId=uff2d3fab-4710-4586-b424-cdf0b1b7c8c&title=&width=1440)
-
 在1的基础上，不仅问能不能跳的到，还问你最小用几步跳过去
 
 如果有一个点跳不到怎么办？
@@ -1040,31 +1036,23 @@ Output: 2
 
 还有一道非常经典的题目
 
-![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1695648470801-a5078d9c-93c5-40ff-86e5-4fdee29773c3.png#averageHue=%23959083&clientId=u0b7c7590-df6c-4&from=paste&height=900&id=u07c7f0de&originHeight=900&originWidth=1440&originalType=binary&ratio=1&rotation=0&showTitle=false&size=532871&status=done&style=none&taskId=u3dc98844-e47c-451d-9db8-0fa7d36d183&title=&width=1440)
-
 如果你不会动态规划的话，这就是一道非常难的题目。
 
 这道题一定大家会往贪心那边想的。
 
 ### Solutions
 
-![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1695649220968-bf09b375-7e91-4517-9a64-24b56e8d92d8.png#averageHue=%23979386&clientId=u0b7c7590-df6c-4&from=paste&height=900&id=u74fe5243&originHeight=900&originWidth=1440&originalType=binary&ratio=1&rotation=0&showTitle=false&size=560704&status=done&style=none&taskId=u0627e892-901f-46a9-a2c1-0f1c243d566&title=&width=1440)
-
 这道题比较难的是起点和终点是什么。
 
 状态方程再讲一下，如图
 
-![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1695649082437-4e2140ac-e6e2-4430-b178-ae8263c4f7d6.png#averageHue=%23dedad8&clientId=u0b7c7590-df6c-4&from=paste&height=900&id=u3dc6c49f&originHeight=900&originWidth=1440&originalType=binary&ratio=1&rotation=0&showTitle=false&size=565018&status=done&style=none&taskId=ub7327765-3c0a-430a-b59a-aca3cd6d693&title=&width=1440)
+![image.png](dp1-6)
 
 跳这个桩子，能从什么地方开始，从什么地方结束呢？
-
-![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1695649369117-403bbeb6-5b46-4343-a43c-90d9052053b7.png#averageHue=%238f8c7d&clientId=u0b7c7590-df6c-4&from=paste&height=900&id=ub698b9fa&originHeight=900&originWidth=1440&originalType=binary&ratio=1&rotation=0&showTitle=false&size=573886&status=done&style=none&taskId=uad541d7e-a414-4fd7-b7a2-c9231af3254&title=&width=1440)
 
 这道题是一定要掌握的，典型的坐标型动态规划，非常经典的非常经典的一道题。
 
 如果让你给出具体方案呢，
-
-![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1695649613406-47150d95-6d07-468e-96de-5a11d6a4906b.png#averageHue=%23949183&clientId=u0b7c7590-df6c-4&from=paste&height=900&id=u28f45526&originHeight=900&originWidth=1440&originalType=binary&ratio=1&rotation=0&showTitle=false&size=570602&status=done&style=none&taskId=u2855fd9b-1acc-4ac3-963d-1dbc1200c08&title=&width=1440)
 
 动态规划的时候，面试的时候不大让你出方案。
 
