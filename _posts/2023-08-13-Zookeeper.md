@@ -5,6 +5,7 @@ categories:
 tags:
   - 分布式
 toc: true
+img_path: /assets/images/
 ---
 
 ## 一、ZooKeeper基础
@@ -13,15 +14,15 @@ toc: true
 
 1. Nginx作为负载均衡管理大量服务器时，管理起来比较麻烦，可以通过zookeeper注册服务与发现服务协作管理。
 
-	![img]({{ site.url }}/assets/images/wps1.jpg) 
+	![img](wps1.jpg) 
 
-	![img]({{ site.url }}/assets/images/wps2.jpg)
+	![img](wps2.jpg)
 
 2. 使用分布式部署后，多线程安全的问题，以前学的同步代码块、重构锁、读写锁等通通失效，怎么办？
 
 3. 大数据分布式集群中，集群的服务器如何管理？
 
-	![]({{ site.url }}/assets/images/jqgl.jpg)
+	![](jqgl.jpg)
 
 4. 以前大部分应用需要开发私有的协调程序，缺乏一个通用的机制协调程序的反复编写浪费，且难以形成通用、伸缩性好的协调器
 
@@ -43,29 +44,29 @@ ZooKeeper是分布式应用程序的协调服务框架，是Hadoop的重要组�
 
 1. Hadoop,使用ZooKeeper的事件处理确保整个集群只有一个NameNode,存储配置信息等.
 
-![]({{ site.url }}/assets/images/hdfs-nn-ha.jpg) 
+![](hdfs-nn-ha.jpg) 
 
 2. HBase,使用ZooKeeper的事件处理确保整个集群只有一个HMaster,察觉HRegionServer联机和宕机,存储访问控制列表等.
 
 3. 分布式环境下的统一命名服务
 
-![img]({{ site.url }}/assets/images/wps4.jpg) 
+![img](wps4.jpg) 
 
 4. 分布式环境下的配置管理
 
-![img]({{ site.url }}/assets/images/wps5.jpg) 
+![img](wps5.jpg) 
 
 5. 数据发布/订阅
 
 6. 分布式环境下的分布式锁
 
-	![]({{ site.url }}/assets/images/lock1.jpg)
+	![](lock1.jpg)
 
-	![]({{ site.url }}/assets/images/lock2.jpg)
+	![](lock2.jpg)
 
 7. 集群管理问题
 
-	![]({{ site.url }}/assets/images/jqgl2.jpg)
+	![](jqgl2.jpg)
 
  
 
@@ -75,11 +76,11 @@ ZooKeeper是分布式应用程序的协调服务框架，是Hadoop的重要组�
 
 分布式的思想就是人多干活快，即用多台机器同时处理一个任务。分布式的编程和单机的编程 思想是不同的，随之也带来新的问题和挑战。
 
-1.活锁。活锁定义：在程序里，由于某些条件的发生碰撞，导致重新执行，再碰撞=》再执 行，如此循环往复，就形成了活锁。活锁的危害：多个线程争用一个资源，但是没有任何一个 线程能拿到这个资源。（死锁是有一个线程拿到资源，但相互等待互不释放造成死锁），活锁 是死锁的变种。补充：活锁更深层次的危害，很耗尽Cpu资源（在做无意义的调度)![img](image\wps6.jpg)
+1.活锁。活锁定义：在程序里，由于某些条件的发生碰撞，导致重新执行，再碰撞=》再执 行，如此循环往复，就形成了活锁。活锁的危害：多个线程争用一个资源，但是没有任何一个 线程能拿到这个资源。（死锁是有一个线程拿到资源，但相互等待互不释放造成死锁），活锁 是死锁的变种。补充：活锁更深层次的危害，很耗尽Cpu资源（在做无意义的调度)![img](wps6.jpg)
 
 2.需要考虑集群的管理问题，需要有一套机制来检测到集群里节点的状态变化。
 
-![]({{ site.url }}/assets/images/jqgl2.jpg)
+![](jqgl2.jpg)
 
 3.如果用一台机器做集群管理，存在单点故障问题，所以针对集群管理，也需要形成一个集群
 
@@ -91,7 +92,7 @@ ZooKeeper是分布式应用程序的协调服务框架，是Hadoop的重要组�
 
 那么ZooKeeper最基础的东西是什么呢？不得不提Paxos，它是一个基于消息传递的一致性算法，Leslie Lamport（莱斯利·兰伯特）在1990年提出，近几年被广泛应用于分布式计算中，Google的Chubby，Apache的ZooKeeper都是基于它的理论来实现的，Paxos还被认为是到目前为止唯一的分布式一致性算法，其它的算法都是Paxos的改进或简化。有个问题要提一下，Paxos有一个前提：没有拜占庭将军问题。就是说Paxos只有在一个可信的计算环境中才能成立，这个环境是不会被入侵所破坏的。
 
-![]({{ site.url }}/assets/images/pzt.jpg)
+![](pzt.jpg)
 
 ### 1.5 Paxos的小岛的故事
 
@@ -99,11 +100,11 @@ Paxos描述了这样一个场景，有一个叫做Paxos的小岛(Island)上面�
 
 好，现在议会开始运作，所有议员一开始记事本上面记录的编号都是0。有一个议员发了一个提议：将电费设定为1元/度。他首先看了一下记事本，嗯，当前提议编号是0，那么我的这个提议的编号就是1，于是他给所有议员发消息：1号提议，设定电费1元/度。其他议员收到消息以后查了一下记事本，哦，当前提议编号是0，这个提议可接受，于是他记录下这个提议并回复：我接受你的1号提议，同时他在记事本上记录：当前提议编号为1。发起提议的议员收到了超过半数的回复，立即给所有人发通知：1号提议生效！收到的议员会修改他的记事本，将1好提议由记录改成正式的法令，当有人问他电费为多少时，他会查看法令并告诉对方：1元/度。
 
-![]({{ site.url }}/assets/images/paxos-ty.jpg)
+![](paxos-ty.jpg)
 
 现在看冲突的解决：假设总共有三个议员S1-S3，S1和S2同时发起了一个提议:1号提议，设定电费。S1想设为1元/度, S2想设为2元/度。结果S3先收到了S1的提议，于是他做了和前面同样的操作。紧接着他又收到了S2的提议，结果他一查记事本，咦，这个提议的编号小于等于我的当前编号1，于是他拒绝了这个提议：对不起，这个提议先前提过了。于是S2的提议被拒绝，S1正式发布了提议: 1号提议生效。S2向S1或者S3打听并更新了1号法令的内容，然后他可以选择继续发起2号提议。
 
-![]({{ site.url }}/assets/images/paxos-ct.jpg)
+![](paxos-ct.jpg)
 
 好，我觉得Paxos的精华就这么多内容。现在让我们来对号入座，看看在ZK Server里面Paxos是如何得以贯彻实施的。
 
@@ -123,17 +124,17 @@ Paxos描述了这样一个场景，有一个叫做Paxos的小岛(Island)上面�
 
 总统——ZK Server Leader
 
- ![]({{ site.url }}/assets/images/paxos-dygx.jpg)
+ ![](paxos-dygx.jpg)
 
  
 
 ### 1.6 集群架构剖析
 
-####1.6.1 ZooKeeper之攘其外
+#### 1.6.1 ZooKeeper之攘其外
 
 >  ZooKeeper服务端有两种不同的运行模式。单机的称为"**独立模式**"(standalone mode),但是独立模式存在单点故障的问题，所以在实际开发使用较少；集群的称为“**仲裁模式**(quorum mode)”，不存在单点故障的问题，实际开发中使用较多。
 
-![]({{ site.url }}/assets/images/zkcluster.jpg)
+![](zkcluster.jpg)
 
 - 主从架构：Master + Slave
 
@@ -141,11 +142,11 @@ Paxos描述了这样一个场景，有一个叫做Paxos的小岛(Island)上面�
 
 - 客户端写：类比存钱
 
-![](image\guitai.jpg)
+![](guitai.jpg)
 
 
 
-![](image\cunqu.jpg)
+![](cunqu.jpg)
 
 - leader在通知follower执行某条命令时，如何保障每个follower都收到，并执行呢？
 
@@ -153,13 +154,13 @@ Paxos描述了这样一个场景，有一个叫做Paxos的小岛(Island)上面�
 
 	CAP：Consistency一致性；Availability可用性；Partition Tolerance分区容错；三选二
 
-![]({{ site.url }}/assets/images/queue.jpg)
+![](queue.jpg)
 
 #### 1.6.2 ZooKeeper之安其内
 
 1. 思考一下这个架构有什么问题？
 
-![]({{ site.url }}/assets/images/zkcluster.jpg)
+![](zkcluster.jpg)
 
 - leader很重要？如果挂了怎么办？开始选举新的leader
 
@@ -181,7 +182,7 @@ Paxos描述了这样一个场景，有一个叫做Paxos的小岛(Island)上面�
 
 3. **集群启动时的Leader选举**
 
-	![]({{ site.url }}/assets/images/xuanju1.png)
+	![](xuanju1.png)
 
 	- 以3台机器组成的ZooKeeper集群为例 
 
@@ -219,7 +220,7 @@ Paxos描述了这样一个场景，有一个叫做Paxos的小岛(Island)上面�
 
 4. 集群运行时新leader选举：
 
-	![]({{ site.url }}/assets/images/xuanju2.png)
+	![](xuanju2.png)
 
 #### 1.6.3 脑裂和服务器数量选取
 
@@ -227,11 +228,11 @@ Paxos描述了这样一个场景，有一个叫做Paxos的小岛(Island)上面�
 
 	ZK集群的服务器的数量通常为奇数台（3,5,7,9）
 
-	![]({{ site.url }}/assets/images/servernum.jpg)
+	![](servernum.jpg)
 
 2. 脑裂：
 
-	![]({{ site.url }}/assets/images/naolie.jpg)
+	![](naolie.jpg)
 
 ## 二、集群分布式安装
 
@@ -243,7 +244,7 @@ Paxos描述了这样一个场景，有一个叫做Paxos的小岛(Island)上面�
 
 由于后续hadoop等需要四台服务器之间互相均可以免密登录，所以本次直接配置四台服务器的彼此之间的免密登录。配置思路如下：
 
-![]({{ site.url }}/assets/images/mianmi.jpg)
+![](mianmi.jpg)
 
 a、 首先在四台服务器上都要执行：
 
@@ -301,7 +302,7 @@ scp ~/.ssh/authorized_keys  node2:/root/.ssh/
 scp ~/.ssh/authorized_keys  node3:/root/.ssh/
 ```
 
- f.测试是否实现了免密登录
+ f、测试是否实现了免密登录
 
 ```
 ssh nodeX
@@ -359,15 +360,15 @@ scp /etc/profile node[234]:`pwd`
 
 官网页面：https://zookeeper.apache.org
 
-![]({{ site.url }}/assets/images/download.jpg)
+![](download.jpg)
 
 点击Download,进入下图所示的页面：
 
-![]({{ site.url }}/assets/images/download2.jpg)
+![](download2.jpg)
 
 点击：[in the archive](https://archive.apache.org/dist/zookeeper/),进入如下界面
 
-![]({{ site.url }}/assets/images/download3.jpg)
+![](download3.jpg)
 
 选择apache-zookeeper-3.5.7-bin.tar.gz 下载
 
@@ -506,7 +507,7 @@ quit
 
 ### 3.1 Znode数据结构
 
-![img](image\wps8.jpg) 
+![img](wps8.jpg) 
 
 1. ZK有一个最开始的节点 /
 
@@ -809,7 +810,7 @@ znode支持序列SEQUENTIAL
 
 ### 3.3 会话(Session)
 
-![]({{ site.url }}/assets/images/zk2.png)
+![](zk2.png)
 
 **定义：**客户端通过TCP协议与独立服务器或者一个集群中的某个服务器建立TCP长连接。
 
@@ -828,7 +829,7 @@ znode支持序列SEQUENTIAL
 
  **生命周期：**
 
-![]({{ site.url }}/assets/images/zk3.png)
+![](zk3.png)
 
 **Session是由谁来创建的？**
 
@@ -844,7 +845,7 @@ Leader：产生一个唯一的session，放到消息队列，让所有server知�
 
 **方式一：**客户端轮询指定节点下的数据，通过网络轮询，代价很大。
 
-![img](image\wps10.jpg) 
+![img](wps10.jpg) 
 
  
 
@@ -852,7 +853,7 @@ Leader：产生一个唯一的session，放到消息队列，让所有server知�
 
 客户端向ZooKeeper注册需要接收通知的znode，通过对znode设置监视点（watch）来接收通知。监视点是一个单次触发的操作，意即监视点会触发一个通知。 
 
-![img](image\wps11.jpg) 
+![img](wps11.jpg) 
 
  对比两种方式，哪种方式好？
 
@@ -889,7 +890,7 @@ ZooKeeper的核心是原子广播，这个机制保证了各个server之间的�
 4. 完成同步后通知follower 已经成为uptodate状态；
 5. Follower收到uptodate消息后，又可以重新接受client的请求进行服务了。
 
-![]({{ site.url }}/assets/images/stat-sync.png)
+![](stat-sync.png)
 
 2.广播模式
 
@@ -897,7 +898,7 @@ ZooKeeper的核心是原子广播，这个机制保证了各个server之间的�
 
 epoch也称为纪元数字。实现中zxid是一个64位的数字，它高32位是epoch用来标识leader关系是否改变，每次一个leader被选出来，它都会有一个新的epoch，低32位是个递增计数。
 
-![img](image\wps12.png) 
+![img](wps12.png) 
 
 1. 在Client向Follwer发出一个写的请求
 2. Follwer把请求发送给Leader
@@ -908,7 +909,7 @@ epoch也称为纪元数字。实现中zxid是一个64位的数字，它高32位�
 
 ### 3.6 Zookeeper集群的特点
 
-![img](image\wps13.jpg) 
+![img](wps13.jpg) 
 
  
 
@@ -1067,7 +1068,7 @@ public void exists(){
 
 
 
-### 4.5查询节点值和状态信息
+### 4.5 查询节点值和状态信息
 
 ```java
 @Test
@@ -1234,7 +1235,7 @@ public void getDataWatcher(){
 
 如何实现“跨虚拟机”的调用，它就是 RMI（Remote Method Invocation，远程方法调用）。例如，服务A 在 JVM1 中运行，服务B 在 JVM2 中运行，服务A 与 服务B 可相互进行远程调用，就像调用本地方法一样，这就是 RMI。在分布式系统中，我们使用 RMI 技术可轻松将 服务提供者（Service Provider）与 服务消费者（Service Consumer）进行分离，充分体现组件之间的弱耦合，系统架构更易于扩展。
 
-![img](image\wps18.jpg) 
+![img](wps18.jpg) 
 
 我们先从通过一个最简单的 RMI 服务与调用示例，快速掌握 RMI 的使用方法，然后指出 RMI 的局限性，最后笔者对此问题提供了一种简单的解决方案，即使用 ZooKeeper 轻松解决 RMI 调用过程中所涉及的问题。
 
@@ -1242,7 +1243,7 @@ public void getDataWatcher(){
 
 ### 5.1 Java原生RMI实现
 
- ![img](image\wps19.jpg)
+ ![img](wps19.jpg)
 
 #### 5.1.1 发布 RMI 服务
 
@@ -1386,7 +1387,7 @@ public class RmiClient {
 
 可见，借助 JNDI 这个所谓的命名与目录服务，我们成功地发布并调用了 RMI 服务。实际上，JNDI 就是一个注册表，服务端将服务对象放入到注册表中，客户端从注册表中获取服务对象。在服务端我们发布了 RMI 服务，并在 JNDI 中进行了注册，此时就在服务端创建了一个 Skeleton（骨架），当客户端第一次成功连接 JNDI 并获取远程服务对象后，立马就在本地创建了一个 Stub（存根），远程通信实际上是通过 Skeleton 与 Stub 来完成的，数据是基于 TCP/IP 协议，在“传输层”上发送的。毋庸置疑，理论上 RMI 一定比 WebService 要快，毕竟 WebService 是基于 HTTP 的，而 HTTP 所携带的数据是通过“应用层”来传输的，传输层较应用层更为底层，越底层越快。
 
-![img](image\wps20.jpg) 
+![img](wps20.jpg) 
 
 既然 RMI 比 WebService 快，使用起来也方便，那么为什么我们有时候还要用 WebService 呢？
 
@@ -1410,7 +1411,7 @@ public class RmiClient {
 
 要想解决 RMI 服务的高可用性问题，我们需要利用 ZooKeeper 充当一个 服务注册表（Service Registry），让多个 服务提供者（Service Provider）形成一个集群，让 服务消费者（Service Consumer）通过服务注册表获取具体的服务访问地址（也就是 RMI 服务地址）去访问具体的服务提供者。如下图所示：
 
-![img](image\wps21.png) 
+![img](wps21.png) 
 
 
 
@@ -1426,13 +1427,13 @@ public class RmiClient {
 
 ZooKeeper 与生俱来的集群能力（例如：数据同步与领导选举特性），可以确保服务注册表的高可用性。
 
-![img](image\wps22.jpg)
+![img](wps22.jpg)
 
 
 
 #### 5.2.2 服务生产者
 
-![]({{ site.url }}/assets/images/zkrmi.jpg)
+![](zkrmi.jpg)
 
 ```java
 package com.itbaizhan.zookeeper.zkrmi.common;
