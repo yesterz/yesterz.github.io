@@ -41,3 +41,7 @@ mermaid: true
 ## Quick Access
 
 1. Google Search Console <https://search.google.com/search-console?resource_id=https%3A%2F%2Fyesterz.github.io%2F>
+2. collabedit(simple collaborative text) <https://collabedit.com/>
+
+## Others
+1. 
