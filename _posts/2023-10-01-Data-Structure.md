@@ -1,9 +1,9 @@
 ---
-title: Lecture-6 Linked List
-date: 2023-09-30 23:58:00 +0800
+title: Lecture-8 Data Structure
+date: 2023-10-01 23:58:00 +0800
 author: Algorithms-Notes
 categories: [Algorithms]
-tags: [Linked List]
+tags: [Data Structure]
 pin: false
 math: true
 mermaid: false
