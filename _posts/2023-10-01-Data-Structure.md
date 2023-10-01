@@ -1,6 +1,6 @@
 ---
 title: Lecture-8 Data Structure
-date: 2023-10-01 23:58:00 +0800
+date: 2023-10-01 19:38:00 +0800
 author: Algorithms-Notes
 categories: [Algorithms]
 tags: [Data Structure]
