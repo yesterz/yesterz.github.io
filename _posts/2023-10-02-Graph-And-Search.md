@@ -7,7 +7,7 @@ tags: [Graph, Search]
 pin: false
 math: true
 mermaid: false
-img_path: /assets/images/GraphAndSearchImages/s
+img_path: /assets/images/GraphAndSearchImages/
 ---
 
 做一下这道题
