@@ -1,9 +1,9 @@
 ---
-title: Binary Search Template
-date: 2023-10-03 14:03:00 +0800
+title: Lecture-8 Data Structure
+date: 2023-10-01 19:38:00 +0800
 author: Algorithms-Notes
 categories: [Algorithms]
-tags: [Binary Search]
+tags: [Data Structure]
 pin: false
 math: true
 mermaid: false

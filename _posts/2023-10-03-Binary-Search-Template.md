@@ -1,9 +1,9 @@
 ---
-title: Lecture-9 Graph And Search
-date: 2023-10-02 19:02:00 +0800
+title: Binary Search Template
+date: 2023-10-03 14:08:00 +0800
 author: Algorithms-Notes
 categories: [Algorithms]
-tags: [Graph, Search]
+tags: [Binary Search]
 pin: false
 math: true
 mermaid: false
