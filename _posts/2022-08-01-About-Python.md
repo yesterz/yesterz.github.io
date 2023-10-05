@@ -11,7 +11,11 @@ mermaid: false
 
 # Python基础内容
 
-## 一，略
+## 一. Python3 Cheat Sheet
+
+![img](/assets/images/Python3CheatSheet.jpg)
+
+![img](/assets/images/Python3CheatSheet2.jpg)
 
 ## 二. 关于爬虫的特殊性
 
