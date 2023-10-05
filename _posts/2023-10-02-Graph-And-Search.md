@@ -509,7 +509,7 @@ Solution http://www.jiuzhang.com/solutions/permutations-ii/
 
 ### Description
 
-Given a collection of numbers, nums, ***that might contain duplicates,\*** return *all possible unique permutations* ***in any order\****.*
+Given a collection of numbers, nums, **that might contain duplicates,** return all possible unique permutations **in any order**.
 
 
 
@@ -643,7 +643,7 @@ Solution http://www.jiuzhang.com/solutions/n-queens/
 
 The **n-queens** puzzle is the problem of placing n queens on an n x n chessboard such that no two queens attack each other.
 
-Given an integer n, return *all distinct solutions to the* ***n-queens puzzle\***. You may return the answer in **any order**.
+Given an integer n, return *all distinct solutions to the* **n-queens puzzle**. You may return the answer in **any order**.
 
 Each solution contains a distinct board configuration of the n-queens' placement, where 'Q' and '.' both indicate a queen and an empty space, respectively.
 
@@ -995,7 +995,7 @@ Solution http://www.jiuzhang.com/solutions/combination-sum/
 
 ### Description
 
-Given an array of **distinct** integers candidates and a target integer target, return *a list of all* ***unique combinations\*** *of* candidates *where the chosen numbers sum to* target*.* You may return the combinations in **any order**.
+Given an array of **distinct** integers candidates and a target integer target, return *a list of all* **unique combinations** *of* candidates *where the chosen numbers sum to* target*.* You may return the combinations in **any order**.
 
 The **same** number may be chosen from candidates an **unlimited number of times**. Two combinations are unique if the frequency of at least one of the chosen numbers is different.
 
@@ -1336,7 +1336,7 @@ A **transformation sequence** from word beginWord to word endWord using a dictio
 - Every si for 1 <= i <= k is in wordList. Note that beginWord does not need to be in wordList.
 - sk == endWord
 
-Given two words, beginWord and endWord, and a dictionary wordList, return *the* ***number of words\*** *in the* ***shortest transformation sequence\*** *from* beginWord *to* endWord*, or* 0 *if no such sequence exists.*
+Given two words, beginWord and endWord, and a dictionary wordList, return *the* **number of words** *in the* **shortest transformation sequence** *from* beginWord *to* endWord*, or* 0 *if no such sequence exists.*
 
 
 
@@ -1529,7 +1529,7 @@ A **transformation sequence** from word beginWord to word endWord using a dictio
 - Every si for 1 <= i <= k is in wordList. Note that beginWord does not need to be in wordList.
 - sk == endWord
 
-Given two words, beginWord and endWord, and a dictionary wordList, return *all the* ***shortest transformation sequences\*** *from* beginWord *to* endWord*, or an empty list if no such sequence exists. Each sequence should be returned as a list of the words* [beginWord, s1, s2, ..., sk].
+Given two words, beginWord and endWord, and a dictionary wordList, return *all the* **shortest transformation sequences** *from* beginWord *to* endWord*, or an empty list if no such sequence exists. Each sequence should be returned as a list of the words* [beginWord, s1, s2, ..., sk].
 
 
 

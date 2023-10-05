@@ -3,7 +3,7 @@ title: Lecture-1 strStr & Coding Style
 date: 2023-09-18 15:01:00 +0800
 author: Algorithms-Notes
 categories: [Algorithms]
-tags: [Subsets]
+tags: [Search]
 pin: false
 math: true
 mermaid: false

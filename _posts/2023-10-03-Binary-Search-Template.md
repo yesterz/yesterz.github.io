@@ -3,7 +3,7 @@ title: Binary Search Template
 date: 2023-10-03 14:08:00 +0800
 author: Algorithms-Notes
 categories: [Algorithms]
-tags: [Binary Search]
+tags: [Search]
 pin: false
 math: true
 mermaid: false
