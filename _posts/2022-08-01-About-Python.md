@@ -13,6 +13,8 @@ mermaid: false
 
 ## 一. Python3 Cheat Sheet
 
+Python 3 Cheat Sheet latest version <https://perso.limsi.fr/pointal/python:memento>
+
 ![img](/assets/images/Python3CheatSheet.jpg)
 
 ![img](/assets/images/Python3CheatSheet2.jpg)
