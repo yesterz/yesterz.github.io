@@ -188,7 +188,7 @@ divideConquer(0, 0);
 
 ![image.png](dp1-4.png)
 
-## DFS: Divide Conquer + Memorization
+## Divide Conquer + Memorization
 
 我们想到的一个优化，分治就可以用这个优化。我们用哈希表来记住这个已经访问过的值比如上图的7这个值。
 
@@ -215,7 +215,9 @@ hash[*][*] = Integer.MAX_VALUE;
 divideConquer(0, 0);
 ```
 
-还是会超时！
+DC + HASH 时间复杂度就会降为 **O(n^2)**
+
+下面这个 Solution 还是会超时！
 
 ```java
 class Solution {
@@ -254,9 +256,7 @@ class Solution {
 
 动态规划为什么会快？
 
-动态规划与分治的区别？
-
-**重复计算！！**
+动态规划与分治的区别？ 看有无 **重复计算！！**
 
 搜索基本都是指数级别的复杂度。
 
