@@ -159,6 +159,7 @@ class Solution {
     }
 }
 ```
+
 ## DFS: Divide Conquer
 
 A - O(n^2) / B - O(2^n) / C - (n!) / D - I don't know.
@@ -186,11 +187,33 @@ divideConquer(0, 0);
 
 
 ![image.png](dp1-4.png)
+
+## DFS: Divide Conquer + Memorization
+
 我们想到的一个优化，分治就可以用这个优化。我们用哈希表来记住这个已经访问过的值比如上图的7这个值。
 
 那么现在的时间复杂度降为了O(n^2)
 
 这个思想，已经变为了动态规划了。
+
+```java
+// return minimum path from (x, y) to bottom
+int divideConquer(int x, int y) {
+    if (x == n) {
+        return 0;
+    }
+    // Integer.MAX_VALUE 代表没有访问过 x, y 这个点
+    if (hash[x][y] != Integer.MAX_VALUE) {
+        return hash[x][xy];
+    }
+    hash[x][y] = A[x][y] + Math.min(divideConquer(x + 1, y), divideConquer(x + 1, y + 1));
+    return hash[x][y];
+}
+
+// answer
+hash[*][*] = Integer.MAX_VALUE;
+divideConquer(0, 0);
+```
 
 还是会超时！
 
