@@ -19,6 +19,8 @@ Python 3 Cheat Sheet latest version <https://perso.limsi.fr/pointal/python:memen
 
 ![img](/assets/images/Python3CheatSheet2.jpg)
 
+Python Tips <https://book.pythontips.com/en/latest/index.html>
+
 ## 二. 关于爬虫的特殊性
 
 爬虫是一个很蛋疼的东西, 可能今天讲解的案例. 明天就失效了. 所以, 不要死盯着一个网站干.  要学会见招拆招(爬虫的灵魂)
