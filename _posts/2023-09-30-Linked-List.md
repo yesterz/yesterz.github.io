@@ -59,15 +59,15 @@ node1 = node2; 这只是改变了指针的引用。
 
 ## Remove Duplicates from Sorrted List ii
 
-Lintcode http://www.lintcode.com/problem/remove-duplicates-from-sorted-list-ii/
+Lintcode <http://www.lintcode.com/problem/remove-duplicates-from-sorted-list-ii/>
 
-Leetcode https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/
+Leetcode <https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/>
 
-Solution http://www.jiuzhang.com/solutions/remove-duplicates-from-sorted-list-ii/
+Solution <http://www.jiuzhang.com/solutions/remove-duplicates-from-sorted-list-ii/>
 
 ### Description
 
-Given the head of a sorted linked list, *delete all nodes that have duplicate numbers, leaving only distinct numbers from the original list*. Return *the linked list* ***sorted\*** *as well*.
+Given the head of a sorted linked list, *delete all nodes that have duplicate numbers, leaving only distinct numbers from the original list*. Return *the linked list* **sorted** *as well*.
 
 
 
@@ -141,7 +141,7 @@ public class Solution {
 }
 ```
 
-如果不用dummy node 程序就会变得复杂很多，思考更多的东西。
+如果不用 Dummy Node 程序就会变得复杂很多，思考更多的东西。
 
 
 
@@ -155,7 +155,7 @@ Delete Node in the Middle of Singly Linked List
 
 
 
-Remove Duplicates from Sorrted List https://leetcode.cn/problems/remove-duplicates-from-sorted-list/
+Remove Duplicates from Sorrted List <https://leetcode.cn/problems/remove-duplicates-from-sorted-list/>
 
 ```java
 class Solution {
@@ -182,11 +182,11 @@ class Solution {
 
 ![img](linkedlist4.png)
 
-如果只给了node2 ，但是要删除2，我们把下一个点node3拷贝到node2，并把下一个点node3删掉，一个很巧妙的方法，删除了node2。
+如果只给了 node2 ，但是要删除2，我们把下一个点 node3 拷贝到 node2，并把下一个点 node3 删掉，一个很巧妙的方法，删除了 node2。
 
 ## Reverse Linked List
 
-Leetcode https://leetcode.com/problems/reverse-linked-list/
+Leetcode <https://leetcode.com/problems/reverse-linked-list/>
 
 ### Description
 
@@ -260,11 +260,11 @@ public class Solution {
 
 ## Reverse Linked List ii
 
-Lintcode http://www.lintcode.com/problem/reverse-linked-list-ii/
+Lintcode <http://www.lintcode.com/problem/reverse-linked-list-ii/>
 
-Leetcode https://leetcode.cn/problems/reverse-linked-list-ii/
+Leetcode <https://leetcode.cn/problems/reverse-linked-list-ii/>
 
-Solution http://www.jiuzhang.com/solutions/reverse-linked-list-ii/
+Solution <http://www.jiuzhang.com/solutions/reverse-linked-list-ii/>
 
 ### Description
 
@@ -369,9 +369,9 @@ public class Solution {
 
 ## Dummy Node
 
-Scenario: When the head is not determinated
+**Scenario: When the head is not determinated**
 
-当我的头不是确定的时候，head节点不一定是谁的时候，用Dummy Node
+当我的头不是确定的时候，head 节点不一定是谁的时候，用 Dummy Node
 
 
 
@@ -385,11 +385,13 @@ Related Questions:
 
 ## Partition List
 
-Lintcode http://www.lintcode.com/problem/partition-list/
+还有一道类似的叫做 **Partition Array**
 
-Leetcode https://leetcode.com/problems/partition-list/
+Lintcode <http://www.lintcode.com/problem/partition-list/>
 
-Solution http://www.jiuzhang.com/solutions/partition-list/
+Leetcode <https://leetcode.com/problems/partition-list/>
+
+Solution <http://www.jiuzhang.com/solutions/partition-list/>
 
 ### Description
 
@@ -465,7 +467,7 @@ public class Solution {
 }
 ```
 
-- 没写过归并排序的写一写！！
+[] 没写过归并排序的写一写！！
 
 ## Basic Linked List Skills
 
@@ -479,9 +481,9 @@ public class Solution {
 
 Lintcode 
 
-Leetcode https://leetcode.com/problems/middle-of-the-linked-list/
+Leetcode <https://leetcode.com/problems/middle-of-the-linked-list/>
 
-Solution https://www.jiuzhang.com/solutions/middle-of-the-linked-list/
+Solution <https://www.jiuzhang.com/solutions/middle-of-the-linked-list/>
 
 ### Description
 
@@ -541,17 +543,17 @@ class Solution {
 
 ## Sort List
 
-Lintcode http://www.lintcode.com/problem/sort-list/
+Lintcode <http://www.lintcode.com/problem/sort-list/>
 
-Leetcode https://leetcode.com/problems/sort-list/
+Leetcode <https://leetcode.com/problems/sort-list/>
 
-Solution http://www.jiuzhang.com/solutions/sort-list/
+Solution <http://www.jiuzhang.com/solutions/sort-list/>
 
  Merge Sort **vs** Quick Sort  
 
 ### Description
 
-Given the head of a linked list, return *the list after sorting it in* ***ascending order\***.
+Given the head of a linked list, return *the list after sorting it in* **ascending order**.
 
 
 
@@ -829,11 +831,11 @@ public class Solution {
 
 ## Reorder List
 
-Lintcode http://www.lintcode.com/problem/reorder-list/
+Lintcode <http://www.lintcode.com/problem/reorder-list/>
 
-Leetcode https://leetcode.com/problems/reorder-list/
+Leetcode <https://leetcode.com/problems/reorder-list/>
 
-Solution http://www.jiuzhang.com/solutions/reorder-list/
+Solution <http://www.jiuzhang.com/solutions/reorder-list/>
 
 ### Description
 
@@ -952,11 +954,11 @@ public class Solution {
 
 ## Linked List Cycle
 
-Lintcode http://www.lintcode.com/problem/linked-list-cycle/
+Lintcode <http://www.lintcode.com/problem/linked-list-cycle/>
 
-Leetcode https://leetcode.com/problems/linked-list-cycle/
+Leetcode <https://leetcode.com/problems/linked-list-cycle/>
 
-Solution http://www.jiuzhang.com/solutions/linked-list-cycle/
+Solution <http://www.jiuzhang.com/solutions/linked-list-cycle/>
 
 ### Description
 
@@ -1012,9 +1014,7 @@ Explanation: There is no cycle in the linked list.
 
 ![img](circularlinkedlist_notes.png)
 
-Linked List Cycle i, ii 这种题目就是背答案题目。。
-
-你不太可能在面试现场想到这个办法
+Linked List Cycle i, ii 这种题目就是背答案题目。。你不太可能在面试现场想到这个办法
 
 ```java
 public class Solution {
@@ -1043,11 +1043,7 @@ Can you solve it using O(1) (i.e. constant) memory?
 
 环的入口在哪？？？
 
-
-
 首先第一次相遇，这里操作把Slow慢指针放到第一个节点，然后再次相遇就是入口。
-
-
 
 ![img](circularlinkedlist_notes2.png)
 
@@ -1055,29 +1051,19 @@ Can you solve it using O(1) (i.e. constant) memory?
 
 把L2和tail连起来，就是“环的入口”这道题的思路来解决。
 
-
-
 实际上用一个hash表就都解决了，为什么用这个呢，要用O(1)的来实现
-
-
-
-
-
-
 
 ## Rotate List
 
-Lintcode http://www.lintcode.com/problem/rotate-list/
+Lintcode <http://www.lintcode.com/problem/rotate-list/>
 
-Leetcode https://leetcode.com/problems/rotate-list/
+Leetcode <https://leetcode.com/problems/rotate-list/>
 
-Solution http://www.jiuzhang.com/solutions/rotate-list/
+Solution <http://www.jiuzhang.com/solutions/rotate-list/>
 
 ### Description
 
 Given the head of a linked list, rotate the list to the right by k places.
-
-
 
 **Example 1:**
 
@@ -1095,8 +1081,6 @@ Input: head = [0,1,2], k = 4
 
 Output: [2,0,1] 
 
-
-
 **Constraints:**
 
 - The number of nodes in the list is in the range [0, 500].
@@ -1105,7 +1089,7 @@ Output: [2,0,1]
 
 ### Solutions
 
-一种方法，我先找到它的长度，我rotate到哪里。
+一种方法，我先找到它的长度，我 rotate 到哪里。
 
 ```java
 public class Solution {
@@ -1148,21 +1132,15 @@ public class Solution {
 }
 ```
 
-
-
-
-
-
-
 ## Merge k Sorted Lists
 
-Lintcode http://www.lintcode.com/problem/merge-k-sorted-lists/
+Lintcode <http://www.lintcode.com/problem/merge-k-sorted-lists/>
 
-Leetcode https://leetcode.com/problems/merge-k-sorted-lists/
+Leetcode <https://leetcode.com/problems/merge-k-sorted-lists/>
 
-Solution http://www.jiuzhang.com/solutions/merge-k-sorted-lists/
+Solution <http://www.jiuzhang.com/solutions/merge-k-sorted-lists/>
 
-PriorityQueue/Heap **vs** Divide Conquer
+PriorityQueue / Heap **vs** Divide Conquer
 
 ### Description
 
@@ -1171,12 +1149,11 @@ You are given an array of k linked-lists lists, each linked-list is sorted in as
 *Merge all the linked-lists into one sorted linked-list and return it.*
 
 
-
 **Example 1:**
 
-Input: lists = [[1,4,5],[1,3,4],[2,6]] 
+Input: lists = [ [1, 4, 5], [1, 3, 4], [2, 6] ] 
 
-Output: [1,1,2,3,4,4,5,6] 
+Output: [1, 1, 2, 3, 4, 4, 5, 6] 
 
 Explanation: The linked-lists are: [   1->4->5,   1->3->4,   2->6 ] merging them into one sorted list: 1->1->2->3->4->4->5->6 
 
@@ -1311,6 +1288,9 @@ public class Solution {
         return dummy.next;
     }
 }
+```
+
+```
 // Version 3: merge two by two
 /**
  * Definition for ListNode.
@@ -1377,11 +1357,11 @@ public class Solution {
 
 ## Copy List with Random Pointer
 
-Lintcode http://www.lintcode.com/problem/copy-list-with-random-pointer/
+Lintcode <http://www.lintcode.com/problem/copy-list-with-random-pointer/>
 
-Leetcode http://www.leetcode.com/problems/copy-list-with-random-pointer/
+Leetcode <http://www.leetcode.com/problems/copy-list-with-random-pointer/>
 
-Solution http://www.jiuzhang.com/solutions/copy-list-with-random-pointer/
+Solution <http://www.jiuzhang.com/solutions/copy-list-with-random-pointer/>
 
 ### Description
 
@@ -1440,7 +1420,7 @@ Output: [[3,null],[3,0],[3,null]]
 深拷贝要对每个点都新建一遍。ALL
 
 ```java
-//HashMap version
+// HashMap version
 public class Solution {
     public RandomListNode copyRandomList(RandomListNode head) {
         if (head == null) {
@@ -1493,7 +1473,7 @@ public class Solution {
 
 这道题同样需要函数化！！
 
-第一遍扫的时候巧妙运用next指针， 开始数组是1->2->3->4  。 
+第一遍扫的时候巧妙运用next指针， 开始数组是 1->2->3->4  。 
 
 然后扫描过程中 先建立copy节点 1->1`->2->2`->3->3`->4->4`, 然后第二遍copy的时候去建立边的copy， 拆分节点, 一边扫描一边拆成两个链表，这里用到两个dummy node。
 
@@ -1693,11 +1673,11 @@ public class Solution {
 
 ## Related Questions
 
-http://www.lintcode.com/problem/reverse-nodes-in-k-group/
+<http://www.lintcode.com/problem/reverse-nodes-in-k-group/>
 
-http://www.lintcode.com/problem/delete-node-in-the-middle-of-singly-linked-list/
+<http://www.lintcode.com/problem/delete-node-in-the-middle-of-singly-linked-list/>
 
-http://www.lintcode.com/problem/convert-binary-search-tree-to-doubly-linked-list/
+<http://www.lintcode.com/problem/convert-binary-search-tree-to-doubly-linked-list/>
 
 ## Homework
 
