@@ -151,11 +151,8 @@ soft delete / hard delete / logic delete
 
 ### Related Question
 
-Delete Node in the Middle of Singly Linked List
-
-
-
 Remove Duplicates from Sorrted List <https://leetcode.cn/problems/remove-duplicates-from-sorted-list/>
+
 
 ```java
 class Solution {
@@ -178,7 +175,13 @@ class Solution {
 }
 ```
 
+Delete Node in the Middle of Singly Linked List
 
+只给了要删除的节点，没给 head，那只能 soft delete。
+
+`node.val = node.next.val;`
+
+`node.next = node.next.next;`
 
 ![img](linkedlist4.png)
 
