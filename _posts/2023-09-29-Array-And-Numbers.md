@@ -13,27 +13,22 @@ img_path: /assets/images/LinkedListImages/
 ## Outline
 
 - Sorted Array
-
-- Merge Two Sorted Arrays / Merge k Sorted Arrays
-- **Median Of Two Sorted Arrays**
+    - Merge Two Sorted Arrays / Merge k Sorted Arrays
+    - **Median Of Two Sorted Arrays**
 
 - **Subarray**
-
-- Best Time to Buy and Sell Stockes  I, II, III
-- Subarray  I, II, III, IV
+    - Best Time to Buy and Sell Stockes  I, II, III
+    - Subarray  I, II, III, IV
 
 - Two Pointers
-
-- Two sum, 3 Sum, 4 Sum, k Sum, 3 Sum Closest
-- **Partition Array**
-
-加粗的为重点，review
+    - Two sum, 3 Sum, 4 Sum, k Sum, 3 Sum Closest
+    - **Partition Array**
 
 ## Merge Sorted Array
 
-Lintcode http://www.lintcode.com/en/problem/merge-sorted-array/
+Lintcode <http://www.lintcode.com/en/problem/merge-sorted-array/>
 
-Leetcode https://leetcode.com/problems/merge-sorted-array/
+Leetcode <https://leetcode.com/problems/merge-sorted-array/>
 
 ### Description
 
@@ -47,11 +42,11 @@ The final sorted array should not be returned by the function, but instead be *s
 
 **Example 1:**
 
-Input: nums1 = [1,2,3,0,0,0], m = 3, nums2 = [2,5,6], n = 3 
+Input: nums1 = [1, 2, 3, 0, 0, 0], m = 3, nums2 = [2, 5, 6], n = 3 
 
-Output: [1,2,2,3,5,6] 
+Output: [1, 2, 2, 3, 5, 6] 
 
-Explanation: The arrays we are merging are [1,2,3] and [2,5,6]. The result of the merge is [1,2,2,3,5,6] with the underlined elements coming from nums1. 
+Explanation: The arrays we are merging are [1, 2, 3] and [2, 5, 6]. The result of the merge is [1, 2, 2, 3, 5, 6] with the underlined elements coming from nums1. 
 
 **Example 2:**
 
@@ -91,9 +86,76 @@ Explanation: The arrays we are merging are [] and [1]. The result of the merge i
 
 小的trick：从最大的开始合并，那就可以从空的地方开始。可以 O(m+n) 完成
 
-## Merge Sorted Array ii
+最直观的方法是将数组 A 放进数组 B 的尾部，然后直接对整个数组进行排序。
 
-Lintcode <http://www.lintcode.com/en/problem/merge-sorted-array-ii/>
+```java
+class Solution {
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        for (int i = 0; i != n; ++i) {
+            nums1[m + i] = nums2[i];
+        }
+        Arrays.sort(nums1);
+    } // end merge
+} // end Solution
+```
+
+第二种方法，从前往后，双指针一个指向 nums1，另一个指向 nums2，每次取较小的数出来给 ans，然后最后，把 ans 复制给 nums1。
+
+
+```java
+class Solution {
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        int p1 = 0, p2 = 0, cur = 0;
+        int[] ans = new int[m + n];
+        while (p1 != m || p2 != n) {
+            if (p1 == m) {
+                cur = nums2[p2++];
+            } else if (p2 == n) {
+                cur = nums1[p1++];
+            } else if (nums1[p1] <= nums2[p2]) {
+                cur = nums1[p1++];
+            } else {
+                cur = nums2[p2++];
+            }
+            ans[p1 + p2 - 1] = cur;
+        } // end while loop
+        for (int i = 0; i < ans.length; i++) {
+            nums1[i] = ans[i];
+        } // end for loop
+    } // end merge
+} // end Solution
+```
+
+第3种方法，不用开辟新的数组，直接用给的，从后往前比较大小，取较大的放到数组的最后面来填充数组。
+
+不会覆盖的原因，一句话就能说明白：
+
+把 nums1 的数字移到另一个空位，又产生了一个新的空位，空位个数不变，所以总是有空位可以让 nums2 的数字填入。
+
+```java
+class Solution {
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        int p1 = m - 1;
+        int p2 = n - 1;
+        int p = m + n -1;
+        while (p2 >= 0) { // nums2 还有要合并的元素
+            // 如果 p1 < 0，那么走 else 分支，把 nums2 合并到 nums1 中
+            if (p1 >= 0 && nums1[p1] > nums2[p2]) {
+                nums1[p] = nums1[p1];
+                p1 -= 1;
+            } else {
+                nums1[p] = nums2[p2];
+                p2 -= 1;
+            }
+            p -= 1; // 更新下一个要填充的位置
+        } // end while loop
+    } // end merge
+} // end Solution
+```
+
+## Merge Two Sorted Arrays
+
+Lintcode <https://www.lintcode.com/problem/6/>
 
 Solution <https://www.jiuzhang.com/solutions/merge-sorted-array-ii/>
 
@@ -101,16 +163,17 @@ Solution <https://www.jiuzhang.com/solutions/merge-sorted-array-ii/>
 
 ### Description
 
-Given two sorted arrays, the task is to merge them in a sorted manner.
-
+Merge two given sorted ascending integer array A and B into a new sorted integer array.
 
 **Examples:** 
 
-***Input\****: arr1[] = { 1, 3, 4, 5}, arr2[] = {2, 4, 6, 8} 
-****Output\****: arr3[] = {1, 2, 3, 4, 4, 5, 6, 8}*
+**Input**: arr1[] = { 1, 3, 4, 5}, arr2[] = {2, 4, 6, 8}
 
-***Input\****: arr1[] = { 5, 8, 9}, arr2[] = {4, 7, 8} 
-****Output\****: arr3[] = {4, 5, 7, 8, 8, 9}* 
+**Output**: arr3[] = {1, 2, 3, 4, 4, 5, 6, 8}
+
+**Input**: arr1[] = { 5, 8, 9}, arr2[] = {4, 7, 8}
+
+**Output**: arr3[] = {4, 5, 7, 8, 8, 9}
 
 
 
@@ -139,8 +202,7 @@ class Solution {
             while(a != A.length){
                 ans[temp++] = A[a++];
             }
-        }
-        else {
+        } else {
             while(b != B.length){
                 ans[temp++] = B[b++];
             }
@@ -148,6 +210,42 @@ class Solution {
         return ans;
     }
 }
+```
+
+```java
+public class Solution {
+    /**
+     * @param a: sorted integer array A
+     * @param b: sorted integer array B
+     * @return: A new sorted integer array
+     */
+    public int[] mergeSortedArray(int[] a, int[] b) {
+        // write your code here
+        int[] ans = new int[a.length + b.length];
+        int p1 = 0;
+        int p2 = 0;
+        int p = 0;
+        while (p1 != a.length && p2 != b.length) {
+            if (a[p1] > b[p2]) {
+                ans[p] = b[p2++];
+            } else {
+                ans[p] = a[p1++];
+            }
+            p++;
+        } // end while loop
+        if (p1 != a.length) {
+            while (p1 != a.length) {
+                ans[p++] = a[p1++];
+            } // end
+        } else {
+            while (p2 != b.length) {
+                ans[p++] = b[p2++];
+            } // end while loop
+        }
+
+        return ans;
+    } // end mergeSortedArray
+} // end Solution
 ```
 
 ## Median of Two Sorted Arrays
