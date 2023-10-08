@@ -254,11 +254,11 @@ public class Solution {
 
 
 
-Lintcode http://www.lintcode.com/problem/median-of-two-sorted-arrays/
+Lintcode <http://www.lintcode.com/problem/median-of-two-sorted-arrays/>
 
-Leetcode https://leetcode.com/problems/median-of-two-sorted-arrays/
+Leetcode <https://leetcode.com/problems/median-of-two-sorted-arrays/>
 
-Solution http://www.jiuzhang.com/solutions/median-of-two-sorted-arrays/
+Solution <http://www.jiuzhang.com/solutions/median-of-two-sorted-arrays/>
 
 ### Description
 
