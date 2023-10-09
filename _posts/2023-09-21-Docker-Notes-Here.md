@@ -3,7 +3,7 @@ title: Docker Notes
 date: 2023-09-01 15:01:00 +0800
 author: CAFEBABY
 categories: [Docker]
-tags: [Docker]
+tags: [Linux, Docker]
 pin: false
 math: true
 mermaid: false

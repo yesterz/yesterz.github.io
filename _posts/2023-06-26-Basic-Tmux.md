@@ -2,8 +2,7 @@
 title: "Tmux优秀的终端复用工具"
 categories:
   - Linux
-tags:
-  - Linux
+tags: [Linux, Tmux]
 toc: true
 ---
 
