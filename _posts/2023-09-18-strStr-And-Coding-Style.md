@@ -344,7 +344,7 @@ public class Solution {
         int index = 0;
         
         Arrays.sort(nums);
-        queue.add(new LinkedList<Integer>());
+        queue.add(new ArrayList<Integer>());
         while (index < queue.size()) {
             List<Integer> subset = queue.get(index++);
             for (int i = 0; i < nums.length; i++) {
