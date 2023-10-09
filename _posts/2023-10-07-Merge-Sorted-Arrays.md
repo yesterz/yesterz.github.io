@@ -2,8 +2,8 @@
 title: Merge Sorted Arrays
 date: 2023-10-07 23:58:00 +0800
 author: Algorithms-Notes
-categories: [Algorithms]
-tags: [Two Pointers, Array, Sorting]
+categories: [Leetcode]
+tags: [Leetcode, Two Pointers, Array, Sorting]
 pin: false
 math: true
 mermaid: false
