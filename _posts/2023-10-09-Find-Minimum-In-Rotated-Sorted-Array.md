@@ -8,4 +8,4 @@ pin: false
 math: true
 mermaid: false
 ---
-![Alt text](image.png)
+![Alt text](image.p![Alt text](image.png)
