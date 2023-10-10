@@ -56,14 +56,14 @@ mermaid: false
 ## DFS in Binary Tree
 
 - Preorder
-   - [http://www.lintcode.com/problem/binary-tree-preorder-traversal/](http://www.lintcode.com/problem/binary-tree-preorder-traversal/)
-   - [http://www.jiuzhang.com/solutions/binary-tree-preorder-traversal/](http://www.jiuzhang.com/solutions/binary-tree-preorder-traversal/)
+   - <http://www.lintcode.com/problem/binary-tree-preorder-traversal/>
+   - <http://www.jiuzhang.com/solutions/binary-tree-preorder-traversal/>
 - Inorder
-   - [http://www.lintcode.com/en/problem/binary-tree-inorder-traversal/](http://www.lintcode.com/en/problem/binary-tree-inorder-traversal/)
-   - [http://www.jiuzhang.com/solutions/binary-tree-inorder-traversal/](http://www.jiuzhang.com/solutions/binary-tree-inorder-traversal/)
+   - <http://www.lintcode.com/en/problem/binary-tree-inorder-traversal/>
+   - <http://www.jiuzhang.com/solutions/binary-tree-inorder-traversal/>
 - Postorder
-   - [http://www.lintcode.com/en/problem/binary-tree-postorder-traversal/](http://www.lintcode.com/en/problem/binary-tree-postorder-traversal/)
-   - [http://www.jiuzhang.com/solutions/binary-tree-postorder-traversal/](http://www.jiuzhang.com/solutions/binary-tree-postorder-traversal/)
+   - <http://www.lintcode.com/en/problem/binary-tree-postorder-traversal/>
+   - <http://www.jiuzhang.com/solutions/binary-tree-postorder-traversal/>
 
 > **这三个程序需要背诵并理解，先背诵再理解。**
 {: .prompt-tip }
@@ -242,11 +242,11 @@ public class Solution {
 
 ## Max Depth of Binary Tree
 
-Lintcode [http://www.lintcode.com/problem/maximum-depth-of-binary-tree/](http://www.lintcode.com/problem/maximum-depth-of-binary-tree/)
+Lintcode <http://www.lintcode.com/problem/maximum-depth-of-binary-tree/>
 
-Leetcode [https://leetcode.cn/problems/maximum-depth-of-binary-tree/](https://leetcode.cn/problems/maximum-depth-of-binary-tree/)
+Leetcode <https://leetcode.cn/problems/maximum-depth-of-binary-tree/>
 
-Solution [http://www.jiuzhang.com/solutions/maximum-depth-of-binary-tree/](http://www.jiuzhang.com/solutions/maximum-depth-of-binary-tree/)
+Solution <http://www.jiuzhang.com/solutions/maximum-depth-of-binary-tree/>
 
 Related Question: Minimum Depth of Binary Tree
 
@@ -254,9 +254,9 @@ Related Question: Minimum Depth of Binary Tree
 
 ## Balanced Binary Tree
 
-Lintcode [http://www.lintcode.com/problem/balanced-binary-tree/](http://www.lintcode.com/problem/balanced-binary-tree/)
+Lintcode <http://www.lintcode.com/problem/balanced-binary-tree/>
 
-Solution [http://www.jiuzhang.com/solutions/balanced-binary-tree/](http://www.jiuzhang.com/solutions/balanced-binary-tree/)
+Solution <http://www.jiuzhang.com/solutions/balanced-binary-tree/>
 
 When we need ResultType?
 
@@ -346,9 +346,9 @@ public class Solution {
 
 ## Lowest Common Ancesstor
 
-Lintcode [http://www.lintcode.com/problem/lowest-common-ancestor/](http://www.lintcode.com/problem/lowest-common-ancestor/)
+Lintcode <http://www.lintcode.com/problem/lowest-common-ancestor/>
 
-Solution [http://www.jiuzhang.com/solutions/lowest-common-ancestor/](http://www.jiuzhang.com/solutions/lowest-common-ancestor/)
+Solution <http://www.jiuzhang.com/solutions/lowest-common-ancestor/>
 
 with parent pointer **vs** no parent pointer
 
