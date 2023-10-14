@@ -633,11 +633,11 @@ public class Solution {
 
 Eight Quenes Puzzle <https://en.wikipedia.org/wiki/Eight_queens_puzzle>
 
-Lintcode http://www.lintcode.com/problem/n-queens/
+Lintcode <http://www.lintcode.com/problem/n-queens/>
 
-Leetcode http://www.leetcode.com/problems/n-queens/
+Leetcode <http://www.leetcode.com/problems/n-queens/>
 
-Solution http://www.jiuzhang.com/solutions/n-queens/
+Solution <http://www.jiuzhang.com/solutions/n-queens/>
 
 ### Description
 

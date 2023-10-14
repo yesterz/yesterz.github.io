@@ -20,3 +20,19 @@ Largest Rectangle in Histogram <https://leetcode.cn/problems/largest-rectangle-i
 Max Tree <https://leetcode.cn/problems/maximum-binary-tree/>
 
 LRU-Cache <https://leetcode.cn/problems/lru-cache/>
+
+## Graph & Search
+
+Clone Graph <https://leetcode.cn/problems/clone-graph/>
+
+Course Schedule <https://leetcode.cn/problems/course-schedule/>
+
+Permutations I <https://leetcode.cn/problems/permutations/>
+
+Permutations II <https://leetcode.cn/problems/permutations-ii/>
+
+N Queens <https://leetcode.cn/problems/n-queens/>
+
+Palindrome Patitioning <https://leetcode.cn/problems/palindrome-partitioning/>
+
+Combination Sum <https://leetcode.cn/problems/combination-sum/>
