@@ -68,6 +68,10 @@ Leetcode <https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-tree/>
 
 ### 解题报告
 
+关键点：所查找的两个节点都存在于二叉树里面
+
+如果可以在某节点的左右子树分别找到 A 和 B，那么该节点就是 LCA。
+
 在root为根的二叉树中找A,B的LCA:
 
 1. 如果找到了就返回这个LCA
@@ -229,6 +233,8 @@ LCA(5, 8) = null
 
 
 ### 解题报告
+
+关键点：要查找的两个节点可能不存在于二叉树中。
 
 ```java
 
