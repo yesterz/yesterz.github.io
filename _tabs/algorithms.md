@@ -5,6 +5,10 @@ order: 4
 mermaid: true
 ---
 
+## Common Data Structure
+
+Array, Stack, Queue, Linked List, Tree, Heap, Graph, Hash Table.
+
 ## Coding Style
 
 Google Java Style Guide <https://yesterz.github.io/posts/Google-Java-Style-Guide/>
