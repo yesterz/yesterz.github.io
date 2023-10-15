@@ -5,6 +5,10 @@ order: 4
 mermaid: true
 ---
 
+## Big O Notation
+
+<https://yesterz.github.io/posts/Algorithm-Complexity/>
+
 ## Common Data Structure
 
 Array, Stack, Queue, Linked List, Tree, Heap, Graph, Hash Table.

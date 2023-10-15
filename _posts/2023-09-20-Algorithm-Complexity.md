@@ -11,6 +11,14 @@ mermaid: false
 
 ## 大O表示法
 
+Big O notation: algorithm complexity (time complexity, space complexity)
+
+e.g., time complexity O(n).
+
+e.g., space complexity: how much memory does it need to run this algorithm. O(n)
+
+e.g., auxiliary space complexity: is the extra space or temporary space used by an algorithm.
+
 | 大O表示法 | 英文 | 中文 |
 | --- | --- | --- |
 | O(1) | Constant Complexity | 常数复杂度 |
