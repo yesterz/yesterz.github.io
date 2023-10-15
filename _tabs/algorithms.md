@@ -36,3 +36,7 @@ N Queens <https://leetcode.cn/problems/n-queens/>
 Palindrome Patitioning <https://leetcode.cn/problems/palindrome-partitioning/>
 
 Combination Sum <https://leetcode.cn/problems/combination-sum/>
+
+Combination Sum II <https://leetcode.cn/problems/combination-sum-ii/>
+
+Word Ladder <https://leetcode.cn/problems/word-ladder/>

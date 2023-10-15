@@ -987,11 +987,11 @@ public class Solution {
 
 ## Combination Sum
 
-Lintcode http://www.lintcode.com/problem/combination-sum/
+Lintcode <http://www.lintcode.com/problem/combination-sum/>
 
-Leetcode http://www.leetcode.com/problems/combination-sum/
+Leetcode <http://www.leetcode.com/problems/combination-sum/>
 
-Solution http://www.jiuzhang.com/solutions/combination-sum/
+Solution <http://www.jiuzhang.com/solutions/combination-sum/>
 
 ### Description
 
@@ -1139,6 +1139,9 @@ public class Solution {
         }
     }
 }
+```
+
+```java
 // version 2: reuse candidates array
 public class Solution {
     public  List<List<Integer>> combinationSum(int[] candidates, int target) {
@@ -1179,6 +1182,9 @@ public class Solution {
         }
     }
 }
+```
+
+```java
 public class Solution {
     /**
      * @param candidates: A list of integers
@@ -1220,11 +1226,11 @@ public class Solution {
 
 ## Combination Sum II
 
-Lintcode http://www.lintcode.com/problem/combination-sum-ii/
+Lintcode <http://www.lintcode.com/problem/combination-sum-ii/>
 
-Leetcode http://www.leetcode.com/problems/combination-sum-ii/
+Leetcode <http://www.leetcode.com/problems/combination-sum-ii/>
 
-Solution http://www.jiuzhang.com/solutions/combination-sum-ii/
+Solution <http://www.jiuzhang.com/solutions/combination-sum-ii/>
 
 ### Description
 
@@ -1312,11 +1318,11 @@ public class Solution {
 
 ## Word Ladder
 
-Lintcode http://www.lintcode.com/problem/word-ladder/
+Lintcode <http://www.lintcode.com/problem/word-ladder/>
 
-Leetcode http://www.leetcode.com/problems/word-ladder/
+Leetcode <http://www.leetcode.com/problems/word-ladder/>
 
-Solution http://www.jiuzhang.com/solutions/word-ladder/
+Solution <http://www.jiuzhang.com/solutions/word-ladder/>
 
 很具有代表性的一类题，给你一个 start 给你一个 end ，再给你一个规则。
 
@@ -1444,6 +1450,9 @@ public class Solution {
         return nextWords;			//构造当前单词的全部下一步方案
     } // end getNextWords
 } // end Solution
+```
+
+```java
 // version: LeetCode
 public class Solution {
     public int ladderLength(String start, String end, List<String> wordList) {
@@ -1515,11 +1524,11 @@ public class Solution {
 
 ## Word Ladder II
 
-Lintcode http://www.lintcode.com/problem/word-ladder-ii/
+Lintcode <http://www.lintcode.com/problem/word-ladder-ii/>
 
-Leetcode http://www.leetcode.com/problems/word-ladder-ii/
+Leetcode <http://www.leetcode.com/problems/word-ladder-ii/>
 
-Solution http://www.jiuzhang.com/solutions/word-ladder-ii/
+Solution <http://www.jiuzhang.com/solutions/word-ladder-ii/>
 
 ### Description
 
