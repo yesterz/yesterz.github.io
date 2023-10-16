@@ -10,9 +10,10 @@ mermaid: false
 ---
 
 Time = O(nlogn)
+
 Space = O(n)
 
-```C
+```
 // main function that calls merge_sort
 // left: the left index of the sub vector
 // right: the right index of the sub vector
@@ -37,4 +38,5 @@ vector<int> mergeSort(vector<int>& a, int left, int right) {
 ## Discussion
 
 1) Could we use Merge Sort to sort a linked list? What is the time Complexity if so?
+
 2) 什么是面试中一个类型的题？
