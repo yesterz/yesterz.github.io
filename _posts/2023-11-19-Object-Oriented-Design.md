@@ -3,7 +3,7 @@ title: Singleton pattern
 date: 2023-11-19 17:17:00 +0800
 author: 
 categories: [Object-Oriented Design]
-tags: [Singleton]
+tags: [OOD]
 pin: false
 math: false
 mermaid: false
@@ -97,7 +97,7 @@ public class Singleton {
     }
 
     private Singleton() {}
-    
+
     public static final Singleton getInstance() {
         return SingletonHolder.INSTANCE;
     }
