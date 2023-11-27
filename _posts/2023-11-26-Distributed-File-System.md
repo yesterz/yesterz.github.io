@@ -149,7 +149,7 @@ Hadoop生态圈：
 
 
 
-##2.2 发展历史
+## 2.2 发展历史
 
 ![img](wps6.png) 
 
@@ -1791,7 +1791,7 @@ Safe mode is OFF
 
   ![img](wps33.jpg)
 
-##7.2 项目搭建
+## 7.2 项目搭建
 
 1. 创建一个Maven工程HdfsClientAPI，并导入相应的依赖坐标
 
