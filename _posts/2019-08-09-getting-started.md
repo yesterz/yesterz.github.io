@@ -93,7 +93,7 @@ $ docker run -it --rm \
     jekyll serve
 ```
 
-After a few seconds, the local service will be published at _<http://127.0.0.1:4000>_.
+After a few seconds, the local service will be published at _<https://127.0.0.1:4000>_.
 
 ## Deployment
 

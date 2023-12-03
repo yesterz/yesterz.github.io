@@ -17,7 +17,7 @@ Nested and mixed lists are an interesting beast. It's a corner case to make sure
 * Lists within lists do not break the ordered list numbering order
 * Your list styles go deep enough.
 ### 一个重要文档
-jekyll中文站：http://jekyllcn.com/docs
+jekyll中文站：https://jekyllcn.com/docs
 ### 每篇博文的头信息格式配置
 每篇post中要带头信息，格式像下面这样子，头信息中全局变量会被解析出来
 ``` 
@@ -77,9 +77,9 @@ end
 |-- _layouts/
 |-- _posts/
 |-- _site/
-|-- about.html    # => http://example.com/about.html
-|-- index.html    # => http://example.com/
-|-- other.md      # => http://example.com/other.html
-└── contact.html  # => http://example.com/contact.html
+|-- about.html    # => https://example.com/about.html
+|-- index.html    # => https://example.com/
+|-- other.md      # => https://example.com/other.html
+└── contact.html  # => https://example.com/contact.html
 ```
-干净的 URLs 也可以通过在头信息中定义　permalink　实现。就上边的第一个例子而言，在 other.md 文件的头信息中定义：permalink: /other，你就能得到 URL http://example.com/other
+干净的 URLs 也可以通过在头信息中定义　permalink　实现。就上边的第一个例子而言，在 other.md 文件的头信息中定义：permalink: /other，你就能得到 URL https://example.com/other

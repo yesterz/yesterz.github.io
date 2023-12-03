@@ -106,7 +106,7 @@ sudo yum install -y yum-utils device-mapper-persistent-data lvm2
 （3）设置yum源为阿里云
 
 ```shell
-sudo yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+sudo yum-config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
 ```
 
 （4）安装docker
@@ -786,7 +786,7 @@ docker run -di --name=my_registry -p 5000:5000 registry:latest
 
 3、测试私有镜像仓库是否搭建成功
 
-- 打开浏览器 输入地址http://192.168.200.128:5000/v2/_catalog
+- 打开浏览器 输入地址https://192.168.200.128:5000/v2/_catalog
 - 看到{"repositories":[]} 表示私有仓库搭建成功
 
 4、配置私有仓库

@@ -212,7 +212,7 @@ Implement int sqrt(int x).
 
 Compute and return the square root of _x_.
 
-lintcode [http://www.lintcode.com/problem/sqrtx](http://www.lintcode.com/problem/sqrtx/)
+lintcode [https://www.lintcode.com/problem/sqrtx](https://www.lintcode.com/problem/sqrtx/)
 
 leetcode [https://leetcode.cn/problems/sqrtx](https://leetcode.cn/problems/sqrtx/)
 
@@ -291,11 +291,11 @@ public double sqrt(int x) {
 
 ## Search a 2D  Matrix
 
-Lintcode [http://www.lintcode.com/problem/search-a-2d-matrix/](http://www.lintcode.com/problem/search-a-2d-matrix/)
+Lintcode [https://www.lintcode.com/problem/search-a-2d-matrix/](https://www.lintcode.com/problem/search-a-2d-matrix/)
 
 Leetcode [https://leetcode.cn/problems/search-a-2d-matrix](https://leetcode.cn/problems/search-a-2d-matrix)
 
-Solusiton [http://www.jiuzhang.com/solutions/search-a-2d-matrix/](http://www.jiuzhang.com/solutions/search-a-2d-matrix/)
+Solusiton [https://www.jiuzhang.com/solutions/search-a-2d-matrix/](https://www.jiuzhang.com/solutions/search-a-2d-matrix/)
 
 **_Last_ **row that matrix[row][0] <= target
 
@@ -476,11 +476,11 @@ O(log(n) + log(m)) time
 
 ## Search Insert Position
 
-Lintcode [http://www.lintcode.com/problem/search-insert-position/](http://www.lintcode.com/problem/search-insert-position/)
+Lintcode [https://www.lintcode.com/problem/search-insert-position/](https://www.lintcode.com/problem/search-insert-position/)
 
 Leetcode [https://leetcode.cn/problems/search-insert-position/](https://leetcode.cn/problems/search-insert-position/)
 
-Solution [http://www.jiuzhang.com/solutions/search-insert-position/](http://www.jiuzhang.com/solutions/search-insert-position/)
+Solution [https://www.jiuzhang.com/solutions/search-insert-position/](https://www.jiuzhang.com/solutions/search-insert-position/)
 
 - **_First_** posistion >= target 
 - (**_Last_** postion < target) + 1
@@ -488,13 +488,13 @@ Solution [http://www.jiuzhang.com/solutions/search-insert-position/](http://www.
 ### Related Questions
 
 1. Count of Smaller Number
-   1. Lintcode [http://www.lintcode.com/problem/count-of-smaller-number/](http://www.lintcode.com/problem/count-of-smaller-number/)
+   1. Lintcode [https://www.lintcode.com/problem/count-of-smaller-number/](https://www.lintcode.com/problem/count-of-smaller-number/)
    2. Leetcode [https://leetcode.cn/problems/count-of-smaller-numbers-after-self](https://leetcode.cn/problems/count-of-smaller-numbers-after-self)
 2. Search for a Range / Number of Target
-   1. Lintcode [http://www.lintcode.com/problem/search-for-a-range/](http://www.lintcode.com/problem/search-for-a-range/)
+   1. Lintcode [https://www.lintcode.com/problem/search-for-a-range/](https://www.lintcode.com/problem/search-for-a-range/)
    2. Leetcode [https://leetcode.cn/problems/find-first-and-last-position-of-element-in-sorted-array](https://leetcode.cn/problems/find-first-and-last-position-of-element-in-sorted-array)
 3. Search in a Big/Infinite Sorted Array
-   1. Lintcode [http://www.lintcode.com/problem/search-in-a-big-sorted-array/](http://www.lintcode.com/problem/search-in-a-big-sorted-array/)
+   1. Lintcode [https://www.lintcode.com/problem/search-in-a-big-sorted-array/](https://www.lintcode.com/problem/search-in-a-big-sorted-array/)
    2. Leetcode 
 
 找某一段就是找到第一个出现的和最后一个出现的
@@ -519,11 +519,11 @@ first postion of version
 
 ## Find Minimum in Rotated Sorted Array
 
-Lintcode [http://www.lintcode.com/problem/find-minimum-in-rotated-sorted-array/](http://www.lintcode.com/problem/find-minimum-in-rotated-sorted-array/)
+Lintcode [https://www.lintcode.com/problem/find-minimum-in-rotated-sorted-array/](https://www.lintcode.com/problem/find-minimum-in-rotated-sorted-array/)
 
 Leetcode [https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/)
 
-Solution [http://www.jiuzhang.com/solutions/find-minimum-in-rotated-sorted-array/](http://www.jiuzhang.com/solutions/find-minimum-in-rotated-sorted-array/)
+Solution [https://www.jiuzhang.com/solutions/find-minimum-in-rotated-sorted-array/](https://www.jiuzhang.com/solutions/find-minimum-in-rotated-sorted-array/)
 
 **_First _**position <= Last Number
 
@@ -541,11 +541,11 @@ Solution [http://www.jiuzhang.com/solutions/find-minimum-in-rotated-sorted-array
 
 ## Search in Rotated Sorted Array
 
-Lintcode [http://www.lintcode.com/problem/search-in-rotated-sorted-array/](http://www.lintcode.com/problem/search-in-rotated-sorted-array/)
+Lintcode [https://www.lintcode.com/problem/search-in-rotated-sorted-array/](https://www.lintcode.com/problem/search-in-rotated-sorted-array/)
 
 Leetcode [https://leetcode.com/problems/search-in-rotated-sorted-array](https://leetcode.com/problems/search-in-rotated-sorted-array)
 
-Solution [http://www.jiuzhang.com/solutions/search-in-rotated-sorted-array/](http://www.jiuzhang.com/solutions/search-in-rotated-sorted-array/)
+Solution [https://www.jiuzhang.com/solutions/search-in-rotated-sorted-array/](https://www.jiuzhang.com/solutions/search-in-rotated-sorted-array/)
 
 **You may assume no duplicate exists in the array. （特别重要）**
 
@@ -586,11 +586,11 @@ public class ArrayListSortExample {
 
 ## Find Peak Element
 
-Lintcode [http://www.lintcode.com/problem/find-peak-element/](http://www.lintcode.com/problem/find-peak-element/)
+Lintcode [https://www.lintcode.com/problem/find-peak-element/](https://www.lintcode.com/problem/find-peak-element/)
 
 Leetcode [https://leetcode.com/problems/find-peak-element](https://leetcode.com/problems/find-peak-element)
 
-Solution [http://www.jiuzhang.com/solutions/find-peak-element/](http://www.jiuzhang.com/solutions/find-peak-element/)
+Solution [https://www.jiuzhang.com/solutions/find-peak-element/](https://www.jiuzhang.com/solutions/find-peak-element/)
 
 ### Description
 
@@ -608,11 +608,11 @@ Find Peak Element ii
 ### Related Questions
 
 1. Recover Rotated Sorted Array
-   1. Lintcode [http://www.lintcode.com/problem/recover-rotated-sorted-array/](http://www.lintcode.com/problem/recover-rotated-sorted-array/)
-   2.  Solutions [http://www.jiuzhang.com/solutions/recover-rotated-sorted-array/](http://www.jiuzhang.com/solutions/recover-rotated-sorted-array/)
+   1. Lintcode [https://www.lintcode.com/problem/recover-rotated-sorted-array/](https://www.lintcode.com/problem/recover-rotated-sorted-array/)
+   2.  Solutions [https://www.jiuzhang.com/solutions/recover-rotated-sorted-array/](https://www.jiuzhang.com/solutions/recover-rotated-sorted-array/)
 2. Rotate String
-   1. Lintcode [http://www.lintcode.com/problem/rotate-string/](http://www.lintcode.com/problem/rotate-string/)
-   2. Solutions [http://www.jiuzhang.com/solutions/rotate-string/](http://www.jiuzhang.com/solutions/rotate-string/)
+   1. Lintcode [https://www.lintcode.com/problem/rotate-string/](https://www.lintcode.com/problem/rotate-string/)
+   2. Solutions [https://www.jiuzhang.com/solutions/rotate-string/](https://www.jiuzhang.com/solutions/rotate-string/)
 
 ## Conclusion
 

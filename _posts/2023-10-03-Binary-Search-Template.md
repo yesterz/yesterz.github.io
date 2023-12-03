@@ -520,11 +520,11 @@ Exponential backoff is **an algorithm that uses feedback to multiplicatively dec
 
 ## Find Minimum in Rotated Sorted Array
 
-Lintcode <http://www.lintcode.com/problem/find-minimum-in-rotated-sorted-array/>
+Lintcode <https://www.lintcode.com/problem/find-minimum-in-rotated-sorted-array/>
 
 Leetcode <https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/>
 
-Solution <http://www.jiuzhang.com/solutions/find-minimum-in-rotated-sorted-array/>
+Solution <https://www.jiuzhang.com/solutions/find-minimum-in-rotated-sorted-array/>
 
 ***First*** position <= Last Number
 
@@ -581,11 +581,11 @@ follow up: Find Peak Element ii
 
 **会了这道题，才敢说自己会二分法。**
 
-Lintcode <http://www.lintcode.com/problem/search-in-rotated-sorted-array/>
+Lintcode <https://www.lintcode.com/problem/search-in-rotated-sorted-array/>
 
 Leetcode <https://leetcode.com/problems/search-in-rotated-sorted-array>
 
-Solution <http://www.jiuzhang.com/solutions/search-in-rotated-sorted-array/>
+Solution <https://www.jiuzhang.com/solutions/search-in-rotated-sorted-array/>
 
 **You may assume no duplicate exists in the array. （特别重要）**
 

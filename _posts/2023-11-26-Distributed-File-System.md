@@ -201,7 +201,7 @@ Hortonworks文档较好。对应产品HDP。
 
 1）Apache Hadoop
 
-官网地址：http://hadoop.apache.org/releases.html
+官网地址：https://hadoop.apache.org/releases.html
 
 下载地址：https://archive.apache.org/dist/hadoop/common/
 
@@ -209,7 +209,7 @@ Hortonworks文档较好。对应产品HDP。
 
 官网地址：https://www.cloudera.com/downloads/cdh/5-10-0.html
 
-下载地址：http://archive-primary.cloudera.com/cdh5/cdh/5/
+下载地址：https://archive-primary.cloudera.com/cdh5/cdh/5/
 
 （1）2008年成立的Cloudera是最早将Hadoop商用的公司，为合作伙伴提供Hadoop的商用解决方案，主要是包括支持、咨询服务、培训。
 
@@ -790,11 +790,11 @@ HDFS_SECONDARYNAMENODE_USER=root
 
 - **Web端查看HDFS的NameNode相关信息**
 
-在浏览器地址栏中输入：http://192.168.20.101:9870，查看HDFS上存储的数据信息，以及DataNode节点的相关信息。
+在浏览器地址栏中输入：https://192.168.20.101:9870，查看HDFS上存储的数据信息，以及DataNode节点的相关信息。
 
 ![](hdfs-page.jpg)
 
-DataNodes相关信息页面：http://192.168.20.101:9870/dfshealth.html#tab-datanode
+DataNodes相关信息页面：https://192.168.20.101:9870/dfshealth.html#tab-datanode
 
 ![](hdfs-dn.jpg)
 
@@ -830,7 +830,7 @@ Found 2 items
 -rw-r--r--   2 root supergroup         38 2021-10-09 11:12 /user/root/test.txt
 ```
 
-也可以通过浏览器进行查看：http://192.168.20.101:9870/explorer.html#/user/root
+也可以通过浏览器进行查看：https://192.168.20.101:9870/explorer.html#/user/root
 
 ![](hdfs-list2.jpg)
 
@@ -2613,7 +2613,7 @@ d) 在另一台node2上同步元数据,然后在该节点上启动NameNode。
 About to bootstrap Standby ID nn2 from:
            Nameservice ID: mycluster
         Other Namenode ID: nn1
-  Other NN's HTTP address: http://node1:9870
+  Other NN's HTTP address: https://node1:9870
   Other NN's IPC  address: node1/192.168.20.101:9820
              Namespace ID: 1743499963
             Block pool ID: BP-166908272-192.168.20.101-1634275293276
@@ -2709,11 +2709,11 @@ dataLength = 29
 numChildren = 0
 ```
 
-node1占用着锁，它的状态是active的。浏览器访问：http://node1:9870
+node1占用着锁，它的状态是active的。浏览器访问：https://node1:9870
 
 ![img](wps29.jpg) 
 
-node2为standby，浏览器地址栏输入：http://node2:9870
+node2为standby，浏览器地址栏输入：https://node2:9870
 
 ![img](wps30.jpg) 
 

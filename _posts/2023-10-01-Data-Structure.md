@@ -74,11 +74,11 @@ Operations:
 
 ## Min Stack
 
-Lintcode http://www.lintcode.com/problem/min-stack/
+Lintcode https://www.lintcode.com/problem/min-stack/
 
 Leetcode https://leetcode.com/problems/min-stack/
 
-Solution http://www.jiuzhang.com/solutions/min-stack/
+Solution https://www.jiuzhang.com/solutions/min-stack/
 
 ### Description
 
@@ -209,11 +209,11 @@ public class MinStack {
 
 （可以用两个！！）
 
-Lintcode http://www.lintcode.com/problem/implement-queue-by-two-stacks/
+Lintcode https://www.lintcode.com/problem/implement-queue-by-two-stacks/
 
 Leetcode https://leetcode.com/problems/implement-queue-using-stacks/
 
-SoluLtion http://www.jiuzhang.com/solutions/implement-queue-by-two-stacks/
+SoluLtion https://www.jiuzhang.com/solutions/implement-queue-by-two-stacks/
 
 ### Description
 
@@ -311,11 +311,11 @@ public class MyQueue {
 
 一道题经典的栈的运用。
 
-Lintcode http://www.lintcode.com/problem/largest-rectangle-in-histogram/
+Lintcode https://www.lintcode.com/problem/largest-rectangle-in-histogram/
 
 Leetcode https://leetcode.com/problems/largest-rectangle-in-histogram/
 
-Solution http://www.jiuzhang.com/solutions/largest-rectangle-in-histogram/
+Solution https://www.jiuzhang.com/solutions/largest-rectangle-in-histogram/
 
 ### Description
 
@@ -407,11 +407,11 @@ public class Solution {
 
 ## Max Tree
 
-Lintcode http://www.lintcode.com/problem/max-tree/
+Lintcode https://www.lintcode.com/problem/max-tree/
 
 Leetcode https://leetcode.com/problems/maximum-binary-tree/
 
-Solution http://www.jiuzhang.com/solutions/max-tree/
+Solution https://www.jiuzhang.com/solutions/max-tree/
 
 ### Description
 
@@ -634,9 +634,9 @@ Open Hashing vs Closed Hashing
 
 ## Rehashing
 
-http://www.lintcode.com/problem/rehashing/
+https://www.lintcode.com/problem/rehashing/
 
-http://www.lintcode.com/problem/hash-function/
+https://www.lintcode.com/problem/hash-function/
 
 ## Hash in Java
 
@@ -687,11 +687,11 @@ HashTable 与 HashMap 作用相同，接口也基本相同，是同步的，但�
 
 **这道题一定要会做！！**
 
-Lintcode http://www.lintcode.com/problem/lru-cache/
+Lintcode https://www.lintcode.com/problem/lru-cache/
 
 Leetcode https://leetcode.com/problems/lru-cache/
 
-Solution http://www.jiuzhang.com/solutions/lru-cache/
+Solution https://www.jiuzhang.com/solutions/lru-cache/
 
 Example: [2 1 3 2 5 3 6 7]
 
@@ -944,13 +944,13 @@ public class LRUCache {
 
 ## Related Questions
 
-http://www.lintcode.com/problem/subarray-sum/
+https://www.lintcode.com/problem/subarray-sum/
 
-http://www.lintcode.com/problem/copy-list-with-random-pointer/
+https://www.lintcode.com/problem/copy-list-with-random-pointer/
 
-http://www.lintcode.com/problem/anagrams/
+https://www.lintcode.com/problem/anagrams/
 
-http://www.lintcode.com/problem/longest-consecutive-sequence/
+https://www.lintcode.com/problem/longest-consecutive-sequence/
 
 ## Heap
 
@@ -968,18 +968,18 @@ Operations
 
 ## Median Number
 
-Lintcode http://www.lintcode.com/problem/data-stream-median/
+Lintcode https://www.lintcode.com/problem/data-stream-median/
 
-Solution http://www.jiuzhang.com/solutions/median-in-data-stream/
+Solution https://www.jiuzhang.com/solutions/median-in-data-stream/
 
 ## Related Questions
 
-http://www.lintcode.com/problem/heapify/
+https://www.lintcode.com/problem/heapify/
 
 heapify 是帮助你理解堆的具体的存储时怎么存的
 
-http://www.lintcode.com/problem/merge-k-sorted-lists/
+https://www.lintcode.com/problem/merge-k-sorted-lists/
 
-http://www.lintcode.com/problem/merge-k-sorted-arrays/
+https://www.lintcode.com/problem/merge-k-sorted-arrays/
 
-http://www.lintcode.com/problem/ugly-number/
+https://www.lintcode.com/problem/ugly-number/

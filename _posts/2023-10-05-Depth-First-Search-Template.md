@@ -240,11 +240,11 @@ public class Solution {
 
 回文串分割
 
-Lintcode <http://www.lintcode.com/problem/palindrome-partitioning/>
+Lintcode <https://www.lintcode.com/problem/palindrome-partitioning/>
 
 Leetcode <https://leetcode.com/problems/palindrome-partitioning/>
 
-Solution <http://www.jiuzhang.com/solutions/palindrome-partitioning/>
+Solution <https://www.jiuzhang.com/solutions/palindrome-partitioning/>
 
 ### Description
 
@@ -419,11 +419,11 @@ public class Solution {
 
 ## Permutations
 
-Lintcode <http://www.lintcode.com/problem/permutations/>
+Lintcode <https://www.lintcode.com/problem/permutations/>
 
 Leetcode <https://leetcode.com/problems/permutations/>
 
-Solution <http://www.jiuzhang.com/solutions/permutations/>
+Solution <https://www.jiuzhang.com/solutions/permutations/>
 
 ### Description
 
@@ -536,11 +536,11 @@ public class Solution {
 
 ## Permutations II
 
-Lintcode <http://www.lintcode.com/problem/permutations-ii/>
+Lintcode <https://www.lintcode.com/problem/permutations-ii/>
 
-Leetcode <http://www.leetcode.com/problems/permutations-ii/>
+Leetcode <https://www.leetcode.com/problems/permutations-ii/>
 
-Solution <http://www.jiuzhang.com/solutions/permutations-ii/>
+Solution <https://www.jiuzhang.com/solutions/permutations-ii/>
 
 怎么去重？？
 
@@ -618,11 +618,11 @@ public class Solution {
 
 Eight Quenes Puzzle <https://en.wikipedia.org/wiki/Eight_queens_puzzle>
 
-Lintcode <http://www.lintcode.com/problem/n-queens/>
+Lintcode <https://www.lintcode.com/problem/n-queens/>
 
-Leetcode <http://www.leetcode.com/problems/n-queens/>
+Leetcode <https://www.leetcode.com/problems/n-queens/>
 
-Solution <http://www.jiuzhang.com/solutions/n-queens/>
+Solution <https://www.jiuzhang.com/solutions/n-queens/>
 
 ### Description
 
@@ -734,11 +734,11 @@ class Solution {
 
 ## Word Ladder
 
-Lintcode <http://www.lintcode.com/problem/word-ladder/>
+Lintcode <https://www.lintcode.com/problem/word-ladder/>
 
-Leetcode <http://www.leetcode.com/problems/word-ladder/>
+Leetcode <https://www.leetcode.com/problems/word-ladder/>
 
-Solution <http://www.jiuzhang.com/solutions/word-ladder/>
+Solution <https://www.jiuzhang.com/solutions/word-ladder/>
 
 很具有代表性的一类题，给你一个 start 给你一个 end ，再给你一个规则。
 
@@ -938,11 +938,11 @@ public class Solution {
 
 还要找出所有的方案，这就要用到 BFS + DFS 了
 
-Lintcode <http://www.lintcode.com/problem/word-ladder-ii/>
+Lintcode <https://www.lintcode.com/problem/word-ladder-ii/>
 
-Leetcode <http://www.leetcode.com/problems/word-ladder-ii/>
+Leetcode <https://www.leetcode.com/problems/word-ladder-ii/>
 
-Solution <http://www.jiuzhang.com/solutions/word-ladder-ii/>
+Solution <https://www.jiuzhang.com/solutions/word-ladder-ii/>
 
 ### Description
 

@@ -97,7 +97,7 @@ mermaid: false
 
 #### 特殊转义序列
 
-对于任何含有 [特殊转义序列](http://docs.oracle.com/javase/tutorial/java/data/characters.html)（ `\b`、`\t`、`\n`、`\f`、`\r`、`\"`、`\'` 和 `\\` ）的字符，推荐使用这些转义序列，而不是对应的八进制（例如 `\012` ）或者 Unicode（例如 `\u000a` ）转义字符。
+对于任何含有 [特殊转义序列](https://docs.oracle.com/javase/tutorial/java/data/characters.html)（ `\b`、`\t`、`\n`、`\f`、`\r`、`\"`、`\'` 和 `\\` ）的字符，推荐使用这些转义序列，而不是对应的八进制（例如 `\012` ）或者 Unicode（例如 `\u000a` ）转义字符。
 
 #### 非 ASCII 字符
 
@@ -197,7 +197,7 @@ Import 语句应按以下方式排序：
 
 #### 非空语句块：K & R 风格
 
-对于非空语句块和块状结构，花括号的使用方式遵循 Kernighan & Ritchie 风格（[Egyptian brackets](http://www.codinghorror.com/blog/2012/07/new-programming-jargon.html)）：
+对于非空语句块和块状结构，花括号的使用方式遵循 Kernighan & Ritchie 风格（[Egyptian brackets](https://www.codinghorror.com/blog/2012/07/new-programming-jargon.html)）：
 
 - 左花括号之前不能换行，除下面详细说明的情况外。
 - 左花括号之后换行。
@@ -745,7 +745,7 @@ somethingThatYieldsAFoo().aStaticMethod(); // very bad
 
 重写 `Object.finalize` 方法是 **非常罕见** 的。
 
-> **提示**：禁止这么做。如果你真的需要，请先仔细阅读和理解 [《Effective Java》第七章](http://books.google.com/books?isbn=0134686047) —— 避免使用 Finalizer 和 Cleaner，然后禁止这么做。
+> **提示**：禁止这么做。如果你真的需要，请先仔细阅读和理解 [《Effective Java》第七章](https://books.google.com/books?isbn=0134686047) —— 避免使用 Finalizer 和 Cleaner，然后禁止这么做。
 {: .prompt-tip }
 
 ---

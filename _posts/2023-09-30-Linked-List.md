@@ -59,11 +59,11 @@ node1 = node2; 这只是改变了指针的引用。
 
 ## Remove Duplicates from Sorrted List ii
 
-Lintcode <http://www.lintcode.com/problem/remove-duplicates-from-sorted-list-ii/>
+Lintcode <https://www.lintcode.com/problem/remove-duplicates-from-sorted-list-ii/>
 
 Leetcode <https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/>
 
-Solution <http://www.jiuzhang.com/solutions/remove-duplicates-from-sorted-list-ii/>
+Solution <https://www.jiuzhang.com/solutions/remove-duplicates-from-sorted-list-ii/>
 
 ### Description
 
@@ -263,11 +263,11 @@ public class Solution {
 
 ## Reverse Linked List ii
 
-Lintcode <http://www.lintcode.com/problem/reverse-linked-list-ii/>
+Lintcode <https://www.lintcode.com/problem/reverse-linked-list-ii/>
 
 Leetcode <https://leetcode.cn/problems/reverse-linked-list-ii/>
 
-Solution <http://www.jiuzhang.com/solutions/reverse-linked-list-ii/>
+Solution <https://www.jiuzhang.com/solutions/reverse-linked-list-ii/>
 
 ### Description
 
@@ -390,11 +390,11 @@ Related Questions:
 
 还有一道类似的叫做 **Partition Array**
 
-Lintcode <http://www.lintcode.com/problem/partition-list/>
+Lintcode <https://www.lintcode.com/problem/partition-list/>
 
 Leetcode <https://leetcode.com/problems/partition-list/>
 
-Solution <http://www.jiuzhang.com/solutions/partition-list/>
+Solution <https://www.jiuzhang.com/solutions/partition-list/>
 
 ### Description
 
@@ -546,11 +546,11 @@ class Solution {
 
 ## Sort List
 
-Lintcode <http://www.lintcode.com/problem/sort-list/>
+Lintcode <https://www.lintcode.com/problem/sort-list/>
 
 Leetcode <https://leetcode.com/problems/sort-list/>
 
-Solution <http://www.jiuzhang.com/solutions/sort-list/>
+Solution <https://www.jiuzhang.com/solutions/sort-list/>
 
  Merge Sort **vs** Quick Sort  
 
@@ -834,11 +834,11 @@ public class Solution {
 
 ## Reorder List
 
-Lintcode <http://www.lintcode.com/problem/reorder-list/>
+Lintcode <https://www.lintcode.com/problem/reorder-list/>
 
 Leetcode <https://leetcode.com/problems/reorder-list/>
 
-Solution <http://www.jiuzhang.com/solutions/reorder-list/>
+Solution <https://www.jiuzhang.com/solutions/reorder-list/>
 
 ### Description
 
@@ -957,11 +957,11 @@ public class Solution {
 
 ## Linked List Cycle
 
-Lintcode <http://www.lintcode.com/problem/linked-list-cycle/>
+Lintcode <https://www.lintcode.com/problem/linked-list-cycle/>
 
 Leetcode <https://leetcode.com/problems/linked-list-cycle/>
 
-Solution <http://www.jiuzhang.com/solutions/linked-list-cycle/>
+Solution <https://www.jiuzhang.com/solutions/linked-list-cycle/>
 
 ### Description
 
@@ -1058,11 +1058,11 @@ Can you solve it using O(1) (i.e. constant) memory?
 
 ## Rotate List
 
-Lintcode <http://www.lintcode.com/problem/rotate-list/>
+Lintcode <https://www.lintcode.com/problem/rotate-list/>
 
 Leetcode <https://leetcode.com/problems/rotate-list/>
 
-Solution <http://www.jiuzhang.com/solutions/rotate-list/>
+Solution <https://www.jiuzhang.com/solutions/rotate-list/>
 
 ### Description
 
@@ -1137,11 +1137,11 @@ public class Solution {
 
 ## Merge k Sorted Lists
 
-Lintcode <http://www.lintcode.com/problem/merge-k-sorted-lists/>
+Lintcode <https://www.lintcode.com/problem/merge-k-sorted-lists/>
 
 Leetcode <https://leetcode.com/problems/merge-k-sorted-lists/>
 
-Solution <http://www.jiuzhang.com/solutions/merge-k-sorted-lists/>
+Solution <https://www.jiuzhang.com/solutions/merge-k-sorted-lists/>
 
 PriorityQueue / Heap **vs** Divide Conquer
 
@@ -1360,11 +1360,11 @@ public class Solution {
 
 ## Copy List with Random Pointer
 
-Lintcode <http://www.lintcode.com/problem/copy-list-with-random-pointer/>
+Lintcode <https://www.lintcode.com/problem/copy-list-with-random-pointer/>
 
-Leetcode <http://www.leetcode.com/problems/copy-list-with-random-pointer/>
+Leetcode <https://www.leetcode.com/problems/copy-list-with-random-pointer/>
 
-Solution <http://www.jiuzhang.com/solutions/copy-list-with-random-pointer/>
+Solution <https://www.jiuzhang.com/solutions/copy-list-with-random-pointer/>
 
 ### Description
 
@@ -1534,11 +1534,11 @@ public class Solution {
 
 ## Convert Sorted List to Balanced BST
 
-Lintcode http://www.lintcode.com/problem/convert-sorted-list-to-balanced-bst/
+Lintcode https://www.lintcode.com/problem/convert-sorted-list-to-balanced-bst/
 
 Leetcode https://leetcode.com/problems/convert-sorted-list-to-binary-search-tree/
 
-Solution http://www.jiuzhang.com/solutions/convert-sorted-list-to-balanced-bst/
+Solution https://www.jiuzhang.com/solutions/convert-sorted-list-to-balanced-bst/
 
 ### Description
 
@@ -1676,11 +1676,11 @@ public class Solution {
 
 ## Related Questions
 
-<http://www.lintcode.com/problem/reverse-nodes-in-k-group/>
+<https://www.lintcode.com/problem/reverse-nodes-in-k-group/>
 
-<http://www.lintcode.com/problem/delete-node-in-the-middle-of-singly-linked-list/>
+<https://www.lintcode.com/problem/delete-node-in-the-middle-of-singly-linked-list/>
 
-<http://www.lintcode.com/problem/convert-binary-search-tree-to-doubly-linked-list/>
+<https://www.lintcode.com/problem/convert-binary-search-tree-to-doubly-linked-list/>
 
 ## Homework
 

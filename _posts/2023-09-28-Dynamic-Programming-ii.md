@@ -30,9 +30,9 @@ img_path: /assets/images/IntroductionToDPImages/
 
 ## 什么情况下不使用动态规划？
 
-求出所有**具体**的方案而非方案的**个数** http://www.lintcode.com/problem/palindrome-partitioning/
+求出所有**具体**的方案而非方案的**个数** https://www.lintcode.com/problem/palindrome-partitioning/
 
-输入数据是一个**集合**而不是**序列** http://www.lintcode.com/problem/longest-consecutive-sequence/
+输入数据是一个**集合**而不是**序列** https://www.lintcode.com/problem/longest-consecutive-sequence/
 
 则**极不可能**使用动态规划求解
 
@@ -191,11 +191,11 @@ answer: f[n-1] ...
 
 ## Palindrome Partitioning ii
 
-Lintcode http://www.lintcode.com/problem/palindrome-partitioning-ii/
+Lintcode https://www.lintcode.com/problem/palindrome-partitioning-ii/
 
 Leetcode https://leetcode.com/problems/palindrome-partitioning-ii/
 
-Solution http://www.jiuzhang.com/solutions/palindrome-partitioning-ii/
+Solution https://www.jiuzhang.com/solutions/palindrome-partitioning-ii/
 
 
 
@@ -462,11 +462,11 @@ public class Solution {
 
 ## Word Break
 
-Lintcode http://www.lintcode.com/problem/word-break/
+Lintcode https://www.lintcode.com/problem/word-break/
 
 Leetcode https://leetcode.com/problems/word-break/
 
-Solution http://www.jiuzhang.com/solutions/word-break/
+Solution https://www.jiuzhang.com/solutions/word-break/
 
 ### Description
 
@@ -663,9 +663,9 @@ answer: f[s1.length()][s2.length()]
 
 ## Longest Common Subsequence
 
-Lintcode http://www.lintcode.com/problem/longest-common-subsequence/
+Lintcode https://www.lintcode.com/problem/longest-common-subsequence/
 
-Solution http://www.jiuzhang.com/solutions/longest-common-subsequence/
+Solution https://www.jiuzhang.com/solutions/longest-common-subsequence/
 
 ### Description
 
@@ -747,17 +747,17 @@ public class Solution {
 
 ### Related Question
 
-Longest Common Substring http://www.lintcode.com/problem/longest-common-substring/
+Longest Common Substring https://www.lintcode.com/problem/longest-common-substring/
 
 
 
 ## Edit Distance
 
-Lintcode http://www.lintcode.com/problem/edit-distance/
+Lintcode https://www.lintcode.com/problem/edit-distance/
 
 Leetcode https://leetcode.com/problems/edit-distance/
 
-Solution http://www.jiuzhang.com/solutions/edit-distance/
+Solution https://www.jiuzhang.com/solutions/edit-distance/
 
 
 
@@ -852,11 +852,11 @@ public class Solution {
 
 ## Distinct Subsequences
 
-Lintcode http://www.lintcode.com/problem/distinct-subsequences/
+Lintcode https://www.lintcode.com/problem/distinct-subsequences/
 
 Leetcode https://leetcode.com/problems/distinct-subsequences/
 
-Solution http://www.jiuzhang.com/solutions/distinct-subsequences/
+Solution https://www.jiuzhang.com/solutions/distinct-subsequences/
 
 ### Description
 
@@ -938,11 +938,11 @@ public class Solution {
 
 ## Interleaving String
 
-Lintcode http://www.lintcode.com/problem/interleaving-string/
+Lintcode https://www.lintcode.com/problem/interleaving-string/
 
 Leetcode https://leetcode.com/problems/interleaving-string/
 
-Solution http://www.jiuzhang.com/solutions/interleaving-string/
+Solution https://www.jiuzhang.com/solutions/interleaving-string/
 
 ### Description
 
@@ -1074,25 +1074,25 @@ Could you solve it using only O(s2.length) additional memory space?
 
 - 背包类：
 
-http://www.lintcode.com/problem/backpack/
+https://www.lintcode.com/problem/backpack/
 
-http://www.lintcode.com/problem/backpack-ii/
+https://www.lintcode.com/problem/backpack-ii/
 
-http://www.lintcode.com/problem/minimum-adjustment-cost/
+https://www.lintcode.com/problem/minimum-adjustment-cost/
 
-http://www.lintcode.com/problem/k-sum/
+https://www.lintcode.com/problem/k-sum/
 
 - 区间类：
 
-http://www.lintcode.com/problem/coins-in-a-line-iii/
+https://www.lintcode.com/problem/coins-in-a-line-iii/
 
-http://www.lintcode.com/problem/scramble-string/
+https://www.lintcode.com/problem/scramble-string/
 
 - 划分类：
 
-http://www.lintcode.com/problem/best-time-to-buy-and-sell-stock-iv/
+https://www.lintcode.com/problem/best-time-to-buy-and-sell-stock-iv/
 
-http://www.lintcode.com/problem/maximum-subarray-iii/
+https://www.lintcode.com/problem/maximum-subarray-iii/
 
 
 

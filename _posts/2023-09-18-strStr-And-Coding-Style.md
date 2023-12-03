@@ -24,7 +24,7 @@ mermaid: false
 
 Returns the position of the first occurrence of string target in string source, or -1 if target is not part of source.
 
-Lintcode [http://www.lintcode.com/problem/strstr/](http://www.lintcode.com/problem/strstr/)
+Lintcode [https://www.lintcode.com/problem/strstr/](https://www.lintcode.com/problem/strstr/)
 
 Leetcode [https://leetcode.cn/problems/find-the-index-of-the-first-occurrence-in-a-string](https://leetcode.cn/problems/find-the-index-of-the-first-occurrence-in-a-string/)
 
@@ -155,11 +155,11 @@ SEV
 ## 排列组合模板
 
 - 全子集问题 Subsets
-   - Lintcode [http://www.lintcode.com/problem/subsets/](http://www.lintcode.com/problem/subsets/)
-   - Solution [http://www.jiuzhang.com/solutions/subsets/](http://www.jiuzhang.com/solutions/subsets/)
+   - Lintcode [https://www.lintcode.com/problem/subsets/](https://www.lintcode.com/problem/subsets/)
+   - Solution [https://www.jiuzhang.com/solutions/subsets/](https://www.jiuzhang.com/solutions/subsets/)
 - 带重复元素的全子集问题
-   - Lintcode [http://www.lintcode.com/problem/subsets-ii/](http://www.lintcode.com/problem/subsets-ii/)
-   - Solution [http://www.jiuzhang.com/solutions/subsets-ii/](http://www.jiuzhang.com/solutions/subsets-ii/)
+   - Lintcode [https://www.lintcode.com/problem/subsets-ii/](https://www.lintcode.com/problem/subsets-ii/)
+   - Solution [https://www.jiuzhang.com/solutions/subsets-ii/](https://www.jiuzhang.com/solutions/subsets-ii/)
 
 ## Subsets
 

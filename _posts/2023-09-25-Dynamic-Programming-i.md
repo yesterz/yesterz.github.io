@@ -31,11 +31,11 @@ img_path: /assets/images/IntroductionToDPImages/
 
 ## Triangle
 
-Lintcode [http://www.lintcode.com/problem/triangle/](http://www.lintcode.com/problem/triangle/)
+Lintcode [https://www.lintcode.com/problem/triangle/](https://www.lintcode.com/problem/triangle/)
 
 Leetcode [https://leetcode.cn/problems/triangle](https://leetcode.cn/problems/triangle)
 
-Solution [http://www.jiuzhang.com/solutions/triangle/](http://www.jiuzhang.com/solutions/triangle/)
+Solution [https://www.jiuzhang.com/solutions/triangle/](https://www.jiuzhang.com/solutions/triangle/)
 
 解决方法：
 
@@ -490,9 +490,9 @@ public class Solution {
 
 ## 什么情况下不适用动态规划？
 
-求出所有具体的方案而非方案个数 [http://www.lintcode.com/problem/palindrome-partitioning/](http://www.lintcode.com/problem/palindrome-partitioning/)
+求出所有具体的方案而非方案个数 [https://www.lintcode.com/problem/palindrome-partitioning/](https://www.lintcode.com/problem/palindrome-partitioning/)
 
-输入数据是一个集合而不是序列 [http://www.lintcode.com/problem/longest-consecutive-sequence/](http://www.lintcode.com/problem/longest-consecutive-sequence/)
+输入数据是一个集合而不是序列 [https://www.lintcode.com/problem/longest-consecutive-sequence/](https://www.lintcode.com/problem/longest-consecutive-sequence/)
 
 则极不可能使用动态规划求解
 
@@ -553,11 +553,11 @@ public class Solution {
 
 ## Minimum Path Sum
 
-Lintcode [http://www.lintcode.com/problem/minimum-path-sum/](http://www.lintcode.com/problem/minimum-path-sum/)
+Lintcode [https://www.lintcode.com/problem/minimum-path-sum/](https://www.lintcode.com/problem/minimum-path-sum/)
 
 Leetcode [https://leetcode.com/problems/minimum-path-sum/](https://leetcode.com/problems/minimum-path-sum/)
 
-Solution [http://www.jiuzhang.com/solutions/minimum-path-sum/](http://www.jiuzhang.com/solutions/minimum-path-sum/)
+Solution [https://www.jiuzhang.com/solutions/minimum-path-sum/](https://www.jiuzhang.com/solutions/minimum-path-sum/)
 
 ### Description
 
@@ -750,11 +750,11 @@ public class Solution {
 
 ## Unique Path
 
-Lintcode [http://www.lintcode.com/problem/unique-paths/](http://www.lintcode.com/problem/unique-paths/)
+Lintcode [https://www.lintcode.com/problem/unique-paths/](https://www.lintcode.com/problem/unique-paths/)
 
 Leetcode [https://leetcode.com/problems/unique-paths/](https://leetcode.com/problems/unique-paths/)
 
-Solution [http://www.jiuzhang.com/solutions/unique-paths/](http://www.jiuzhang.com/solutions/unique-paths/)
+Solution [https://www.jiuzhang.com/solutions/unique-paths/](https://www.jiuzhang.com/solutions/unique-paths/)
 
 ![](dp1-5.png)
 
@@ -839,11 +839,11 @@ public class Solution {
 
 更简单的问题，爬楼梯
 
-Lintcode [http://www.lintcode.com/problem/climbing-stairs/](http://www.lintcode.com/problem/climbing-stairs/)
+Lintcode [https://www.lintcode.com/problem/climbing-stairs/](https://www.lintcode.com/problem/climbing-stairs/)
 
 Leetcode [https://leetcode.cn/problems/climbing-stairs/](https://leetcode.cn/problems/climbing-stairs/)
 
-Solution [http://www.jiuzhang.com/solutions/climbing-stairs/](http://www.jiuzhang.com/solutions/climbing-stairs/)
+Solution [https://www.jiuzhang.com/solutions/climbing-stairs/](https://www.jiuzhang.com/solutions/climbing-stairs/)
 
 ### Description
 
@@ -947,11 +947,11 @@ public class Solution {
 
 看一个稍微复杂一点的例子
 
-Lintcode [http://www.lintcode.com/problem/jump-game/](http://www.lintcode.com/problem/jump-game/)
+Lintcode [https://www.lintcode.com/problem/jump-game/](https://www.lintcode.com/problem/jump-game/)
 
 Leetcode [https://leetcode.com/problems/jump-game/](https://leetcode.com/problems/jump-game/)
 
-Solution [http://www.jiuzhang.com/solutions/jump-game/](http://www.jiuzhang.com/solutions/jump-game/)
+Solution [https://www.jiuzhang.com/solutions/jump-game/](https://www.jiuzhang.com/solutions/jump-game/)
 
 ### Description
 
@@ -1009,11 +1009,11 @@ Its maximum jump length is 0, which makes it impossible to reach the last index.
 
 ## Jump Game ii
 
-Lintcode [http://www.lintcode.com/problem/jump-game-ii/](http://www.lintcode.com/problem/jump-game-ii/)
+Lintcode [https://www.lintcode.com/problem/jump-game-ii/](https://www.lintcode.com/problem/jump-game-ii/)
 
 Leetcode [https://leetcode.cn/problems/jump-game-ii/](https://leetcode.cn/problems/jump-game-ii/)
 
-Solution [http://www.jiuzhang.com/solutions/jump-game-ii/](http://www.jiuzhang.com/solutions/jump-game-ii/)
+Solution [https://www.jiuzhang.com/solutions/jump-game-ii/](https://www.jiuzhang.com/solutions/jump-game-ii/)
 
 
 ### Description

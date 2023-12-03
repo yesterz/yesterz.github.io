@@ -36,7 +36,7 @@ git commit --amend [file1] [file2] ...  # 重做上一次 commit，并包括指�
 
 [] 下面内容重新合并过来
 
-git rebase http://gitbook.liuhui998.com/4_2.html
+git rebase https://gitbook.liuhui998.com/4_2.html
 
 合并多个commit： https://blog.csdn.net/itfootball/article/details/44154121
 

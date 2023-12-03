@@ -137,16 +137,16 @@ _注意：命令区分大小写（需要注意的事项会出现在当前行这�
 [kepbod]: https://github.com/kepbod/ivim
 [chxuan]: https://github.com/chxuan/vimplus
 [spacevim]: https://github.com/SpaceVim/SpaceVim
-[coolshell]: http://coolshell.cn/articles/5426.html
+[coolshell]: https://coolshell.cn/articles/5426.html
 [vimgalore]: https://github.com/mhinz/vim-galore
-[liuzhijun]: http://liuzhijun.iteye.com/category/270228
+[liuzhijun]: https://liuzhijun.iteye.com/category/270228
 [vimjc]: https://vimjc.com
 [learnvim]: https://github.com/iggredible/Learn-Vim
 [openvim]: https://openvim.com/
 [quickref]: https://quickref.me/vim
 [cheatsheets1]: https://vim.rtorr.com/lang/zh_tw
 [cheatsheets2]: https://vimsheet.com/
-[cheatsheets3]: http://people.csail.mit.edu/vgod/vim/vim-cheat-sheet-en.png
+[cheatsheets3]: https://people.csail.mit.edu/vgod/vim/vim-cheat-sheet-en.png
 [cheatsheets4]: https://cdn.shopify.com/s/files/1/0165/4168/files/preview.png
 
 ## 光标的移动

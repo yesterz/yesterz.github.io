@@ -44,7 +44,7 @@ mermaid: false
  * version 2.0 (the "License"); you may not use this file except in compliance
  * with the License. You may obtain a copy of the License at:
  *
- *   http://www.apache.org/licenses/LICENSE-2.0
+ *   https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
@@ -173,7 +173,7 @@ DEFAULT_EVENT_LOOP_THREADS = Math.max(1, SystemPropertyUtil.getInt("io.netty.eve
  * version 2.0 (the "License"); you may not use this file except in compliance
  * with the License. You may obtain a copy of the License at:
  *
- *   http://www.apache.org/licenses/LICENSE-2.0
+ *   https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
@@ -666,7 +666,7 @@ if((readyOps & (SelectionKey.OP_READ | SelectionKey.OP_ACCEPT)) != 0 || readyOps
 }
 ```
 
-2. 执行浏览器 `http://localhost:8007/` ，客户端发出请求
+2. 执行浏览器 `https://localhost:8007/` ，客户端发出请求
 3. 从的断点我们可以看到，`readyOps` 是 `16`，也就是 `Accept` 事件。说明浏览器的请求已经进来了。
 4. 这个 `unsafe` 是 `boss` 线程中 `NioServerSocketChannel` 的 `AbstractNioMessageChannel$NioMessageUnsafe` 对象。我们进入到 `AbstractNioMessageChannel$NioMessageUnsafe` 的 `read` 方法中
 5. `read` 方法代码并分析:
@@ -1125,7 +1125,7 @@ public final ChannelPipeline addLast(EventExecutorGroup group, String name, Chan
 
 说明
 
-当浏览器输入 `http://localhost:8007` 。可以看到会执行 `handler`
+当浏览器输入 `https://localhost:8007` 。可以看到会执行 `handler`
 在 `Debug` 时，可以将断点下在 `DefaultChannelPipeline` 类的
 
 ```java

@@ -549,8 +549,8 @@ pg_two = get_page_source("koukou.com")
 def download_image(url, save_path):
     print(f"我要下载图片{url}了", f"保存在{save_path}")
 
-donwload_image("http://www.baidu.com/abc/huyifei.jpg", "胡二飞.jpg")
-donwload_image("http://www.baidu.com/aaa/dagedagefeifeifei.jpg", "大哥大哥飞飞飞.jpg")
+donwload_image("https://www.baidu.com/abc/huyifei.jpg", "胡二飞.jpg")
+donwload_image("https://www.baidu.com/aaa/dagedagefeifeifei.jpg", "大哥大哥飞飞飞.jpg")
 
 ```
 

@@ -134,7 +134,7 @@ IDEA破解：https://tech.souyunku.com/?p=49115
 
 ### 3.1 Maven仓库是什么
 
-Maven仓库是基于简单文件系统存储的，集中化管理Java API资源（构件）的一个服务。仓库中的任何一个构件都有其唯一的坐标，根据这个坐标可以定义其在仓库中的唯一存储路径，这要得益于 Maven 的[坐标机制](http://tangyanbo.iteye.com/blog/1503946)，任何 Maven项目使用任何一个构件的方式都是完全相同的，Maven 可以在某个位置统一存储所有的 Maven 项目共享的构件，这个统一的位置就是仓库，项目构建完毕后生成的构件也可以安装或者部署到仓库中，供其它项目使用。
+Maven仓库是基于简单文件系统存储的，集中化管理Java API资源（构件）的一个服务。仓库中的任何一个构件都有其唯一的坐标，根据这个坐标可以定义其在仓库中的唯一存储路径，这要得益于 Maven 的[坐标机制](https://tangyanbo.iteye.com/blog/1503946)，任何 Maven项目使用任何一个构件的方式都是完全相同的，Maven 可以在某个位置统一存储所有的 Maven 项目共享的构件，这个统一的位置就是仓库，项目构建完毕后生成的构件也可以安装或者部署到仓库中，供其它项目使用。
 
 坐标：坐标有三个部分构成，如果一个部分不同那么表示的就是不同的jar。
 
@@ -206,7 +206,7 @@ D:\devsoft\mvnRepo382\com\itbaizhan\mavenDemo\1.0-SNAPSHOT
 
 #### 3.3.2 配置镜像仓库
 
-如果仓库A可以提供仓库B存储的所有内容，那么就可以认为A是B的一个镜像。例如：在国内直接连接中央仓库下载依赖，由于一些特殊原因下载速度非常慢。这时，我们可以使用阿里云提供的镜像https://maven.aliyun.com/repository/public来替换中央仓库http://repol.maven.org/maven2/。修改maven的setting.xml文件，具体内容如下：
+如果仓库A可以提供仓库B存储的所有内容，那么就可以认为A是B的一个镜像。例如：在国内直接连接中央仓库下载依赖，由于一些特殊原因下载速度非常慢。这时，我们可以使用阿里云提供的镜像https://maven.aliyun.com/repository/public来替换中央仓库https://repol.maven.org/maven2/。修改maven的setting.xml文件，具体内容如下：
 
 ```xml
 <mirror>
@@ -470,9 +470,9 @@ Maven中的继承跟Java中的继承概念一样，需要有父项目以及子�
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="https://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.itbaizhan</groupId>
     <artifactId>parent</artifactId>
@@ -503,9 +503,9 @@ Maven中的继承跟Java中的继承概念一样，需要有父项目以及子�
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="https://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.itbaizhan</groupId>
@@ -543,9 +543,9 @@ parenta项目的pom.xml
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="https://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.itbaizhan</groupId>
     <artifactId>parenta</artifactId>
@@ -572,9 +572,9 @@ parentb项目的pom.xml
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="https://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.itbaizhan</groupId>
@@ -716,7 +716,7 @@ Maven的聚合特性可以帮助我们把多个项目基于多个模块聚合在
 
 Maven自身拥有很多内置插件，每一个内置插件都代表了Maven的一种行为。Maven在管理项目整个生命周期时，在不同的阶段处理的过程都是使用插件来具体完成。如：构建项目时使用构建插件、编译项目时使用编译插件、清除构建使用清除构建的插件、测试项目时使用测试插件、打包时使用资源拷贝插件以及打包插件。
 
-maven插件更多信息见：http://maven.apache.org/plugins/index.html
+maven插件更多信息见：https://maven.apache.org/plugins/index.html
 
 我们可以在不同阶段使用Maven中的不同命令来触发不同的插件来执行不同的工作。换言之，Maven的插件是需要依赖命令来执行的。
 
@@ -921,7 +921,7 @@ Tomcat插件是Maven的扩展插件，其作用是为基于Maven开发的Web项�
 
 官网的命名规范说明
 
-http://maven.apache.org/guides/mini/guide-naming-conventions.html
+https://maven.apache.org/guides/mini/guide-naming-conventions.html
 
 1. groupId
 
@@ -951,9 +951,9 @@ http://maven.apache.org/guides/mini/guide-naming-conventions.html
 
 	```xml
 	<?xml version="1.0" encoding="UTF-8"?>
-	<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-	         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+	<web-app xmlns="https://xmlns.jcp.org/xml/ns/javaee"
+	         xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+	         xsi:schemaLocation="https://xmlns.jcp.org/xml/ns/javaee https://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
 	         version="4.0">
 	</web-app>
 	```
@@ -980,9 +980,9 @@ http://maven.apache.org/guides/mini/guide-naming-conventions.html
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="https://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.itbaizhan</groupId>
@@ -1069,7 +1069,7 @@ http://maven.apache.org/guides/mini/guide-naming-conventions.html
         <!-- 上传的war包解压后的路径 -->
         <path>/ROOT</path>
         <!-- 将war上传哪个服务器上，除了IP和端口可以修改外其它内容不变-->
-        <url>http://192.168.20.102:8080/manager/text</url>
+        <url>https://192.168.20.102:8080/manager/text</url>
         <!-- 为tomcat 配置的用户名和密码 -->
         <username>tomcat</username>
         <password>tomcat</password>

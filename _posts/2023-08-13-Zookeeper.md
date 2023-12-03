@@ -925,9 +925,9 @@ epoch也称为纪元数字。实现中zxid是一个64位的数字，它高32位�
 
 	```xml
 	<?xml version="1.0" encoding="UTF-8"?>
-	<project xmlns="http://maven.apache.org/POM/4.0.0"
-	         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<project xmlns="https://maven.apache.org/POM/4.0.0"
+	         xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+	         xsi:schemaLocation="https://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	    <modelVersion>4.0.0</modelVersion>
 	    <groupId>com.itbaizhan</groupId>
 	    <artifactId>zookeeper</artifactId>

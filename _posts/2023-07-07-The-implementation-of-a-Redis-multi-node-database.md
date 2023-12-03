@@ -9,7 +9,7 @@ toc: true
 
 Redis 官网：<https://redis.io/docs/management/replication>
 
-Redis 翻译站：<http://www.redis.cn/topics/replication.html>
+Redis 翻译站：<https://www.redis.cn/topics/replication.html>
 
 ## 复制
 

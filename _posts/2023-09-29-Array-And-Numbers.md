@@ -26,7 +26,7 @@ img_path: /assets/images/LinkedListImages/
 
 ## Merge Sorted Array
 
-Lintcode <http://www.lintcode.com/en/problem/merge-sorted-array/>
+Lintcode <https://www.lintcode.com/en/problem/merge-sorted-array/>
 
 Leetcode <https://leetcode.com/problems/merge-sorted-array/>
 
@@ -254,11 +254,11 @@ public class Solution {
 
 
 
-Lintcode <http://www.lintcode.com/problem/median-of-two-sorted-arrays/>
+Lintcode <https://www.lintcode.com/problem/median-of-two-sorted-arrays/>
 
 Leetcode <https://leetcode.com/problems/median-of-two-sorted-arrays/>
 
-Solution <http://www.jiuzhang.com/solutions/median-of-two-sorted-arrays/>
+Solution <https://www.jiuzhang.com/solutions/median-of-two-sorted-arrays/>
 
 ### Description
 
@@ -299,7 +299,7 @@ Explanation: merged array = [1,2,3,4] and median is (2 + 3) / 2 = 2.5.
 
 ### Solutions
 
-还有一道题，就叫 [Median](http://www.lintcode.com/problem/median) 。一个数组的中位数，解法就是 Quick Select 他能找到的是一个无序数组的第K大的数，O(n)的时间完成这个。
+还有一道题，就叫 [Median](https://www.lintcode.com/problem/median) 。一个数组的中位数，解法就是 Quick Select 他能找到的是一个无序数组的第K大的数，O(n)的时间完成这个。
 
 - Quickselect Algorithm
 
@@ -466,11 +466,11 @@ public class Solution {
 
 ## BT2B & SS vs MMS
 
-http://www.lintcode.com/problem/best-time-to-buy-and-sell-stock/
+https://www.lintcode.com/problem/best-time-to-buy-and-sell-stock/
 
-http://www.lintcode.com/problem/best-time-to-buy-and-sell-stock-ii/
+https://www.lintcode.com/problem/best-time-to-buy-and-sell-stock-ii/
 
-http://www.lintcode.com/problem/best-time-to-buy-and-sell-stock-iii/
+https://www.lintcode.com/problem/best-time-to-buy-and-sell-stock-iii/
 
 ## Best Time to Buy and Sell Stock
 
@@ -478,7 +478,7 @@ http://www.lintcode.com/problem/best-time-to-buy-and-sell-stock-iii/
 
 Leetcode <https://leetcode.com/problems/best-time-to-buy-and-sell-stock/>
 
-Lintcode <http://www.lintcode.com/problem/best-time-to-buy-and-sell-stock/>
+Lintcode <https://www.lintcode.com/problem/best-time-to-buy-and-sell-stock/>
 
 Solution <https://www.jiuzhang.com/solutions/best-time-to-buy-and-sell-stock/>
 
@@ -542,13 +542,13 @@ public class Solution {
 
 ## Maximum Subarray
 
-Lintcode <http://www.lintcode.com/problem/maximum-subarray/>
+Lintcode <https://www.lintcode.com/problem/maximum-subarray/>
 
 Leetcode <https://leetcode.cn/problems/maximum-subarray/>
 
-http://www.lintcode.com/problem/maximum-subarray-ii/
+https://www.lintcode.com/problem/maximum-subarray-ii/
 
-http://www.lintcode.com/problem/maximum-subarray-iii/
+https://www.lintcode.com/problem/maximum-subarray-iii/
 
 ### Description
 
@@ -617,13 +617,13 @@ Maximum Subarray iii  这道比较难，用了动态规划，划分型的
 
 ## Subarray
 
-Minimum Subarray http://www.lintcode.com/problem/minimum-subarray/
+Minimum Subarray https://www.lintcode.com/problem/minimum-subarray/
 
-Maximum Subarray Difference http://www.lintcode.com/problem/maximum-subarray-difference/
+Maximum Subarray Difference https://www.lintcode.com/problem/maximum-subarray-difference/
 
-Subarray Sum http://www.lintcode.com/problem/subarray-sum/
+Subarray Sum https://www.lintcode.com/problem/subarray-sum/
 
-Subarray Sum Closest http://www.lintcode.com/problem/subarray-sum-closest/
+Subarray Sum Closest https://www.lintcode.com/problem/subarray-sum-closest/
 
 
 
@@ -631,11 +631,11 @@ Subarray Sum Closest http://www.lintcode.com/problem/subarray-sum-closest/
 
 ## Two Sum
 
-Lintcode http://www.lintcode.com/problem/two-sum/
+Lintcode https://www.lintcode.com/problem/two-sum/
 
 Leetcode https://leetcode.com/problems/two-sum/
 
-Solution http://www.jiuzhang.com/solutions/two-sum/
+Solution https://www.jiuzhang.com/solutions/two-sum/
 
 
 
@@ -768,9 +768,9 @@ public class Solution {
 
 ## 3Sum
 
-Lintcode http://www.lintcode.com/problem/3sum/
+Lintcode https://www.lintcode.com/problem/3sum/
 
-Solution http://www.jiuzhang.com/solutions/3sum/
+Solution https://www.jiuzhang.com/solutions/3sum/
 
 想办法把它变成 2 Sum 。
 
@@ -780,17 +780,17 @@ Solution http://www.jiuzhang.com/solutions/3sum/
 
 ## 3Sum Closest
 
-Lintcode http://www.lintcode.com/problem/3sum-closest/
+Lintcode https://www.lintcode.com/problem/3sum-closest/
 
-Solution http://www.jiuzhang.com/solutions/3sum-closest/
+Solution https://www.jiuzhang.com/solutions/3sum-closest/
 
 
 
 ## 4Sum
 
-Lintcode http://www.lintcode.com/problem/4sum/
+Lintcode https://www.lintcode.com/problem/4sum/
 
-Solution http://www.jiuzhang.com/solutions/4sum/
+Solution https://www.jiuzhang.com/solutions/4sum/
 
 
 
@@ -798,27 +798,27 @@ Solution http://www.jiuzhang.com/solutions/4sum/
 
 ## K Sum (Optional)
 
-Lintcode http://www.lintcode.com/problem/k-sum/
+Lintcode https://www.lintcode.com/problem/k-sum/
 
-Solution http://www.jiuzhang.com/solutions/k-sum/
+Solution https://www.jiuzhang.com/solutions/k-sum/
 
 ##  Partition Array  
 
-Lintcode http://www.lintcode.com/problem/partition-array/
+Lintcode https://www.lintcode.com/problem/partition-array/
 
-Solution http://www.jiuzhang.com/solutions/partition-array/
+Solution https://www.jiuzhang.com/solutions/partition-array/
 
 ## Sort Letters by Case
 
-Lintcode http://www.lintcode.com/problem/sort-letters-by-case/
+Lintcode https://www.lintcode.com/problem/sort-letters-by-case/
 
-Solution http://www.jiuzhang.com/solutions/sort-letters-by-case/
+Solution https://www.jiuzhang.com/solutions/sort-letters-by-case/
 
 ## Sort Colors
 
-Lintcode http://www.lintcode.com/en/problem/sort-colors/
+Lintcode https://www.lintcode.com/en/problem/sort-colors/
 
-Solution http://www.jiuzhang.com/solutions/sort-colors/
+Solution https://www.jiuzhang.com/solutions/sort-colors/
 
 
 
@@ -837,12 +837,12 @@ Solution http://www.jiuzhang.com/solutions/sort-colors/
 
 ## Sort Colors II  
 
-Lintcode http://www.lintcode.com/en/problem/sort-colors-ii/
+Lintcode https://www.lintcode.com/en/problem/sort-colors-ii/
 
-Solution http://www.jiuzhang.com/solutions/sort-colors-ii/
+Solution https://www.jiuzhang.com/solutions/sort-colors-ii/
 
 ## Interleaving Positive and Negative Numbers  
 
-Lintcode http://www.lintcode.com/problem/interleaving-positive-and-negative-numbers/
+Lintcode https://www.lintcode.com/problem/interleaving-positive-and-negative-numbers/
 
-Solution http://www.jiuzhang.com/solutions/interleaving-positive-and-negative-integers/
+Solution https://www.jiuzhang.com/solutions/interleaving-positive-and-negative-integers/

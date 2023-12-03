@@ -594,7 +594,7 @@ Operating Systems Principles, pages 29.43, Lake George, New York, 2003. To appea
 [9] S. Gorlatch. Systematic efficient parallelization of scan and other list homomorphisms. In L. Bouge, P. 
 Fraigniaud, A. Mignotte, and Y. Robert, editors, Euro-Par’96. Parallel Processing, Lecture Notes in Computer 
 Science 1124, pages 401.408. Springer-Verlag, 1996.
-[10] Jim Gray. Sort benchmark home page. http://research.microsoft.com/barc/SortBenchmark/.
+[10] Jim Gray. Sort benchmark home page. https://research.microsoft.com/barc/SortBenchmark/.
 [11] William Gropp, Ewing Lusk, and Anthony Skjellum. Using MPI: Portable Parallel Programming with the 
 Message-Passing Interface. MIT Press, Cambridge, MA, 1999.
 [12] L. Huston, R. Sukthankar, R.Wickremesinghe, M. Satyanarayanan, G. R. Ganger, E. Riedel, and A. 
@@ -611,7 +611,7 @@ processing. IEEE Computer, pages 68.74, June 2001.
 experience. Concurrency and Computation: Practice and Experience, 2004.
 [17] L. G. Valiant. A bridging model for parallel computation. Communications of the ACM, 33(8):103.111, 
 1997.
-[18] Jim Wyllie. Spsort: How to sort a terabyte quickly. http://alme1.almaden.ibm.com/cs/spsort.pdf.
+[18] Jim Wyllie. Spsort: How to sort a terabyte quickly. https://alme1.almaden.ibm.com/cs/spsort.pdf.
 
 
 ## 11 附录 A-单词频率统计

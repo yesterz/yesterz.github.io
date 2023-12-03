@@ -97,21 +97,21 @@ T(n) = 2T(n/2) + O(1) = 2(2T(n/4) + O(1)) + O(1)
 
 - Preorder
 
-  - http://www.lintcode.com/problem/binary-tree-preorder-traversal/
+  - https://www.lintcode.com/problem/binary-tree-preorder-traversal/
 
-  - http://www.jiuzhang.com/solutions/binary-tree-preorder-traversal/
+  - https://www.jiuzhang.com/solutions/binary-tree-preorder-traversal/
 
 - Inorder
 
-  - http://www.lintcode.com/en/problem/binary-tree-inorder-traversal/
+  - https://www.lintcode.com/en/problem/binary-tree-inorder-traversal/
 
-  - http://www.jiuzhang.com/solutions/binary-tree-inorder-traversal/
+  - https://www.jiuzhang.com/solutions/binary-tree-inorder-traversal/
 
 - Postorder
 
-  - http://www.lintcode.com/en/problem/binary-tree-postorder-traversal/
+  - https://www.lintcode.com/en/problem/binary-tree-postorder-traversal/
 
-  - http://www.jiuzhang.com/solutions/binary-tree-postorder-traversal/
+  - https://www.jiuzhang.com/solutions/binary-tree-postorder-traversal/
 
 如果面试面你一个二叉树的遍历，那么面试官希望你用非递归的版本来写，因为递归的版本太简单了。
 
@@ -254,11 +254,11 @@ public class Solution {
 
 ## Maximum Depth of Binary Tree
 
-Lintcode <http://www.lintcode.com/problem/maximum-depth-of-binary-tree/>
+Lintcode <https://www.lintcode.com/problem/maximum-depth-of-binary-tree/>
 
 Leetcode <https://leetcode.cn/problems/maximum-depth-of-binary-tree/>
 
-Solution <http://www.jiuzhang.com/solutions/maximum-depth-of-binary-tree/>
+Solution <https://www.jiuzhang.com/solutions/maximum-depth-of-binary-tree/>
 
 Related Question: Minimum Depth of Binary Tree
 
@@ -657,11 +657,11 @@ class ResultType {
 
 ## Balanced Binary Tree
 
-Lintcode <http://www.lintcode.com/problem/balanced-binary-tree/>
+Lintcode <https://www.lintcode.com/problem/balanced-binary-tree/>
 
-Leetcode <http://www.leetcode.com/problems/balanced-binary-tree/>
+Leetcode <https://www.leetcode.com/problems/balanced-binary-tree/>
 
-Solution <http://www.jiuzhang.com/solutions/balanced-binary-tree/>
+Solution <https://www.jiuzhang.com/solutions/balanced-binary-tree/>
 
 **When we need ResultType?**
 
@@ -1175,9 +1175,9 @@ Notes:
 
 Leetcode <https://leetcode.cn/problems/validate-binary-search-tree/>
 
-Lintcode <http://www.lintcode.com/problem/validate-binary-search-tree/>
+Lintcode <https://www.lintcode.com/problem/validate-binary-search-tree/>
 
-Solution <http://www.jiuzhang.com/solutions/validate-binary-search-tree/>
+Solution <https://www.jiuzhang.com/solutions/validate-binary-search-tree/>
 
 Traverse **vs** Divide Conquer
 

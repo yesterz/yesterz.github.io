@@ -56,14 +56,14 @@ mermaid: false
 ## DFS in Binary Tree
 
 - Preorder
-   - <http://www.lintcode.com/problem/binary-tree-preorder-traversal/>
-   - <http://www.jiuzhang.com/solutions/binary-tree-preorder-traversal/>
+   - <https://www.lintcode.com/problem/binary-tree-preorder-traversal/>
+   - <https://www.jiuzhang.com/solutions/binary-tree-preorder-traversal/>
 - Inorder
-   - <http://www.lintcode.com/en/problem/binary-tree-inorder-traversal/>
-   - <http://www.jiuzhang.com/solutions/binary-tree-inorder-traversal/>
+   - <https://www.lintcode.com/en/problem/binary-tree-inorder-traversal/>
+   - <https://www.jiuzhang.com/solutions/binary-tree-inorder-traversal/>
 - Postorder
-   - <http://www.lintcode.com/en/problem/binary-tree-postorder-traversal/>
-   - <http://www.jiuzhang.com/solutions/binary-tree-postorder-traversal/>
+   - <https://www.lintcode.com/en/problem/binary-tree-postorder-traversal/>
+   - <https://www.jiuzhang.com/solutions/binary-tree-postorder-traversal/>
 
 > **这三个程序需要背诵并理解，先背诵再理解。**
 {: .prompt-tip }
@@ -242,11 +242,11 @@ public class Solution {
 
 ## Max Depth of Binary Tree
 
-Lintcode <http://www.lintcode.com/problem/maximum-depth-of-binary-tree/>
+Lintcode <https://www.lintcode.com/problem/maximum-depth-of-binary-tree/>
 
 Leetcode <https://leetcode.cn/problems/maximum-depth-of-binary-tree/>
 
-Solution <http://www.jiuzhang.com/solutions/maximum-depth-of-binary-tree/>
+Solution <https://www.jiuzhang.com/solutions/maximum-depth-of-binary-tree/>
 
 Related Question: Minimum Depth of Binary Tree
 
@@ -254,9 +254,9 @@ Related Question: Minimum Depth of Binary Tree
 
 ## Balanced Binary Tree
 
-Lintcode <http://www.lintcode.com/problem/balanced-binary-tree/>
+Lintcode <https://www.lintcode.com/problem/balanced-binary-tree/>
 
-Solution <http://www.jiuzhang.com/solutions/balanced-binary-tree/>
+Solution <https://www.jiuzhang.com/solutions/balanced-binary-tree/>
 
 When we need ResultType?
 
@@ -346,9 +346,9 @@ public class Solution {
 
 ## Lowest Common Ancesstor
 
-Lintcode <http://www.lintcode.com/problem/lowest-common-ancestor/>
+Lintcode <https://www.lintcode.com/problem/lowest-common-ancestor/>
 
-Solution <http://www.jiuzhang.com/solutions/lowest-common-ancestor/>
+Solution <https://www.jiuzhang.com/solutions/lowest-common-ancestor/>
 
 with parent pointer **vs** no parent pointer
 
@@ -457,9 +457,9 @@ public class Solution {
 
 ## Binary Tree Maximum Path Sum
 
-Lintcode [http://www.lintcode.com/problem/binary-tree-maximum-path-sum/](http://www.lintcode.com/problem/binary-tree-maximum-path-sum/)
+Lintcode [https://www.lintcode.com/problem/binary-tree-maximum-path-sum/](https://www.lintcode.com/problem/binary-tree-maximum-path-sum/)
 
-Solution [http://www.jiuzhang.com/solutions/binary-tree-maximum-path-sum/](http://www.jiuzhang.com/solutions/binary-tree-maximum-path-sum/)
+Solution [https://www.jiuzhang.com/solutions/binary-tree-maximum-path-sum/](https://www.jiuzhang.com/solutions/binary-tree-maximum-path-sum/)
 
 any to any **vs** root to any  
 
@@ -564,9 +564,9 @@ public class Solution {
 
 Binary Tree Level Order Traversal
 
-Lintcode [http://www.lintcode.com/problem/binary-tree-level-order-traversal/](http://www.lintcode.com/problem/binary-tree-level-order-traversal/)
+Lintcode [https://www.lintcode.com/problem/binary-tree-level-order-traversal/](https://www.lintcode.com/problem/binary-tree-level-order-traversal/)
 
-Solution [http://www.jiuzhang.com/solutions/binary-tree-level-order-traversal/](http://www.jiuzhang.com/solutions/binary-tree-level-order-traversal/)
+Solution [https://www.jiuzhang.com/solutions/binary-tree-level-order-traversal/](https://www.jiuzhang.com/solutions/binary-tree-level-order-traversal/)
 
 - 2 Queues
 - 1 Queue + Dummy Node
@@ -768,13 +768,13 @@ public class Solution {
 
 **Binary Tree Level Order Traversal ii**
 
-- Lintcode [http://www.lintcode.com/problem/binary-tree-level-order-traversal-ii/](http://www.lintcode.com/problem/binary-tree-level-order-traversal-ii/)
-- Solution [http://www.jiuzhang.com/solutions/binary-tree-level-order-traversal-ii/](http://www.jiuzhang.com/solutions/binary-tree-level-order-traversal-ii/)
+- Lintcode [https://www.lintcode.com/problem/binary-tree-level-order-traversal-ii/](https://www.lintcode.com/problem/binary-tree-level-order-traversal-ii/)
+- Solution [https://www.jiuzhang.com/solutions/binary-tree-level-order-traversal-ii/](https://www.jiuzhang.com/solutions/binary-tree-level-order-traversal-ii/)
 
 **Binary Tree Zigzag Level Order Traversal**
 
-- Lintcode [http://www.lintcode.com/problem/binary-tree-zigzag-level-order-traversal/](http://www.lintcode.com/problem/binary-tree-zigzag-level-order-traversal/)
-- Solution [http://www.jiuzhang.com/solutions/binary-tree-zigzag-level-order-traversal/](http://www.jiuzhang.com/solutions/binary-tree-zigzag-level-order-traversal/)
+- Lintcode [https://www.lintcode.com/problem/binary-tree-zigzag-level-order-traversal/](https://www.lintcode.com/problem/binary-tree-zigzag-level-order-traversal/)
+- Solution [https://www.jiuzhang.com/solutions/binary-tree-zigzag-level-order-traversal/](https://www.jiuzhang.com/solutions/binary-tree-zigzag-level-order-traversal/)
 
 ## Binary Search Tree
 
@@ -789,9 +789,9 @@ Assume a BST is defined as follows:
 
 ## Validate Binary Search Tree
 
-Lintcode [http://www.lintcode.com/problem/validate-binary-search-tree/](http://www.lintcode.com/problem/validate-binary-search-tree/)
+Lintcode [https://www.lintcode.com/problem/validate-binary-search-tree/](https://www.lintcode.com/problem/validate-binary-search-tree/)
 
-Solution [http://www.jiuzhang.com/solutions/validate-binary-search-tree/](http://www.jiuzhang.com/solutions/validate-binary-search-tree/)
+Solution [https://www.jiuzhang.com/solutions/validate-binary-search-tree/](https://www.jiuzhang.com/solutions/validate-binary-search-tree/)
 
 Traverse **vs** Divide Conquer
 
@@ -934,15 +934,15 @@ public class Solution {
 
 ## Inorder Successor in Binary Search Tree
 
-Lintcode [http://www.lintcode.com/problem/inorder-successor-in-binary-search-tree/](http://www.lintcode.com/problem/inorder-successor-in-binary-search-tree/)
+Lintcode [https://www.lintcode.com/problem/inorder-successor-in-binary-search-tree/](https://www.lintcode.com/problem/inorder-successor-in-binary-search-tree/)
 
-Solution [http://www.jiuzhang.com/solutions/inorder-successor-in-binary-search-tree/](http://www.jiuzhang.com/solutions/inorder-successor-in-binary-search-tree/)
+Solution [https://www.jiuzhang.com/solutions/inorder-successor-in-binary-search-tree/](https://www.jiuzhang.com/solutions/inorder-successor-in-binary-search-tree/)
 
 这是一道模拟题
 
 ### Description
 
-Given a binary search tree ([See Definition](http://www.lintcode.com/problem/validate-binary-search-tree/)) and a node in it, find the in-order successor of that node in the BST.
+Given a binary search tree ([See Definition](https://www.lintcode.com/problem/validate-binary-search-tree/)) and a node in it, find the in-order successor of that node in the BST.
 
 If the given node has no in-order successor in the tree, return null.
 
@@ -1004,9 +1004,9 @@ public class Solution {
 
 对比看的一道题 中序遍历的非递归的那道题。
 
-Lintcode 	[http://www.lintcode.com/en/problem/binary-search-tree-iterator/](http://www.lintcode.com/en/problem/binary-search-tree-iterator/)
+Lintcode 	[https://www.lintcode.com/en/problem/binary-search-tree-iterator/](https://www.lintcode.com/en/problem/binary-search-tree-iterator/)
 
-Solution [http://www.jiuzhang.com/solutions/binary-search-tree-iterator/](http://www.jiuzhang.com/solutions/binary-search-tree-iterator/)
+Solution [https://www.jiuzhang.com/solutions/binary-search-tree-iterator/](https://www.jiuzhang.com/solutions/binary-search-tree-iterator/)
 
 Iterator **vs** Inorder with non-recursion
 
@@ -1014,18 +1014,18 @@ Iterator **vs** Inorder with non-recursion
 
 Search Range in Binary Search Tree
 
-[http://www.lintcode.com/problem/search-range-in-binary-search-tree/](http://www.lintcode.com/problem/search-range-in-binary-search-tree/)
+[https://www.lintcode.com/problem/search-range-in-binary-search-tree/](https://www.lintcode.com/problem/search-range-in-binary-search-tree/)
 
 Insert Node in a Binary Search Tree
 
-[http://www.lintcode.com/problem/insert-node-in-a-binary-search-tree/](http://www.lintcode.com/problem/insert-node-in-a-binary-search-tree/)
+[https://www.lintcode.com/problem/insert-node-in-a-binary-search-tree/](https://www.lintcode.com/problem/insert-node-in-a-binary-search-tree/)
 
 
 Remove Node in a Binary Search Tree
 
-[http://www.lintcode.com/problem/remove-node-in-binary-search-tree/](http://www.lintcode.com/problem/remove-node-in-binary-search-tree/)
+[https://www.lintcode.com/problem/remove-node-in-binary-search-tree/](https://www.lintcode.com/problem/remove-node-in-binary-search-tree/)
 
-[http://www.mathcs.emory.edu/~cheung/Courses/171/Syllabus/9-BinTree/BST-delete.html](http://www.mathcs.emory.edu/~cheung/Courses/171/Syllabus/9-BinTree/BST-delete.html) **[Expired]**
+[https://www.mathcs.emory.edu/~cheung/Courses/171/Syllabus/9-BinTree/BST-delete.html](https://www.mathcs.emory.edu/~cheung/Courses/171/Syllabus/9-BinTree/BST-delete.html) **[Expired]**
 
 other links
 

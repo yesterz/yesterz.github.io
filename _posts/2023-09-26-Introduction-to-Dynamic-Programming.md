@@ -307,11 +307,11 @@ public calss Solution {
 
 ### Description
 
-Lintcode http://www.lintcode.com/problem/unique-paths/
+Lintcode https://www.lintcode.com/problem/unique-paths/
 
 Leetcode https://leetcode.com/problems/unique-paths/
 
-Solution http://www.jiuzhang.com/solutions/unique-paths/
+Solution https://www.jiuzhang.com/solutions/unique-paths/
 
 
 
@@ -466,11 +466,11 @@ public class Solution {
 
 
 
-Lintcode http://www.lintcode.com/problem/jump-game/
+Lintcode https://www.lintcode.com/problem/jump-game/
 
 Leetcode https://leetcode.com/problems/jump-game/
 
-Solution http://www.jiuzhang.com/solutions/jump-game/
+Solution https://www.jiuzhang.com/solutions/jump-game/
 
 
 

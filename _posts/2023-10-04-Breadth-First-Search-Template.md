@@ -39,11 +39,11 @@ img_path: /assets/images/BFSImages/
 
 ## Template Binary Tree Level Order Traversal
 
-Lintcode <http://www.lintcode.com/problem/binary-tree-level-order-traversal/>
+Lintcode <https://www.lintcode.com/problem/binary-tree-level-order-traversal/>
 
 Leetcode <https://leetcode.cn/problems/binary-tree-level-order-traversal/>
 
-Solution <http://www.jiuzhang.com/solutions/binary-tree-level-order-traversal/>
+Solution <https://www.jiuzhang.com/solutions/binary-tree-level-order-traversal/>
 
 图的遍历（层级遍历）
 
@@ -506,11 +506,11 @@ public class Solution {
 
 图的遍历（由点及面）
 
-Lintcode <http://www.lintcode.com/problem/clone-graph/>
+Lintcode <https://www.lintcode.com/problem/clone-graph/>
 
 Leetcode <https://leetcode.com/problems/clone-graph/>
 
-Solution <http://www.jiuzhang.com/solutions/clone-graph/>
+Solution <https://www.jiuzhang.com/solutions/clone-graph/>
 
 ### Description
 

@@ -960,11 +960,11 @@ pages 92–103, San Jose, California, October 1998.
 [5] John Howard, Michael Kazar, Sherri Menees, David Nichols, Mahadev Satyanarayanan, Robert Sidebotham,
 and Michael West. Scale and performance in a distributed file system. ACM Transactions on Computer
 Systems, 6(1):51–81, February 1988.
-[6] InterMezzo. http://www.inter-mezzo.org, 203.
+[6] InterMezzo. https://www.inter-mezzo.org, 203.
 [7] Barbara Liskov, Sanjay Ghemawat, Robert Gruber, Paul Johnson, Liuba Shrira, and Michael Williams.
 Replication in the Harp file system. In 13th Symposium on Operating System Principles, pages 226–
 238, Pacific Grove, CA, October 1991. 
-[8] Lustre. http://www.lustreorg, 2003.
+[8] Lustre. https://www.lustreorg, 2003.
 [9] David A. Patterson, Garth A. Gibson, and Randy H. Katz. A case for redundant arrays of inexpensive disks
 (RAID). In Proceedings of the 1988 ACM SIGMOD International Conference on Management of Data,
 pages 109–116, Chicago, Illinois, September 1988.
