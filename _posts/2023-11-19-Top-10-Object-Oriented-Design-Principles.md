@@ -3,7 +3,7 @@ title: Top 10 Object Oriented Design Principles
 date: 2023-11-19 17:51:00 +0800
 author: 
 categories: [Object-Oriented Design]
-tags: [OOD]
+tags: [Object-Oriented Design]
 pin: false
 math: false
 mermaid: false

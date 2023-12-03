@@ -3,7 +3,7 @@ title: The Google File System
 date: 2023-12-03 12:18:00 +0800
 author: 
 categories: [System Design]
-tags: []
+tags: [System Design]
 pin: false
 math: false
 mermaid: false
