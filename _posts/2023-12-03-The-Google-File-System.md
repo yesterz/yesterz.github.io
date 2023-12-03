@@ -1,8 +1,8 @@
 ---
 title: The Google File System
-date: 2023-12-03 20:06:00 +0800
+date: 2023-12-03 12:18:00 +0800
 author: 
-categories: [Linux]
+categories: [System Design]
 tags: []
 pin: false
 math: false
