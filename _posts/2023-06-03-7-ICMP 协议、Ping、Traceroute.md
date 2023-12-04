@@ -1,5 +1,5 @@
 ---
-title: ICMP 协议、Ping、Traceroute ✅
+title: ICMP 协议、Ping、Traceroute 
 date: 2023-06-03 21:09:00 +0800
 categories: [Computer Networking]
 author: ltfy
