@@ -3,14 +3,12 @@ title: 聊聊分布式锁
 date: 2023-12-04 18:04:00 +0800
 author: 
 categories: []
-tags: []
+tags: [System Design]
 pin: false
 math: false
 mermaid: false
 img_path: /assets/images/DistributedLockImages
 ---
-
-# 聊聊分布式锁
 
 Original 林坚 [字节跳动技术团队](javascript:void(0);) *2022-07-15 12:00* *Posted on 北京*
 
