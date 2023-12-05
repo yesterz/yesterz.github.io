@@ -7,15 +7,16 @@ tags: []
 pin: false
 math: false
 mermaid: false
+img_path: /assets/images/DistributedLockImages
 ---
 
 # 聊聊分布式锁
 
 Original 林坚 [字节跳动技术团队](javascript:void(0);) *2022-07-15 12:00* *Posted on 北京*
 
+<https://mp.weixin.qq.com/s/-N4x6EkxwAYDGdJhwvmZLw>
+
 **字节跳动技术团队** | 字节跳动的技术实践分享
-
-
 
 ## 为什么我们需要一把分布式锁？
 
@@ -44,7 +45,7 @@ Original 林坚 [字节跳动技术团队](javascript:void(0);) *2022-07-15 12:0
 
 使用 jedis 的客户端代码如下：
 
-```
+```java
 if (jedis.setnx(lockKey, val) == 1) {
     jedis.expire(lockKey, timeout);
 }
@@ -104,7 +105,7 @@ return false;
 3. 主动释放锁；
 4. 如果主动释放锁失败了，则达到超时时间，Redis 自动释放锁。
 
-![Image](./assets/640.png)
+![Image](640-1701780676778-3.png)
 
 如何释放锁呢？Java 代码里在 finally 中释放锁，即无论代码执行成功或者失败，都要释放锁。
 
@@ -124,7 +125,9 @@ try{
 
 上面那个 unlock(lockKey)代码释放锁有什么问题？**可能会出现释放别人的锁的问题。**
 
-有的同学可能会反驳：线程 A 获取了锁之后，它要是没有释放锁，这个时候别的线程假如线程 B、C……根本不可能获取到锁，何来释放别人锁之说？    
+有的同学可能会反驳：线程 A 获取了锁之后，它要是没有释放锁，这个时候别的线程假如线程 B、C……根本不可能获取到锁，何来释放别人锁之说？   
+
+![Image](640.png) 
 
 1. 客户端 1 获取锁成功。
 2. 客户端 1 在某个操作上阻塞了很长时间。
@@ -167,7 +170,7 @@ return false;
 
 显然，jedis.get(lockKey).equals(requestId) 这行代码包含了【获取该锁的值】，【判断是否是自己加的锁】，【删除锁】这三个操作，万一这三个操作中间的某个时刻出现阻塞
 
-![Image](data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg width='1px' height='1px' viewBox='0 0 1 1' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Ctitle%3E%3C/title%3E%3Cg stroke='none' stroke-width='1' fill='none' fill-rule='evenodd' fill-opacity='0'%3E%3Cg transform='translate(-249.000000, -126.000000)' fill='%23FFFFFF'%3E%3Crect x='249' y='126' width='1' height='1'%3E%3C/rect%3E%3C/g%3E%3C/g%3E%3C/svg%3E)
+![image-20231205205252100](image-20231205205252100.png)
 
 1. 客户端 1 获取锁成功；
 2. 客户端 1 进行业务操作；
@@ -198,13 +201,13 @@ return false;
 
 **释放锁的操作为什么要使用 lua 脚本？**
 
-释放锁其实包含三步操作：**‘****GET’、判断和‘DEL’，用 Lua 脚本来实现能保证这三步的原子性。**
+释放锁其实包含三步操作：**‘GET’、判断和‘DEL’，用 Lua 脚本来实现能保证这三步的原子性。**
 
 ### 锁超时问题
 
 如果客户端 1 请求锁成功了，但是由于业务处理、GC、操作系统等原因导致它处理时间过长，超过了锁的时间，这时候 Redis 会自动释放锁，这种情况可能导致问题：
 
-![Image](data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg width='1px' height='1px' viewBox='0 0 1 1' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Ctitle%3E%3C/title%3E%3Cg stroke='none' stroke-width='1' fill='none' fill-rule='evenodd' fill-opacity='0'%3E%3Cg transform='translate(-249.000000, -126.000000)' fill='%23FFFFFF'%3E%3Crect x='249' y='126' width='1' height='1'%3E%3C/rect%3E%3C/g%3E%3C/g%3E%3C/svg%3E)
+![image-20231205205438469](image-20231205205438469.png)
 
 如何解决这种问题？---- **续期，**Java 里我们可以使用 TimerTask 类来实现自动续期的功能，伪代码如下：
 
@@ -213,7 +216,7 @@ Timer timer = new Timer();
 timer.schedule(new TimerTask() {
     @Override
     public void run(Timeout timeout) throws Exception {
-        //自动续期逻辑􁛔􀛖􁖅􀹗􁭦􁬋
+        // 自动续期逻辑
     }
 }, 10000, TimeUnit.MILLISECONDS);
 ```
@@ -224,7 +227,7 @@ timer.schedule(new TimerTask() {
 - 默认值：**30000**
 - 监控锁的看门狗超时时间单位为毫秒。该参数只适用于分布式锁的加锁请求中未明确使用 leaseTimeout 参数的情况。如果该看门狗未使用 lockWatchdogTimeout 去重新调整一个分布式锁的 lockWatchdogTimeout 超时，那么这个锁将变为失效状态。这个参数可以用来避免由 Redisson 客户端节点宕机或其他原因造成死锁的情况。
 
-![Image](data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg width='1px' height='1px' viewBox='0 0 1 1' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Ctitle%3E%3C/title%3E%3Cg stroke='none' stroke-width='1' fill='none' fill-rule='evenodd' fill-opacity='0'%3E%3Cg transform='translate(-249.000000, -126.000000)' fill='%23FFFFFF'%3E%3Crect x='249' y='126' width='1' height='1'%3E%3C/rect%3E%3C/g%3E%3C/g%3E%3C/svg%3E)
+![image-20231205205624686](image-20231205205624686.png)
 
 ## Redis 主从架构数据同步复制问题
 
@@ -232,7 +235,7 @@ timer.schedule(new TimerTask() {
 
 前面铺垫的 Redis 锁在单点实例中是没有问题的，因为并没有涉及 Redis 的高可用部署架构细节。但是如果多实例的情况下会出现什么问题呢？比如：主从、或者使用了哨兵模式、或者 Redis cluster。Redis 的主从架构如下所示：
 
-![Image](data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg width='1px' height='1px' viewBox='0 0 1 1' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Ctitle%3E%3C/title%3E%3Cg stroke='none' stroke-width='1' fill='none' fill-rule='evenodd' fill-opacity='0'%3E%3Cg transform='translate(-249.000000, -126.000000)' fill='%23FFFFFF'%3E%3Crect x='249' y='126' width='1' height='1'%3E%3C/rect%3E%3C/g%3E%3C/g%3E%3C/svg%3E)
+![image-20231205205648403](image-20231205205648403.png)
 
 Redis 所有的写操作都是先在 Master 上操作，然后同步更新到 Slave 上，Slave 只能读不能写。
 
@@ -240,7 +243,7 @@ Redis 所有的写操作都是先在 Master 上操作，然后同步更新到 Sl
 
 主从发生重新选导致分布式锁出现问题的场景：
 
-![Image](data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg width='1px' height='1px' viewBox='0 0 1 1' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Ctitle%3E%3C/title%3E%3Cg stroke='none' stroke-width='1' fill='none' fill-rule='evenodd' fill-opacity='0'%3E%3Cg transform='translate(-249.000000, -126.000000)' fill='%23FFFFFF'%3E%3Crect x='249' y='126' width='1' height='1'%3E%3C/rect%3E%3C/g%3E%3C/g%3E%3C/svg%3E)
+![image-20231205205718404](image-20231205205718404.png)
 
 ## WAIT 命令能够为 Redis 实现强一致吗？
 
@@ -253,7 +256,7 @@ WAIT 命令作用：WAIT 命令阻塞当前客户端，直到所有先前的写�
 
 官方文档：https://redis.io/commands/wait
 
-![Image](data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg width='1px' height='1px' viewBox='0 0 1 1' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Ctitle%3E%3C/title%3E%3Cg stroke='none' stroke-width='1' fill='none' fill-rule='evenodd' fill-opacity='0'%3E%3Cg transform='translate(-249.000000, -126.000000)' fill='%23FFFFFF'%3E%3Crect x='249' y='126' width='1' height='1'%3E%3C/rect%3E%3C/g%3E%3C/g%3E%3C/svg%3E)
+![redis.io-commands-wait](redis.io-commands-wait.png)
 
 结论：WAIT 不能保证 Redis 的强一致性
 
@@ -275,7 +278,7 @@ Redlock 算法基于 N 个**完全独立**的 Redis 节点，客户端依次执�
 4. 如果最终获取锁成功了，那么这个锁的有效时间应该重新计算，它等于最初的锁的有效时间减去第 3 步计算出来的获取锁消耗的时间。
 5. 如果最终获取锁失败了（可能由于获取到锁的 Redis 节点个数少于 N/2+1，或者整个获取锁的过程消耗的时间超过了锁的最初有效时间），那么客户端应该立即向所有 Redis 节点发起释放锁的操作（即前面介绍的 Redis Lua 脚本）。
 
-![Image](data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg width='1px' height='1px' viewBox='0 0 1 1' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Ctitle%3E%3C/title%3E%3Cg stroke='none' stroke-width='1' fill='none' fill-rule='evenodd' fill-opacity='0'%3E%3Cg transform='translate(-249.000000, -126.000000)' fill='%23FFFFFF'%3E%3Crect x='249' y='126' width='1' height='1'%3E%3C/rect%3E%3C/g%3E%3C/g%3E%3C/svg%3E)
+![image-20231205205939618](image-20231205205939618.png)
 
 > 注意！！！redLock 会直接连接多个 Redis 主节点，不是通过集群机制连接的。
 >
@@ -285,7 +288,7 @@ Redlock 算法基于 N 个**完全独立**的 Redis 节点，客户端依次执�
 
 高并发场景下，当多个加锁线程并发抢锁时，可能导致脑裂，最终造成任何一个线程都无法抢到锁的情况。
 
-![Image](data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg width='1px' height='1px' viewBox='0 0 1 1' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Ctitle%3E%3C/title%3E%3Cg stroke='none' stroke-width='1' fill='none' fill-rule='evenodd' fill-opacity='0'%3E%3Cg transform='translate(-249.000000, -126.000000)' fill='%23FFFFFF'%3E%3Crect x='249' y='126' width='1' height='1'%3E%3C/rect%3E%3C/g%3E%3C/g%3E%3C/svg%3E)
+![image-20231205210000526](image-20231205210000526.png)
 
 所以当一个加锁线程无法获得锁的时候，应该在一个**随机延时后**再一次尝试获得锁。加锁线程从多数 Redis 实例中获得锁越快，出现脑裂的窗口越小（重试的次数也越少）。所以理想情况下，加锁线程应该多路复用地同时向 N 个实例发送加锁命令。
 
@@ -313,7 +316,7 @@ Redlock 算法释放锁的过程比较简单：客户端向所有 Redis 节点�
 
 假设 Rodlock 算法中的 Redis 发生了崩溃-恢复，那么锁的安全性将无法保证。假设加锁线程在 5 个实例中对其中 3 个加锁成功，获得了这把分布式锁，这个时候 3 个实例中有一个实例被重启了。重启后的实例将丢失其中的锁信息，这个时候另一个加锁线程可以对这个实例加锁成功，此时两个线程同时持有分布式锁。锁的安全性被破坏。
 
-![Image](data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg width='1px' height='1px' viewBox='0 0 1 1' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Ctitle%3E%3C/title%3E%3Cg stroke='none' stroke-width='1' fill='none' fill-rule='evenodd' fill-opacity='0'%3E%3Cg transform='translate(-249.000000, -126.000000)' fill='%23FFFFFF'%3E%3Crect x='249' y='126' width='1' height='1'%3E%3C/rect%3E%3C/g%3E%3C/g%3E%3C/svg%3E)
+![image-20231205210038891](image-20231205210038891.png)
 
 如果我们配置了 AOF 持久化，**只能减少它发生的概率而无法保证锁的绝对安全。**断电的场景下，如果 Redis 被配置了默认每秒同步数据到硬盘，重启之后 lockKey 可能会丢失，理论上，如果我们想要保证任何实例重启的情况下锁都是安全的，需要在持久化配置中设置`fsync=always`，但此时 Redis 的性能将大大打折扣。
 
@@ -328,7 +331,7 @@ Redlock 算法释放锁的过程比较简单：客户端向所有 Redis 节点�
 
 ### Redis 分布式锁官方文档翻译
 
-![Image](data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg width='1px' height='1px' viewBox='0 0 1 1' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Ctitle%3E%3C/title%3E%3Cg stroke='none' stroke-width='1' fill='none' fill-rule='evenodd' fill-opacity='0'%3E%3Cg transform='translate(-249.000000, -126.000000)' fill='%23FFFFFF'%3E%3Crect x='249' y='126' width='1' height='1'%3E%3C/rect%3E%3C/g%3E%3C/g%3E%3C/svg%3E)
+![redis.io-topics-distlock](redis.io-topics-distlock.png)
 
 ### Redlock 算法存在的问题
 
@@ -339,11 +342,11 @@ Redlock 算法释放锁的过程比较简单：客户端向所有 Redis 节点�
 
 Redis 之父 Antirez 实现 Redlock 算法之后。有一天，Martin Kleppmann 写了一篇 blog，分析了 Redlock 在安全性上存在的一些问题。然后 Redis 的作者立即写了一篇 blog 来反驳 Martin 的分析。但 Martin 表示仍然坚持原来的观点。随后，这个问题在 Twitter 和 Hacker News 上引发了激烈的讨论，很多分布式系统的专家都参与其中。
 
-![Image](data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg width='1px' height='1px' viewBox='0 0 1 1' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Ctitle%3E%3C/title%3E%3Cg stroke='none' stroke-width='1' fill='none' fill-rule='evenodd' fill-opacity='0'%3E%3Cg transform='translate(-249.000000, -126.000000)' fill='%23FFFFFF'%3E%3Crect x='249' y='126' width='1' height='1'%3E%3C/rect%3E%3C/g%3E%3C/g%3E%3C/svg%3E)
+![image-20231205210321249](image-20231205210321249.png)
 
-![Image](data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg width='1px' height='1px' viewBox='0 0 1 1' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Ctitle%3E%3C/title%3E%3Cg stroke='none' stroke-width='1' fill='none' fill-rule='evenodd' fill-opacity='0'%3E%3Cg transform='translate(-249.000000, -126.000000)' fill='%23FFFFFF'%3E%3Crect x='249' y='126' width='1' height='1'%3E%3C/rect%3E%3C/g%3E%3C/g%3E%3C/svg%3E)
+![image-20231205210338577](image-20231205210338577.png)
 
-![Image](data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg width='1px' height='1px' viewBox='0 0 1 1' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Ctitle%3E%3C/title%3E%3Cg stroke='none' stroke-width='1' fill='none' fill-rule='evenodd' fill-opacity='0'%3E%3Cg transform='translate(-249.000000, -126.000000)' fill='%23FFFFFF'%3E%3Crect x='249' y='126' width='1' height='1'%3E%3C/rect%3E%3C/g%3E%3C/g%3E%3C/svg%3E)
+![image-20231205210348988](image-20231205210348988.png)
 
 - https://redis.io/topics/distlock
 - https://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html
@@ -362,7 +365,7 @@ Martin 在这篇文章中谈及了分布式系统的很多基础性的问题（�
 
 首先我们讨论一下前半部分的关键点。Martin 给出了下面这样一份时序图：
 
-![Image](data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg width='1px' height='1px' viewBox='0 0 1 1' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Ctitle%3E%3C/title%3E%3Cg stroke='none' stroke-width='1' fill='none' fill-rule='evenodd' fill-opacity='0'%3E%3Cg transform='translate(-249.000000, -126.000000)' fill='%23FFFFFF'%3E%3Crect x='249' y='126' width='1' height='1'%3E%3C/rect%3E%3C/g%3E%3C/g%3E%3C/svg%3E)
+![image-20231205210409472](image-20231205210409472.png)
 
 在上面的时序图中，假设锁服务本身是没有问题的，它总是能保证任一时刻最多只有一个客户端获得锁。上图中出现的 lease 这个词可以暂且认为就等同于一个带有自动过期功能的锁。客户端 1 在获得锁之后发生了很长时间的 GC pause，在此期间，它获得的锁过期了，而客户端 2 获得了锁。当客户端 1 从 GC pause 中恢复过来的时候，它不知道自己持有的锁已经过期了，它依然向共享资源（上图中是一个存储服务）发起了写数据请求，而这时**锁实际上被客户端 2 持有，**因此两个客户端的写请求就有可能冲突（锁的互斥作用失效了）。
 
@@ -376,7 +379,7 @@ Martin 在这篇文章中谈及了分布式系统的很多基础性的问题（�
 
 那怎么解决这个问题呢？Martin 给出了一种方法，称为 fencing token。fencing token 是一个**单调递增的数字，**当客户端成功获取锁的时候它随同锁一起返回给客户端。而客户端访问共享资源的时候带着这个 fencing token，这样提供共享资源的服务就能根据它进行检查，拒绝掉延迟到来的访问请求（避免了冲突）。如下图：
 
-![Image](data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg width='1px' height='1px' viewBox='0 0 1 1' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Ctitle%3E%3C/title%3E%3Cg stroke='none' stroke-width='1' fill='none' fill-rule='evenodd' fill-opacity='0'%3E%3Cg transform='translate(-249.000000, -126.000000)' fill='%23FFFFFF'%3E%3Crect x='249' y='126' width='1' height='1'%3E%3C/rect%3E%3C/g%3E%3C/g%3E%3C/svg%3E)
+![image-20231205210431513](image-20231205210431513.png)
 
 在上图中，客户端 1 先获取到的锁，因此有一个较小的 fencing token，等于 33，而客户端 2 后获取到的锁，有一个较大的 fencing token，等于 34。客户端 1 从 GC pause 中恢复过来之后，依然是向存储服务发送访问请求，但是带了 fencing token = 33。存储服务发现它之前已经处理过 34 的请求，所以会拒绝掉这次 33 的请求。这样就避免了冲突。
 
@@ -424,7 +427,7 @@ N 个 Redis 节点中如果有节点发生崩溃重启，会对锁的安全性�
 
 Redis 之父 antirez 提出了**延迟重启**(delayed restarts)的概念。也就是说，**一个节点崩溃后，先不立即重启它，而是等待一段时间再重启，这段时间应该大于锁的有效时间(lock validity time)。**这样的话，这个节点在重启前所参与的锁都会过期，它在重启后就不会对现有的锁造成影响。
 
-![Image](data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg width='1px' height='1px' viewBox='0 0 1 1' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Ctitle%3E%3C/title%3E%3Cg stroke='none' stroke-width='1' fill='none' fill-rule='evenodd' fill-opacity='0'%3E%3Cg transform='translate(-249.000000, -126.000000)' fill='%23FFFFFF'%3E%3Crect x='249' y='126' width='1' height='1'%3E%3C/rect%3E%3C/g%3E%3C/g%3E%3C/svg%3E)
+![image-20231205210459142](image-20231205210459142.png)
 
 #### 问题二：时钟变迁
 
@@ -441,7 +444,7 @@ Redlock 的安全性(safety property)对系统的时钟有比较强的依赖，�
 
 clock realtime 可以被人为修改，在实现分布式锁时，不应该使用 clock realtime。不过很可惜，Redis 使用的就是这个时间，Redis 5.0 使用的还是 clock realtime。Antirez 说过后面会改成 clock monotonic 的。也就是说，人为修改 Redis 服务器的时间，就能让 Redis 出问题了。
 
-![Image](data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg width='1px' height='1px' viewBox='0 0 1 1' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Ctitle%3E%3C/title%3E%3Cg stroke='none' stroke-width='1' fill='none' fill-rule='evenodd' fill-opacity='0'%3E%3Cg transform='translate(-249.000000, -126.000000)' fill='%23FFFFFF'%3E%3Crect x='249' y='126' width='1' height='1'%3E%3C/rect%3E%3C/g%3E%3C/g%3E%3C/svg%3E)
+![image-20231205210515617](image-20231205210515617.png)
 
 1. 加锁线程 1 从节点 Redis1, Redis2, Redis3 成功获取了锁（多数节点）。由于网络问题，与 Redis4、Redis5 通信失败。
 2. 节点 Redis3 上的时钟发生了向前跳跃，导致它上面维护的锁快速过期。
@@ -540,7 +543,7 @@ ZooKeeper 的数据存储结构就像一棵树，这棵树由节点组成，这�
 
 ZooKeeper 集群和客户端通过长连接维护一个 session，当客户端试图创建/lock 节点的时候，发现它已经存在了，这时候创建失败，但客户端不一定就此返回获取锁失败。客户端可以进入一种等待状态，等待当/lock 节点被删除的时候，ZooKeeper 通过 watch 机制通知它，这样它就可以继续完成创建操作（获取锁）。这可以让分布式锁在客户端用起来就像一个本地的锁一样：加锁失败就**阻塞**住，直到获取到锁为止。这样的特性 Redis 的 Redlock 就无法实现。
 
-![Image](data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg width='1px' height='1px' viewBox='0 0 1 1' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Ctitle%3E%3C/title%3E%3Cg stroke='none' stroke-width='1' fill='none' fill-rule='evenodd' fill-opacity='0'%3E%3Cg transform='translate(-249.000000, -126.000000)' fill='%23FFFFFF'%3E%3Crect x='249' y='126' width='1' height='1'%3E%3C/rect%3E%3C/g%3E%3C/g%3E%3C/svg%3E)
+![image-20231205210558322](image-20231205210558322.png)
 
 ### 加锁&释放锁
 
@@ -548,7 +551,7 @@ ZooKeeper 集群和客户端通过长连接维护一个 session，当客户端�
 - 持有锁的客户端访问共享资源完成后，将 znode 删掉，这样其它客户端接下来就能来获取锁了。**（客户端删除锁）**
 - znode 应该被创建成 **EPHEMERAL_SEQUENTIAL** 的。这是 znode 的一个特性，它保证如果**创建 znode 的那个客户端崩溃了，那么相应的 znode 会被自动删除。**这保证了**锁一定会被释放（ZooKeeper 服务器自己删除锁）。**另外保证了**公平性，**后面创建的节点会加在节点链最后的位置，等待锁的客户端会按照先来先得的顺序获取到锁。
 
-![Image](data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg width='1px' height='1px' viewBox='0 0 1 1' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Ctitle%3E%3C/title%3E%3Cg stroke='none' stroke-width='1' fill='none' fill-rule='evenodd' fill-opacity='0'%3E%3Cg transform='translate(-249.000000, -126.000000)' fill='%23FFFFFF'%3E%3Crect x='249' y='126' width='1' height='1'%3E%3C/rect%3E%3C/g%3E%3C/g%3E%3C/svg%3E)
+![image-20231205210619983](image-20231205210619983.png)
 
 **惊群效应：**错误的实现——如果实现 ZooKeeper 分布式锁的时候，所有后加入的节点都监听最小的节点。那么删除节点的时候，所有客户端都会被唤醒，这个时候由于通知的客户端很多，通知操作会造成 ZooKeeper 性能突然下降，这样会影响 ZooKeeper 的使用。
 
@@ -622,9 +625,9 @@ Chubby 是 Google 内部使用的分布式锁服务，有点类似于 ZooKeeper�
 
 这跟前面 Martin 的分析大同小异。
 
-![Image](data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg width='1px' height='1px' viewBox='0 0 1 1' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Ctitle%3E%3C/title%3E%3Cg stroke='none' stroke-width='1' fill='none' fill-rule='evenodd' fill-opacity='0'%3E%3Cg transform='translate(-249.000000, -126.000000)' fill='%23FFFFFF'%3E%3Crect x='249' y='126' width='1' height='1'%3E%3C/rect%3E%3C/g%3E%3C/g%3E%3C/svg%3E)
+![image-20231205210645535](image-20231205210645535.png)
 
-![Image](data:image/svg+xml,%3C%3Fxml version='1.0' encoding='UTF-8'%3F%3E%3Csvg width='1px' height='1px' viewBox='0 0 1 1' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Ctitle%3E%3C/title%3E%3Cg stroke='none' stroke-width='1' fill='none' fill-rule='evenodd' fill-opacity='0'%3E%3Cg transform='translate(-249.000000, -126.000000)' fill='%23FFFFFF'%3E%3Crect x='249' y='126' width='1' height='1'%3E%3C/rect%3E%3C/g%3E%3C/g%3E%3C/svg%3E)
+![image-20231205210656449](image-20231205210656449.png)
 
 Chubby 给出的用于解决（**缓解**）这一问题的机制称为 sequencer，类似于 fencing token 机制。锁的持有者可以随时请求一个 sequencer，这是一个字节串，它由三部分组成：
 
