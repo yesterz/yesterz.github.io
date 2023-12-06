@@ -22,7 +22,9 @@ img_path:
 >
 > 祝大家面试取得好的成绩
 
-## [175. 组合两个表](https://leetcode-cn.com/problems/combine-two-tables/)
+## part 1
+
+### [175. 组合两个表](https://leetcode-cn.com/problems/combine-two-tables/)
 
 难度简单
 
@@ -74,7 +76,7 @@ left join  Address a
 on a.PersonId = p.PersonId
 ```
 
-## [176. 第二高的薪水](https://leetcode-cn.com/problems/second-highest-salary/)
+### [176. 第二高的薪水](https://leetcode-cn.com/problems/second-highest-salary/)
 
 难度简单
 
@@ -112,7 +114,7 @@ SELECT
     NULL) AS SecondHighestSalary
 ```
 
-## [177. 第N高的薪水](https://leetcode-cn.com/problems/nth-highest-salary/)
+### [177. 第N高的薪水](https://leetcode-cn.com/problems/nth-highest-salary/)
 
 难度中等
 
@@ -157,7 +159,7 @@ BEGIN
 END
 ```
 
-## [178. 分数排名](https://leetcode-cn.com/problems/rank-scores/)
+### [178. 分数排名](https://leetcode-cn.com/problems/rank-scores/)
 
 难度中等
 
@@ -205,7 +207,7 @@ from Scores
 
 
 
-## [180. 连续出现的数字](https://leetcode-cn.com/problems/consecutive-numbers/)
+### [180. 连续出现的数字](https://leetcode-cn.com/problems/consecutive-numbers/)
 
 难度中等
 
@@ -252,7 +254,7 @@ from Logs
 where Num = n2 and Num = n3
 ```
 
-## [181. 超过经理收入的员工](https://leetcode-cn.com/problems/employees-earning-more-than-their-managers/)
+### [181. 超过经理收入的员工](https://leetcode-cn.com/problems/employees-earning-more-than-their-managers/)
 
 难度简单
 
@@ -293,7 +295,7 @@ where a.Salary>b.Salary
 
 
 
-## [182. 查找重复的电子邮箱](https://leetcode-cn.com/problems/duplicate-emails/)
+### [182. 查找重复的电子邮箱](https://leetcode-cn.com/problems/duplicate-emails/)
 
 难度简单
 
@@ -336,7 +338,7 @@ having count(*)>1
 
 
 
-## [183. 从不订购的客户](https://leetcode-cn.com/problems/customers-who-never-order/)
+### [183. 从不订购的客户](https://leetcode-cn.com/problems/customers-who-never-order/)
 
 难度简单
 
@@ -388,7 +390,7 @@ where o.id is null
 
 
 
-## [184. 部门工资最高的员工](https://leetcode-cn.com/problems/department-highest-salary/)
+### [184. 部门工资最高的员工](https://leetcode-cn.com/problems/department-highest-salary/)
 
 难度中等
 
@@ -444,7 +446,7 @@ where rk = 1
 
 
 
-## [185. 部门工资前三高的所有员工](https://leetcode-cn.com/problems/department-top-three-salaries/)
+### [185. 部门工资前三高的所有员工](https://leetcode-cn.com/problems/department-top-three-salaries/)
 
 难度困难
 
@@ -511,7 +513,7 @@ where rk <=3
 
 
 
-## [196. 删除重复的电子邮箱](https://leetcode-cn.com/problems/delete-duplicate-emails/)
+### [196. 删除重复的电子邮箱](https://leetcode-cn.com/problems/delete-duplicate-emails/)
 
 难度简单
 
@@ -560,7 +562,7 @@ WHERE
 
 
 
-## [197. 上升的温度](https://leetcode-cn.com/problems/rising-temperature/)
+### [197. 上升的温度](https://leetcode-cn.com/problems/rising-temperature/)
 
 难度简单
 
@@ -608,7 +610,7 @@ and datediff(RecordDate,yd)=1
 
 
 
-## [262. 行程和用户](https://leetcode-cn.com/problems/trips-and-users/)
+### [262. 行程和用户](https://leetcode-cn.com/problems/trips-and-users/)
 
 难度困难
 
@@ -695,7 +697,7 @@ GROUP BY T.request_at
 
 
 
-## [511. 游戏玩法分析 I](https://leetcode-cn.com/problems/game-play-analysis-i/)
+### [511. 游戏玩法分析 I](https://leetcode-cn.com/problems/game-play-analysis-i/)
 
 难度简单
 
@@ -769,7 +771,7 @@ group by player_id
 
 
 
-## [512. 游戏玩法分析 II](https://leetcode-cn.com/problems/game-play-analysis-ii/)
+### [512. 游戏玩法分析 II](https://leetcode-cn.com/problems/game-play-analysis-ii/)
 
 难度简单
 
@@ -829,7 +831,7 @@ from Activity
 where rk = 1
 ```
 
-## [534. 游戏玩法分析 III](https://leetcode-cn.com/problems/game-play-analysis-iii/)
+### [534. 游戏玩法分析 III](https://leetcode-cn.com/problems/game-play-analysis-iii/)
 
 难度中等20收藏分享切换为英文关注反馈
 
@@ -907,7 +909,7 @@ group by 1,2;
 
 
 
-## [550. 游戏玩法分析 IV](https://leetcode-cn.com/problems/game-play-analysis-iv/)
+### [550. 游戏玩法分析 IV](https://leetcode-cn.com/problems/game-play-analysis-iv/)
 
 难度中等17收藏分享切换为英文关注反馈
 
@@ -974,7 +976,7 @@ on p.player_id=a.player_id and datediff(a.event_date, p.login)=1
 
 
 
-## [569. 员工薪水中位数](https://leetcode-cn.com/problems/median-employee-salary/)
+### [569. 员工薪水中位数](https://leetcode-cn.com/problems/median-employee-salary/)
 
 难度困难
 
@@ -1039,7 +1041,7 @@ where rk IN (FLOOR((cnt + 1)/2), FLOOR((cnt + 2)/2))
 
 
 
-## [570. 至少有5名直接下属的经理](https://leetcode-cn.com/problems/managers-with-at-least-5-direct-reports/)
+### [570. 至少有5名直接下属的经理](https://leetcode-cn.com/problems/managers-with-at-least-5-direct-reports/)
 
 难度中等
 
@@ -1086,7 +1088,7 @@ having count(*)>=5
 
 
 
-## [571. 给定数字的频率查询中位数](https://leetcode-cn.com/problems/find-median-given-frequency-of-numbers/)
+### [571. 给定数字的频率查询中位数](https://leetcode-cn.com/problems/find-median-given-frequency-of-numbers/)
 
 难度困难
 
@@ -1168,7 +1170,9 @@ FROM
 )s
 ```
 
-## [574. 当选者](https://leetcode-cn.com/problems/winning-candidate/)
+## part 2
+
+### [574. 当选者](https://leetcode-cn.com/problems/winning-candidate/)
 
 难度中等
 
@@ -1250,7 +1254,7 @@ select CandidateId
 
 
 
-## [577. 员工奖金](https://leetcode-cn.com/problems/employee-bonus/)
+### [577. 员工奖金](https://leetcode-cn.com/problems/employee-bonus/)
 
 难度简单
 
@@ -1307,7 +1311,7 @@ where bonus<1000 or bonus is null
 
 
 
-## [578. 查询回答率最高的问题](https://leetcode-cn.com/problems/get-highest-answer-rate-question/)
+### [578. 查询回答率最高的问题](https://leetcode-cn.com/problems/get-highest-answer-rate-question/)
 
 难度中等3收藏分享切换为英文关注反馈
 
@@ -1372,7 +1376,7 @@ limit 1
 
 
 
-## [579. 查询员工的累计薪水](https://leetcode-cn.com/problems/find-cumulative-salary-of-an-employee/)
+### [579. 查询员工的累计薪水](https://leetcode-cn.com/problems/find-cumulative-salary-of-an-employee/)
 
 难度困难
 
@@ -1456,7 +1460,7 @@ order by  Id,Month desc
 
 
 
-## [580. 统计各专业学生人数](https://leetcode-cn.com/problems/count-student-number-in-departments/)
+### [580. 统计各专业学生人数](https://leetcode-cn.com/problems/count-student-number-in-departments/)
 
 难度中等
 
@@ -1529,7 +1533,7 @@ order by student_number desc
 
 
 
-## [584. 寻找用户推荐人](https://leetcode-cn.com/problems/find-customer-referee/)
+### [584. 寻找用户推荐人](https://leetcode-cn.com/problems/find-customer-referee/)
 
 难度简单9收藏分享切换为英文关注反馈
 
@@ -1576,7 +1580,7 @@ SELECT name FROM customer WHERE referee_id != 2 OR referee_id IS NULL;
 > 因此，在 WHERE 语句中我们需要做一个额外的条件判断 `referee_id IS NULL'。
 >
 
-## [585. 2016年的投资](https://leetcode-cn.com/problems/investments-in-2016/)
+### [585. 2016年的投资](https://leetcode-cn.com/problems/investments-in-2016/)
 
 难度中等14收藏分享切换为英文关注反馈
 
@@ -1667,7 +1671,7 @@ WHERE a.cnt_1 > 1 AND a.cnt_2 < 2
 
 
 
-## [586. 订单最多的客户](https://leetcode-cn.com/problems/customer-placing-the-largest-number-of-orders/)
+### [586. 订单最多的客户](https://leetcode-cn.com/problems/customer-placing-the-largest-number-of-orders/)
 
 难度简单
 
@@ -1727,7 +1731,7 @@ limit 1
 
 
 
-## [595. 大的国家](https://leetcode-cn.com/problems/big-countries/)
+### [595. 大的国家](https://leetcode-cn.com/problems/big-countries/)
 
 难度简单
 
@@ -1772,7 +1776,7 @@ where area  >3000000 or population >25000000
 
 
 
-## [596. 超过5名学生的课](https://leetcode-cn.com/problems/classes-more-than-5-students/)
+### [596. 超过5名学生的课](https://leetcode-cn.com/problems/classes-more-than-5-students/)
 
 难度简单
 
@@ -1824,7 +1828,7 @@ having count(distinct student)>=5
 
 
 
-## [597. 好友申请 I ：总体通过率](https://leetcode-cn.com/problems/friend-requests-i-overall-acceptance-rate/)
+### [597. 好友申请 I ：总体通过率](https://leetcode-cn.com/problems/friend-requests-i-overall-acceptance-rate/)
 
 难度简单21收藏分享切换为英文关注反馈
 
@@ -1890,7 +1894,7 @@ round(
 
 
 
-## [601. 体育馆的人流量](https://leetcode-cn.com/problems/human-traffic-of-stadium/)
+### [601. 体育馆的人流量](https://leetcode-cn.com/problems/human-traffic-of-stadium/)
 
 难度困难113收藏分享切换为英文关注反馈
 
@@ -1971,7 +1975,7 @@ or (a.lg>=100 and a.lg2>=100 and a.people>=100)
 
 
 
-## [602. 好友申请 II ：谁有最多的好友](https://leetcode-cn.com/problems/friend-requests-ii-who-has-the-most-friends/)
+### [602. 好友申请 II ：谁有最多的好友](https://leetcode-cn.com/problems/friend-requests-ii-who-has-the-most-friends/)
 
 难度中等
 
@@ -2028,7 +2032,7 @@ limit 0,1
 
 
 
-## [603. 连续空余座位](https://leetcode-cn.com/problems/consecutive-available-seats/)
+### [603. 连续空余座位](https://leetcode-cn.com/problems/consecutive-available-seats/)
 
 难度简单
 
@@ -2071,7 +2075,7 @@ where free=1
 where  seat_id-ls = 1 or rs-seat_id =1
 ```
 
-## [607. 销售员](https://leetcode-cn.com/problems/sales-person/)
+### [607. 销售员](https://leetcode-cn.com/problems/sales-person/)
 
 难度简单
 
@@ -2167,7 +2171,7 @@ where sales_id not in
 
 
 
-## [608. 树节点](https://leetcode-cn.com/problems/tree-node/)
+### [608. 树节点](https://leetcode-cn.com/problems/tree-node/)
 
 难度中等
 
@@ -2246,7 +2250,7 @@ from tree
 
 
 
-## [610. 判断三角形](https://leetcode-cn.com/problems/triangle-judgement/)
+### [610. 判断三角形](https://leetcode-cn.com/problems/triangle-judgement/)
 
 难度简单
 
@@ -2282,7 +2286,7 @@ from triangle
 
 
 
-## [612. 平面上的最近距离](https://leetcode-cn.com/problems/shortest-distance-in-a-plane/)
+### [612. 平面上的最近距离](https://leetcode-cn.com/problems/shortest-distance-in-a-plane/)
 
 难度中等
 
@@ -2328,7 +2332,7 @@ FROM
         OR (p1.x < p2.x AND p1.y = p2.y)
 ```
 
-## [613. 直线上的最近距离](https://leetcode-cn.com/problems/shortest-distance-in-a-line/)
+### [613. 直线上的最近距离](https://leetcode-cn.com/problems/shortest-distance-in-a-line/)
 
 难度简单
 
@@ -2390,9 +2394,7 @@ FROM
 
 
 
-
-
-## [614. 二级关注者](https://leetcode-cn.com/problems/second-degree-follower/)
+### [614. 二级关注者](https://leetcode-cn.com/problems/second-degree-follower/)
 
 难度中等
 
@@ -2454,8 +2456,10 @@ order by follower
 > 这里出现了重复关注 ，需要去重
 
 
+## Part 3
 
-## [615. 平均工资：部门与公司比较](https://leetcode-cn.com/problems/average-salary-departments-vs-company/)
+
+### [615. 平均工资：部门与公司比较](https://leetcode-cn.com/problems/average-salary-departments-vs-company/)
 
 难度困难
 
@@ -2539,7 +2543,7 @@ from
 IF(avgs>ts,'higher',IF(avgs=ts,'same','lower')) AS comparison
 ```
 
-## [618. 学生地理信息报告](https://leetcode-cn.com/problems/students-report-by-geography/)
+### [618. 学生地理信息报告](https://leetcode-cn.com/problems/students-report-by-geography/)
 
 难度困难
 
@@ -2642,7 +2646,7 @@ left join(
 
 
 
-## [619. 只出现一次的最大数字](https://leetcode-cn.com/problems/biggest-single-number/)
+### [619. 只出现一次的最大数字](https://leetcode-cn.com/problems/biggest-single-number/)
 
 难度简单
 
@@ -2693,7 +2697,7 @@ FROM
 
 
 
-## [620. 有趣的电影](https://leetcode-cn.com/problems/not-boring-movies/)
+### [620. 有趣的电影](https://leetcode-cn.com/problems/not-boring-movies/)
 
 难度简单86收藏分享切换为英文关注反馈
 
@@ -2741,7 +2745,7 @@ order by rating desc,id,movie,description
 
 
 
-## [626. 换座位](https://leetcode-cn.com/problems/exchange-seats/)
+### [626. 换座位](https://leetcode-cn.com/problems/exchange-seats/)
 
 难度中等
 
@@ -2826,7 +2830,7 @@ where b.id=1^(a.id-1)+1
  || (c.cnt%2 && b.id=c.cnt && a.id=c.cnt);
 ```
 
-## [627. 交换工资](https://leetcode-cn.com/problems/swap-salary/)
+### [627. 交换工资](https://leetcode-cn.com/problems/swap-salary/)
 
 难度简单
 
@@ -2866,7 +2870,7 @@ SET
 
 > Update 和set的使用
 
-## [1045. 买下所有产品的客户](https://leetcode-cn.com/problems/customers-who-bought-all-products/)
+### [1045. 买下所有产品的客户](https://leetcode-cn.com/problems/customers-who-bought-all-products/)
 
 难度中等
 
@@ -2944,7 +2948,7 @@ from Product)
 
 
 
-## [1050. 合作过至少三次的演员和导演](https://leetcode-cn.com/problems/actors-and-directors-who-cooperated-at-least-three-times/)
+### [1050. 合作过至少三次的演员和导演](https://leetcode-cn.com/problems/actors-and-directors-who-cooperated-at-least-three-times/)
 
 难度简单
 
@@ -3001,7 +3005,7 @@ group by actor_id,director_id
 having count(*)>=3
 ```
 
-## [1068. 产品销售分析 I](https://leetcode-cn.com/problems/product-sales-analysis-i/)
+### [1068. 产品销售分析 I](https://leetcode-cn.com/problems/product-sales-analysis-i/)
 
 难度简单
 
@@ -3079,7 +3083,7 @@ on s.product_id  = p.product_id
 
 
 
-## [1069. 产品销售分析 II](https://leetcode-cn.com/problems/product-sales-analysis-ii/)
+### [1069. 产品销售分析 II](https://leetcode-cn.com/problems/product-sales-analysis-ii/)
 
 难度简单
 
@@ -3159,7 +3163,7 @@ group by s.product_id
 
 
 
-## [1070. 产品销售分析 III](https://leetcode-cn.com/problems/product-sales-analysis-iii/)
+### [1070. 产品销售分析 III](https://leetcode-cn.com/problems/product-sales-analysis-iii/)
 
 难度中等
 
@@ -3239,7 +3243,7 @@ on s.product_id  = p.product_id
 where rk = 1
 ```
 
-## [1075. 项目员工 I](https://leetcode-cn.com/problems/project-employees-i/)
+### [1075. 项目员工 I](https://leetcode-cn.com/problems/project-employees-i/)
 
 难度简单
 
@@ -3318,7 +3322,7 @@ on p.employee_id=e.employee_id
 group by project_id
 ```
 
-## [1076. 项目员工II](https://leetcode-cn.com/problems/project-employees-ii/)
+### [1076. 项目员工II](https://leetcode-cn.com/problems/project-employees-ii/)
 
 难度简单
 
@@ -3406,7 +3410,7 @@ select project_id from
 
 
 
-## [1077. 项目员工 III](https://leetcode-cn.com/problems/project-employees-iii/)
+### [1077. 项目员工 III](https://leetcode-cn.com/problems/project-employees-iii/)
 
 难度中等
 
@@ -3494,7 +3498,7 @@ where rk=1
 
 
 
-## [1082. 销售分析 I ](https://leetcode-cn.com/problems/sales-analysis-i/)
+### [1082. 销售分析 I ](https://leetcode-cn.com/problems/sales-analysis-i/)
 
 难度简单22
 
@@ -3580,7 +3584,7 @@ where rk =1
 
 
 
-## [1083. 销售分析 II](https://leetcode-cn.com/problems/sales-analysis-ii/)
+### [1083. 销售分析 II](https://leetcode-cn.com/problems/sales-analysis-ii/)
 
 难度简单13
 
@@ -3674,7 +3678,7 @@ having sum(p.product_name='S8')>0 and sum(p.product_name='iPhone')=0
 
 
 
-## [1084. 销售分析III](https://leetcode-cn.com/problems/sales-analysis-iii/)
+### [1084. 销售分析III](https://leetcode-cn.com/problems/sales-analysis-iii/)
 
 难度简单13
 
@@ -3793,7 +3797,7 @@ group by s.product_id
 having min(s.sale_date)>='2019-01-01' and max(s.sale_date) <= '2019-03-31'
 ```
 
-## [1097. 游戏玩法分析 V](https://leetcode-cn.com/problems/game-play-analysis-v/)
+### [1097. 游戏玩法分析 V](https://leetcode-cn.com/problems/game-play-analysis-v/)
 
 难度困难
 
@@ -3861,7 +3865,7 @@ group by install_dt
 
 
 
-## [1098. 小众书籍](https://leetcode-cn.com/problems/unpopular-books/)
+### [1098. 小众书籍](https://leetcode-cn.com/problems/unpopular-books/)
 
 难度中等
 
@@ -3956,7 +3960,7 @@ ORDER BY a.book_id;
 >
 > 还有就是date_add这个函数在hive里和mysql语法上有点小区别
 
-## [1107. 每日新用户统计](https://leetcode-cn.com/problems/new-users-daily-count/)
+### [1107. 每日新用户统计](https://leetcode-cn.com/problems/new-users-daily-count/)
 
 难度中等
 
@@ -4027,7 +4031,10 @@ from(
 group by login_date
 ```
 
-## [1112. 每位学生的最高成绩](https://leetcode-cn.com/problems/highest-grade-for-each-student/)
+## part 4
+
+
+### [1112. 每位学生的最高成绩](https://leetcode-cn.com/problems/highest-grade-for-each-student/)
 
 难度中等
 
@@ -4088,7 +4095,7 @@ where rk =1
 
 
 
-## [1113. 报告的记录](https://leetcode-cn.com/problems/reported-posts/)
+### [1113. 报告的记录](https://leetcode-cn.com/problems/reported-posts/)
 
 难度简单
 
@@ -4161,7 +4168,7 @@ GROUP BY
 	extra;
 ```
 
-## [1132. 报告的记录 II](https://leetcode-cn.com/problems/reported-posts-ii/)
+### [1132. 报告的记录 II](https://leetcode-cn.com/problems/reported-posts-ii/)
 
 难度中等
 
@@ -4256,7 +4263,7 @@ FROM (
 
 > 要理解spam的含义
 
-## [1126. 查询活跃业务](https://leetcode-cn.com/problems/active-businesses/)
+### [1126. 查询活跃业务](https://leetcode-cn.com/problems/active-businesses/)
 
 难度中等
 
@@ -4322,7 +4329,7 @@ group by business_id
 having count(*)>=2
 ```
 
-## [1127. 用户购买平台](https://leetcode-cn.com/problems/user-purchase-platform/)
+### [1127. 用户购买平台](https://leetcode-cn.com/problems/user-purchase-platform/)
 
 难度困难
 
@@ -4410,7 +4417,7 @@ group by spend_date, platform
 
 > 必须保证 desktop mobile both的顺序 ，所以 先列出三个字段
 
-## [1141. 查询近30天活跃用户数](https://leetcode-cn.com/problems/user-activity-for-the-past-30-days-i/)
+### [1141. 查询近30天活跃用户数](https://leetcode-cn.com/problems/user-activity-for-the-past-30-days-i/)
 
 难度简单
 
@@ -4476,7 +4483,7 @@ where activity_date > date_add('2019-07-27',INTERVAL -1 MONTH)
 group by activity_date
 ```
 
-## [1142. 过去30天的用户活动 II](https://leetcode-cn.com/problems/user-activity-for-the-past-30-days-ii/)
+### [1142. 过去30天的用户活动 II](https://leetcode-cn.com/problems/user-activity-for-the-past-30-days-ii/)
 
 难度简单7收藏分享切换为英文关注反馈
 
@@ -4545,7 +4552,7 @@ where activity_date > date_add('2019-07-27',INTERVAL -1 MONTH)
 
 
 
-## [1148. 文章浏览 I](https://leetcode-cn.com/problems/article-views-i/)
+### [1148. 文章浏览 I](https://leetcode-cn.com/problems/article-views-i/)
 
 难度简单3收藏分享切换为英文关注反馈
 
@@ -4605,7 +4612,7 @@ order by id
 
 
 
-## [1149. 文章浏览 II](https://leetcode-cn.com/problems/article-views-ii/)
+### [1149. 文章浏览 II](https://leetcode-cn.com/problems/article-views-ii/)
 
 难度中等4收藏分享切换为英文关注反馈
 
@@ -4665,7 +4672,7 @@ HAVING COUNT(DISTINCT article_id) >= 2
 ORDER BY viewer_id
 ```
 
-## [1158. 市场分析 I](https://leetcode-cn.com/problems/market-analysis-i/)
+### [1158. 市场分析 I](https://leetcode-cn.com/problems/market-analysis-i/)
 
 难度中等
 
@@ -4774,7 +4781,7 @@ group by  buyer_id
 on u.user_id =t1.buyer_id
 ```
 
-## [1159. 市场分析 II](https://leetcode-cn.com/problems/market-analysis-ii/)
+### [1159. 市场分析 II](https://leetcode-cn.com/problems/market-analysis-ii/)
 
 难度困难
 
@@ -4897,7 +4904,7 @@ left join
 on u.user_id = t2.seller_id
 ```
 
-## [1164. 指定日期的产品价格](https://leetcode-cn.com/problems/product-price-at-a-given-date/)
+### [1164. 指定日期的产品价格](https://leetcode-cn.com/problems/product-price-at-a-given-date/)
 
 难度中等
 
@@ -4966,7 +4973,7 @@ order by price desc
 
 
 
-## [1173. 即时食物配送 I](https://leetcode-cn.com/problems/immediate-food-delivery-i/)
+### [1173. 即时食物配送 I](https://leetcode-cn.com/problems/immediate-food-delivery-i/)
 
 难度简单
 
@@ -5024,7 +5031,7 @@ select round(sum(if(order_date=customer_pref_delivery_date,1,0))/count(*)*100,2)
 from Delivery
 ```
 
-## [1174. 即时食物配送 II](https://leetcode-cn.com/problems/immediate-food-delivery-ii/)
+### [1174. 即时食物配送 II](https://leetcode-cn.com/problems/immediate-food-delivery-ii/)
 
 难度中等
 
@@ -5114,7 +5121,7 @@ where (customer_id, order_date) in (
 
 
 
-## [1179. 重新格式化部门表](https://leetcode-cn.com/problems/reformat-department-table/)
+### [1179. 重新格式化部门表](https://leetcode-cn.com/problems/reformat-department-table/)
 
 难度
 
@@ -5241,7 +5248,7 @@ GROUP BY month, country
 
 
 
-## [1193. 每月交易 I](https://leetcode-cn.com/problems/monthly-transactions-i/)
+### [1193. 每月交易 I](https://leetcode-cn.com/problems/monthly-transactions-i/)
 
 难度中等
 
@@ -5306,7 +5313,7 @@ GROUP BY month, country
 
 
 
-## [1205. 每月交易II](https://leetcode-cn.com/problems/monthly-transactions-ii/)
+### [1205. 每月交易II](https://leetcode-cn.com/problems/monthly-transactions-ii/)
 
 难度中等
 
@@ -5403,7 +5410,7 @@ group by month, country
 having approved_amount or chargeback_amount
 ```
 
-## [1194. 锦标赛优胜者](https://leetcode-cn.com/problems/tournament-winners/)
+### [1194. 锦标赛优胜者](https://leetcode-cn.com/problems/tournament-winners/)
 
 难度困难
 
@@ -5526,7 +5533,7 @@ group by group_id
 
 
 
-## [1204. 最后一个能进入电梯的人](https://leetcode-cn.com/problems/last-person-to-fit-in-the-elevator/)
+### [1204. 最后一个能进入电梯的人](https://leetcode-cn.com/problems/last-person-to-fit-in-the-elevator/)
 
 难度中等
 
@@ -5594,7 +5601,7 @@ limit 1
 
 
 
-## [1211. 查询结果的质量和占比](https://leetcode-cn.com/problems/queries-quality-and-percentage/)
+### [1211. 查询结果的质量和占比](https://leetcode-cn.com/problems/queries-quality-and-percentage/)
 
 难度简单
 
@@ -5669,7 +5676,9 @@ from Queries
 group by query_name
 ```
 
-## [1212. 查询球队积分](https://leetcode-cn.com/problems/team-scores-in-football-tournament/)
+## part 5
+
+### [1212. 查询球队积分](https://leetcode-cn.com/problems/team-scores-in-football-tournament/)
 
 难度中等
 
@@ -5762,7 +5771,7 @@ group by team_id ,team_name
 order by num_points desc,team_id
 ```
 
-## [1225. 报告系统状态的连续日期](https://leetcode-cn.com/problems/report-contiguous-dates/)
+### [1225. 报告系统状态的连续日期](https://leetcode-cn.com/problems/report-contiguous-dates/)
 
 难度困难
 
@@ -5863,7 +5872,7 @@ order by start_date
 
 
 
-## [1241. 每个帖子的评论数](https://leetcode-cn.com/problems/number-of-comments-per-post/)
+### [1241. 每个帖子的评论数](https://leetcode-cn.com/problems/number-of-comments-per-post/)
 
 难度简单
 
@@ -5962,7 +5971,7 @@ ORDER BY post_id ASC
 
 
 
-## [1251. 平均售价](https://leetcode-cn.com/problems/average-selling-price/)
+### [1251. 平均售价](https://leetcode-cn.com/problems/average-selling-price/)
 
 难度简单
 
@@ -6057,7 +6066,7 @@ GROUP BY product_id
 
 > 2表关联的时候直接把日期做过滤
 
-## [1264. 页面推荐](https://leetcode-cn.com/problems/page-recommendations/)
+### [1264. 页面推荐](https://leetcode-cn.com/problems/page-recommendations/)
 
 难度中等
 
@@ -6156,7 +6165,7 @@ and page_id not in (select page_id from Likes where user_id=1)
 
 ```
 
-## [1270. 向公司CEO汇报工作的所有人](https://leetcode-cn.com/problems/all-people-report-to-the-given-manager/)
+### [1270. 向公司CEO汇报工作的所有人](https://leetcode-cn.com/problems/all-people-report-to-the-given-manager/)
 
 难度中等
 
@@ -6234,7 +6243,7 @@ where employee_id!=1
 
 
 
-## [1280. 学生们参加各科测试的次数](https://leetcode-cn.com/problems/students-and-examinations/)
+### [1280. 学生们参加各科测试的次数](https://leetcode-cn.com/problems/students-and-examinations/)
 
 难度简单
 
@@ -6290,7 +6299,7 @@ ORDER BY a.student_id, b.subject_name
 
 >  CROSS JOIN Mysql中没有full outer join 	hive中可以用
 
-## [1285. 找到连续区间的开始和结束数字](https://leetcode-cn.com/problems/find-the-start-and-end-number-of-continuous-ranges/)
+### [1285. 找到连续区间的开始和结束数字](https://leetcode-cn.com/problems/find-the-start-and-end-number-of-continuous-ranges/)
 
 难度中等
 
@@ -6359,7 +6368,7 @@ GROUP BY diff
 
 > 相似1225题
 
-## [1294. 不同国家的天气类型](https://leetcode-cn.com/problems/weather-type-in-each-country/)
+### [1294. 不同国家的天气类型](https://leetcode-cn.com/problems/weather-type-in-each-country/)
 
 难度简单
 
@@ -6465,7 +6474,7 @@ where date_format(day,"%Y-%m")='2019-11'
 group by country_name
 ```
 
-## [1303. 求团队人数](https://leetcode-cn.com/problems/find-the-team-size/)
+### [1303. 求团队人数](https://leetcode-cn.com/problems/find-the-team-size/)
 
 难度简单
 
@@ -6522,7 +6531,7 @@ select employee_id,count(*) over(partition by team_id) team_size
 from Employee
 ```
 
-## [1308. 不同性别每日分数总计](https://leetcode-cn.com/problems/running-total-for-different-genders/)
+### [1308. 不同性别每日分数总计](https://leetcode-cn.com/problems/running-total-for-different-genders/)
 
 难度中等
 
@@ -6602,7 +6611,7 @@ from Scores
 
 
 
-## [1321. 餐馆营业额变化增长](https://leetcode-cn.com/problems/restaurant-growth/)
+### [1321. 餐馆营业额变化增长](https://leetcode-cn.com/problems/restaurant-growth/)
 
 难度中等
 
@@ -6688,7 +6697,7 @@ where lg is not null
 
 
 
-## [1322. 广告效果](https://leetcode-cn.com/problems/ads-performance/)
+### [1322. 广告效果](https://leetcode-cn.com/problems/ads-performance/)
 
 难度简单8收藏分享切换为英文关注反馈
 
@@ -6785,7 +6794,7 @@ group by ad_id,ctr
 order by ctr desc,ad_id
 ```
 
-## [1327. 列出指定时间段内所有的下单产品](https://leetcode-cn.com/problems/list-the-products-ordered-in-a-period/)
+### [1327. 列出指定时间段内所有的下单产品](https://leetcode-cn.com/problems/list-the-products-ordered-in-a-period/)
 
 难度简单
 
@@ -6884,7 +6893,7 @@ group by product_name
 having unit>=100
 ```
 
-## [1336. 每次访问的交易次数](https://leetcode-cn.com/problems/number-of-transactions-per-visit/)
+### [1336. 每次访问的交易次数](https://leetcode-cn.com/problems/number-of-transactions-per-visit/)
 
 难度困难
 
@@ -7045,7 +7054,7 @@ group by pcnt
 
 这个得出结果是[0, 4], [1, 5], [3, 3] 少了[2,0] 还没想到什么好办法能把[2，0]加进去。。。
 
-## [1341. 电影评分](https://leetcode-cn.com/problems/movie-rating/)
+### [1341. 电影评分](https://leetcode-cn.com/problems/movie-rating/)
 
 难度中等
 
@@ -7186,7 +7195,7 @@ limit 1
 
 
 
-## [1350. 院系无效的学生](https://leetcode-cn.com/problems/students-with-invalid-departments/)
+### [1350. 院系无效的学生](https://leetcode-cn.com/problems/students-with-invalid-departments/)
 
 难度简单
 
@@ -7278,7 +7287,7 @@ where department_id not in
 )
 ```
 
-## [1355. 活动参与者](https://leetcode-cn.com/problems/activity-participants/)
+### [1355. 活动参与者](https://leetcode-cn.com/problems/activity-participants/)
 
 难度中等
 
@@ -7372,7 +7381,7 @@ Singing 活动有两个人参加 (Victor J. and Jade W.)
 
 > 不需要关联 Activities表，因为 至少有一人参加
 
-## [1364. 顾客的可信联系人数量](https://leetcode-cn.com/problems/number-of-trusted-contacts-of-a-customer/)
+### [1364. 顾客的可信联系人数量](https://leetcode-cn.com/problems/number-of-trusted-contacts-of-a-customer/)
 
 难度中等
 
@@ -7514,7 +7523,7 @@ order by invoice_id
 
 > 就是麻烦点 各种join
 
-## [1369. 获取最近第二次的活动](https://leetcode-cn.com/problems/get-the-second-most-recent-activity/)
+### [1369. 获取最近第二次的活动](https://leetcode-cn.com/problems/get-the-second-most-recent-activity/)
 
 难度困难
 
@@ -7581,7 +7590,9 @@ from UserActivity
 where rk=2 or  (rk = 1 &&  lg is null)
 ```
 
-## [1378. 使用唯一标识码替换员工ID](https://leetcode-cn.com/problems/replace-employee-id-with-the-unique-identifier/)
+## part 6
+
+### [1378. 使用唯一标识码替换员工ID](https://leetcode-cn.com/problems/replace-employee-id-with-the-unique-identifier/)
 
 难度简单
 
@@ -7669,7 +7680,7 @@ from Employees  e left join EmployeeUNI u
 on e.id = u.id
 ```
 
-## [1384. 按年度列出销售总额](https://leetcode-cn.com/problems/total-sales-amount-by-year/)
+### [1384. 按年度列出销售总额](https://leetcode-cn.com/problems/total-sales-amount-by-year/)
 
 难度困难
 
@@ -7775,7 +7786,7 @@ order by product_id, report_year
 
 
 
-## [1393. 股票的资本损益](https://leetcode-cn.com/problems/capital-gainloss/)
+### [1393. 股票的资本损益](https://leetcode-cn.com/problems/capital-gainloss/)
 
 难度中等
 
@@ -7853,7 +7864,7 @@ group by stock_name,buy,sell
 
 
 
-## [1398. 购买了产品A和产品B却没有购买产品C的顾客](https://leetcode-cn.com/problems/customers-who-bought-products-a-and-b-but-not-c/)
+### [1398. 购买了产品A和产品B却没有购买产品C的顾客](https://leetcode-cn.com/problems/customers-who-bought-products-a-and-b-but-not-c/)
 
 难度中等
 
@@ -7942,7 +7953,7 @@ group by customer_id
 having sum(product_name ='A')>=1 and sum(product_name='B')>=1 and sum(product_name='C')=0
 ```
 
-## [1407. 排名靠前的旅行者](https://leetcode-cn.com/problems/top-travellers/)
+### [1407. 排名靠前的旅行者](https://leetcode-cn.com/problems/top-travellers/)
 
 难度简单
 
@@ -8041,7 +8052,7 @@ group by name
 order by travelled_distance  desc, name 
 ```
 
-## [1412. 查找成绩处于中游的学生](https://leetcode-cn.com/problems/find-the-quiet-students-in-all-exams/)
+### [1412. 查找成绩处于中游的学生](https://leetcode-cn.com/problems/find-the-quiet-students-in-all-exams/)
 
 难度困难
 
@@ -8149,7 +8160,7 @@ order by e.student_id
 
 
 
-## [1421. 净现值查询](https://leetcode-cn.com/problems/npv-queries/)
+### [1421. 净现值查询](https://leetcode-cn.com/problems/npv-queries/)
 
 难度中等
 
@@ -8249,7 +8260,7 @@ on q.id = n.id and q.year = n.year
 
 
 
-## [1435. 制作会话柱状图](https://leetcode-cn.com/problems/create-a-session-bar-chart/)
+### [1435. 制作会话柱状图](https://leetcode-cn.com/problems/create-a-session-bar-chart/)
 
 难度简单
 
@@ -8342,7 +8353,7 @@ group by a.bin
 
 
 
-## [1440. 计算布尔表达式的值](https://leetcode-cn.com/problems/evaluate-boolean-expression/)
+### [1440. 计算布尔表达式的值](https://leetcode-cn.com/problems/evaluate-boolean-expression/)
 
 难度中等
 
@@ -8438,7 +8449,7 @@ left join Variables v2 on v2.name = e.right_operand
 
 
 
-## [1445. 苹果和桔子](https://leetcode-cn.com/problems/apples-oranges/)
+### [1445. 苹果和桔子](https://leetcode-cn.com/problems/apples-oranges/)
 
 难度中等
 
@@ -8513,7 +8524,7 @@ where fruit='apples'
 
 
 
-## [1454.  活跃用户](https://leetcode-cn.com/problems/active-users/)
+### [1454.  活跃用户](https://leetcode-cn.com/problems/active-users/)
 
 难度中等
 
@@ -8621,7 +8632,7 @@ on t3.id = a.id
 
 > 注意用户当天重复登入
 
-## [1459. 矩形面积](https://leetcode-cn.com/problems/rectangles-area/)
+### [1459. 矩形面积](https://leetcode-cn.com/problems/rectangles-area/)
 
 难度中等
 
@@ -8683,7 +8694,7 @@ where a.id<b.id and a.x_value != b.x_value and a.y_value != b.y_value
 order by area desc,P1 ,P2 
 ```
 
-## [1468. 计算税后工资](https://leetcode-cn.com/problems/calculate-salaries/)
+### [1468. 计算税后工资](https://leetcode-cn.com/problems/calculate-salaries/)
 
 难度中等
 
@@ -8770,7 +8781,7 @@ from(
 )t1
 ```
 
-## [1479. 周内每天的销售情况](https://leetcode-cn.com/problems/sales-by-day-of-the-week/)
+### [1479. 周内每天的销售情况](https://leetcode-cn.com/problems/sales-by-day-of-the-week/)
 
 难度困难
 
@@ -8884,7 +8895,7 @@ group by item_category
 order by item_category
 ```
 
-## [1485. 按日期分组销售产品](https://leetcode-cn.com/problems/group-sold-products-by-the-date/)
+### [1485. 按日期分组销售产品](https://leetcode-cn.com/problems/group-sold-products-by-the-date/)
 
 难度简单
 
@@ -8950,7 +8961,7 @@ group by sell_date
 
 
 
-## [1495. 上月播放的儿童适宜电影](https://leetcode-cn.com/problems/friendly-movies-streamed-last-month/)
+### [1495. 上月播放的儿童适宜电影](https://leetcode-cn.com/problems/friendly-movies-streamed-last-month/)
 
 难度简单
 
@@ -9060,7 +9071,7 @@ and content_type='Movies'
 
 
 
-## [1501. 可以放心投资的国家](https://leetcode-cn.com/problems/countries-you-can-safely-invest-in/)
+### [1501. 可以放心投资的国家](https://leetcode-cn.com/problems/countries-you-can-safely-invest-in/)
 
 难度中等
 
@@ -9222,7 +9233,7 @@ where avgtime >
 
 
 
-## [1511. 消费者下单频率](https://leetcode-cn.com/problems/customer-order-frequency/)
+### [1511. 消费者下单频率](https://leetcode-cn.com/problems/customer-order-frequency/)
 
 难度简单
 
@@ -9353,7 +9364,7 @@ where customer_id in
 
 
 
-## [1517. Find Users With Valid E-Mails](https://leetcode-cn.com/problems/find-users-with-valid-e-mails/)
+### [1517. Find Users With Valid E-Mails](https://leetcode-cn.com/problems/find-users-with-valid-e-mails/)
 
 难度简单
 
@@ -9443,7 +9454,7 @@ order by user_id
 > 2、https://www.cnblogs.com/zhaopanpan/p/10133224.html
 > 3、"双反斜杠+w"表示字母、数字、下划线，相对"a-zA-Z0-9"的写法更简洁。
 
-## [1527. Patients With a Condition](https://leetcode-cn.com/problems/patients-with-a-condition/)
+### [1527. Patients With a Condition](https://leetcode-cn.com/problems/patients-with-a-condition/)
 
 难度简单
 
@@ -9502,7 +9513,7 @@ from Patients
 where conditions like '%DIAB1%'
 ```
 
-## [1532. The Most Recent Three Orders](https://leetcode-cn.com/problems/the-most-recent-three-orders/)
+### [1532. The Most Recent Three Orders](https://leetcode-cn.com/problems/the-most-recent-three-orders/)
 
 难度中等
 
@@ -9610,7 +9621,7 @@ where rk <=3
 order by customer_name ,customer_id,order_date desc
 ```
 
-## [1543. Fix Product Name Format](https://leetcode-cn.com/problems/fix-product-name-format/)
+### [1543. Fix Product Name Format](https://leetcode-cn.com/problems/fix-product-name-format/)
 
 难度简单
 
@@ -9685,7 +9696,7 @@ order by product_name asc, sale_date asc
 
 
 
-## [1549. The Most Recent Orders for Each Product](https://leetcode-cn.com/problems/the-most-recent-orders-for-each-product/)
+### [1549. The Most Recent Orders for Each Product](https://leetcode-cn.com/problems/the-most-recent-orders-for-each-product/)
 
 难度中等
 
