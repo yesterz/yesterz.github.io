@@ -5,11 +5,10 @@ order: 5
 mermaid: true
 ---
 
-TODO create any commits again again again
-
 # yesterz.github.io
 > 日常学习笔记记录，学习（狗头）互联网上的优秀博客笔记内化成自己的知识（欢迎围观~）<https://yesterz.github.io>
 {: .prompt-tip }
+
 
 <h1 class="mt-5">Getting Things DONE</h1>
 
