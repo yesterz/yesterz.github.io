@@ -5,7 +5,7 @@ author: Algorithms-Notes
 categories: [Algorithms, Sorting]
 tags: [Sorting]
 pin: false
-math: true
+math: false
 mermaid: false
 ---
 
