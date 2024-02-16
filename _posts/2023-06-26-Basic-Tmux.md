@@ -8,7 +8,7 @@ toc: true
 
 ## 改掉默认终端为 Tmux
 
-```
+```sh
 # use Tmux only if current terminal program is xterm-256color
 if [ "$TERM" = 'xterm-256color' ]; then
   tmux has -t risk &> /dev/null
