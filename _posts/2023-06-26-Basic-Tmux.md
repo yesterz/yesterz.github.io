@@ -6,11 +6,26 @@ tags: [Linux, Tmux]
 toc: true
 ---
 
+## 改掉默认终端为 Tmux
+
+```
+# use Tmux only if current terminal program is xterm-256color
+if [ "$TERM" = 'xterm-256color' ]; then
+  tmux has -t risk &> /dev/null
+  if [ $? != 0 ]; then
+    tmux new -s risk
+  elif [ -z $TMUX ]; then
+    tmux attach -t risk
+  fi
+fi
+```
+
 ## tmux使用学习文档
 
 1. Tmux 使用手册 [https://louiszhai.github.io/2017/09/30/tmux/](https://louiszhai.github.io/2017/09/30/tmux/)
 2. 基础教程 [https://www.ruanyifeng.com/blog/2019/10/tmux.html](https://www.ruanyifeng.com/blog/2019/10/tmux.html)
 3. tmux之道？Tao of Tmux [https://tao-of-tmux.readthedocs.io/zh_CN/latest/](https://tao-of-tmux.readthedocs.io/zh_CN/latest/)
+4. Tmux Cheat Sheet & Quick Reference [https://tmuxcheatsheet.com/](https://tmuxcheatsheet.com/)
 
 ## 基本使用流程
 
