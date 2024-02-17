@@ -1,9 +1,7 @@
 ---
 title: "Redis 多机数据库的实现"
-categories:
-  - Redis
-tags:
-  - Redis
+categories: [Cache, Redis]
+tags: [Cache]
 toc: true
 ---
 

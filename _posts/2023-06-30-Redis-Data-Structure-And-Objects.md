@@ -1,9 +1,7 @@
 ---
 title: "Redis 数据结构与对象"
-categories:
-  - Redis
-tags:
-  - Redis
+categories: [Cache, Redis]
+tags: [Cache]
 toc: true
 ---
 

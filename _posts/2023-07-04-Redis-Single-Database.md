@@ -1,9 +1,7 @@
 ---
 title: "Redis 单机数据库的实现"
-categories:
-  - Redis
-tags:
-  - Redis
+categories: [Cache, Redis]
+tags: [Cache]
 toc: true
 ---
 
