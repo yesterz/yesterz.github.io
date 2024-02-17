@@ -32,7 +32,7 @@ mermaid: false
 
 1. `Protobuf` 基本介绍和使用示意图
 2. `Protobuf` 是 `Google` 发布的开源项目，全称 `Google Protocol Buffers`，是一种轻便高效的结构化数据存储格式，可以用于结构化数据串行化，或者说序列化。它很适合做数据存储或 `RPC` [远程过程调用 `remote procedure call` ]数据交换格式。目前很多公司 `http + json tcp + protobuf`
-3. 参考文档：https://developers.google.com/protocol-buffers/docs/proto 语言指南
+3. 参考文档：<https://developers.google.com/protocol-buffers/docs/proto/> 语言指南
 4. `Protobuf` 是以 `message` 的方式来管理数据的.
 5. 支持跨平台、跨语言，即[客户端和服务器端可以是不同的语言编写的]（支持目前绝大多数语言，例如 `C++`、`C#`、`Java`、`python` 等）
 6. 高性能，高可靠性
@@ -53,10 +53,10 @@ mermaid: false
 ```java
 Student.proto
 
-syntax = "proto3"; //版本
-option java_outer_classname = "StudentPOJO";//生成的外部类名，同时也是文件名
-//protobuf 使用message 管理数据
-message Student { //会在 StudentPOJO 外部类生成一个内部类 Student， 他是真正发送的POJO对象
+syntax = "proto3"; // 版本
+option java_outer_classname = "StudentPOJO";// 生成的外部类名，同时也是文件名
+// protobuf 使用message 管理数据
+message Student { // 会在 StudentPOJO 外部类生成一个内部类 Student， 他是真正发送的POJO对象
     int32 id = 1; // Student 类中有 一个属性 名字为 id 类型为int32(protobuf类型) 1表示属性序号，不是值
     string name = 2;
 }
@@ -78,19 +78,19 @@ Student.proto
 
 syntax = "proto3";
 option optimize_for = SPEED; // 加快解析
-option java_package="com.atguigu.netty.codec2";   //指定生成到哪个包下
+option java_package="com.atguigu.netty.codec2";   // 指定生成到哪个包下
 option java_outer_classname="MyDataInfo"; // 外部类名, 文件名
 
-//protobuf 可以使用message 管理其他的message
+// protobuf 可以使用 message 管理其他的 message
 message MyMessage {
 
     //定义一个枚举类型
     enum DataType {
-        StudentType = 0; //在proto3 要求enum的编号从0开始
+        StudentType = 0; //在 proto3 要求 enum 的编号从0开始
         WorkerType = 1;
     }
 
-    //用data_type 来标识传的是哪一个枚举类型
+    //用 data_type 来标识传的是哪一个枚举类型
     DataType data_type = 1;
 
     //表示每次枚举类型最多只能出现其中的一个, 节省空间
@@ -103,7 +103,7 @@ message MyMessage {
 
 
 message Student {
-    int32 id = 1;//Student类的属性
+    int32 id = 1; // Student 类的属性
     string name = 2; //
 }
 message Worker {

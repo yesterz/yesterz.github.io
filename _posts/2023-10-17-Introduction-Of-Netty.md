@@ -38,7 +38,9 @@ mermaid: false
 2. `Netty` 作为高性能的基础通信组件，提供了 `TCP/UDP` 和 `HTTP` 协议栈，方便定制和开发私有协议栈，账号登录服务器。
 3. 地图服务器之间可以方便的通过 `Netty` 进行高性能的通信。
 
-![](/assets/images/NettyImages/chapter01/chapter01_02.png) ![](/assets/images/NettyImages/chapter01/chapter01_03.png)
+![](/assets/images/NettyImages/chapter01/chapter01_02.png)
+
+![](/assets/images/NettyImages/chapter01/chapter01_03.png)
 
 ### 1.3.3 大数据领域
 
@@ -49,7 +51,7 @@ mermaid: false
 
 ### 1.3.4 其它开源项目使用到 Netty
 
-网址：https://netty.io/wiki/related-projects.html
+网址：<https://netty.io/wiki/related-projects.html>
 
 ![](/assets/images/NettyImages/chapter01/chapter01_05.png)
 

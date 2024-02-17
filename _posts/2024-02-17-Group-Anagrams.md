@@ -9,7 +9,7 @@ math: false
 mermaid: false
 ---
 
-Leetcode <https://leetcode.cn/problems/group-anagrams/>
+LeetCode <https://leetcode.cn/problems/group-anagrams/>
 
 49. 字母异位词分组
 
