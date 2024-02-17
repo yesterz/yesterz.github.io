@@ -3,7 +3,7 @@ title: Group Anagrams
 date: 2024-02-17 11:36:00 +0800
 author: Algorithms-Notes
 categories: [Algorithms, LeetCode Hot 100]
-tags: [top-100-liked, Array, Hash Table, String, Sorting]
+tags: [Medium, top-100-liked, Array, Hash Table, String, Sorting]
 pin: false
 math: false
 mermaid: false

@@ -6,6 +6,7 @@ tags: [Operating System]
 pin: false
 math: false
 mermaid: false
+img_path: /assets/images/
 ---
 
 快速了解一些计算机系统的基本概念。今天先来讲讲 Virtual Memory。
@@ -28,7 +29,7 @@ Virtual Memory（虚拟内存），顾名思义，是针对 physical memory（�
 
 这是怎么实现的呢？简单来讲，系统把虚拟内存和物理内存都划分为等长的 page（页），并为每个进程维护一个 page table（页表）用来将虚拟页映射到物理页。这样当我们访问一个虚拟地址时，系统就可以通过查表将其翻译为物理地址。如果这个地址所在的页当前不在物理内存中，则系统会先将它从磁盘取出来替换掉内存里另一个暂时不用的页。整个过程是由操作系统和硬件协同完成的，这里不再赘述，感兴趣的同学可以参考任何一本操作系统教材。
 
-![Virtual_memory](https://en.wikipedia.org/wiki/Virtual_memory#/media/File:Virtual_memory.svg)
+![Virtual_memory](Virtual_memory.svg)
 
 虚拟内存让进程的链接和加载、共享和分配内存、访问权限控制等都变得很容易。连续的虚拟页不必要在物理上连续，而不同的虚拟页也可以映射到同一个物理页。举个简单的例子，几乎所有的C语言程序都会用到printf函数，于是我们在物理内存中可以只有一份printf的实现，而让各个进程对应的虚拟页全都映射到同一个物理页即可。
 
