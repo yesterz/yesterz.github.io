@@ -10,7 +10,7 @@ mermaid: false
 ---
 
 
-> 读了很有感触，记录一篇文章
+> 读了很有感触，贴文章到这里存档
 {: .prompt-info }
 
 <h2 data-toc-skip>走一步再走一步（2016人教版）</h2>
