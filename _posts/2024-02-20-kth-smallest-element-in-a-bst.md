@@ -3,7 +3,7 @@ title: Kth Smallest Element in a BST
 date: 2024-02-20 08:04:00 +0800
 author: Algorithms-Notes
 categories: [Algorithms, LeetCode Hot 100]
-tags: [Medium, Tree, Depth-First Search, Binary Search Tree, Binary Tree]
+tags: [Medium, top-100-liked, Tree, Depth-First Search, Binary Search Tree, Binary Tree]
 pin: false
 math: false
 mermaid: false

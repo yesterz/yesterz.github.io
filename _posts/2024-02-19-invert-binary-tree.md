@@ -3,8 +3,8 @@ title: Invert Binary Tree
 date: 2024-02-19 07:48:00 +0800
 author: Algorithms-Notes
 categories: [Algorithms, LeetCode Hot 100]
-tags: [Easy, Depth-First Search, Breadth-First Search, Binary Tree]
-pin: false
+tags: [Easy, top-100-liked, Depth-First Search, Breadth-First Search, Binary Tree]
+pin: falses
 math: false
 mermaid: false
 ---

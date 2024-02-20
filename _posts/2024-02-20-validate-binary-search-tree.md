@@ -3,7 +3,7 @@ title: Validate Binary Search Tree
 date: 2024-02-20 08:04:00 +0800
 author: Algorithms-Notes
 categories: [Algorithms, LeetCode Hot 100]
-tags: [Easy, Tree, Depth-First Search, Binary Search Tree, Binary Tree]
+tags: [Easy, top-100-liked, Tree, Depth-First Search, Binary Search Tree, Binary Tree]
 pin: false
 math: false
 mermaid: false
@@ -56,4 +56,4 @@ class Solution {
 
 ----
 
-这道题有一个测试用例 [2147483647] 如果边界范围不够大，这个用例过不了。。。
+这道题有一个测试用例 `[2147483647]` 如果边界范围不够大，这个用例过不了。。。
