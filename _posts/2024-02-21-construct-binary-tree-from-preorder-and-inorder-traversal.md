@@ -11,6 +11,12 @@ mermaid: false
 
 LeetCode <https://leetcode.cn/problems/construct-binary-tree-from-preorder-and-inorder-traversal/>
 
+| Index | 0 | 1 | 2 | 3 | 4 | 5 | 6 |
+|-------|---|---|---|---|---|---|---|
+| Preorder | 10 | 5 | 2 | 7 | 15 | 12 | 20 |
+| Inorder | 2 | 5 | 7 | 10 | 12 | 15 | 20 |
+
+
 ```java
 /**
  * Definition for a binary tree node.
