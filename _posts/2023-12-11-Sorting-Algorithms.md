@@ -1,5 +1,5 @@
 ---
-title: 排序算法
+title: Sorting Algorithms
 date: 2023-12-11 08:36:00 +0800
 author: Algorithms-Notes
 categories: [Algorithms]
