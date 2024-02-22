@@ -213,7 +213,7 @@ class ExtendDemo02 {
 	}
 }
 
-演示结果：
+演示结果:
 Fu num = 5
 Zi num2 = 6
 ```
@@ -245,7 +245,7 @@ class ExtendsDemo03 {
 		z.show(); 
 	}
 }
-演示结果：
+演示结果:
 Fu num = 6
 Zi num = 6
 
@@ -272,13 +272,13 @@ class Zi extends Fu {
 		System.out.println("Zi num=" + this.num);
 	}
 }
-演示结果：
+演示结果:
 Fu num = 5
 Zi num = 6
 ```
 
 > 小贴士：Fu 类中的成员变量是非私有的，子类中可以直接访问。若Fu 类中的成员变量私有了，子类是不能直接访问的。通常编码时，我们遵循封装的原则，使用private修饰成员变量，那么如何访问父类的私有成员变量呢？对！可以在父类中提供公共的getXxx方法和setXxx方法。
-
+{: .prompt-info }
 
 
 ## 2.4 super和this
@@ -336,7 +336,7 @@ public class ExtendsDemo08 {
     }
 }
 
-输出结果为：
+输出结果为:
 animal : eat
 cat : eat
 animal : eat
@@ -448,7 +448,7 @@ class NewPhone extends Phone {
 public class ExtendsDemo06 {
 	public static void main(String[] args) {
       	// 创建子类对象
-      	NewPhone np = new NewPhone()；
+      	NewPhone np = new NewPhone();
         
         // 调用父类继承而来的方法
         np.call();
@@ -462,6 +462,7 @@ public class ExtendsDemo06 {
 ```
 
 > 小贴士：这里重写时，用到super.父类成员方法，表示调用父类的成员方法。
+{: .prompt-info }
 
 ### 注意事项
 
@@ -499,7 +500,7 @@ public class ExtendsDemo07{
     Zi zi = new Zi();
   }
 }
-输出结果：
+输出结果:
 Fu（）
 Zi（）
 
@@ -557,13 +558,13 @@ class C extends B{}
 定义格式：
 
 ```java
-修饰符 abstract 返回值类型 方法名 (参数列表)；
+修饰符 abstract 返回值类型 方法名 (参数列表);
 ```
 
 代码举例：
 
 ```java
-public abstract void run()；
+public abstract void run();
 ```
 
 ### 抽象类
@@ -582,7 +583,7 @@ public abstract class 类名字 {
 
 ```java
 public abstract class Employee {
-    public abstract void work()；
+    public abstract void work();
 }
 ```
 
@@ -595,7 +596,7 @@ public abstract class Employee {
 ```java
 public class Teacher extends Employee {
     public void work (){
-      	System.out.println("讲课")； 	 
+      	System.out.println("讲课"); 	 
     }
 }
 public class CatTest {
@@ -607,7 +608,7 @@ public class CatTest {
         t.work();
   	}
 }
-输出结果：
+输出结果:
 	讲课
 
 ```
