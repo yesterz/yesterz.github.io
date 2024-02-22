@@ -67,4 +67,4 @@ class Solution {
 
 ## Recursive
 
-- [ ] Recursive Solution
+- [ ] recursive solution

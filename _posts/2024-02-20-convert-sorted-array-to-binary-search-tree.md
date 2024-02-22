@@ -1,5 +1,5 @@
 ---
-title: Kth Smallest Element in a BST
+title: Convert Sorted Array to Binary Search Tree
 date: 2024-02-20 08:04:00 +0800
 author: Algorithms-Notes
 categories: [Algorithms, LeetCode Hot 100]
