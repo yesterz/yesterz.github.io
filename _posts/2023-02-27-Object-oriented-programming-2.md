@@ -147,7 +147,7 @@ public class InterfaceDemo {
         a.sleep();
     }
 }
-输出结果：
+输出结果:
 吃东西
 晚上睡
 ```
@@ -187,7 +187,7 @@ public class InterfaceDemo {
         a.fly();
     }
 }
-输出结果：
+输出结果:
 天上飞
 ```
 
@@ -225,7 +225,7 @@ public class InterfaceDemo {
         a.fly();
     }
 }
-输出结果：
+输出结果:
 自由自在的飞
 ```
 
@@ -260,7 +260,7 @@ public class InterfaceDemo {
         LiveAble.run(); // 
     }
 }
-输出结果：
+输出结果:
 跑起来~~~
 ```
 
@@ -291,7 +291,7 @@ public class InterfaceDemo {
         System.out.println(Live.NUM2);
     }
 }
-输出结果：
+输出结果:
 10
 100
 ```
@@ -557,7 +557,7 @@ class 缉毒猪 implements 缉毒{
 多态体现的格式：
 
 ```java
-父类类型 变量名 = new 子类对象；
+父类类型 变量名 = new 子类对象;
 变量名.方法名();
 ```
 
@@ -702,7 +702,7 @@ public class Test {
 
 ```java
 父类类型  变量名 = new 子类类型();
-如：Animal a = new Cat();
+如: Animal a = new Cat();
 ```
 
 ### 向下转型
@@ -715,7 +715,7 @@ public class Test {
 
 ```java
 子类类型 变量名 = (子类类型) 父类变量名;
-如:Cat c =(Cat) a;  
+如: Cat c =(Cat) a;  
 ```
 
 ### 为什么要转型
@@ -790,8 +790,8 @@ public class Test {
 
 ```java
 变量名 instanceof 数据类型 
-如果变量属于该数据类型，返回true。
-如果变量不属于该数据类型，返回false。
+// 如果变量属于该数据类型，返回true。
+// 如果变量不属于该数据类型，返回false。
 ```
 
 所以，转换前，我们最好先做一个判断，代码如下：

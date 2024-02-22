@@ -70,3 +70,4 @@ class Solution {
 ## prefix sum
 
 - [ ] prefix sum solution
+

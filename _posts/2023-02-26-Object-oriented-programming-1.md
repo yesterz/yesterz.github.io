@@ -89,15 +89,15 @@ public class Person {
 
 ## 1.2 对象的内存解释
 
-​	对象在内存中的位置:对象由new关键字创建，如同数组，实体存在于堆内存中.任何事物均可以定义成类，创建对象，属于引用类型.而对象的引用变量是一个普通变量。存储的值是该对象堆内存中的地址.
+​	对象在内存中的位置：对象由new关键字创建，如同数组，实体存在于堆内存中。任何事物均可以定义成类，创建对象，属于引用类型。而对象的引用变量是一个普通变量。存储的值是该对象堆内存中的地址。
 
-​							**引用类型赋值代码解释**
+**引用类型赋值代码解释**
 
-![](Object-oriented-programming-1/对象.png)
+![](Object-oriented-programming-1/object.png)
 
-​					              **引用类型赋值对应内存图**
+**引用类型赋值对应内存图**
 
-![](Object-oriented-programming-1/对象2.png)
+![](Object-oriented-programming-1/object2.png)
 
 
 
@@ -492,7 +492,7 @@ class Zi extends Fu {
   Zi(){
     // super（），调用父类构造方法
     super();
-    System.out.println("Zi（）");
+    System.out.println("Zi()");
   }  
 }
 public class ExtendsDemo07{
@@ -501,8 +501,8 @@ public class ExtendsDemo07{
   }
 }
 输出结果:
-Fu（）
-Zi（）
+Fu()
+Zi()
 
 ```
 
@@ -513,7 +513,7 @@ Zi（）
 ```java
 //一个类只能有一个父类，不可以有多个父类。
 class C extends A{} 	//ok
-class C extends A，B...	//error
+class C extends A, B...	//error
 ```
 
 2. Java支持多层继承(继承体系)。
