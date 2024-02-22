@@ -660,7 +660,7 @@ public class CatTest {
 
 - 根据上述部门的描述，得出如下的员工体系图
 
-  ![员工类综合案例](Object-oriented-programming-1/员工类综合案例.bmp)
+  ![员工类综合案例](Object-oriented-programming-1/Employee_Comprehensive_Cases.png)
 
 - 根据员工信息的描述，确定每个员工都有员工编号、姓名、要进行工作。则，把这些共同的属性与功能抽取到父类中（员工类），关于工作的内容由具体的工程师来进行指定。
 
