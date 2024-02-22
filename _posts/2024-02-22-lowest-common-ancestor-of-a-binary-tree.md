@@ -6,7 +6,7 @@ categories: [Algorithms, LeetCode Hot 100]
 tags: [Medium, top-100-liked, Tree, Depth-First Search, Binary Tree]
 pin: false
 math: false
-mermaid: false
+mermaid: true
 ---
 
 ## Description
