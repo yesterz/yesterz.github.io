@@ -2,8 +2,8 @@
 title: 01 面向对象【继承、抽象类】
 date: 2023-02-26 08:44:00 +0800
 author: CAFEBABY
-categories: [CAFE BABY]
-tags: [Collection]
+categories: [CAFE BABY, Object Oriented Programming]
+tags: [CAFE BABY]
 pin: false
 math: true
 mermaid: false

@@ -3,7 +3,7 @@ title: 03 面向对象【修饰符，内部类，参数传递】
 date: 2023-02-28 08:44:00 +0800
 author: CAFEBABY
 categories: [CAFE BABY]
-tags: [Collection]
+tags: [CAFE BABY]
 pin: false
 math: true
 mermaid: false

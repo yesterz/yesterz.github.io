@@ -3,7 +3,7 @@ title: 04 【Object类、常用API】
 date: 2023-03-01 08:44:00 +0800
 author: CAFEBABY
 categories: [CAFE BABY]
-tags: [Collection]
+tags: [CAFE BABY]
 pin: false
 math: true
 mermaid: false

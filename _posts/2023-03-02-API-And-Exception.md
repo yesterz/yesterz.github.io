@@ -3,7 +3,7 @@ title: 05【API、异常】
 date: 2023-03-02 08:44:00 +0800
 author: CAFEBABY
 categories: [CAFE BABY]
-tags: [Collection]
+tags: [CAFE BABY]
 pin: false
 math: true
 mermaid: false

@@ -10,3 +10,26 @@ mermaid: false
 ---
 
 LeetCode <https://leetcode.cn/problems/container-with-most-water/>
+
+
+```java
+class Solution {
+    public int maxArea(int[] height) {
+        int i = 0;
+        int j = height.length - 1;
+        int globalMax = 0;
+        while (i < j) {
+            globalMax = height[i] < height[j] ?
+                Math.max(globalMax, (j - i) * height[i++]) :
+                Math.max(globalMax, (j - i) * height[j--]);
+        }
+        return globalMax;
+    }
+}
+```
+
+
+**Complexity**
+
+* Time = O(n) 
+* Space = O(1) 

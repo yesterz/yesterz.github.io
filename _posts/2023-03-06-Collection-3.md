@@ -3,7 +3,7 @@ title: 集合-3
 date: 2023-03-06 15:01:00 +0800
 author: CAFEBABY
 categories: [CAFE BABY]
-tags: [Collection]
+tags: [CAFE BABY]
 pin: false
 math: true
 mermaid: false

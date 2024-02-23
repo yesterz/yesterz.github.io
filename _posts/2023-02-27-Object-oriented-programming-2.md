@@ -3,7 +3,7 @@ title: 02 面向对象【接口,多态】
 date: 2023-02-27 08:44:00 +0800
 author: CAFEBABY
 categories: [CAFE BABY]
-tags: [Collection]
+tags: [CAFE BABY]
 pin: false
 math: true
 mermaid: false
