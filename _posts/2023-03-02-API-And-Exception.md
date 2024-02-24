@@ -10,7 +10,9 @@ mermaid: false
 img_path: /assets/images/
 ---
 
-## 主要内容
+## Overview
+
+### 主要内容
 
 - Math类
 - BigInteger类
@@ -18,7 +20,7 @@ img_path: /assets/images/
 - 基本类型包装类
 - 异常
 
-## 教学目标
+### 教学目标
 
 - [ ] 能够使用 Math 类的方法
 - [ ] 能够说出自动装箱、自动拆箱的概念
@@ -32,13 +34,13 @@ img_path: /assets/images/
 - [ ] 能够使用 try...catch 关键字处理异常
 - [ ] 能够使用 throws 关键字处理异常
 
-# 第一章 Math类
+## 第一章 Math类
 
-## 1.1 概述
+### 1.1 概述
 
 `java.lang.Math` 类包含用于执行基本数学运算的方法，如初等指数、对数、平方根和三角函数。类似这样的工具类，其所有方法均为静态方法，并且不会创建对象，调用起来非常简单。
 
-## 1.2 常用方法
+### 1.2 常用方法
 
 | 方法名    方法名                     | 说明                                           |
 | ------------------------------------ | ---------------------------------------------- |
@@ -47,17 +49,17 @@ img_path: /assets/images/
 | public static double floor(double a) | 返回小于或等于参数的最大double值，等于一个整数 |
 | public   static int round(float a)   | 按照四舍五入返回最接近参数的int                |
 
-# 第二章 BigInteger类
+## 第二章 BigInteger类
 
-## 2.1 概述
+### 2.1 概述
 
 `java.math.BigInteger`类，不可变的任意精度的整数。如果运算中，数据的范围超过了long类型后，可以使用BigInteger类实现，该类的计算整数是不限制长度的。
 
-## 2.2 构造方法
+### 2.2 构造方法
 
 BigInteger(String value) 将 BigInteger 的十进制字符串表示形式转换为 BigInteger。超过long类型的范围，已经不能称为数字了，因此构造方法中采用字符串的形式来表示超大整数，将超大整数封装成BigInteger对象。
 
-## 2.3 常用方法
+### 2.3 常用方法
 
 | 方法名                     | 含义                                                         |
 | -------------------------- | ------------------------------------------------------------ |
@@ -85,21 +87,21 @@ public static void main(String[] args){
 }
 ```
 
-# 第三章 BigDecimal类
+## 第三章 BigDecimal类
 
-## 3.1 概述
+### 3.1 概述
 
 `java.math.BigDecimal`类，不可变的、任意精度的有符号十进制数。该类可以实现超大浮点数据的精确运算。
 
-## 3.2 构造方法
+### 3.2 构造方法
 
 BigDecimal(String value)将 BigDecimal的十进制字符串表示形式转换为 BigDecimal。
 
-## 3.3 常用方法
+### 3.3 常用方法
 
 BigDecimal类的加法减法乘法与BigInteger类相同，不在重复。
 
-## 3.4 除法计算
+### 3.4 除法计算
 
 BigDecimal类实现精确的浮点数除法运算，如果两个浮点除法计算后是无限循环，那么就会抛出异常。
 
@@ -133,9 +135,9 @@ public static void main(String[] args){
 }
 ```
 
-# 第四章 基本类型包装类
+## 第四章 基本类型包装类
 
-## 4.1 概述
+### 4.1 概述
 
 Java提供了两个类型系统，基本类型与引用类型，使用基本类型在于效率，然而很多情况，会创建对象使用，因为对象可以做更多的功能，如果想要我们的基本类型像对象一样操作，就可以使用基本类型对应的包装类，如下：
 
@@ -150,7 +152,7 @@ Java提供了两个类型系统，基本类型与引用类型，使用基本类�
 | char     | **Character**                     |
 | boolean  | Boolean                           |
 
-## 4.2 Integer类
+### 4.2 Integer类
 
 - Integer类概述
 
@@ -187,7 +189,7 @@ public static void main(String[] args) {
 }
 ```
 
-## 4.3 装箱与拆箱
+### 4.3 装箱与拆箱
 
 基本类型与对应的包装类对象之间，来回转换的过程称为”装箱“与”拆箱“：
 
@@ -209,7 +211,7 @@ Integer iii = Integer.valueOf(4);//使用包装类中的valueOf方法
 int num = i.intValue();
 ```
 
-## 4.4 自动装箱与自动拆箱
+### 4.4 自动装箱与自动拆箱
 
 由于我们经常要做基本类型与包装类之间的转换，从Java 5（JDK 1.5）开始，基本类型与包装类的装箱、拆箱动作可以自动完成。例如：
 
@@ -219,7 +221,7 @@ i = i + 5; // 等号右边：将i对象转成基本数值(自动拆箱) i.intVal
 // 加法运算完成后，再次装箱，把基本数值转成对象。
 ```
 
-## 4.5 基本类型与字符串之间的转换
+### 4.5 基本类型与字符串之间的转换
 
 **基本类型转换为String**
 
@@ -255,9 +257,9 @@ public static void main(String[] args) {
 - `public static double parseDouble(String s)`：将字符串参数转换为对应的double基本类型。
 - `public static boolean parseBoolean(String s)`：将字符串参数转换为对应的boolean基本类型。
 
-# 第五章 异常
+## 第五章 异常
 
-## 5.1 异常概念
+### 5.1 异常概念
 
 异常，就是不正常的意思。在生活中：医生说，你的身体某个部位有异常，该部位和正常相比有点不同，该部位的功能将受影响。在程序中的意思就是：
 
@@ -268,7 +270,7 @@ public static void main(String[] args) {
 > 异常指的并不是语法错误，语法错了，编译不通过，不会产生字节码文件，根本不能运行。
 {: .prompt-info }
 
-## 5.2 异常体系
+### 5.2 异常体系
 
 异常机制其实是帮助我们**找到**程序中的问题，异常的根类是`java.lang.Throwable`，其下有两个子类：`java.lang.Error`与`java.lang.Exception`，平常所说的异常指`java.lang.Exception`。
 
@@ -295,7 +297,7 @@ public static void main(String[] args) {
 
 ![简单的异常查看](API-and-exception/Recognize_simple_exceptions.jpg)
 
-## 5.3 异常分类
+### 5.3 异常分类
 
 我们平常说的异常就是指`Exception`，因为这类异常一旦出现，我们就要对代码进行更正，修复程序。
 
@@ -306,7 +308,7 @@ public static void main(String[] args) {
 
 ![异常的分类](API-and-exception/Abnormal_Classification.png)
 
-## 5.4 异常的产生过程解析
+### 5.4 异常的产生过程解析
 
 先运行下面的程序，程序会产生一个数组索引越界异常`ArrayIndexOfBoundsException`。我们通过图解来解析下异常产生的过程。
 
@@ -337,13 +339,13 @@ public class ExceptionDemo {
 
 上述程序执行过程图解：
 
-![](API-and-exception/The_process_of_exception_generation.png)
+![异常的产生过程](API-and-exception/The_process_of_exception_generation.png)
 
-# 第六章 异常处理
+## 第六章 异常处理
 
 Java异常处理的五个关键字：**try、catch、finally、throw、throws**
 
-## 6.1 抛出异常throw
+### 6.1 抛出异常throw
 
 在编写程序时，我们必须要考虑程序出现问题的情况。比如，在定义方法时，方法需要接受参数。那么，当调用方法使用接受到的参数时，首先需要先对参数数据进行合法的判断，数据若不合法，就应该告诉调用者，传递合法的数据进来。这时需要使用抛出异常的方式来告诉调用者。
 
@@ -395,7 +397,7 @@ public static int getElement(int[] arr, int index){
 
 那么对于调用者来说，该怎么处理呢？一种是进行捕获处理，另一种就是继续讲问题声明出去，使用 throws 声明处理。
 
-## 6.2  声明异常throws
+### 6.2  声明异常throws
 
 **声明异常**：将问题标识出来，报告给调用者。如果方法内通过 throw 抛出了编译时异常，而没有捕获处理（稍后讲解该方式），那么必须通过 throws 进行声明，让调用者去处理。
 
@@ -443,7 +445,7 @@ public static void read(String path)throws FileNotFoundException, IOException {
 }
 ```
 
-## 6.3  捕获异常 try…catch
+### 6.3  捕获异常 try…catch
 
 如果异常出现的话，会立刻终止程序，所以我们得处理异常:
 
@@ -502,7 +504,7 @@ Throwable类中定义了一些查看方法:
 
 在开发中呢也可以在 catch 将编译期异常转换成运行期异常处理。
 
-## 6.4 finally 代码块
+### 6.4 finally 代码块
 
 **finally**：有一些特定的代码无论异常是否发生，都需要执行。另外，因为异常会引发程序跳转，导致有些语句执行不到。而 finally 就是解决这个问题的，在 finally 代码块中存放的代码都是一定会被执行的。
 
@@ -544,7 +546,7 @@ public static void read(String path) throws FileNotFoundException {
 }
 ```
 
-## 6.5 异常注意事项
+### 6.5 异常注意事项
 
 - 运行时异常被抛出可以不处理。即不捕获也不声明抛出。
 
@@ -576,9 +578,9 @@ try{
 }
 ```
 
-# 第七章 自定义异常
+## 第七章 自定义异常
 
-## 7.1 概述
+### 7.1 概述
 
 **为什么需要自定义异常类:**
 
@@ -597,7 +599,7 @@ try{
 1. 自定义一个编译期异常: 自定义类 并继承于`java.lang.Exception`。
 2. 自定义一个运行时期的异常类：自定义类 并继承于`java.lang.RuntimeException`。
 
-## 7.2 自定义异常的练习
+### 7.2 自定义异常的练习
 
 要求：我们模拟注册操作，如果用户名已存在，则抛出异常并提示：亲，该用户名已经被注册。
 
