@@ -14,11 +14,11 @@ img_path: /assets/images/
 
 ### 主要内容
 
-- Math类
-- BigInteger类
-- BigDecimal类
-- 基本类型包装类
-- 异常
+1. Math 类
+2. BigInteger 类
+3. BigDecimal 类
+4. 基本类型包装类
+5. 异常
 
 ### 教学目标
 
