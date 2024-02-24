@@ -7,7 +7,7 @@ tags: [Multithreading]
 pin: false
 math: true
 mermaid: false
-Multithreading_in_Java_2_path: /assets/images/
+img_path: /assets/images/
 ---
 
 ## Overview
