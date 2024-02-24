@@ -638,7 +638,7 @@ public static void main(String[] args) throws Exception {
 }
 ```
 
-## 第六章 Timer定时器
+## 第六章 Timer 定时器
 
 ### 6.1 概述
 
@@ -646,7 +646,7 @@ Java中的定时器，可以根据指定的时间来运行程序。
 
 `java.util.Timer`一种工具，线程用其安排以后在后台线程中执行的任务。可安排任务执行一次，或者定期重复执行。定时器是使用新建的线程来执行，这样即使主线程main结束了，定时器也依然会继续工作。
 
-### 6.2 Timer类的方法
+### 6.2 Timer 类的方法
 
 - 构造方法：无参数。
 - 定时方法：public void schedule(TimerTask task,Date firstTime,long period)
@@ -676,11 +676,11 @@ public static void main(String[] args) throws Exception {
 
 `java.util.concurrent.ConcurrentHashMap`支持获取的完全并发和更新的所期望可调整并发的哈希表。
 
-此集合实现 Map 接口，因此Map集合中的所有功能都可以直接使用。
+此集合实现 Map 接口，因此 Map 集合中的所有功能都可以直接使用。
 
 - ConcurrentHashMap 集合特点
   - 底层是哈希表结构
-  - 此集合是线程安全的，但是某些功能不必锁定。比如get()
+  - 此集合是线程安全的，但是某些功能不必锁定。比如 get()
   - 不会抛出 ConcurrentModificationException 并发修改异常
     - 此集合支持遍历过程中添加，删除元素。
 
@@ -746,4 +746,3 @@ public static void main(String[] args) throws Exception {
     System.out.println(map.size());
 }
 ```
-
