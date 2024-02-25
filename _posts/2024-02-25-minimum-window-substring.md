@@ -17,14 +17,15 @@ Given a string S and a string T, find the minimum window in S which will contain
 
 For example,
 
-    **S** = "ADOBECODEBANC"
+```
+S = "ADOBECODEBANC"
+T = "ABC"
+```
 
-    **T** = "ABC"
-
-Minimum window is"BANC".
+Minimum window is "BANC".
 
 > Note:
->   1. If there is no such window in S that covers all characters in T, return the empty string"".
+>   1. If there is no such window in S that covers all characters in T, return the empty string "".
 >   2. If there are multiple such windows, you are guaranteed that there will always be only one unique minimum window in S.
 {: .prompt-tip }
 
@@ -34,7 +35,7 @@ T = "ABC"
 
 Minimum window is "BANC".
 
-## General Idea:
+## General Idea
 
 For each fast pointer, we need to find the corresponding slow pointer to ensure the sliding window is the shortest one matching T.
 
