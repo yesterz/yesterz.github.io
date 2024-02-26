@@ -2,7 +2,7 @@
 title: MyBatisPlus
 date: 2023-03-28 08:44:00 +0800
 author: CAFEBABY
-categories: [CAFA BABY]
+categories: [CAFE BABY, framework]
 tags: [framework]
 pin: false
 math: true

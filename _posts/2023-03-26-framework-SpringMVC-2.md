@@ -2,7 +2,7 @@
 title: SpringMVC (2/2)
 date: 2023-03-26 08:44:00 +0800
 author: CAFEBABY
-categories: [CAFA BABY]
+categories: [CAFE BABY, framework]
 tags: [framework]
 pin: false
 math: true

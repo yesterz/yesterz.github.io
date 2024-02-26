@@ -2,7 +2,7 @@
 title: Maven 进阶知识
 date: 2023-03-29 08:44:00 +0800
 author: CAFEBABY
-categories: [CAFA BABY]
+categories: [CAFE BABY, framework]
 tags: [framework]
 pin: false
 math: true

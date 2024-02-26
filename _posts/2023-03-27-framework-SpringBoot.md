@@ -2,7 +2,7 @@
 title: SpringBoot
 date: 2023-03-27 08:44:00 +0800
 author: CAFEBABY
-categories: [CAFA BABY]
+categories: [CAFE BABY, framework]
 tags: [framework]
 pin: false
 math: true

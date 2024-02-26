@@ -2,7 +2,7 @@
 title: Spring (3/3)
 date: 2023-03-24 08:44:00 +0800
 author: CAFEBABY
-categories: [CAFA BABY]
+categories: [CAFE BABY, framework]
 tags: [framework]
 pin: false
 math: true
