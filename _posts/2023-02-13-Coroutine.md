@@ -1,3 +1,16 @@
+---
+title: 协程
+date: 2023-02-13 10:51:00 +0800
+author:
+categories: [Python]
+tags: [Python]
+pin: false
+math: true
+mermaid: false
+img_path: /assets/images/
+---
+
+
 ## 一、协程
 
 ### 概念
@@ -547,7 +560,7 @@ asyncio.run(main())
 
 使用async可以定义协程，协程用于耗时的io操作，我们也可以封装更多的io操作过程，这样就实现了嵌套的协程，即一个协程中await了另外一个协程，如此连接起来
 
-![截屏2020-01-1317_34_29](协程.assets/截屏2020-01-1317_34_29.png)
+![2020-01-1317_34_29](Coroutine/2020-01-1317_34_29.png)
 
 ```python
 import time
