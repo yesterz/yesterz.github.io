@@ -190,7 +190,7 @@ jdbc.password=root
 
 解决2：使用system-properties-mode="NEVER"属性表示不使用系统属性。
 
-```properties
+```xml
 <context:property-placeholder location="jdbc.properties" system-properties-mode="NEVER"/>
 ```
 
@@ -205,23 +205,28 @@ jdbc.password=root
 ```
 
 - 加载多个properties文件
+
 ```xml
 <context:property-placeholder location="jdbc.properties,msg.properties"/>
 ```
+
 - 加载所有properties文件
+
 ```xml
 <context:property-placeholder location="*.properties"/>
 ```
+
 - 加载properties文件**==标准格式==**
+
 ```xml
 <context:property-placeholder location="classpath:*.properties"/>
 ```
+
 - 加载properties文件标准格式
+
 ```xml
 <context:property-placeholder location="classpath*:*.properties"/>
 ```
-
-
 
 ## 二、Spring容器
 
@@ -437,7 +442,7 @@ public class BookServiceImpl implements BookService {
 - @ComponentScan注解用于设定扫描路径，此注解只能添加一次，多个数据请用数组格式
 
 ```java
-@ComponentScan({com.itheima.service","com.itheima.dao"})
+@ComponentScan({"com.itheima.service", "com.itheima.dao"})
 ```
 
 - 读取Spring核心配置文件初始化容器对象切换为读取Java配置类初始化容器对象

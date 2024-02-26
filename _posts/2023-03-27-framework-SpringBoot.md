@@ -477,7 +477,7 @@ server.port=82
 
 - 带参数启动SpringBoot
 
-```properties
+```consloe
 java –jar springboot.jar --spring.profiles.active=test
 java –jar springboot.jar --server.port=88
 java –jar springboot.jar --server.port=88 --spring.profiles.active=test
@@ -562,7 +562,7 @@ SpringBoot的配置文件可以放在项目的哪些地方？
 
 ![image-20210811200723514](framework-SpringBoot/image-20210811200723514.png)
 
-```properties
+```console
 java –jar springboot.jar --spring.profiles.active=test --server.port=85 --server.servlet.context-path=/heima --server.tomcat.connection-timeout=-1 ... ...
 ```
 

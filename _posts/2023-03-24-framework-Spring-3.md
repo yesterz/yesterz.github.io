@@ -247,8 +247,8 @@ public class App {
 
 - 切入点表达式标准格式：动作关键字(访问修饰符  返回值  包名.类/接口名.方法名(参数) 异常名）
 
-  ```
-  execution(public User com.itheima.service.UserService.findById(int))
+  ```java
+  execution(public User com.itheima.service.UserService.findById(int));
   ```
 
   - 动作关键字：描述切入点的行为动作，例如execution表示执行到指定切入点
@@ -269,7 +269,7 @@ public class App {
 > 匹配com.itheima包下的任意包中的UserService类或接口中所有find开头的带有一个参数的方法
 
 ```java
-execution（public * com.itheima.*.UserService.find*(*))
+execution(public * com.itheima.*.UserService.find*(*))
 ```
 
 - .. ：多个连续的任意符号，可以独立出现，常用于简化包名与参数的书写
@@ -277,7 +277,7 @@ execution（public * com.itheima.*.UserService.find*(*))
 > 匹配com包下的任意包中的UserService类或接口中所有名称为findById的方法
 
 ```java
-execution（public User com..UserService.findById(..))
+execution(public User com..UserService.findById(..))
 ```
 
 - +：专用于匹配子类类型
@@ -285,8 +285,6 @@ execution（public User com..UserService.findById(..))
 ```java
 execution(* *..*Service+.*(..))
 ```
-
-![image-20210730153824117](framework-Spring-3/image-20210730153824117.png)
 
 #### 4.3 书写技巧
 

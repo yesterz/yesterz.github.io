@@ -375,7 +375,10 @@ public class ServletContainersInitConfig extends AbstractAnnotationConfigDispatc
 
 #### 5.1 PostMan介绍
 
-- Postman是一款功能强大的网页调试与发送网页HTTP请求的Chrome插件。<img src="assets/image-20210804194708518.png" alt="image-20210804194708518" style="zoom:25%;" />
+- Postman是一款功能强大的网页调试与发送网页HTTP请求的Chrome插件。
+
+<img src="framework-SpringMVC-1/image-20210804194708518.png" alt="image-20210804194708518" style="zoom:25%;" />
+
 - 作用：常用于进行接口测试
 - 特征
   - 简单
@@ -387,7 +390,7 @@ public class ServletContainersInitConfig extends AbstractAnnotationConfigDispatc
 
 > 双击资料中的“Postman-win64-8.3.1-Setup.exe”即可自动按照，打开之后需要注册，如果底部有如下链接，可以点击跳过注册
 
-<img src="assets/image-20210804194952058.png" alt="image-20210804194952058"  />
+<img src="framework-SpringMVC-1/image-20210804194952058.png" alt="image-20210804194952058"  />
 
 #### 5.3 PostMan的使用
 
