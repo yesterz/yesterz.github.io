@@ -44,7 +44,7 @@ img_path: /assets/images/
 
   _thread模块：低级模块
 
-  threading模块：高级模块，对_thread进行了封装
+  threading模块：高级模块，对 _thread 进行了封装
 
 ### 2、使用_thread 模块 去创建线程
 
@@ -65,16 +65,16 @@ img_path: /assets/images/
 
   ```python
   import win32api
-  import _thread #引入线程的模块   比较老的模块  新的 threading
+  import _thread # 引入线程的模块   比较老的模块  新的 threading
 
   def run(i):
       win32api.MessageBox(0,"您的{}号大宝贝上线了".format(i),"来自凤姐以及陆源凯的问候",2)
 
   for i in range(5):
-      _thread.start_new_thread(run,(i,)) #发起多个线程  传参的情况  参数为元组
-      # _thread.start_new_thread(run,()) #发起多个线程  不传参 页需要俩个参数 第二个为空元组
+      _thread.start_new_thread(run,(i,)) # 发起多个线程  传参的情况  参数为元组
+      # _thread.start_new_thread(run,()) # 发起多个线程  不传参 页需要俩个参数 第二个为空元组
   print('会先执行我')
-  #如果主线程 不死  那么 所有的次线程 就都会正常执行
+  # 如果主线程 不死  那么 所有的次线程 就都会正常执行
   while True:
       pass
   ```
@@ -95,9 +95,9 @@ img_path: /assets/images/
   """
 
   for i in range(5):
-      _thread.start_new_thread(run,()) #发起五个线程去执行  时间大大缩短
+      _thread.start_new_thread(run,()) # 发起五个线程去执行  时间大大缩短
 
-  for i in range(10): #循环10秒  计算 线程执行完毕所需要的时间  类似与一个劫停
+  for i in range(10): # 循环10秒  计算 线程执行完毕所需要的时间  类似与一个劫停
       time.sleep(1)
   print('xxxx')
   ```
@@ -112,7 +112,7 @@ img_path: /assets/images/
 
 + threading创建线程的方式
 
-  myThread = threading.Thread(target=函数名[,args=(参数,),name="你指定的线程名称"])
+  myThread = threading.Thread(target=函数名[, args=(参数,), name="你指定的线程名称"])
 
   参数
 
@@ -165,11 +165,11 @@ img_path: /assets/images/
 
   设置子线程是否随主线程一起结束
 
-  有一个布尔值的参数，默认为False，该方法设置子线程是否随主线程一起结束   True一起结束
+  有一个布尔值的参数，默认为 False，该方法设置子线程是否随主线程一起结束   True 一起结束
 
   Thread.setDaemon(True)	
 
-  还有个要特别注意的：必须在start() 方法调用之前设置
+  还有个要特别注意的：必须在 start() 方法调用之前设置
 
   ```python
   if __name__ == '__main__':
@@ -215,11 +215,11 @@ if __name__ == "__main__":
     th1 = threading.Thread(target=run1, name="th1")
     th2 = threading.Thread(target=run2, args=("lucky", "nice"))
 
-    #启动
+    # 启动
     th1.start()
     th2.start()
 
-    #等待子线程结束
+    # 等待子线程结束
     th1.join()
     th2.join()
 
@@ -277,7 +277,7 @@ if __name__ == "__main__":
 
 + 概述
 
-  Lock锁是线程模块中的一个类，有两个主要方法：acquire()和release() 当调用acquire()方法时，它锁定锁的执行并阻塞锁的执行，直到其他线程调用release()方法将其设置为解锁状态。锁帮助我们有效地访问程序中的共享资源，以防止数据损坏，它遵循互斥，因为一次只能有一个线程访问特定的资源。
+  Lock 锁是线程模块中的一个类，有两个主要方法：acquire() 和 release() 当调用 acquire() 方法时，它锁定锁的执行并阻塞锁的执行，直到其他线程调用 release() 方法将其设置为解锁状态。锁帮助我们有效地访问程序中的共享资源，以防止数据损坏，它遵循互斥，因为一次只能有一个线程访问特定的资源。
 
 + 作用
 

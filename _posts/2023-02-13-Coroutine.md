@@ -47,9 +47,9 @@ img_path: /assets/images/
 
 - 前言
 
-  python由于GIL（全局锁）的存在，不能发挥多核的优势，其性能一直饱受诟病。然而在IO密集型的网络编程里，异步处理比同步处理能提升成百上千倍的效率
+  Python 由于 GIL（全局锁）的存在，不能发挥多核的优势，其性能一直饱受诟病。然而在IO密集型的网络编程里，异步处理比同步处理能提升成百上千倍的效率
 
-  IO密集型就是磁盘的读取数据和输出数据非常大的时候就是属于IO密集型
+  IO 密集型就是磁盘的读取数据和输出数据非常大的时候就是属于 IO 密集型
   由于IO操作的运行时间远远大于cpu、内存运行时间，所以任务的大部分时间都是在等待IO操作完成，IO的特点是cpu消耗小，所以，IO任务越多，cpu效率越高，当然不是越多越好，有一个极限值。
 
 - 同步
@@ -103,11 +103,11 @@ img_path: /assets/images/
       print("总耗时：%.2f" % (t2 - t1))
   ```
 
-  ## 三、asyncio模块
+  ## 三、asyncio 模块
 
   ### 1、概述
 
-  - asyncio模块
+  - asyncio 模块
 
     是python3.4版本引入的标准库，直接内置了对异步IO的操作
 
@@ -129,7 +129,7 @@ img_path: /assets/images/
     | async/await | python3.5用于定义协程的关键字，async定义一个协程，await用于挂起阻塞的异步调用接口 |
 
 
-### 2、asyncio基本使用
+### 2、asyncio 基本使用
 
 - 定义一个协程
 
@@ -768,17 +768,17 @@ if __name__ == "__main__":
 
 
 
-## 四、aiohttp与aiofiles
+## 四、aiohttp 与 aiofiles
 
 ### 1、安装与使用
 
-```undefined
+```console
 pip install aiohttp 
 ```
 
 ### 2、简单实例使用
 
-aiohttp的自我介绍中就包含了客户端和服务器端，所以我们分别来看下客户端和服务器端的简单实例代码。
+aiohttp 的自我介绍中就包含了客户端和服务器端，所以我们分别来看下客户端和服务器端的简单实例代码。
 
 客户端：
 
@@ -854,7 +854,7 @@ session.get('http://httpbin.org/get')
 
 有时候在发起网络请求的时候需要附加一些参数到url中，这一点也是支持的。
 
-```csharp
+```python
 import aiohttp
 import asyncio
 
@@ -980,7 +980,7 @@ async with aiohttp.ClientSession(headers=headers) as session:
 
 
 
-### 8、aiofiles文件读写
+### 8、aiofiles 文件读写
 
 #### 8.1 概述
 
@@ -1138,3 +1138,4 @@ if __name__ == '__main__':
 ```
 
 > 需要注意，当前对于Windows系统可能会有报错，原因出在文件名称有特殊字符，可以将特殊字符进行替换后即可
+{: .prompt-info }
