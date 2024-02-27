@@ -1,0 +1,12 @@
+---
+title: Copy List with Random Pointer
+date: 2024-02-28 07:11:00 +0800
+author: Algorithms-Notes
+categories: [Algorithms, LeetCode Hot 100]
+tags: [medium, top-100-liked, Hash Table, Linked List]
+pin: false
+math: false
+mermaid: false
+---
+
+LeetCode <https://leetcode.cn/problems/copy-list-with-random-pointer/>

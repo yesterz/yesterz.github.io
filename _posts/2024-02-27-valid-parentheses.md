@@ -20,10 +20,12 @@ class Solution {
         Stack<Character> stack = new Stack<>();
         for (int i = 0; i < s.length(); i++) {
             char curr = s.charAt(i);
+            // if current character matach left parenthese
             if (curr == '(' || curr == '[' || curr == '{') {
                 stack.push(curr);
                 continue;
             } 
+            // if current character matach right parenthese, else return false
             if (!stack.isEmpty()) {
                 if (curr == ')' && stack.peek() == '(') {
                     stack.pop();
