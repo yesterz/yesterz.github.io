@@ -57,7 +57,7 @@ void main() {
 
 node1 = node2; 这只是改变了指针的引用。
 
-## Remove Duplicates from Sorrted List ii
+### Remove Duplicates from Sorrted List ii
 
 Lintcode <https://www.lintcode.com/problem/remove-duplicates-from-sorted-list-ii/>
 
@@ -65,7 +65,7 @@ Leetcode <https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/>
 
 Solution <https://www.jiuzhang.com/solutions/remove-duplicates-from-sorted-list-ii/>
 
-### Description
+#### Description
 
 Given the head of a sorted linked list, *delete all nodes that have duplicate numbers, leaving only distinct numbers from the original list*. Return *the linked list* **sorted** *as well*.
 
@@ -95,7 +95,7 @@ Output: [2,3]
 - -100 <= Node.val <= 100
 - The list is guaranteed to be **sorted** in ascending order.
 
-### Solutions
+#### Solutions
 
 ![img](linkedlist3.png)
 
@@ -149,7 +149,7 @@ soft delete / hard delete / logic delete
 
 
 
-### Related Question
+#### Related Question
 
 Remove Duplicates from Sorrted List <https://leetcode.cn/problems/remove-duplicates-from-sorted-list/>
 
@@ -187,11 +187,11 @@ Delete Node in the Middle of Singly Linked List
 
 如果只给了 node2 ，但是要删除2，我们把下一个点 node3 拷贝到 node2，并把下一个点 node3 删掉，一个很巧妙的方法，删除了 node2。
 
-## Reverse Linked List
+### Reverse Linked List
 
 Leetcode <https://leetcode.com/problems/reverse-linked-list/>
 
-### Description
+#### Description
 
 Given the head of a singly linked list, reverse the list, and return *the reversed list*.
 
@@ -230,7 +230,7 @@ Output: []
 
 **Follow up:** A linked list can be reversed either iteratively or recursively. Could you implement both?
 
-### Solutions
+#### Solutions
 
 单纯的reverse list 理解背下来了。
 
@@ -261,7 +261,7 @@ public class Solution {
 
 这样子可以借助swap(a, b)来记住反转链表的代码
 
-## Reverse Linked List ii
+### Reverse Linked List ii
 
 Lintcode <https://www.lintcode.com/problem/reverse-linked-list-ii/>
 
@@ -269,7 +269,7 @@ Leetcode <https://leetcode.cn/problems/reverse-linked-list-ii/>
 
 Solution <https://www.jiuzhang.com/solutions/reverse-linked-list-ii/>
 
-### Description
+#### Description
 
 Given the head of a singly linked list and two integers left and right where left <= right, reverse the nodes of the list from position left to position right, and return *the reversed list*.
 
@@ -300,7 +300,7 @@ Input: head = [5], left = 1, right = 1 Output: [5]
 
 **Follow up:** Could you do it in one pass?
 
-### Solutions
+#### Solutions
 
 容易写错的地方：你有没有冒出一个NPE，出现空指针的情况。
 
@@ -386,7 +386,7 @@ Related Questions:
 
 
 
-## Partition List
+### Partition List
 
 还有一道类似的叫做 **Partition Array**
 
@@ -396,7 +396,7 @@ Leetcode <https://leetcode.com/problems/partition-list/>
 
 Solution <https://www.jiuzhang.com/solutions/partition-list/>
 
-### Description
+#### Description
 
 Given the head of a linked list and a value x, partition it such that all nodes **less than** x come before nodes **greater than or equal** to x.
 
@@ -426,7 +426,7 @@ Output: [1,2]
 - -100 <= Node.val <= 100
 - -200 <= x <= 200
 
-### Solutions
+#### Solutions
 
 双指针方法，用两个指针将两个部分分别串起来。最后在将两个部分拼接起来。 left指针用来串起来所有小于x的结点， right指针用来串起来所有大于等于x的结点。 得到两个链表，一个是小于x的，一个是大于等于x的，做一个拼接即可。
 
@@ -480,7 +480,7 @@ public class Solution {
 4. Merge Two Linked Lists
 5. Middle of a Linked List
 
-## Middle of Linked List
+### Middle of Linked List
 
 Lintcode 
 
@@ -488,7 +488,7 @@ Leetcode <https://leetcode.com/problems/middle-of-the-linked-list/>
 
 Solution <https://www.jiuzhang.com/solutions/middle-of-the-linked-list/>
 
-### Description
+#### Description
 
 Given the head of a singly linked list, return *the middle node of the linked list*.
 
@@ -523,7 +523,7 @@ Explanation: Since the list has two middle nodes with values 3 and 4, we return 
 - The number of nodes in the list is in the range [1, 100].
 - 1 <= Node.val <= 100
 
-### Solutions
+#### Solutions
 
 ```java
 class Solution {
@@ -544,7 +544,7 @@ class Solution {
 
 也就是说快指针每走一步，慢指针的位置都是快指针的中间位置。
 
-## Sort List
+### Sort List
 
 Lintcode <https://www.lintcode.com/problem/sort-list/>
 
@@ -554,7 +554,7 @@ Solution <https://www.jiuzhang.com/solutions/sort-list/>
 
  Merge Sort **vs** Quick Sort  
 
-### Description
+#### Description
 
 Given the head of a linked list, return *the list after sorting it in* **ascending order**.
 
@@ -591,7 +591,7 @@ Input: head = [] Output: []
 
 **Follow up:** Can you sort the linked list in O(n logn) time and O(1) memory (i.e. constant space)?
 
-### Solutions
+#### Solutions
 
 一定是已知的排序算法来解决。
 
@@ -832,7 +832,7 @@ public class Solution {
 
 面试中你需要先写出main，先写出大的逻辑写全了。
 
-## Reorder List
+### Reorder List
 
 Lintcode <https://www.lintcode.com/problem/reorder-list/>
 
@@ -840,7 +840,7 @@ Leetcode <https://leetcode.com/problems/reorder-list/>
 
 Solution <https://www.jiuzhang.com/solutions/reorder-list/>
 
-### Description
+#### Description
 
 You are given the head of a singly linked-list. The list can be represented as:
 
@@ -877,7 +877,7 @@ Output: [1,5,2,4,3]
 - The number of nodes in the list is in the range [1, 5 * 104].
 - 1 <= Node.val <= 1000
 
-### Solutions
+#### Solutions
 
 先找到中点，然后把后半段倒过来，然后前后交替合并。
 
@@ -955,7 +955,7 @@ public class Solution {
 
 
 
-## Linked List Cycle
+### Linked List Cycle
 
 Lintcode <https://www.lintcode.com/problem/linked-list-cycle/>
 
@@ -963,7 +963,7 @@ Leetcode <https://leetcode.com/problems/linked-list-cycle/>
 
 Solution <https://www.jiuzhang.com/solutions/linked-list-cycle/>
 
-### Description
+#### Description
 
 Given head, the head of a linked list, determine if the linked list has a cycle in it.
 
@@ -1011,7 +1011,7 @@ Explanation: There is no cycle in the linked list.
 - -10^5 <= Node.val <= 10^5
 - pos is -1 or a **valid index** in the linked-list.
 
-### Solutions
+#### Solutions
 
 快慢指针的经典题。 快指针每次走两步，慢指针一次走一步。 在慢指针进入环之后，快慢指针之间的距离每次缩小1，所以最终能相遇。
 
@@ -1040,7 +1040,7 @@ public class Solution {
 }
 ```
 
-### Follow Up
+#### Follow Up
 
 Can you solve it using O(1) (i.e. constant) memory?
 
@@ -1056,7 +1056,7 @@ Can you solve it using O(1) (i.e. constant) memory?
 
 实际上用一个hash表就都解决了，为什么用这个呢，要用O(1)的来实现
 
-## Rotate List
+### Rotate List
 
 Lintcode <https://www.lintcode.com/problem/rotate-list/>
 
@@ -1064,7 +1064,7 @@ Leetcode <https://leetcode.com/problems/rotate-list/>
 
 Solution <https://www.jiuzhang.com/solutions/rotate-list/>
 
-### Description
+#### Description
 
 Given the head of a linked list, rotate the list to the right by k places.
 
@@ -1090,7 +1090,7 @@ Output: [2,0,1]
 - -100 <= Node.val <= 100
 - 0 <= k <= 2 * 10^9
 
-### Solutions
+#### Solutions
 
 一种方法，我先找到它的长度，我 rotate 到哪里。
 
@@ -1135,7 +1135,7 @@ public class Solution {
 }
 ```
 
-## Merge k Sorted Lists
+### Merge k Sorted Lists
 
 Lintcode <https://www.lintcode.com/problem/merge-k-sorted-lists/>
 
@@ -1145,7 +1145,7 @@ Solution <https://www.jiuzhang.com/solutions/merge-k-sorted-lists/>
 
 PriorityQueue / Heap **vs** Divide Conquer
 
-### Description
+#### Description
 
 You are given an array of k linked-lists lists, each linked-list is sorted in ascending order.
 
@@ -1183,7 +1183,7 @@ Output: []
 - lists[i] is sorted in **ascending order**.
 - The sum of lists[i].length will not exceed 10^4.
 
-### Solutions
+#### Solutions
 
 三种方法，这是一个非常有区分度的题目。我很喜欢。
 
@@ -1358,7 +1358,7 @@ public class Solution {
 
 
 
-## Copy List with Random Pointer
+### Copy List with Random Pointer
 
 Lintcode <https://www.lintcode.com/problem/copy-list-with-random-pointer/>
 
@@ -1366,7 +1366,7 @@ Leetcode <https://www.leetcode.com/problems/copy-list-with-random-pointer/>
 
 Solution <https://www.jiuzhang.com/solutions/copy-list-with-random-pointer/>
 
-### Description
+#### Description
 
 A linked list of length n is given such that each node contains an additional random pointer, which could point to any node in the list, or null.
 
@@ -1418,7 +1418,7 @@ Output: [[3,null],[3,0],[3,null]]
 - -104 <= Node.val <= 104
 - Node.random is null or is pointing to some node in the linked list.
 
-### Solutions
+#### Solutions
 
 深拷贝要对每个点都新建一遍。ALL
 
@@ -1532,7 +1532,7 @@ public class Solution {
 
 
 
-## Convert Sorted List to Balanced BST
+### Convert Sorted List to Balanced BST
 
 Lintcode https://www.lintcode.com/problem/convert-sorted-list-to-balanced-bst/
 
@@ -1540,7 +1540,7 @@ Leetcode https://leetcode.com/problems/convert-sorted-list-to-binary-search-tree
 
 Solution https://www.jiuzhang.com/solutions/convert-sorted-list-to-balanced-bst/
 
-### Description
+#### Description
 
 Given the head of a singly linked list where elements are sorted in **ascending order**, convert *it to a* ***height-balanced*** *binary search tree*.
 
@@ -1569,7 +1569,7 @@ Output: []
 - The number of nodes in head is in the range [0, 2 * 10^4].
 - -10^5 <= Node.val <= 10^5
 
-### Solutions
+#### Solutions
 
 在链表上使用分治的方法。 这个算法的时间复杂度是 O(n)的。 要诀在于，先把整个链表的长度取一次，然后拿着这个长度和链表头一起作为参数来进行递归构造。 convert(head, length) 表示把从 head 开头的长度为 length 的那么多个节点，转化为 bst。 return 两个值，一个是转化后的 bst 根节点，一个是链表上从 head 开始第 length + 1 个节点是谁。 这样做的好处是，你不需要用 O(n) 的时间去找链表的中点了，直接 O(1) 从 return 里得到。
 
@@ -1674,7 +1674,7 @@ public class Solution {
 
 
 
-## Related Questions
+### Related Questions
 
 <https://www.lintcode.com/problem/reverse-nodes-in-k-group/>
 
