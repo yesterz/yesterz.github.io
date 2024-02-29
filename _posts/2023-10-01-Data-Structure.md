@@ -72,7 +72,7 @@ Operations:
 
 
 
-## Min Stack
+### Min Stack
 
 Lintcode https://www.lintcode.com/problem/min-stack/
 
@@ -80,7 +80,7 @@ Leetcode https://leetcode.com/problems/min-stack/
 
 Solution https://www.jiuzhang.com/solutions/min-stack/
 
-### Description
+#### Description
 
 Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.
 
@@ -128,7 +128,7 @@ minStack.getMin(); // return -2
 - Methods pop, top and getMin operations will always be called on **non-empty** stacks.
 - At most 3 * 104 calls will be made to push, pop, top, and getMin.
 
-### Solutions
+#### Solutions
 
 使用两个仅支持 pop 和 push 的栈就可以完成, stack 储存压入的数据, minStack 储存最小值.
 
@@ -203,7 +203,7 @@ public class MinStack {
 }
 ```
 
-## Implement Queue by Two Stacks
+### Implement Queue by Two Stacks
 
 面试官一般就说一句话“你用栈实现一个队列”
 
@@ -215,7 +215,7 @@ Leetcode https://leetcode.com/problems/implement-queue-using-stacks/
 
 SoluLtion https://www.jiuzhang.com/solutions/implement-queue-by-two-stacks/
 
-### Description
+#### Description
 
 Implement a first in first out (FIFO) queue using only two stacks. The implemented queue should support all the functions of a normal queue (push, peek, pop, and empty).
 
@@ -265,7 +265,7 @@ myQueue.empty(); // return false
 
 **Follow-up:** Can you implement the queue such that each operation is [amortized](https://en.wikipedia.org/wiki/Amortized_analysis) O(1) time complexity? In other words, performing n operations will take overall O(n) time even if one of those operations may take longer.
 
-### Solutions
+#### Solutions
 
 push加入到栈中 top即从A栈出到B栈，执行完之后，B栈push出栈顶元素，作为返回值，然后继续入站栈，最后B栈出，返回A栈。 pop即从A栈出到B栈，执行完之后，B栈push出栈顶元素，然后B栈依次出，返回A栈。
 
@@ -305,7 +305,7 @@ public class MyQueue {
 }
 ```
 
-## Largest Rectangle in Histogram
+### Largest Rectangle in Histogram
 
 直方图的最大子矩阵
 
@@ -317,7 +317,7 @@ Leetcode https://leetcode.com/problems/largest-rectangle-in-histogram/
 
 Solution https://www.jiuzhang.com/solutions/largest-rectangle-in-histogram/
 
-### Description
+#### Description
 
 Given an array of integers heights representing the histogram's bar height where the width of each bar is 1, return *the area of the largest rectangle in the histogram*.
 
@@ -352,7 +352,7 @@ Output: 4
 
 
 
-### Solutions
+#### Solutions
 
 
 
@@ -405,7 +405,7 @@ public class Solution {
 }
 ```
 
-## Max Tree
+### Max Tree
 
 Lintcode https://www.lintcode.com/problem/max-tree/
 
@@ -413,7 +413,7 @@ Leetcode https://leetcode.com/problems/maximum-binary-tree/
 
 Solution https://www.jiuzhang.com/solutions/max-tree/
 
-### Description
+#### Description
 
 You are given an integer array nums with no duplicates. A **maximum binary tree** can be built recursively from nums using the following algorithm:
 
@@ -467,7 +467,7 @@ Output: [3, null, 2, null, 1]
 
 
 
-### Solutions
+#### Solutions
 
 考点：
 
@@ -583,7 +583,7 @@ Collision
 - Open Hashing (LinkedList)
 - Closed Hashing (ArrayList)
 
-## Hash Function
+### Hash Function
 
 Typical: From string to int.
 
@@ -595,7 +595,7 @@ int hashfunc(String key) {
 }
 ```
 
-## Hash Function - Magic Number 33
+#### Hash Function - Magic Number 33
 
 有的库实现的时候会取31
 
@@ -615,7 +615,7 @@ int hashfunc(String key) {
 
 尽量不要不同的 Key 算出一个同样的结果出来，要尽量避免这个事情。
 
-## Collision
+### Collision
 
 Open Hashing vs Closed Hashing
 
@@ -624,21 +624,21 @@ Open Hashing vs Closed Hashing
 1. 让链表长度尽量的小，让整个数组大一点，那么冲突出现的概率就会小一点
 2. 哈希函数设计的巧妙一点
 
-### Open Hashing
+#### Open Hashing
 
 开放寻址法
 
-### Closed Hashing
+#### Closed Hashing
 
 类比上厕所，你占了我的坑，我去看看下一个坑是不是空的，如果是空的，我去占其他人的坑。
 
-## Rehashing
+### Rehashing
 
 https://www.lintcode.com/problem/rehashing/
 
 https://www.lintcode.com/problem/hash-function/
 
-## Hash in Java
+### Hash in Java
 
 - HashTable
 - HashSet
@@ -646,18 +646,18 @@ https://www.lintcode.com/problem/hash-function/
 
 Which on is Thread Safe? **Ans:** HashTable
 
-### java.util.HashSet<E>
+#### java.util.HashSet<E>
 
 - `HashSet()` 构造一个空散列集。
 - `HashSet(Collection<? extends E> elements)` 构造一个散列集，并将集合中的所有元素添加到这个散列集中。
 - `HashSet(int initialCapacity)` 构造一个空的具有指定容量（桶数）的散列集。
 - `HashSet(int initialCapacity, float loadFactor)` 构造一个有指定容量和装填因子（0.0 ~ 1.0 之间的一个数，确定散列表填充的百分比，当大于这个百分比时，散列表进行再散列）的空散列集。
 
-### java.lang.Object
+#### java.lang.Object
 
 - `int hashCode()` 返回这个对象的散列码。散列码可以是任何整数，包括正数或负数。equals 和 hashCode 的定义必须兼容，即如果 x.equals(y) 为 true，x.hashCode() 必须等于 y.hashCode()。
 
-### java.util.Map<K, V>
+#### java.util.Map<K, V>
 
 - V get(Object key) 获取与键关联值；返回与键关联的对象，或者如果映射中没有这个对象，则返回 null。实现类可以禁止键位 null。
 - `default V getOrDefault(Object key, V defaultValue)` 获得与键关联的值；返回与键关联的对象 ，或者如果未在映射中找到这个键，则返回 defaultValue。
@@ -667,13 +667,13 @@ Which on is Thread Safe? **Ans:** HashTable
 - `boolean containsValue(Object value)` 如果在映射中已经有这个值，返回 true。
 - `default void forEach(BiConsumer<? super K,? super V> action)` 对这个映射中的所有键 / 值对应用这个动作。
 
-### java.util.HashMap<K, V>
+#### java.util.HashMap<K, V>
 
 - `HashMap()`
 - `HashMap(int initialCapacity)`
 - `HashMap(int initialCapacity, float loadFactor)` 用给定的容量和装填因子构造一个空散列映射（装填因子时一个 0.0 ~ 1.0 之间的数。这个数决定散列表填充的百分比。一旦到了这个比例，就要将其再散列到更大的散列表中）。默认的装填因子时 0.75。
 
-### java.util.HashTable<K, V>
+#### java.util.HashTable<K, V>
 
 HashTable 是在集合框架出现之前已经存在的大量“遗留的”容器类。
 
@@ -683,7 +683,7 @@ HashTable 与 HashMap 作用相同，接口也基本相同，是同步的，但�
 
 
 
-## LRU Cache
+### LRU Cache
 
 **这道题一定要会做！！**
 
@@ -695,7 +695,7 @@ Solution https://www.jiuzhang.com/solutions/lru-cache/
 
 Example: [2 1 3 2 5 3 6 7]
 
-### Description
+#### Description
 
 Design a data structure that follows the constraints of a [Least Recently Used (LRU) cache](https://en.wikipedia.org/wiki/Cache_replacement_policies#LRU).
 
@@ -748,7 +748,7 @@ lRUCache.get(4);    // return 4
 
 
 
-### Solutions
+#### Solutions
 
 LinkedHashMap = DoublyLinkedList + HashMap
 
@@ -962,7 +962,7 @@ Operations
 
 
 
-[] 整理这个位置的相关知识
+- [] 整理这个位置的相关知识
 
 
 
