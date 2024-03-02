@@ -6,7 +6,7 @@ categories: [JVM]
 tags: [JVM]
 pin: false
 math: false
-mermaid: false
+mermaid: true
 ---
 
 # ch2 JVM内存模型 & 对象分配布局访问
@@ -48,19 +48,17 @@ flowchart LR
 
 ![《深入理解Java虚拟机》书中的一张图](ch2%20JVM%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B%20&%20%E5%AF%B9%E8%B1%A1%E5%88%86%E9%85%8D%E5%B8%83%E5%B1%80%E8%AE%BF%E9%97%AE%20afd703b3ac2c44429912f0cf11e56375/Untitled.png)
 
-《深入理解Java虚拟机》书中的一张图
-
 ## 由所有线程共享的数据区
 
 ### 方法区 Method Area
 
 方法区这块放JVM加载的类型信息、常量、静态变量、即时编译器编译后的代码缓存等数据
 
-Q 啥是即时编译器？
+Q: 啥是即时编译器？
 
 Ans 即时编译器（Just In Time Compiler，JIT Compiler）是一种编译器。它在程序运行时动态地将程序代码编译成机器码，从而提高程序的运行速度。
 
-Q 类型信息是啥
+Q: 类型信息是啥
 
 Ans 对象实例的元数据
 
