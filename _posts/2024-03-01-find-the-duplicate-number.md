@@ -38,6 +38,11 @@ class Solution {
 }
 ```
 
+**Complexity**
+
+* Time = O(logn) 
+* Space = O(1) 
+
 ## Two pointers
 
 ```java
@@ -64,3 +69,8 @@ class Solution {
     }
 }
 ```
+
+**Complexity**
+
+* Time = O(n) 
+* Space = O(1) 
