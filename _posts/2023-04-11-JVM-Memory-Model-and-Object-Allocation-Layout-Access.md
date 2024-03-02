@@ -7,6 +7,7 @@ tags: [JVM]
 pin: false
 math: false
 mermaid: true
+img_path: /assets/images/
 ---
 
 # ch2 JVM内存模型 & 对象分配布局访问
@@ -46,7 +47,7 @@ flowchart LR
 
 ### **书上的图也同样贴在这里**
 
-![《深入理解Java虚拟机》书中的一张图](ch2%20JVM%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B%20&%20%E5%AF%B9%E8%B1%A1%E5%88%86%E9%85%8D%E5%B8%83%E5%B1%80%E8%AE%BF%E9%97%AE%20afd703b3ac2c44429912f0cf11e56375/Untitled.png)
+![Java 虚拟机运行时数据区](JVMRuntime.png)
 
 ## 由所有线程共享的数据区
 
