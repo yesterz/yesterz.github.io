@@ -439,4 +439,8 @@ Java堆中对象的内存布局就必须考虑如何放置访问类型数据的�
 
 ## OutOfMemoryError 异常
 
+<<<<<<< HEAD
 >>>>>>> bd50eca (commit)
+=======
+tobecontinue
+>>>>>>> d5bd5d1 (new)
