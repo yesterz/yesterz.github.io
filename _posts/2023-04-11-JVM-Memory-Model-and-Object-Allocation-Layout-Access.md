@@ -1,5 +1,5 @@
 ---
-title: ch2 Java 内存区域与内存溢出异常
+title: Java 内存区域与内存溢出异常
 date: 2023-04-11 21:09:00 +0800
 author: 
 categories: [JVM]
@@ -9,6 +9,8 @@ math: false
 mermaid: true
 img_path: /assets/images/
 ---
+
+ch2 Java 内存区域与内存溢出异常
 
 Owner: better
 
@@ -88,9 +90,6 @@ Java 堆既可以被实现成固定大小的，也可以是可扩展的，不过
 
 Here, unit denotes the unit in which we’ll initialize the memory (indicated by heap size). We can mark units as ‘g’ for GB, ‘m’ for MB, and ‘k’ for KB.
 
-
-
-
 #### 运行时常量池 Runtime Constant Pool
 
 运行时常量池是方法区的一部分。在编译时期把一个 .class 类文件生成的一个信息是常量池表（Constant Pool Table），表中描述了各种字面量与符号引用，这部分内容将在类加载后存放到运行时常量池中。
@@ -134,26 +133,7 @@ Ans 编译时实际上不知道实际要访问的内存地址是什么，所有�
 
 字节码解释器工作的时候改变这个程序计数器的值选取下一条执行的字节码指令。
 
-Q 线程私又是啥
-
-Ans 每条线程都有一个独立的程序计数器，各条线程之间互不影响，独立存储，称这类内存区域为线程私有的内存
-
-# 第二个事 对象的分配、布局和访问
-
-## 分配
-
-其实就是Object Allocattion，人话就是创建一个对象，new 一个出来。实际上指的是**给对象分配内存空间**。
-
-**Step 1 JVM 检查在常量池中的符号引用**
-
-JVM 遇到一条字节码 **new 指令**时，会检查运行时常量池中的符号引用，这个符号引用代表着这个类是否被加载过了，没有则先去执行类加载过程。
-
-**Step 2 JVM 给新生对象分配内存**
-
-类加载过程新生对象所需内存大小就被确定了，将分配到的内存初始化为零值。分配内存空间就是将内存中可用的一部分空闲空间划分出来。JVM 还维护着一个空闲列表 free list
-
-******************Step 3 给对象进行初始化操作******************
-**Q: 线程私有是啥**
+**Q: 线程私又是啥**
 
 Ans 每条线程都有一个独立的程序计数器，各条线程之间互不影响，独立存储，称这类内存区域为线程私有的内存
 
@@ -272,11 +252,11 @@ if (!constants->tag_at(index).is_unresolved_klass()) {
 
 在 Hotspot 虚拟机里，对象在堆内存的存储分布可以划分为三个部分**对象头（Header）、实例数据（Instance Data）、对齐填充（Padding）**
 
-**对象头 Object Header**
+#### 对象头 Object Header
 
-存两类信息，一类存储对象自身运行时数据官方叫Mark Word（下表），另一类是是类型指针，即对象指向它的类型元数据的指针，Java虚拟机通过这个指针来确定该对象是哪个类的实例。
+存两类信息，一类存储对象自身运行时数据官方叫 Mark Word（下表），另一类是是类型指针，即对象指向它的类型元数据的指针，Java虚拟机通过这个指针来确定该对象是哪个类的实例。
 
-HotSpot 虚拟机对象头 Mark Word：
+**HotSpot 虚拟机对象头 Mark Word：**
 
 |存储内容|	标志位|	状态
 |:---:|:---:|:---:|
@@ -286,20 +266,56 @@ HotSpot 虚拟机对象头 Mark Word：
 |空，不需要记录信息|	11|	GC标记
 |偏向线程ID、偏向时间戳、对象分代年龄|	01|	可偏向
 
+下面的注释分别描述了 32 位虚拟机和 64 位虚拟机的存储布局。
 
-************实例数据 Instance Data************
+**markOop.hpp 片段：**
 
-存储真正用的上的数据，写代码的时候定义的各种字段的值
+line 35 - 50 <https://hg.openjdk.org/jdk8u/jdk8u/hotspot/file/6f33e450999c/src/share/vm/oops/markOop.hpp>
 
-**对齐填充 Padding** 
+```java
+// Bit-format of an object header (most significant first, big endian layout below):
+//
+//  32 bits:
+//  --------
+//             hash:25 ------------>| age:4    biased_lock:1 lock:2 (normal object)
+//             JavaThread*:23 epoch:2 age:4    biased_lock:1 lock:2 (biased object)
+//             size:32 ------------------------------------------>| (CMS free block)
+//             PromotedObject*:29 ---------->| promo_bits:3 ----->| (CMS promoted object)
+//
+//  64 bits:
+//  --------
+//  unused:25 hash:31 -->| unused:1   age:4    biased_lock:1 lock:2 (normal object)
+//  JavaThread*:54 epoch:2 unused:1   age:4    biased_lock:1 lock:2 (biased object)
+//  PromotedObject*:61 --------------------->| promo_bits:3 ----->| (CMS promoted object)
+//  size:64 ----------------------------------------------------->| (CMS free block)
+//
+```
 
-非必然存储，无特别含义，补齐数据宽度的。
+#### 实例数据 Instance Data
+
+对象真正存储的有效信息，就是我们写代码的时候定义的各种字段的值内容
+
+存储顺序会受到虚拟机分配策略参数和字段在 Java 源码中定义顺序的影响。
+
+HotSpot 虚拟机默认的分配顺序为 longs/doubles、ints、shorts/chars、bytes/booleans、oops(Ordinary Object Pointers, OOPs)，相同宽度的字段总是被分配到一起存放，满足这个前提条件的情况下，在父类定义的变量会出现在子类之前。
+
+`--XX:FieldsAllocationStyle` 设置 JVM 对象的字段分配策略，1：按照顺序分配字段。2：按照类型分组分配字段。3：混合模式，结合了按照顺序和按照类型分组的特性。
+
+`--XX:CompactFields` 启用或禁用 JVM 中的字段压缩优化，默认是 true，会将子类中较窄的变量也允许插入父类变量的空隙中，以节省出一点点空间。
+
+#### 对齐填充 Padding
+
+占位符，非必然存储，无特别含义，补齐数据宽度的。犹豫 HotSpot 虚拟机的自动内存管理系统要求对象起始地址必须是 8 字节的整数倍，换句话说就是任何对象的大小都必须是 8 字节的整数倍。
+
+对象头备份已经被精心设计成 8 字节的倍数了，所以如果对象实例数据没有对齐的话，就需要对齐填充来补全。
 
 ### 对象的访问定位
 
-通过reference数据来操作堆上的对象实例，JVM规范 reference类型是指向一个对象实例的引用。
+创建对象自然是为了后续使用该对象，我们的 Java 程序会通过栈上的 reference 数据来操作堆上的具体对象实例，JVM 规范 reference 类型只是指向一个对象实例的引用。
 
-两种方式 A 句柄访问 B 直接指针访问
+并没有定义这个引用应该通过什么方式去定位、访问到堆中对象的具体位置，它由具体的虚拟机实现而定。
+
+主流的访问方式主要有两种方式 A 句柄访问 B 直接指针访问
 
 A 句柄访问
 
@@ -309,9 +325,6 @@ B 直接指针访问
 
 Java堆中对象的内存布局就必须考虑如何放置访问类型数据的相关信息，reference中存储的直接就是对象地址，如果只是访问对象本身的话，就不需要多⼀次间接访问的开销。
 
-![Untitled](ch2%20JVM%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B%20&%20%E5%AF%B9%E8%B1%A1%E5%88%86%E9%85%8D%E5%B8%83%E5%B1%80%E8%AE%BF%E9%97%AE%20afd703b3ac2c44429912f0cf11e56375/Untitled%202.png)
-
-![Untitled](ch2%20JVM%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B%20&%20%E5%AF%B9%E8%B1%A1%E5%88%86%E9%85%8D%E5%B8%83%E5%B1%80%E8%AE%BF%E9%97%AE%20afd703b3ac2c44429912f0cf11e56375/Untitled%203.png)
 
 优劣 Hotspot 虚拟机用的直接指针来访问
 

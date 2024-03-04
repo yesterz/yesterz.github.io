@@ -2,16 +2,14 @@
 title: Search in Rotated Sorted Array
 date: 2023-10-09 22:03:00 +0800
 author: Algorithms-Notes
-categories: [Leetcode]
-tags: [Leetcode, Binary Search]
+categories: [Algorithms]
+tags: [Medium, top-100-liked, Array, Binary Search]
 pin: false
-math: true
+math: false
 mermaid: false
 ---
 
-## Search in Rotated Sorted Array
-
-Leetcode <https://leetcode.cn/problems/search-in-rotated-sorted-array>
+LeetCode <https://leetcode.cn/problems/search-in-rotated-sorted-array/>
 
 ### 题目描述
 

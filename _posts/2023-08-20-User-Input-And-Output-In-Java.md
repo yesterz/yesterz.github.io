@@ -3,7 +3,7 @@ title: 在 Java 中的用户输入和输出
 author: my-test-author-id
 date: 2023-08-18 21:09:00 +0800
 categories: [Algorithms]
-tags: [剑指Offer, 笔试]
+tags: []
 pin: false
 math: false
 mermaid: false

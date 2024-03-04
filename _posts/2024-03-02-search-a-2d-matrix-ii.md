@@ -2,8 +2,8 @@
 title: Search a 2D Matrix II
 date: 2024-03-02 07:03:00 +0800
 author: Algorithms-Notes
-categories: [Algorithms, LeetCode Hot 100]
-tags: [medium, top-100-liked, 剑指 Offer, Array, Binary Search, Divide and Conquer, Matrix]
+categories: [Algorithms]
+tags: [Medium, top-100-liked, 剑指 Offer, Array, Binary Search, Divide and Conquer, Matrix]
 pin: false
 math: false
 mermaid: false

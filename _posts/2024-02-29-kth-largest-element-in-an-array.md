@@ -3,7 +3,7 @@ title: Kth Largest Element in an Array
 date: 2024-02-29 07:00:00 +0800
 author: Algorithms-Notes
 categories: [Algorithms, LeetCode Hot 100]
-tags: [medium, top-100-liked, Array, Divide and Conquer, Quickselect, Sorting, Heap]
+tags: [Medium, top-100-liked, Array, Divide and Conquer, Quickselect, Sorting, Heap]
 pin: false
 math: false
 mermaid: false

@@ -3,7 +3,7 @@ title: Lecture-3 Binary Tree & Divide Conquer
 date: 2023-09-24 15:01:00 +0800
 author: Algorithms-Notes
 categories: [Algorithms]
-tags: [Binary Tree, Divide Conquer]
+tags: [Algorithms Note]
 pin: false
 math: true
 mermaid: false

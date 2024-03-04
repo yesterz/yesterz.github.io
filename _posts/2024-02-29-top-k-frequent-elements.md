@@ -3,7 +3,7 @@ title: Top K Frequent Elements
 date: 2024-02-29 07:03:00 +0800
 author: Algorithms-Notes
 categories: [Algorithms, LeetCode Hot 100]
-tags: [medium, top-100-liked, Array, Hash Table, Divide and Conquer, Bucket Sort, Counting, Quickselect, Sorting, Heap]
+tags: [Medium, top-100-liked, Array, Hash Table, Divide and Conquer, Bucket Sort, Counting, Quickselect, Sorting, Heap]
 pin: false
 math: false
 mermaid: false

@@ -395,9 +395,11 @@ docker inspect 容器名称（容器ID） 
 
 也可以直接执行下面的命令直接输出IP地址
 
+{% raw %}
 ```shell
 docker inspect --format='{{.NetworkSettings.IPAddress}}' 容器名称（容器ID）
 ```
+{% endraw %}
 
 #### 3.2.7 删除容器 
 

@@ -3,7 +3,7 @@ title: Copy List with Random Pointer
 date: 2024-02-28 07:11:00 +0800
 author: Algorithms-Notes
 categories: [Algorithms, LeetCode Hot 100]
-tags: [medium, top-100-liked, Hash Table, Linked List]
+tags: [Medium, top-100-liked, Hash Table, Linked List]
 pin: false
 math: false
 mermaid: false
@@ -16,8 +16,8 @@ LeetCode <https://leetcode.cn/problems/copy-list-with-random-pointer/>
 **Idea:** Build mapping between node in the original list and the corresponding node in the new list
 
 Two pointers:
-Head -> current list
-Curr -> new list
+1. Head -> current list
+2. Curr -> new list
 
 HashMap: 
 1. KEY: original node
