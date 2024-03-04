@@ -3,7 +3,7 @@ title: Python 抓取m3u8视频
 date: 2023-02-15 10:51:00 +0800
 author:
 categories: [Python]
-tags: [Python]
+tags: [Python, Web Crawler]
 pin: false
 math: true
 mermaid: false

@@ -3,7 +3,7 @@ title: Urllib 与 Requests 2
 date: 2023-02-03 10:51:00 +0800
 author: 
 categories: [Python]
-tags: [Python]
+tags: [Python, Web Crawler]
 pin: false
 math: true
 mermaid: false
