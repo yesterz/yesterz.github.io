@@ -16,25 +16,131 @@ mermaid: false
 
 ## 基础故障处理
 
+jdk/bin目录：命令行工具，编译、运行、打包、部署、签名、调试、监控、运维
+
+```shell
+# risk@DESKTOP-0VC22M5:/usr/lib/jvm$ tree . java-11-openjdk-amd64/ -L 1
+.
+├── default-java -> java-1.11.0-openjdk-amd64
+├── java-1.11.0-openjdk-amd64 -> java-11-openjdk-amd64
+├── java-11-openjdk-amd64
+└── openjdk-11
+java-11-openjdk-amd64/
+├── bin
+├── conf
+├── docs -> ../../../share/doc/openjdk-11-jre-headless
+├── include
+├── jmods
+├── legal
+├── lib
+├── man
+└── release
+
+8 directories, 1 file
+
+```
+
 ### jps：虚拟机进程状况工具
 
 可以列出正在运行的虚拟机进程，并显示虚拟机执行主类（Main Class，main()函数所在的类）名称以及这些进程的本地虚拟机唯一ID（LVMID，Local Virtual Machine Identifier）
+
+```shell
+# risk@DESKTOP-0VC22M5:/usr/lib/jvm$ jps -h
+usage: jps [--help]
+       jps [-q] [-mlvV] [<hostid>]
+
+Definitions:
+    <hostid>:      <hostname>[:<port>]
+    -? -h --help -help: Print this help message and exit.
+```
 
 ### jstat：虚拟机统计信息监视工具
 
 jstat（JVM Statistics Monitoring Tool）是用于监视虚拟机各种运行状态信息的命令行工具。它可以显示本地或者远程虚拟机进程中的类加载、内存、垃圾收集、即时编译等运行时数据，在没有GUI图形界面、只提供了纯文本控制台环境的服务器上，它将是运行期定位虚拟机性能问题的常用工具。
 
+```shell
+# risk@DESKTOP-0VC22M5:/usr/lib/jvm$ jstat -h
+Usage: jstat --help|-options
+       jstat -<option> [-t] [-h<lines>] <vmid> [<interval> [<count>]]
+
+Definitions:
+  <option>      An option reported by the -options option
+  <vmid>        Virtual Machine Identifier. A vmid takes the following form:
+                     <lvmid>[@<hostname>[:<port>]]
+                Where <lvmid> is the local vm identifier for the target
+                Java virtual machine, typically a process id; <hostname> is
+                the name of the host running the target Java virtual machine;
+                and <port> is the port number for the rmiregistry on the
+                target host. See the jvmstat documentation for a more complete
+                description of the Virtual Machine Identifier.
+  <lines>       Number of samples between header lines.
+  <interval>    Sampling interval. The following forms are allowed:
+                    <n>["ms"|"s"]
+                Where <n> is an integer and the suffix specifies the units as
+                milliseconds("ms") or seconds("s"). The default units are "ms".
+  <count>       Number of samples to take before terminating.
+  -J<flag>      Pass <flag> directly to the runtime system.
+  -? -h --help  Prints this help message.
+  -help         Prints this help message.
+```
+
 ### jinfo：Java配置信息工具
 
 jinfo（Configuration Info for Java）的作用是实时查看和调整虚拟机各项参数
+
+```shell
+risk@DESKTOP-0VC22M5:/usr/lib/jvm$ jinfo -h
+Usage:
+    jinfo <option> <pid>
+       (to connect to a running process)
+
+where <option> is one of:
+    -flag <name>         to print the value of the named VM flag
+    -flag [+|-]<name>    to enable or disable the named VM flag
+    -flag <name>=<value> to set the named VM flag to the given value
+    -flags               to print VM flags
+    -sysprops            to print Java system properties
+    <no option>          to print both VM flags and system properties
+    -? | -h | --help | -help to print this help message
+```
 
 ### jmap：Java内存映像工具
 
 jmap（Memory Map for Java）命令用于生成堆转储快照（一般称为heapdump或dump文件），它还可以查询finalize执行队列、Java堆和方法区的详细信息，如空间使用率、当前用的是哪种收集器等。
 
+```shell
+# risk@DESKTOP-0VC22M5:/usr/lib/jvm$ jmap -h
+Usage:
+    jmap -clstats <pid>
+        to connect to running process and print class loader statistics
+    jmap -finalizerinfo <pid>
+        to connect to running process and print information on objects awaiting finalization
+    jmap -histo[:live] <pid>
+        to connect to running process and print histogram of java object heap
+        if the "live" suboption is specified, only count live objects
+    jmap -dump:<dump-options> <pid>
+        to connect to running process and dump java heap
+    jmap -? -h --help
+        to print this help message
+
+    dump-options:
+      live         dump only live objects; if not specified,
+                   all objects in the heap are dumped.
+      format=b     binary format
+      file=<file>  dump heap to <file>
+      parallel=<number>  parallel threads number for heap iteration:
+                         parallel=0 default behavior, use predefined number of threads
+                         parallel=1 disable parallel heap iteration
+                         parallel=<N> use N threads for parallel heap iteration
+
+    Example: jmap -dump:live,format=b,file=heap.bin <pid>
+```
+
 ### jhat：虚拟机堆转储快照分析工具
 
 JDK提供jhat（JVM Heap Analysis Tool）命令与jmap搭配使用，来分析jmap生成的堆转储快照。
+
+**jdk8?**
 
 ### jstack：Java堆栈跟踪工具
 
@@ -43,6 +149,18 @@ jstack（Stack Trace for Java）命令用于生成虚拟机当前时刻的线程
 线程快照就是当前虚拟机内每一条线程正在执行的方法堆栈的集合，生成线程快照的目的通常是定位线程出现长时间停顿的原因，如线程间死锁、死循环、请求外部资源导致的长时间挂起等，都是导致线程长时间停顿的常见原因。
 
 线程出现停顿时通过jstack来查看各个线程的调用堆栈，就可以获知没有响应的线程到底在后台做些什么事情，或者等待着什么资源
+
+```shell
+risk@DESKTOP-0VC22M5:/usr/lib/jvm$ jstack -?
+Usage:
+    jstack [-l][-e] <pid>
+        (to connect to running process)
+
+Options:
+    -l  long listing. Prints additional information about locks
+    -e  extended listing. Prints additional information about threads
+    -? -h --help -help to print this help message
+```
 
 ## 可视化故障处理
 
