@@ -7,7 +7,7 @@ tags: [Python, App Reverse]
 pin: false
 math: true
 mermaid: false
-img_path:Disassembly-tool-and-Hook-framework/images/
+img_path: /assets/images/
 ---
 
 ## 一 反编译工具
