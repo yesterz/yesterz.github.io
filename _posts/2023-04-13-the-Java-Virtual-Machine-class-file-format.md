@@ -13,9 +13,51 @@ Owner: better
 
 This chapter describes the class file format of the Java Virtual Machine. <https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html>
 
+## 字节码文件分析 javap
+
+Disassembles one or more class files.
+
+```shell
+risk@DESKTOP-0VC22M5:~$ javap -h
+Usage: javap <options> <classes>
+where possible options include:
+  -? -h --help -help               Print this help message
+  -version                         Version information
+  -v  -verbose                     Print additional information
+  -l                               Print line number and local variable tables
+  -public                          Show only public classes and members
+  -protected                       Show protected/public classes and members
+  -package                         Show package/protected/public classes
+                                   and members (default)
+  -p  -private                     Show all classes and members
+  -c                               Disassemble the code
+  -s                               Print internal type signatures
+  -sysinfo                         Show system info (path, size, date, MD5 hash)
+                                   of class being processed
+  -constants                       Show final constants
+  --module <module>, -m <module>   Specify module containing classes to be disassembled
+  --module-path <path>             Specify where to find application modules
+  --system <jdk>                   Specify where to find system modules
+  --class-path <path>              Specify where to find user class files
+  -classpath <path>                Specify where to find user class files
+  -cp <path>                       Specify where to find user class files
+  -bootclasspath <path>            Override location of bootstrap class files
+
+GNU-style options may use = instead of whitespace to separate the name of an option
+from its value.
+
+Each class to be shown may be specified by a filename, a URL, or by its fully
+qualified class name. Examples:
+   path/to/MyClass.class
+   jar:file:///path/to/MyJar.jar!/mypkg/MyClass.class
+   java.lang.Object
+```
+
+javap 官方文档： <https://docs.oracle.com/javase/8/docs/technotes/tools/windows/javap.html>
+
 ## 什么是类文件？
 
-与平台无关，与语言无关，统一程序存储格式——字节码 Byte Code，仅仅与 Class文件 这种特定的二进制文件格式所关联。
+与平台无关，与语言无关，统一程序存储格式——字节码 Byte Code，仅仅与 Class 文件 这种特定的二进制文件格式所关联。
 
 ## Class 类文件的结构
 
@@ -39,10 +81,6 @@ ClassFile {
     attribute_info attributes[attributes_count];
 }
 ```
-
-![这张表由表6-1所示的数据项按严格顺序排列构成。](ch6%20%E7%B1%BB%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%200e3ae0a321dd497eb7a55638567afdff/Untitled.png)
-
-这张表由表6-1所示的数据项按严格顺序排列构成。
 
 - Class 文件是一组以**8个字节为基础单位的⼆进制流**
     
@@ -72,16 +110,15 @@ ClassFile {
 5. 方法句柄和方法类型 Method Handle、Method Type、Invoke Dynamic
 6. 动态调用点和动态常量 Dynamically-Computed Call Site、Dynamically-Computed Constant
 
-**Q 字面量是啥？**
+**Q: 字面量是啥？**
 
-Ans ***字面量***是指由字母，数字等构成的字符串或者数值，它只能作为右值出现,(右值是指等号右边的值，如：int a=123这里的a为左值，123为右值。) from Baidu
+Ans: ***字面量***是指由字母，数字等构成的字符串或者数值，它只能作为右值出现,(右值是指等号右边的值，如：int a=123这里的a为左值，123为右值。) from Baidu
 
-**Q 符号引用又是啥？**
+**Q: 符号引用又是啥？**
 
-Ans 编译时实际上不知道实际要访问的内存地址是什么，所有用符号引用来代替
+Ans: 编译时实际上不知道实际要访问的内存地址是什么，所有用符号引用来代替
 
 > 符号引用（Symbolic References）：符号引用以一组符号来描述所引用的目标，符号可以是任何形式的字面量，只要使用时能够无歧义的定位到目标即可。例如，在Class文件中它以CONSTANT_Class_info、CONSTANT_Fieldref_info、CONSTANT_Methodref_info等类型的常量出现。符号引用与虚拟机的内存布局无关，引用的目标并不一定加载到内存中。在[Java](https://lib.csdn.net/base/javaee)中，一个java类将会编译成一个class文件。**在编译时，java类并不知道所引用的类的实际地址，因此只能使用符号引用来代替。**比如org.simple.People类引用了org.simple.Language类，在编译时People类并不知道Language类的实际内存地址，因此只能使用符号org.simple.Language（假设是这个，当然实际中是由类似于CONSTANT_Class_info的常量来表示的）来表示Language类的地址。各种虚拟机实现的内存布局可能有所不同，但是它们能接受的符号引用都是一致的，因为符号引用的字面量形式明确定义在Java虚拟机规范的Class文件格式中。
-> 
 
 所以运行时常量池里面装的东西到底是啥——符号引用和字面量
 
@@ -98,7 +135,7 @@ Ans 编译时实际上不知道实际要访问的内存地址是什么，所有�
 
 等等。
 
-* **Table** Class access and property modifiers
+* **The following table:** Class access and property modifiers
 
 | Flag Name      | Value | Interpretation                                                |
 |----------------|-------|---------------------------------------------------------------|

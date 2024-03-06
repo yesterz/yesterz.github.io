@@ -1,29 +1,54 @@
 ---
 title: 虚拟机类加载机制
 date: 2023-04-15 21:09:00 +0800
-author: ltfy
+author: 
 categories: [JVM]
 tags: [JVM]
 pin: false
 math: false
-mermaid: false
+mermaid: true
 ---
-
-# 虚拟机类加载机制
 
 Owner: better
 
-# 类加载器 Class Loader
+一个类型从被加载到虚拟机内存开始，到卸载出内存为止，它的整个生命周期将经历 1 加载 Loading 2 验证 Verification 3 准备 Preparation 4 解析 Resolution 5 初始化 Initialization 6 使用 Using 7 卸载 Unloading 七个阶段，其中验证、准备、解析三个部分统称为连接 Linking
+
+```mermaid
+graph LR;
+    A[Loading] --> B[Verification]
+    subgraph Linking
+    B --> C[Preparation]
+    C --> D[Resolution]
+    end
+    D --> E[Initialization]
+    E --> F[Using]
+    F --> G[Unloading]
+```
+
+## 类加载器 Class Loader
 
 通过一个类的全限定名来获取描述该类的二进制字节流
 
-# 类加载时机
+## 类加载时机
 
-一个类型从被加载到虚拟机内存开始，到卸载出内存为止，它的整个生命周期将经历 1 加载 Loading 2 验证 Verification 3 准备 Preparation 4 解析 Resolution 5 初始化 Initialization 6 使用 Using 7 卸载 Unloading 七个阶段，其中验证、准备、解析三个部分统称为连接 Linking
+《Java 虚拟机规范》严格规定了**有且仅有**六种情况必须立即对“初始化”（而加载、验证、准备自然需要在此之前开始）
+1. 遇到 new、getstatic、putstatic 或 invokestatic 这四条字节码指令时，如果类型没有进行过初始化，则需要先触发其初始化阶段。能够生成这四条指令的典型Java代码场景有：
+  + 使用new关键字实例化对象的时候。
+  + 读取或设置一个类型的静态字段（被 final 修饰、已在编译期把结果放入常量池的静态字段除外）的时候。
+  + 调用一个类型的静态方法的时候。
+2. 使用 java.lang.reflect 包的方法对类型进行反射调用的时候，如果类型没有进行过初始化，则需要先触发其初始化。
+3. 当初始化类的时候，如果发现其父类还没有进行过初始化，则需要先触发其父类的初始化。
+4. 当虚拟机启动时，用户需要指定一个要执行的主类（包含 main() 方法的那个类），虚拟机会先初始化这个主类。
+5. 当使用 JDK7 新加入的动态语言支持时，如果一个 java.lang.invoke.MethodHandle 实例最后的解析结果为 REF_getStatic、REF_putStatic、REF_invokeStatic、REF_newInvokeSpecial 四种类型的方法句柄，并且这个方法句柄对应的类没有进行过初始化，则需要先触发其初始化。
+6. 当一个接口中定义了JDK8新加入的默认方法（被default关键字修饰的接口方法）时，如果有这个接口的实现类发生了初始化，那该接口要在其之前被初始化。
 
-![Untitled](%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6%208bed1cc89eef4b2381023c76ef708cb6/Untitled.png)
+**六种场景中的行为称为对一个类型进行主动引用。**
 
-# 类加载的过程
+对于这六种会触发类型进行初始化的场景，《Java虚拟机规范》中使用了一个非常强烈的限定语 ——“有且只有”。
+
+除此之外，所有引用类型的方式都不会触发初始化，称为被动引用。
+
+## 类加载的过程
 
 1. 加载 Loading
     
@@ -60,7 +85,7 @@ Owner: better
     同⼀个类加载器下，⼀个类型只会被初始化⼀次。
     
 
-# 类加载器
+## 类加载器
 
 类加载过程为通过一个类的全限定名来获取描述该类的二进制字节流；那么实现这个动作的代码称为类加载器 Class Loader
 
@@ -71,8 +96,6 @@ A 类与类加载器
 比较两个类是否“相等”，只有在这两个类是由同一个类加载器加载的前提下才有意义，否则，即使这两个类来源于同一个Class文件，被同一个Java虚拟机加载，只要加载它们的类加载器不同，那这两个类就必定不相等。
 
 B 双亲委派模型
-
-![Untitled](%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%B1%BB%E5%8A%A0%E8%BD%BD%E6%9C%BA%E5%88%B6%208bed1cc89eef4b2381023c76ef708cb6/Untitled%201.png)
 
 - 站在Java虚拟机的⻆度来看，只存在两种不同的类加载器: ⼀种是启动类加载器(Bootstrap ClassLoader)，这个类加载器使⽤C++语⾔实现，是虚拟机⾃身的⼀部分；另外⼀种就是其他所有的类加载器，这些类加载器都由Java语⾔实现，独⽴存在于虚拟机外部，并且全都继承⾃抽象类 java.lang.ClassLoader
 - 站在Java开发⼈员的⻆度来看，类加载器就应当划分得更细致⼀些。⾃JDK 1.2以来，
@@ -88,3 +111,7 @@ C 破坏双亲委派模型
 
 1. ⾯对已经存在的⽤户⾃定义类加载器的代码，Java设计者们引⼊双亲委派模型时不得不做出⼀些妥协，为了兼容这些已有代码，⽆法再以技术⼿段避免loadClass()被⼦类覆盖的可能性，只能在JDK1.2之后的java.lang.ClassLoader中添加⼀个新的protected⽅法findClass()，并引导⽤户编写的类加载逻辑时尽可能去重写这个⽅法，⽽不是在loadClass()中编写代码。
 2. 双亲委派很好地解决了各个类加载器协作时基础类型的⼀致性问题(越基础的类由越上层的加载器进⾏加载)，基础类型之所以被称为“基础”，是因为它们总是作为被⽤户代码继承、调⽤的API存在，但程序设计往往没有绝对不变的完美规则，如果有基础类型⼜要调⽤回⽤户的代码，那该怎么办呢? 为了解决这个困境，Java的设计团队只好引⼊了⼀个不太优雅的设计: 线程上下⽂类加载器 (Thread Context ClassLoader)。这个类加载器可以通过java.lang.Thread类的setContextClassLoader()⽅法进⾏设置，如果创建线程时还未设置，它将会从⽗线程中继承⼀个，如果在应⽤程序的全局范围内都没有设置过的话，那这个类加载器默认就是应⽤程序类加载器。JNDI服务使⽤这个线程上下⽂类加载器去加载所需的SPI服务代码，这是⼀种⽗类加载器去请求⼦类加载器完成类加载的⾏为，这种⾏为实际上是打通了双亲委派模型的层次结构来逆向使⽤类加载器，已经违背了双亲委派模型的⼀般性原则，但也是⽆可奈何的事情。Java中涉及SPI的加载基本上都采⽤这种⽅式来完成，例如JNDI、JDBC、JCE、JAXB和JBI等
+
+
+
+官方文档资料： <https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-5.html>
