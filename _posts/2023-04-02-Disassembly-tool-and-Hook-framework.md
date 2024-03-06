@@ -7,19 +7,19 @@ tags: [Python, App Reverse]
 pin: false
 math: true
 mermaid: false
-img_path: /assets/images/
+img_path:Disassembly-tool-and-Hook-framework/images/
 ---
 
-# 一 反编译工具
+## 一 反编译工具
 
-## 1.1 常见反编译工具
+### 1.1 常见反编译工具
 
 ```python
 常见的反编译工具：jadx（推荐）、jeb、GDA
 反编译工具依赖于java环境，所以我们按照jdk
 ```
 
-## 1.2 JDK环境安装
+### 1.2 JDK环境安装
 
 ```python
 # 官方地址：（需要注册-最新java 21）
@@ -30,23 +30,23 @@ https://www.oracle.com/java/technologies/downloads/
 提取码: yyhx
 ```
 
-![image-20230615154720045](./assets/image-20230615154720045.png)
+![image-20230615154720045](Disassembly-tool-and-Hook-framework/image-20230615154720045.png)
 
-### 1.2.1 win平台安装
+#### 1.2.1 win平台安装
 
 ```python
 # 1 下载jdk-8u371-windows-x64.exe
 # 2 双击安装
 ```
 
-### 1.2.2 mac平台安装
+#### 1.2.2 mac平台安装
 
 ```python
 # 1 下载jdk-8u371-macosx-x64.dmg
 # 2 双击安装
 ```
 
-### 1.2.3 验证是否安装成功
+#### 1.2.3 验证是否安装成功
 
 ```python
 java -version  # 看到打印安装成功
@@ -56,9 +56,9 @@ Java(TM) SE Runtime Environment (build 1.8.0_371-b11)
 '''
 ```
 
-## 1.3 jdax安装
+### 1.3 jdax安装
 
-### 1.3.1 下载地址
+#### 1.3.1 下载地址
 
 ```python
 # 1 官网
@@ -71,33 +71,33 @@ https://github.com/skylot/jadx/releases
 # 最新：1.4.7 推荐：1.2.0，后期都会用
 ```
 
-![image-20230615155149828](./assets/image-20230615155149828.png)
+![image-20230615155149828](Disassembly-tool-and-Hook-framework/image-20230615155149828.png)
 
-### 1.3.2 安装
+#### 1.3.2 安装
 
 ```python
 # 下载直接解压即可（注意不要放在有中文的路径）
 # 把apk直接拖入软件即可
 ```
 
-![image-20230615155407729](./assets/image-20230615155407729.png)
+![image-20230615155407729](Disassembly-tool-and-Hook-framework/image-20230615155407729.png)
 
-![image-20230615155504155](./assets/image-20230615155504155.png)
+![image-20230615155504155](Disassembly-tool-and-Hook-framework/image-20230615155504155.png)
 
 
 
-# 二 反编译后代码定位
+## 二 反编译后代码定位
 
-## 2.1 抓包
+### 2.1 抓包
 
 ```python
 # 打开app，运行，使用抓包工具抓包，发现密码是加密的
 # 这时候咱们需要，反编译后，定位到代码位置
 ```
 
-![image-20230615155818493](./assets/image-20230615155818493.png)
+![image-20230615155818493](Disassembly-tool-and-Hook-framework/image-20230615155818493.png)
 
-## 2.2 反编译定位位置
+### 2.2 反编译定位位置
 
 ```python
 # 通过：URL网址 或 参数关键字  `pwd`   `"pwd"`    put("pwd    等关键字搜索
@@ -105,18 +105,18 @@ https://github.com/skylot/jadx/releases
 
 ```
 
-![image-20230615160044899](./assets/image-20230615160044899.png)
+![image-20230615160044899](Disassembly-tool-and-Hook-framework/image-20230615160044899.png)
 
-![image-20230615160201891](./assets/image-20230615160201891.png)
+![image-20230615160201891](Disassembly-tool-and-Hook-framework/image-20230615160201891.png)
 
-![image-20230615160242472](./assets/image-20230615160242472.png)
+![image-20230615160242472](Disassembly-tool-and-Hook-framework/image-20230615160242472.png)
 
-![image-20230615160257337](./assets/image-20230615160257337.png)
+![image-20230615160257337](Disassembly-tool-and-Hook-framework/image-20230615160257337.png)
 
-![image-20230615160312466](./assets/image-20230615160312466.png)
+![image-20230615160312466](Disassembly-tool-and-Hook-framework/image-20230615160312466.png)
 
 ```python
-# 我们发现，定位到代码，但是读不懂什么意思，只能靠猜测和比较
+## 我们发现，定位到代码，但是读不懂什么意思，只能靠猜测和比较
 import hashlib
 str='1234567'
 res=hashlib.md5(str.encode('utf-8')).hexdigest()
@@ -125,7 +125,7 @@ print(res)
 ## 注意：这个过程需要掌握Java和安卓开发。所以后期我们要学习java知识和安卓开发
 ```
 
-# 三hook框架frida
+## 三hook框架frida
 
 
 
@@ -138,13 +138,13 @@ Xposed Framework：Xposed 是一个功能强大的开源 Hook 框架，可以在
 Frida：Frida 是一个跨平台的动态 Hook 框架，支持安卓和其他操作系统。它提供了一个强大的 JavaScript API，可以在运行时对应用程序进行 Hook，包括方法拦截、参数修改、调用注入等。Frida 可以用于安全研究、逆向工程和应用程序调试等方面。
 ```
 
-## 3.1 下载安装
+### 3.1 下载安装
 
 ```python
 # 注意：需要电脑端[电脑端要安装python解释器环境]和手机端同时安装，版本必须对应
 ```
 
-### 3.1.1 电脑端安装
+#### 3.1.1 电脑端安装
 
 ```python
 # 指定版本安装
@@ -163,9 +163,9 @@ https://pypi.doubanio.com/simple/frida/
 pip install frida-16.0.1-cp37-abi3-macosx_10_9_x86_64.whl
 ```
 
-![image-20230615161449757](./assets/image-20230615161449757.png)
+![image-20230615161449757](Disassembly-tool-and-Hook-framework/image-20230615161449757.png)
 
-### 3.1.2 手机端安装frida-server
+#### 3.1.2 手机端安装frida-server
 
 ```python
 # 1 先查看手机架构
@@ -186,12 +186,12 @@ cd /data/local/tmp/
 chmod 755 frida-server-16.0.19-android-arm64  # 加入执行权限
 ls -al   # 查看权限
 
-# 5 
+## 5 
 ```
 
-![image-20230615162238083](./assets/image-20230615162238083.png)
+![image-20230615162238083](Disassembly-tool-and-Hook-framework/image-20230615162238083.png)
 
-## 3.2 启动并hook应用
+### 3.2 启动并hook应用
 
 ### 3.2.1 手机端启动frida服务端
 
@@ -212,11 +212,11 @@ cd /data/local/tmp
 
 
 
-![image-20230615163240601](./assets/image-20230615163240601.png)
+![image-20230615163240601](Disassembly-tool-and-Hook-framework/image-20230615163240601.png)
 
-### 3.2.2 电脑端配置
+#### 3.2.2 电脑端配置
 
-#### 3.2.2.1 配置端口转发
+##### 3.2.2.1 配置端口转发
 
 ```python
 # 方式一：命令行中敲
@@ -230,7 +230,7 @@ subprocess.getoutput("adb forward tcp:27042 tcp:27042")
 subprocess.getoutput("adb forward tcp:27043 tcp:27043")
 ```
 
-#### 3.2.2.2 编写python代码，打印手机中的进程
+##### 3.2.2.2 编写python代码，打印手机中的进程
 
 ```python
 # 枚举手机上的所有进程 & 前台进程
@@ -259,11 +259,11 @@ adb forward tcp:27043 tcp:27043
 
 
 
-![image-20230615163609652](./assets/image-20230615163609652.png)
+![image-20230615163609652](Disassembly-tool-and-Hook-framework/image-20230615163609652.png)
 
 
 
-## 3.3 hook 某智赢的加密算法encodeMD5
+### 3.3 hook 某智赢的加密算法encodeMD5
 
 ```python
 import frida
@@ -300,7 +300,7 @@ sys.stdin.read()
 
 ```
 
-## 3.4  Python Hook方式
+### 3.4  Python Hook方式
 
 ```python
 # Spawn 方式适应场景：Spawn 方式是在目标应用程序启动时直接注入 Frida 的 Agent 代码
@@ -319,7 +319,7 @@ sys.stdin.read()
 
 
 
-### 3.4.1 attach方式（手动操作）
+#### 3.4.1 attach方式（手动操作）
 
 ```python
 import frida
@@ -357,7 +357,7 @@ sys.stdin.read()
 
 
 
-### 3.4.2 spawn方式（自动重启app，适用于在应用程序启动的早期阶段进行）
+#### 3.4.2 spawn方式（自动重启app，适用于在应用程序启动的早期阶段进行）
 
 ```python
 import frida
@@ -396,7 +396,7 @@ sys.stdin.read()
 
 
 
-## 3.5 js Hook方式javaScript+终端
+### 3.5 js Hook方式javaScript+终端
 
 ```python
 # 代码 hook.js
@@ -414,13 +414,13 @@ Java.perform(function () {
 
 
 
-### 3.5.1 attach，先启动app，然后再在终端执行：
+#### 3.5.1 attach，先启动app，然后再在终端执行：
 
 ```
 frida -UF -l hook.js  
 ```
 
-### 3.5.2 spwan，脚本自动重启APP并进行Hook
+#### 3.5.2 spwan，脚本自动重启APP并进行Hook
 
 ```python
 frida -U -f com.che168.autotradercloud -l hook.js
@@ -430,7 +430,7 @@ frida -U -f com.che168.autotradercloud -l hook.js
 
 
 
-# 四 使用python还原算法
+## 四 使用python还原算法
 
 ```python
 # 加密分类
@@ -451,7 +451,7 @@ print(m.hexdigest())
 
 
 
-## 4.2 sha
+### 4.2 sha
 
 ```python
 import hashlib
@@ -462,7 +462,7 @@ sha1_data = sha1.hexdigest()
 print(sha1_data)
 ```
 
-## 4.3 DES加密
+### 4.3 DES加密
 
 ```python
 # pip3 install pycryptodomex -i https://pypi.douban.com/simple
@@ -484,7 +484,7 @@ print(plaintext)
 
 
 
-## 4.4 非对称加密算法-RSA
+### 4.4 非对称加密算法-RSA
 
 ```python
 # 安装模块
@@ -515,7 +515,7 @@ print(method)
 
 ```
 
-## 4.5 base64
+### 4.5 base64
 
 ```python
 import base64
