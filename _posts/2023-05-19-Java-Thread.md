@@ -11,14 +11,14 @@ toc: true
 
 **创建和启动分两步走。**
 
-- 这里由三种方法
+**这里由三种方法**
     1. 直接使用 Thread
     2. 使用 Runnable 配合 Thread
     3. FutureTask 配合 Thread
 
 ### 第一种方法 直接使用 Thread
 
-这里其实是**匿名内部类的写法**，创建的是Thread的一个子类。 并且要覆盖其中的 run 方法。
+这里其实是**匿名内部类的写法**，创建的是Thread的一个子类，并且要覆盖其中的 run 方法。
 
 ```java
 // 创建线程对象
@@ -200,8 +200,8 @@ jconsole 远程监控配置
 需要以如下方式运行你的 java 类
 
 ```java
-java -Djava.rmi.server.hostname=`ip地址` -Dcom.sun.management.jmxremote -
-Dcom.sun.management.jmxremote.port=`连接端口` -Dcom.sun.management.jmxremote.ssl=是否安全连接 -
+java -Djava.rmi.server.hostname='ip地址' -Dcom.sun.management.jmxremote -
+Dcom.sun.management.jmxremote.port='连接端口' -Dcom.sun.management.jmxremote.ssl=是否安全连接 -
 Dcom.sun.management.jmxremote.authenticate=是否认证 java类
 ```
 
@@ -218,9 +218,6 @@ Dcom.sun.management.jmxremote.authenticate=是否认证 java类
     - Thread 两种创建方式 的源码
 
 ### 栈与栈帧（Stack & Stack Frame）
-
-> [Java 虚拟机栈](https://www.notion.so/ch2-JVM-afd703b3ac2c44429912f0cf11e56375?pvs=21)
-> 
 
 JVM 运行时数据区是由方法区，虚拟机栈，本地方法栈，堆，程序计数器构成，其中栈内存是给谁用的，其实就是给线程用的，每个线程启动后，VM 就会为其分配一块栈内存。
 
@@ -245,27 +242,32 @@ Java 虚拟机栈描述的是 Java 方法执行的线程内存模型：每个方
 
 ## 3 Thread API
 
-| 方法名 |  功能说明 | 注意 |
-| --- | --- | --- |
-| start() | 启动一个新线程，在新的线程运行 run 方法中的代码 | start 方法只是让线程进入就绪，里面代码不一定立刻运行（CPU的时间片还没分给它）。每个线程对象的 start 方法只能调用一次，如果调用了多次会出现 IllegalThreadStateException |
-| run() |  新的线程启动后会调用的方法 |  如果在构造 Thread 对象时传递了 Runnable 参数，则线程启动后会调用 Runnable 中的 run 方法，否则默认不执行任何操作。但可以创建 Thread 的子类对象来覆盖默认行为，即使用匿名内部类形式来写（或使用 lambda 表达式来简化） |
-| join() | 等待线程运行结束 |  |
-| join(long n) | 等待线程运行结束 |  |
-| getId() | 获取线程长整型的 id | id 唯一 |
-| getName() | 获取线程名 |  |
-| setName() | 修改线程名 |  |
-| getPriority() |  获取线程优先级 |  |
-| setPriority() | 修改线程优先级 | java 中规定线程优先级时1~10的整数，较大的优先级能提高该线程被 CPU 调度的几率 |
-| getState() | 判断是否被打断 | 不会清除 打断标记 |
-| isAlive() | 线程是否存活（还没有运行完毕） |  |
-| interrupt() | 打断线程 | 如果被打断线程正在 sleep, wait, join 会导致被打断的线程抛出 InterruptedException，并清除打断标记；如果打断的正在运行的线程，则会设置打断标记；park的线程被打断，也会设置打断标记 |
-| interrupted() | 判断当前线程是否被打断 | static
-会清除打断标记 |
-| currentThread() | 获取当前正在执行的线程 | static |
-| sleep(long n) | 让当前执行的线程休眠 n 毫秒，休眠时让出 CPU 时间片给其他线程 | static |
-| yield() | 提示线程调度器让出当前线程对 CPU 的使用 | static
-主要是为了测试和调试 |
-|  |  |  |
+| 方法名         | 功能说明                                   |
+| ------------- | ------------------------------------------ |
+| start()       | 启动一个新线程，在新的线程运行 run 方法中的代码 |
+| run()         | 新的线程启动后会调用的方法                  |
+| join()        | 等待线程运行结束                           |
+| join(long n)  | 等待线程运行结束                           |
+| getId()       | 获取线程长整型的 id                       |
+| getName()     | 获取线程名                                 |
+| setName()     | 修改线程名                                 |
+| getPriority() | 获取线程优先级                             |
+| setPriority() | 修改线程优先级                             |
+| getState()    | 判断是否被打断                             |
+| interrupted() | 判断当前线程是否被打断                     |
+| currentThread() | 获取当前正在执行的线程                     |
+| sleep(long n) | 让当前执行的线程休眠 n 毫秒，休眠时让出 CPU 时间片给其他线程 |
+| yield()       | 提示线程调度器让出当前线程对 CPU 的使用    |
+| isAlive()     | 线程是否存活（还没有运行完毕）            |
+| interrupt()   | 打断线程                                   |
+
+**注意:**
+
+- `start()`方法只是让线程进入就绪，里面代码不一定立刻运行（CPU的时间片还没分给它）。每个线程对象的`start()`方法只能调用一次，如果调用了多次会出现 `IllegalThreadStateException`.
+- 如果在构造 `Thread` 对象时传递了 `Runnable` 参数，则线程启动后会调用 `Runnable` 中的 `run` 方法，否则默认不执行任何操作。但可以创建 `Thread` 的子类对象来覆盖默认行为，即使用匿名内部类形式来写（或使用 lambda 表达式来简化）.
+- `interrupted()`方法会清除打断标记。
+- `interrupt()`方法会设置打断标记。如果被打断线程正在 `sleep`, `wait`, `join` 会导致被打断的线程抛出 `InterruptedException`，并清除打断标记；如果打断的正在运行的线程，则会设置打断标记.
+
 
 ### start & run
 
