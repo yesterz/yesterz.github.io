@@ -250,31 +250,36 @@ log.debug("结果是:{}", result);
 
 ### Linux
 
-1. ps -ef 查看所有进程
-2. ps -fT -p <PID> 查看某个进程（PID）的所有进程
-3. kill 杀死进程
-4. top 按大写 H 切换是否显示线程
-5. top -H -p <PID> 查看某个进程（PID）的所有线程
+1. `ps -ef` 查看所有进程
+2. `ps -fT -p <PID>` 查看某个进程（PID）的所有进程
+3. `kill` 杀死进程
+4. `top` 按大写 H 切换是否显示线程
+5. `top -H -p <PID>` 查看某个进程（PID）的所有线程
 
 ### Java
 
-1. jps 命令查看所有 Java 进程
-2. jstack <PID> 查看某个Java进程（PID）的所有线程状态
-3. jconsole 来查看某个 Java 进程中线程的运行情况（图形界面）
+1. `jps` 命令查看所有 Java 进程
+2. `jstack <PID>` 查看某个Java进程（PID）的所有线程状态
+3. `jconsole` 来查看某个 Java 进程中线程的运行情况（图形界面）
 
 jconsole 远程监控配置
 需要以如下方式运行你的 java 类
 
-```java
-java -Djava.rmi.server.hostname='ip地址' -Dcom.sun.management.jmxremote -
-Dcom.sun.management.jmxremote.port='连接端口' -Dcom.sun.management.jmxremote.ssl=是否安全连接 -
-Dcom.sun.management.jmxremote.authenticate=是否认证 java类
+```console
+java -Djava.rmi.server.hostname='ip地址' -Dcom.sun.management.jmxremote \
+-Dcom.sun.management.jmxremote.port='连接端口' \
+-Dcom.sun.management.jmxremote.ssl=是否安全连接 \
+-Dcom.sun.management.jmxremote.authenticate=是否认证 java类
 ```
 
 修改 /etc/hosts 文件将 127.0.0.1 映射至主机名
+
 如果要认证访问，还需要做如下步骤
+
 复制 jmxremote.password 文件
+
 修改 jmxremote.password 和 jmxremote.access 文件的权限为 600 即文件所有者可读写
+
 连接时填入 controlRole（用户名），R&D（密码）
 
 ## 3 原理之线程运行
@@ -494,31 +499,28 @@ Thread.State docs <https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.St
 
 ### 五种状态，从操作系统层面来描述
 
-![img]({{ site.url }}/assets/images/wps4.jpg) 
+![五种状态](Threads-in-Java/javaThread1.png)
 
-![五种状态](Threads-in-Java/JavaThread1.png)
+1. **初始状态：**仅是在语言层面创建了线程对象，还未与操作系统线程关联线程
+2. **可运行状态：**（就绪状态）指该线程已经被创建（与操作系统线程关联），可以由 CPU 调度执行
 
-**初始状态：**仅是在语言层面创建了线程对象，还未与操作系统线程关联线程
-
-**可运行状态：**（就绪状态）指该线程已经被创建（与操作系统线程关联），可以由 CPU 调度执行
-
-**运行状态：**指获取了 CPU 时间片运行中的状态
+3. **运行状态：**指获取了 CPU 时间片运行中的状态
 
     - 当 CPU 时间片用完，会从【运行状态】转换至【可运行状态】，会导致线程的上下文切换
 
-**阻塞状态：**
+4. **阻塞状态：**
 
     - 如果调用了阻塞 API，如 BIO 读写文件，这是该线程实际不会用到 CPU ，会导致线程上下文切换进入【阻塞状态】
     - 等 BIO 操作完毕，会由操作系统唤醒阻塞的线程，转换至【可运行状态】
     - 与【可运行状态】的区别是，对【阻塞状态】的线程来说只要它们一直不唤醒，调度器就一直不会考虑调度它们
 
-**终止状态：**表示线程已经执行完毕，声明周期已经结束，不会再转换为其它状态
+5. **终止状态：**表示线程已经执行完毕，声明周期已经结束，不会再转换为其它状态
 
 ### 六种状态，从 Java API 层面来描述
 
-![Untitled](Threads-in-Java/JavaThread2.png)
+![Untitled](Threads-in-Java/javaThread2.png)
 
-![根据 Thread.State 枚举，分为六种状态](Threads-in-Java/JavaThread3.png)
+![根据 Thread.State 枚举，分为六种状态](Threads-in-Java/javaThread3.png)
 
 根据 Thread.State 枚举，分为六种状态
 
@@ -527,9 +529,9 @@ Thread.State docs <https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.St
 **RUNNABLE** 当调用了 start() 方法之后，并 CPU 没有立刻去执行，需要听令于 CPU 的调度。这种中间状态即可执行状态（RUNNABLE），也就是具备执行资格，但是没有真正地执行起来而是在等待 CPU 的调度。
 
 > 注意，Java API 层面的 **RUNNABLE** 状态涵盖了 操作系统 层面的【可运行状态】、【运行状态】和【阻塞状态】（由于 BIO 导致的线程阻塞，在 Java 里无法区分发，仍然认为是可运行的）
-> 
+{: .prompt-info }
 
-**BLOCKED**，**WAITING**，**TIMED_WAITING** 都是 Java API 层面对【堵塞状态】的细分，后面会在[状态转换](https://www.notion.so/ch4-Monitor-31f3b4b19110419981f92db6bd6a2de2?pvs=21)一节详述
+**BLOCKED**，**WAITING**，**TIMED_WAITING** 都是 Java API 层面对【堵塞状态】的细分，后面会在状态转换一节详述
 
 **TERMINATED** 当线程代码运行结束，意味着该线程的整个生命周期结束
 
@@ -537,7 +539,7 @@ Thread.State docs <https://docs.oracle.com/javase/8/docs/api/java/lang/Thread.St
 2. 线程运行出错意外结束
 3. JVM Crash，导致所有的线程都结束
 
-## ch3 本章总结
+## 本章总结
 
 应用方面
 
