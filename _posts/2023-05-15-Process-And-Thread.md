@@ -1,6 +1,6 @@
 ---
 title: 进程与线程
-author: someone
+author: 
 date: 2023-05-15 11:33:00 +0800
 categories: [Concurrent Programming]
 tags: [Concurrent Programming]

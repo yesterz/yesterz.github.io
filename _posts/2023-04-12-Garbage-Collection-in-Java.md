@@ -7,40 +7,75 @@ tags: [JVM]
 pin: false
 math: false
 mermaid: true
+img_path: /assets/images/
 ---
 
 Owner: better
 
 ## 思维脉络
 
-![Untitled](ch3%20%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%2030b5351fde314abaaab4a4486662bf81/Untitled.png)
 
 ### 这块讲什么
 
 1. 垃圾收集要完成的事情？
-    1. 哪些内存需要回收？
-    2. 什么时候回收？
-    3. 如何回收？
+    * 哪些内存需要回收？
+    * 什么时候回收？
+    * 如何回收？
 2. 怎么判断垃圾？
 3. 垃圾收集的算法
 4. 垃圾收集算法的具体实现——垃圾收集器
+
+**Q:** 为什么还要去了解垃圾收集和内存分配？
+
+Ans: 当需要排查各种内存溢出、内存泄漏问题时，当垃圾收集成为系统达到更高并发量的瓶颈时，就要对这些实施必要的监控和调节。
 
 ## 到底哪些是垃圾？怎么判断？
 
 对象存活判定：
 
-1. **引用计数法 Reference Counting**
+### 1. 引用计数法 Reference Counting
     
-    引用计数法说的是判断一个对象是否需要回收看这个对象的引用计数，给每一个对象添加一个引用计数器，当有一个地方引用它的时候，计数器就加一；当一个计数器值为零的时候就是这个对象不再被使用了，就变成了垃圾。
+引用计数法说的是判断一个对象是否需要回收看这个对象的引用计数，给每一个对象添加一个引用计数器，当有一个地方引用它的时候，计数器就加一；当一个计数器值为零的时候就是这个对象不再被使用了，就变成了垃圾。
     
-2. **可达性分析法 Reachability Analysis**
+### 2. 可达性分析法 Reachability Analysis
     
-    通过一系列的 GC Roots 的跟对象作为起始节点集，从这些节点开始，根据引用关系向下搜索；当一个对象到 GC Roots 间没有任何引用链相连，或者用图论的话来说就是从 GC Roots 到这个对象不可达时，则证明了这个对象时不可能再被使用的，判定为可回收的对象。
-    
+通过一系列的 GC Roots 的跟对象作为起始节点集，从这些节点开始，根据引用关系向下搜索；当一个对象到 GC Roots 间没有任何引用链相连，或者用图论的话来说就是从 GC Roots 到这个对象不可达时，则证明了这个对象时不可能再被使用的，判定为可回收的对象。
 
-Q 引用链是什么
+**Q: 引用链是什么**
 
-Ans 从 GC Roots 出发，根据对象的引用关系向下搜索，搜索走过的路径称为引用链 Reference Chain
+Ans: 从 GC Roots 出发，根据对象的引用关系向下搜索，搜索走过的路径称为引用链 Reference Chain
+
+### Garbage Collection Roots[^ref_1]
+
+- **System Class**: Class loaded by bootstrap/system class loader. For example, everything from the rt.jar like `java.util.*`.
+
+- **JNI Local**: Local variable in native code, such as user-defined JNI code or JVM internal code.
+
+- **JNI Global**: Global variable in native code, such as user-defined JNI code or JVM internal code.
+
+- **Thread Block**: Object referred to from a currently active thread block.
+
+- **Thread**: A started, but not stopped, thread.
+
+- **Busy Monitor**: Everything that has called `wait()` or `notify()` or that is synchronized. For example, by calling `synchronized(Object)` or by entering a synchronized method. Static method means class, non-static method means object.
+
+- **Java Local**: Local variable. For example, input parameters or locally created objects of methods that are still in the stack of a thread.
+
+- **Native Stack**: In or out parameters in native code, such as user-defined JNI code or JVM internal code. This is often the case as many methods have native parts and the objects handled as method parameters become GC roots. For example, parameters used for file/network I/O methods or reflection.
+
+- **Finalizable**: An object which is in a queue awaiting its finalizer to be run.
+
+- **Unfinalized**: An object which has a finalize method, but has not been finalized and is not yet on the finalizer queue.
+
+- **Unreachable**: An object which is unreachable from any other root, but has been marked as a root by MAT to retain objects which otherwise would not be included in the analysis.
+
+- **Java Stack Frame**: A Java stack frame, holding local variables. Only generated when the dump is parsed with the preference set to treat Java stack frames as objects.
+
+- **Unknown**: An object of unknown root type. Some dumps, such as IBM Portable Heap Dump files, do not have root information. For these dumps, the MAT parser marks objects which are have no inbound references or are unreachable from any other root as roots of this type. This ensures that MAT retains all the objects in the dump.
+
+### 再谈引用
+
+
 
 ## 那么垃圾收集的算法整理
 
@@ -51,8 +86,6 @@ Ans 从 GC Roots 出发，根据对象的引用关系向下搜索，搜索走过
 2 标记-复制算法
 
 3 标记-整理算法
-
----
 
 ### 0 分代收集理论
 
@@ -75,7 +108,15 @@ Ans 从 GC Roots 出发，根据对象的引用关系向下搜索，搜索走过
     
     依据这条假说只需在新生代上建立一个全局的数据结构（记忆集 Remembered Set），这个结构把老年代划分成若干小块，标识出老年代的哪一块内存会存在跨代引用。
     
-    ---
+---
+
+* **部分收集（ Partial GC） ：**指目标不是完整收集整个Java堆的垃圾收集，其中又分为：
+    - **新生代收集（ Minor GC/Young GC）：**指目标只是新生代的垃圾收集。
+    - **老年代收集（ Major GC/Old GC）：**指目标只是老年代的垃圾收集。目前只有CMS收集器会有单独收集老年代的行为。另外请注意“Major GC”这个说法现在有点混淆，在不同资料上常有不同所指，读者需按上下文区分到底是指老年代的收集还是整堆收集。
+    - **混合收集（ Mixed GC）：**指目标是收集整个新生代以及部分老年代的垃圾收集。目前只有G1收集器会有这种行为。
+* **整堆收集（ Full GC）：**收集整个Java堆和方法区的垃圾收集。
+
+---
     
 
 ### 1 标记 - 清楚算法 Mark-Sweep
@@ -83,7 +124,6 @@ Ans 从 GC Roots 出发，根据对象的引用关系向下搜索，搜索走过
 - 具体解释为标记清楚两个阶段。首先标记出来所有需要回收的对象（标记过程就是判定为垃圾的过程），标记完成后，统一回收掉所有被标记的对象，也可以反过来，标记存活的对象，统一回收所有未被标记的对象。
 - 两个缺点：1 执行效率不稳定 2 内存空间碎片化
 
-![Untitled](ch3%20%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%2030b5351fde314abaaab4a4486662bf81/Untitled%201.png)
 
 ### 2 标记 - 复制算法 Semispace Copying
 
@@ -92,7 +132,6 @@ Ans 从 GC Roots 出发，根据对象的引用关系向下搜索，搜索走过
 - 对于多数对象都是**可回收**的情况，仅需复制少量存活对象，移动堆顶指针，按顺序分配。
 - 一个缺点：可用空间缩小为了原来的一半，很浪费。
 
-![Untitled](ch3%20%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%2030b5351fde314abaaab4a4486662bf81/Untitled%202.png)
 
 JVM实际实现中，则是将内存分为一块较大的 Eden 区和两块较小的 Survivor 空间，每次使用 Eden 和一块 Survivor，回收时，把存活的对象复制到另一块 Survivor
 
@@ -107,7 +146,6 @@ JVM实际实现中，则是将内存分为一块较大的 Eden 区和两块较�
 
 - 标记过程与标记清除算法一样，但后续步骤不是可回收对象进行清理，而是让所有的存活对象向内存空间一端移动，然后**清理掉边界以外的内存。**
 
-![Untitled](ch3%20%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%2030b5351fde314abaaab4a4486662bf81/Untitled%203.png)
 
 对象移动操作**必须全程暂停用户应用程序才能进行 Stop-The-World**
 
@@ -116,7 +154,7 @@ JVM实际实现中，则是将内存分为一块较大的 Eden 区和两块较�
 
 ---
 
-## HotSpot的算法细节实现
+## HotSpot 的算法细节实现
 
 ### 思维脉络
 
@@ -307,3 +345,6 @@ G1 收集器运行过程的四个步骤：
 ### 空间分配担保
 
 
+## Reference
+
+[^ref_1]: [Garbage Collection Roots](https://help.eclipse.org/latest/index.jsp?topic=%2Forg.eclipse.mat.ui.help%2Fconcepts%2Fgcroots.html&cp=37_2_3)
