@@ -119,6 +119,13 @@ class Test {
         }
 } // 3 静态同步方法，锁是当前类的Class对象
 ```
+### synchronized 内存语义
+
+了解 synchronized 的一个内存语义，这个内存语义就可以解决共享变量内存可见性问题。进入 synchronized 块的内存语义是把在 synchronized 块内使用到的变量从线程的工作内存中清除，这样在 synchronized 块内使用到该变 时就不会从线程的工作内存中获取，而是直接从主内存中获取 退出 synchronized 块的内存语义是把在 synchronized 块内对共享变量的修改刷新到主内存。
+
+其实这也是加锁和释放锁的语义，当获取锁后会清空锁块内本地内存中将会被用到的共享变量 ，在使用这些共享变量时从主内存进行加载，在释放锁时将本地内存中修改的共享变量刷新到主内存。
+
+除可以解决共享变量内存可见性问题外， synchronizedd 经常被用来实现原子性操作。**另外请注意， synchronized 会引起线程上下文切换并带来线程调度开销。**
 
 [[TODO]线程八锁问题](https://www.notion.so/TODO-7b7d5f5db08b4314b771bd7212d8a6b4?pvs=21) 
 

@@ -123,7 +123,17 @@ System.out.println(i.accumulateAndGet(-10, (p, x) -> p + x));
 
 ### ABA 问题及解决
 
-ABA问题
+**ABA问题**
+
+假如线程I使用 CAS 修改初始值为 A 的变量 X，那么线程I会首先去获取当前变量 X 的值（为 A），然后使用 CAS 操作尝试修改 X 值为 B，如果使 CAS 操作成功了，那么程序运行一定是正确的吗？
+
+其实未必，这是因为有可能在线程I获取变量 X 的值 A 后，在执行 CAS 前，线程II使用 CAS 修改了变量 X 的值为 B，然后又使 CAS 修改变量 X 的值为 A。
+
+所以虽然线程I执行 CAS 时 X 的值是 A，但是这 A 己经不是线程I获取时的 A 了。这就是 ABA 问题。
+
+ABA 产生是因为变量的状态值产生了环形转换，就是变量的值可以从 A 到 B，然后再从 B 到 A。如果变量的值只能朝着一个方向转换，比如 A 到 B，B 到 C，不构成环形，就不会存在问题。
+
+JDK 中的 AtomicStampedReference 类给每个变量的状态值都配备了一个时间戳避免了 ABA 问题的产生。
 
 ```java
 static AtomicReference<String> ref = new AtomicReference<>("A");

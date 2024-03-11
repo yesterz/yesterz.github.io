@@ -17,6 +17,8 @@ img_path: /assets/images/
 2. 实现 Runnable 接口的 `run()` 方法；
 3. 使用 FutureTask 的方式。
 
+**本质上来说只有1种方式：构造`Thread`类**
+
 ### a 直接使用 Thread
 
 ```java
@@ -179,14 +181,14 @@ public void run() {
 - 创建线程只有一种方式即构造 Thread 类
 - 实现线程的执行单元则有两种方式
     1. 重写 Thread 的 run 方法
-    2. 实现 Runnable 接口的 run 方法，并且将 Runnable 实例用作构造 Thread 的参数。
+    2. 实现 Runnable 接口的 run 方法，并且将 Runnable 实例用作构造 Thread 的参数（作为 target 对象），传给 Thread 类，最终调用 `target.run()`
 
 使用继承方式的好处是`run()`方法内获取当前线程直接使用 this 就可以了，无需使用`Thread.currentThread()`方法；不好的地方是 Java 不支持多继承，如果继承了 Thread 类，那么就不能再继承其他类。另外任务与代码没有分离，当多个线程执行一样的任务时需要多份任务代码，而 Runnable 则没有这个限制。这两种方式都有一个缺点，就是任务没有返回值。
 
 **总结**
-1. 方法1（继承 Thread 类）是把线程和任务合并在了一起，方法2（实现 Runnable 接口）是把线程和任务分开了
-2. 用 Runnable 更容易与线程池等高级 API 配合
-3. 用 Runnable 让任务类脱离了 Thread 继承体系，更灵活
+1. 方法1（继承 Thread 类）是把线程和任务合并在了一起，方法2（实现 Runnable 接口）是把线程和任务分开了，把不同的内容进行解耦，权责分明。
+2. 用 Runnable 更容易与线程池等高级 API 配合，可以提升性能，减少开销。
+3. 用 Runnable 让任务类脱离了 Thread 继承体系，更灵活，继承 Thread 类就相当于限制了代码未来的可扩展性。
 
 ### c FutureTask 配合 Thread
 
@@ -239,6 +241,7 @@ log.debug("结果是:{}", result);
 2. 使用 Runnable 方式，则只能使用主线程里面被声明为 final 的变量。
 3. Java 不支持多继承，如果继承了 Thread 类，那么子类不能再继承其他类，Runnable 则没有这个限制。
 4. 前面两种方式都没办法拿到任务的返回结果，但是 FutureTask 方式可以。
+5. **透过现象看本质，基本上最终实现 runnable 接口或者继承 Thread 类。**
 
 ## 2 查看线程
 
