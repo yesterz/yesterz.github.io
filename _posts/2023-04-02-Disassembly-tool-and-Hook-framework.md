@@ -3,7 +3,7 @@ title: 反汇编工具和 Hook 框架
 date: 2023-04-02 10:51:00 +0800
 author:
 categories: [Python]
-tags: [Python, App Reverse]
+tags: [Python, Reverse Engineering]
 pin: false
 math: true
 mermaid: false
@@ -14,21 +14,17 @@ img_path: /assets/images/
 
 ### 1.1 常见反编译工具
 
-```python
 常见的反编译工具：jadx（推荐）、jeb、GDA
 反编译工具依赖于java环境，所以我们按照jdk
-```
 
 ### 1.2 JDK环境安装
 
-```python
-# 官方地址：（需要注册-最新java 21）
-https://www.oracle.com/java/technologies/downloads/
+* 官方地址：（需要注册-最新java 21）
+<https://www.oracle.com/java/technologies/downloads/>
 
-# 下载地址
-链接: https://pan.baidu.com/s/1JxmjfGhWqWjpkprqi6GGrQ 
+* 下载地址
+链接: <https://pan.baidu.com/s/1JxmjfGhWqWjpkprqi6GGrQ >
 提取码: yyhx
-```
 
 ![image-20230615154720045](Disassembly-tool-and-Hook-framework/image-20230615154720045.png)
 
@@ -432,13 +428,13 @@ frida -U -f com.che168.autotradercloud -l hook.js
 
 ## 四 使用python还原算法
 
-```python
-# 加密分类
-1、单向加密 ：MD5、sha系列不可逆
-2、对称加密：AES、DES
-3、非对称加密：RSA、DSA
-4、补充算法：base64
-```
+
+**加密分类**
+1. 单向加密 ：MD5、sha系列不可逆
+2. 对称加密：AES、DES
+3. 非对称加密：RSA、DSA
+4. 补充算法：base64
+
 
 ### 4.1 md5
 
