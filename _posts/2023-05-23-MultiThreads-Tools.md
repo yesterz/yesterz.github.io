@@ -75,12 +75,12 @@ private static int ctlOf(int rs, int wc) { return rs | wc; }
 
 ```java
 public ThreadPoolExecutor(int corePoolSize,
-				int maximumPoolSize,
-				long keepAliveTime,
-				TimeUnit unit,
-				BlockingQueue<Runnable> workQueue,
-				ThreadFactory threadFactory,
-				RejectedExecutionHandler handler)
+                int maximumPoolSize,
+                long keepAliveTime,
+                TimeUnit unit,
+                BlockingQueue<Runnable> workQueue,
+                ThreadFactory threadFactory,
+                RejectedExecutionHandler handler)
 ```
 
 | 参数名 | 含义 |
@@ -113,13 +113,13 @@ public ThreadPoolExecutor(int corePoolSize,
 
 根据这个构造方法，JDK Executors 类中提供了众多工厂方法来创建各种用途的线程池
 
-#### newFixedThreadPool
+**newFixedThreadPool**
 
 ```java
 public static ExecutorService newFixedThreadPool(int nThreads) {
-		return new ThreadPoolExecutor(nThreads, nThreads,
-																	0L, TimeUnit.MILLISECONDS,
-																	new LinkedBlockingQueue<Runnable>());
+        return new ThreadPoolExecutor(nThreads, nThreads,
+                                    0L, TimeUnit.MILLISECONDS,
+                                    new LinkedBlockingQueue<Runnable>());
 }
 ```
 
@@ -131,34 +131,34 @@ public static ExecutorService newFixedThreadPool(int nThreads) {
 > 评价 适用于任务量已知，相对耗时的任务
 > 
 
-#### newCachedThreadPool
+**newCachedThreadPool**
 
 ```java
 public static ExecutorService newCachedThreadPool() {
-		return new ThreadPoolExecutor(0, Integer.MAX_VALUE,
-																	60L, TimeUnit.SECONDS,
-																	new SynchronousQueue<Runnable>());
+        return new ThreadPoolExecutor(0, Integer.MAX_VALUE,
+                                        60L, TimeUnit.SECONDS,
+                                        new SynchronousQueue<Runnable>());
 }
 ```
 
 特点：
 
 1. 核心线程数 0，最大线程数是 Integer.MAX_VALUE ，救急线程的空闲生存时间是 60s，意味着
-    1. 全部都是救急线程（60s 后可以回收）
-    2. 救急线程可以无限创建
+    - 全部都是救急线程（60s 后可以回收）
+    - 救急线程可以无限创建
 2. 队列采用了 SynchronousQueue 实现特点是它没有容量，没有线程来取是放不进去的（一手交钱，一手交货）
 
 > 评价 整个线程池表现为线程数会根据任务量不断增长，没有上线，当任务执行完毕，空闲 1 分钟后释放线程。适合任务数比较密集，但每个任务执行时间较短的情况
 > 
 
-#### newSingleThreadExecutor
+**newSingleThreadExecutor**
 
 ```java
 public static ExecutorService newSingleThreadExecutor() {
-		return new FinalizableDelegatedExecutorService
-				(new ThreadPoolExecutor(1, 1,
-																0L, TimeUnit.MILLISECONDS,
-																new LinkedBlockingQueue<Runnable>()));
+        return new FinalizableDelegatedExecutorService
+                (new ThreadPoolExecutor(1, 1,
+                                        0L, TimeUnit.MILLISECONDS,
+                                        new LinkedBlockingQueue<Runnable>()));
 }
 ```
 
@@ -295,7 +295,7 @@ boolean awaitTermination(long timeout, TimeUnit unit) throws InterruptedExceptio
 ```java
 // 如果获取锁失败
 if (!tryAcquire(arg)) {
-		// 入队，可以选择阻塞当前线程 park unpark
+        // 入队，可以选择阻塞当前线程 park unpark
 }
 ```
 
@@ -304,7 +304,7 @@ if (!tryAcquire(arg)) {
 ```java
 // 如果释放锁成功
 if (tryRelease(arg)) {
-		// 让阻塞线程恢复运行
+        // 让阻塞线程恢复运行
 }
 ```
 
@@ -391,9 +391,9 @@ final class MySync extends AbstractQueuedSynchronizer {
     
     ```java
     while(state 状态不允许获取) {
-    		if(队列中还没有此线程) {
-    				入队并阻塞
-    		}
+            if(队列中还没有此线程) {
+                // 入队并阻塞
+            }
     }
     当前线程出队
     ```
@@ -402,7 +402,7 @@ final class MySync extends AbstractQueuedSynchronizer {
     
     ```java
     if(state 状态允许了) {
-    		恢复阻塞的线程(s)
+            恢复阻塞的线程(s)
     }
     ```
     
@@ -429,9 +429,9 @@ final class MySync extends AbstractQueuedSynchronizer {
 
 ```java
 do {
-		// 原来的 tail
-		Node prev = tail;
-		// 用 CAS 在原来 tail 的基础上改为 node
+        // 原来的 tail
+        Node prev = tail;
+        // 用 CAS 在原来 tail 的基础上改为 node
 } while(tail.compareAndSet(prev, node))
 ```
 
@@ -491,7 +491,7 @@ private Node enq(final Node node) {
     
     ```java
     public ReentrantLock() {
-    		sync = new NonfairSync();
+            sync = new NonfairSync();
     }
     ```
     
@@ -625,25 +625,24 @@ static final <K,V> void setTabAt(Node<K,V>[] tab, int i, Node<K,V> v)
 
 ```java
 public ConcurrentHashMap(int initialCapacity, float loadFactor, int concurrencyLevel) {
- if (!(loadFactor > 0.0f) || initialCapacity < 0 || concurrencyLevel <= 0)
- throw new IllegalArgumentException();
- if (initialCapacity < concurrencyLevel) // Use at least as many bins
- initialCapacity = concurrencyLevel; // as estimated threads
- long size = (long)(1.0 + (long)initialCapacity / loadFactor);
- // tableSizeFor 仍然是保证计算的大小是 2^n, 即 16,32,64 ... 
- int cap = (size >= (long)MAXIMUM_CAPACITY) ?
- MAXIMUM_CAPACITY : tableSizeFor((int)size);
- this.sizeCtl = cap;
+    if (!(loadFactor > 0.0f) || initialCapacity < 0 || concurrencyLevel <= 0)  
+        throw new IllegalArgumentException();
+    if (initialCapacity < concurrencyLevel) // Use at least as many bins
+    initialCapacity = concurrencyLevel; // as estimated threads
+    long size = (long)(1.0 + (long)initialCapacity / loadFactor);
+    // tableSizeFor 仍然是保证计算的大小是 2^n, 即 16,32,64 ... 
+    int cap = (size >= (long)MAXIMUM_CAPACITY) ?  MAXIMUM_CAPACITY : tableSizeFor((int)size);
+    this.sizeCtl = cap;
 }
 ```
 
 ### BlockingQueue
 
-[并发编程_原理.pdf]
+
 
 ### ConcurrentLinkQueue
 
-[并发编程_原理.pdf]
+
 
 ### CopyOnWriteArrayList
 
@@ -653,9 +652,7 @@ get 弱一致性
 
 ![Untitled](/assets/images/ToolsImages/Untitled%2010.png)
 
-## ch8 本章总结
-
-[并发编程_原理.pdf]
+## 总结
 
 - 线程池
 - JUC
