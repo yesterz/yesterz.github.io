@@ -332,6 +332,15 @@ Java 技术体系的自动内存管理，最根本的目标是自动化解决两
 
 大多数情况下，对象在新生代 Eden 区中分配。当 Eden 区没有足够空间进行分配时，虚拟机将发起一次 Minor GC。
 
+下面代码尝试分配三个 2MB 大小和一个 4MB 大小的对象。
+
+**配置虚拟机参数：**
+
+1. **-verbose:gc** 在控制台输出GC情况
+2. **-Xmx20M -Xmx20M -Xmn10M** 限制java堆大小为20MB，不可扩展，其中10MB分配给新生代，剩下10MB分配给老年代
+3. **-XX:+PrintGCDetails** 在控制台输出详细的GC情况
+4. **-XX:SurvivorRatio=8** 决定了新生代中Eden区与一个Survivor区的空间比例是8:1
+
 ```java
 public class AllocationTest {
 
