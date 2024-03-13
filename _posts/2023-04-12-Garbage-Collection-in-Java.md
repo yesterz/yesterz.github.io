@@ -302,13 +302,11 @@ G1 收集器运行过程的四个步骤：
 
 - 应⽤程序的主要关注点是什么?
     
-    如果是数据分析、科学计算类的任务，⽬标是能尽快算出结果，那吞吐量就是主要关注点; 如果是 SLA 应⽤，那停顿时间直接影响服务质量，严
-    重的甚⾄会导致事务超时，这样延迟就是主要关注点; ⽽如果是客户端应⽤或者嵌⼊式应⽤，那垃圾收集的内存占⽤则是不可忽视的。
+    如果是数据分析、科学计算类的任务，⽬标是能尽快算出结果，那吞吐量就是主要关注点; 如果是 SLA 应⽤，那停顿时间直接影响服务质量，严重的甚⾄会导致事务超时，这样延迟就是主要关注点; ⽽如果是客户端应⽤或者嵌⼊式应⽤，那垃圾收集的内存占⽤则是不可忽视的。
     
 - 运⾏应⽤的基础设施如何?
     
-    譬如硬件规格，要涉及的系统架构是 x86-32/64、SPARC 还是 ARM /Aarch64; 处理器的数量多少，分配内存的⼤⼩; 选择的操作系统是 Linux、Solaris
-    还是 Windows 等。
+    譬如硬件规格，要涉及的系统架构是 x86-32/64、SPARC 还是 ARM /Aarch64; 处理器的数量多少，分配内存的⼤⼩; 选择的操作系统是 Linux、Solaris 还是 Windows 等。
     
 - 使⽤ JDK 的发⾏商是什么? 版本号是多少?
     
@@ -317,7 +315,10 @@ G1 收集器运行过程的四个步骤：
 
 ## 实战：内存分配与回收策略
 
-**对象优先在Eden分配**  大多数情况下，对象在新生代Eden区中分配。当Eden区没有足够空间进行分配时，虚拟机将发起一次Minor GC。
+Java 技术体系的自动内存管理，最根本的目标是自动化解决两个问题：
+
+1. 自动给对象**分配**内存；
+2. 自动**回收**分配给对象的内存。
 
 **大对象直接进入老年代**  大对象就是指需要大量连续内存空间的Java对象，最典型的大对象便是那种很长的字符串，或者元素数量很庞大的数组。—XX:PretenureSizeThreshold
 
@@ -329,7 +330,78 @@ G1 收集器运行过程的四个步骤：
 
 ### 对象优先在 Eden 分配
 
+大多数情况下，对象在新生代 Eden 区中分配。当 Eden 区没有足够空间进行分配时，虚拟机将发起一次 Minor GC。
 
+```java
+public class AllocationTest {
+
+    private static final int _1MB = 1024 * 1024;
+
+    public static void main(String[] args) {
+        byte[] allocation1, allocation2, allocation3, allocation4;
+        allocation1 = new byte[2 * _1MB];
+        allocation2 = new byte[2 * _1MB];
+        allocation3 = new byte[2 * _1MB];
+        allocation4 = new byte[4 * _1MB];
+    }
+}
+```
+
+Output:
+
+```console
+/usr/lib/jvm/java-11-openjdk-amd64/bin/java -verbose:gc -Xms20M -Xmx20M -Xmn10M -XX:+PrintGCDetails -XX:SurvivorRatio=8 -Dfile.encoding=UTF-8 -classpath /home/risk/ideaProject/Java-learning/out/production/JVM AllocationTest
+[0.000s][warning][gc] -XX:+PrintGCDetails is deprecated. Will use -Xlog:gc* instead.
+[0.002s][info   ][gc,heap] Heap region size: 1M
+[0.003s][info   ][gc     ] Using G1
+[0.003s][info   ][gc,heap,coops] Heap address: 0x00000000fec00000, size: 20 MB, Compressed Oops mode: 32-bit
+[0.003s][info   ][gc,cds       ] Mark closed archive regions in map: [0x00000000fff00000, 0x00000000fff6bff8]
+[0.003s][info   ][gc,cds       ] Mark open archive regions in map: [0x00000000ffe00000, 0x00000000ffe47ff8]
+[0.020s][info   ][gc,start     ] GC(0) Pause Young (Concurrent Start) (G1 Humongous Allocation)
+[0.020s][info   ][gc,task      ] GC(0) Using 2 workers of 13 for evacuation
+[0.022s][info   ][gc,phases    ] GC(0)   Pre Evacuate Collection Set: 0.0ms
+[0.022s][info   ][gc,phases    ] GC(0)   Evacuate Collection Set: 1.4ms
+[0.022s][info   ][gc,phases    ] GC(0)   Post Evacuate Collection Set: 0.1ms
+[0.022s][info   ][gc,phases    ] GC(0)   Other: 0.2ms
+[0.022s][info   ][gc,heap      ] GC(0) Eden regions: 1->0(9)
+[0.022s][info   ][gc,heap      ] GC(0) Survivor regions: 0->1(2)
+[0.022s][info   ][gc,heap      ] GC(0) Old regions: 2->2
+[0.022s][info   ][gc,heap      ] GC(0) Humongous regions: 6->6
+[0.022s][info   ][gc,metaspace ] GC(0) Metaspace: 155K(4864K)->155K(4864K) NonClass: 150K(4352K)->150K(4352K) Class: 5K(512K)->5K(512K)
+[0.022s][info   ][gc           ] GC(0) Pause Young (Concurrent Start) (G1 Humongous Allocation) 7M->6M(20M) 1.708ms
+[0.022s][info   ][gc,cpu       ] GC(0) User=0.00s Sys=0.00s Real=0.00s
+[0.022s][info   ][gc           ] GC(1) Concurrent Cycle
+[0.022s][info   ][gc,marking   ] GC(1) Concurrent Clear Claimed Marks
+[0.022s][info   ][gc,marking   ] GC(1) Concurrent Clear Claimed Marks 0.003ms
+[0.022s][info   ][gc,marking   ] GC(1) Concurrent Scan Root Regions
+[0.022s][info   ][gc,marking   ] GC(1) Concurrent Scan Root Regions 0.288ms
+[0.022s][info   ][gc,marking   ] GC(1) Concurrent Mark (0.022s)
+[0.022s][info   ][gc,marking   ] GC(1) Concurrent Mark From Roots
+[0.022s][info   ][gc,task      ] GC(1) Using 3 workers of 3 for marking
+[0.023s][info   ][gc,marking   ] GC(1) Concurrent Mark From Roots 0.883ms
+[0.023s][info   ][gc,marking   ] GC(1) Concurrent Preclean
+[0.023s][info   ][gc,marking   ] GC(1) Concurrent Preclean 0.038ms
+[0.023s][info   ][gc,marking   ] GC(1) Concurrent Mark (0.022s, 0.023s) 0.945ms
+[0.023s][info   ][gc,start     ] GC(1) Pause Remark
+[0.023s][info   ][gc,stringtable] GC(1) Cleaned string and symbol table, strings: 3 processed, 0 removed, symbols: 14 processed, 0 removed
+[0.023s][info   ][gc            ] GC(1) Pause Remark 15M->15M(20M) 0.222ms
+[0.023s][info   ][gc,cpu        ] GC(1) User=0.00s Sys=0.00s Real=0.00s
+[0.023s][info   ][gc,marking    ] GC(1) Concurrent Rebuild Remembered Sets
+[0.023s][info   ][gc,marking    ] GC(1) Concurrent Rebuild Remembered Sets 0.197ms
+[0.023s][info   ][gc,start      ] GC(1) Pause Cleanup
+[0.023s][info   ][gc            ] GC(1) Pause Cleanup 15M->15M(20M) 0.029ms
+[0.023s][info   ][gc,cpu        ] GC(1) User=0.00s Sys=0.00s Real=0.00s
+[0.024s][info   ][gc,marking    ] GC(1) Concurrent Cleanup for Next Mark
+[0.024s][info   ][gc,marking    ] GC(1) Concurrent Cleanup for Next Mark 0.127ms
+[0.024s][info   ][gc            ] GC(1) Concurrent Cycle 2.052ms
+[0.024s][info   ][gc,heap,exit  ] Heap
+[0.024s][info   ][gc,heap,exit  ]  garbage-first heap   total 20480K, used 15320K [0x00000000fec00000, 0x0000000100000000)
+[0.024s][info   ][gc,heap,exit  ]   region size 1024K, 2 young (2048K), 1 survivors (1024K)
+[0.024s][info   ][gc,heap,exit  ]  Metaspace       used 156K, capacity 4486K, committed 4864K, reserved 1056768K
+[0.024s][info   ][gc,heap,exit  ]   class space    used 5K, capacity 386K, committed 512K, reserved 1048576K
+
+Process finished with exit code 0
+```
 
 
 ### 大对象直接进入老年代
