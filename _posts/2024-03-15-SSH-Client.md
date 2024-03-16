@@ -19,16 +19,16 @@ Linux 系统一般都自带 ssh，如果没有就需要安装。
 
 ```bash
 # Ubuntu 和 Debian
-$ sudo apt install openssh-client
+sudo apt install openssh-client
 
 # CentOS 和 Fedora
-$ sudo dnf install openssh-clients
+sudo dnf install openssh-clients
 ```
 
 安装以后，可以使用`-V`参数输出版本号，查看一下是否安装成功。
 
 ```bash
-$ ssh -V
+ssh -V
 ```
 
 ## 基本用法
@@ -38,13 +38,13 @@ ssh 最常见的用途就是登录服务器，这要求服务器安装并正在�
 ssh 登录服务器的命令如下。
 
 ```bash
-$ ssh hostname
+ssh hostname
 ```
 
 上面命令中，`hostname`是主机名，它可以是域名，也可能是 IP 地址或局域网内部的主机名。不指定用户名的情况下，将使用客户端的当前用户名，作为远程服务器的登录用户名。如果要指定用户名，可以采用下面的语法。
 
 ```bash
-$ ssh user@hostname
+ssh user@hostname
 ```
 
 上面的命令中，用户名和主机名写在一起了，之间使用`@`分隔。
@@ -52,13 +52,13 @@ $ ssh user@hostname
 用户名也可以使用`ssh`的`-l`参数指定，这样的话，用户名和主机名就不用写在一起了。
 
 ```bash
-$ ssh -l username host
+ssh -l username host
 ```
 
 ssh 默认连接服务器的22端口，`-p`参数可以指定其他端口。
 
 ```bash
-$ ssh -p 8821 foo.com
+ssh -p 8821 foo.com
 ```
 
 上面命令连接服务器`foo.com`的8821端口。
@@ -82,7 +82,7 @@ Are you sure you want to continue connecting (yes/no)?
 下面的命令可以查看某个公钥的指纹。
 
 ```bash
-$ ssh-keygen -l -f /etc/ssh/ssh_host_ecdsa_key.pub
+ssh-keygen -l -f /etc/ssh/ssh_host_ecdsa_key.pub
 256 da:24:43:0b:2e:c1:3f:a1:84:13:92:01:52:b4:84:ff   (ECDSA)
 ```
 
@@ -121,7 +121,7 @@ Offending key in /home/me/.ssh/known_hosts:36
 如果新的公钥确认可以信任，需要继续执行连接，你可以执行下面的命令，将原来的公钥指纹从`~/.ssh/known_hosts`文件删除。
 
 ```bash
-$ ssh-keygen -R hostname
+ssh-keygen -R hostname
 ```
 
 上面命令中，`hostname`是发生公钥变更的主机名。
@@ -137,7 +137,7 @@ SSH 登录成功后，用户就进入了远程主机的命令行环境，所看�
 另一种执行远程命令的方法，是将命令直接写在`ssh`命令的后面。
 
 ```bash
-$ ssh username@hostname command
+ssh username@hostname command
 ```
 
 上面的命令会使得 SSH 在登录成功后，立刻在远程主机上执行命令`command`。
@@ -145,7 +145,7 @@ $ ssh username@hostname command
 下面是一个例子。
 
 ```bash
-$ ssh foo@server.example.com cat /etc/hosts
+ssh foo@server.example.com cat /etc/hosts
 ```
 
 上面的命令会在登录成功后，立即远程执行命令`cat /etc/hosts`。
@@ -154,11 +154,11 @@ $ ssh foo@server.example.com cat /etc/hosts
 
 ```bash
 # 报错
-$ ssh remote.server.com emacs
+ssh remote.server.com emacs
 emacs: standard input is not a tty
 
 # 不报错
-$ ssh -t server.example.com emacs
+ssh -t server.example.com emacs
 ```
 
 上面代码中，`emacs`命令需要一个互动式 Shell，所以报错。只有加上`-t`参数，ssh 才会分配一个互动式 Shell。
@@ -245,9 +245,9 @@ ssh 命令有很多配置项，修改它的默认行为。
 `-c`参数指定加密算法。
 
 ```bash
-$ ssh -c blowfish,3des server.example.com
+ssh -c blowfish,3des server.example.com
 # 或者
-$ ssh -c blowfish -c 3des server.example.com
+ssh -c blowfish -c 3des server.example.com
 ```
 
 上面命令指定使用加密算法`blowfish`或`3des`。
@@ -257,7 +257,7 @@ $ ssh -c blowfish -c 3des server.example.com
 `-C`参数表示压缩数据传输。
 
 ```bash
-$ ssh -C server.example.com
+ssh -C server.example.com
 ```
 
 **-D**
@@ -265,7 +265,7 @@ $ ssh -C server.example.com
 `-D`参数指定本机的 Socks 监听端口，该端口收到的请求，都将转发到远程的 SSH 主机，又称动态端口转发，详见《端口转发》一章。
 
 ```bash
-$ ssh -D 1080 server
+ssh -D 1080 server
 ```
 
 上面命令将本机 1080 端口收到的请求，都转发到服务器`server`。
@@ -279,7 +279,7 @@ $ ssh -D 1080 server
 `-F`参数指定配置文件。
 
 ```bash
-$ ssh -F /usr/local/ssh/other_config
+ssh -F /usr/local/ssh/other_config
 ```
 
 上面命令指定使用配置文件`other_config`。
@@ -289,7 +289,7 @@ $ ssh -F /usr/local/ssh/other_config
 `-i`参数用于指定私钥，意为“identity_file”，默认值为`~/.ssh/id_dsa`（DSA 算法）和`~/.ssh/id_rsa`（RSA 算法）。注意，对应的公钥必须存放到服务器，详见《密钥登录》一章。
 
 ```bash
-$ ssh -i my-key server.example.com
+ssh -i my-key server.example.com
 ```
 
 **-J**
@@ -297,7 +297,7 @@ $ ssh -i my-key server.example.com
 `-J`指定跳转服务器。假定本地无法直接与 SSH 服务器通信，就可以通过`—J`指定跳转服务器。
 
 ```bash
-$ ssh -J root@J1,root@J2 root@S1
+ssh -J root@J1,root@J2 root@S1
 ```
 
 上面示例中，本机先通过 J1，再通过 J2，登陆到 S1 服务器。
@@ -307,9 +307,9 @@ $ ssh -J root@J1,root@J2 root@S1
 `-l`参数指定远程登录的账户名。
 
 ```bash
-$ ssh -l sally server.example.com
+ssh -l sally server.example.com
 # 等同于
-$ ssh sally@server.example.com
+ssh sally@server.example.com
 ```
 
 **-L**
@@ -317,7 +317,7 @@ $ ssh sally@server.example.com
 `-L`参数设置本地端口转发，详见《端口转发》一章。
 
 ```bash
-$ ssh  -L 9999:targetServer:80 user@remoteserver
+ssh  -L 9999:targetServer:80 user@remoteserver
 ```
 
 上面命令中，所有发向本地`9999`端口的请求，都会经过`remoteserver`发往 targetServer 的 80 端口，这就相当于直接连上了 targetServer 的 80 端口。
@@ -327,7 +327,7 @@ $ ssh  -L 9999:targetServer:80 user@remoteserver
 `-m`参数指定校验数据完整性的算法（message authentication code，简称 MAC）。
 
 ```bash
-$ ssh -m hmac-sha1,hmac-md5 server.example.com
+ssh -m hmac-sha1,hmac-md5 server.example.com
 ```
 
 上面命令指定数据校验算法为`hmac-sha1`或`hmac-md5`。
@@ -341,7 +341,7 @@ $ ssh -m hmac-sha1,hmac-md5 server.example.com
 `-o`参数用来指定一个配置命令。
 
 ```bash
-$ ssh -o "Keyword Value"
+ssh -o "Keyword Value"
 ```
 
 举例来说，配置文件里面有如下内容。
@@ -354,13 +354,13 @@ Port 220
 通过`-o`参数，可以把上面两个配置命令从命令行传入。
 
 ```bash
-$ ssh -o "User sally" -o "Port 220" server.example.com
+ssh -o "User sally" -o "Port 220" server.example.com
 ```
 
 使用等号时，配置命令可以不用写在引号里面，但是等号前后不能有空格。
 
 ```bash
-$ ssh -o User=sally -o Port=220 server.example.com
+ssh -o User=sally -o Port=220 server.example.com
 ```
 
 **-p**
@@ -368,7 +368,7 @@ $ ssh -o User=sally -o Port=220 server.example.com
 `-p`参数指定 SSH 客户端连接的服务器端口。
 
 ```bash
-$ ssh -p 2035 server.example.com
+ssh -p 2035 server.example.com
 ```
 
 上面命令连接服务器的2035端口。
@@ -378,7 +378,7 @@ $ ssh -p 2035 server.example.com
 `-q`参数表示安静模式（quiet），不向用户输出任何警告信息。
 
 ```bash
-$ ssh –q foo.com
+ssh –q foo.com
 root’s password:
 ```
 
@@ -389,7 +389,7 @@ root’s password:
 `-R`参数指定远程端口转发，详见《端口转发》一章。
 
 ```bash
-$ ssh -R 9999:targetServer:902 local
+ssh -R 9999:targetServer:902 local
 ```
 
 上面命令需在跳板服务器执行，指定本地计算机`local`监听自己的 9999 端口，所有发向这个端口的请求，都会转向 targetServer 的 902 端口。
@@ -399,7 +399,7 @@ $ ssh -R 9999:targetServer:902 local
 `-t`参数在 ssh 直接运行远端命令时，提供一个互动式 Shell。
 
 ```bash
-$ ssh -t server.example.com emacs
+ssh -t server.example.com emacs
 ```
 
 **-v**
@@ -407,15 +407,15 @@ $ ssh -t server.example.com emacs
 `-v`参数显示详细信息。
 
 ```bash
-$ ssh -v server.example.com
+ssh -v server.example.com
 ```
 
 `-v`可以重复多次，表示信息的详细程度，比如`-vv`和`-vvv`。
 
 ```bash
-$ ssh -vvv server.example.com
+ssh -vvv server.example.com
 # 或者
-$ ssh -v -v -v server.example.com
+ssh -v -v -v server.example.com
 ```
 
 上面命令会输出最详细的连接信息。
@@ -425,7 +425,7 @@ $ ssh -v -v -v server.example.com
 `-V`参数输出 ssh 客户端的版本。
 
 ```bash
-$ ssh –V
+ssh –V
 ssh: SSH Secure Shell 3.2.3 (non-commercial version) on i686-pc-linux-gnu
 ```
 
@@ -436,7 +436,7 @@ ssh: SSH Secure Shell 3.2.3 (non-commercial version) on i686-pc-linux-gnu
 `-X`参数表示打开 X 窗口转发。
 
 ```bash
-$ ssh -X server.example.com
+ssh -X server.example.com
 ```
 
 **-1，-2**
@@ -446,7 +446,7 @@ $ ssh -X server.example.com
 `-2`参数指定使用 SSH 2 协议。
 
 ```ssh
-$ ssh -2 server.example.com
+ssh -2 server.example.com
 ```
 
 **-4，-6**
@@ -454,13 +454,13 @@ $ ssh -2 server.example.com
 `-4`指定使用 IPv4 协议，这是默认值。
 
 ```bash
-$ ssh -4 server.example.com
+ssh -4 server.example.com
 ```
 
 `-6`指定使用 IPv6 协议。
 
 ```bash
-$ ssh -6 server.example.com
+ssh -6 server.example.com
 ```
 
 ## 客户端配置文件
@@ -502,9 +502,9 @@ Host *
 以后，登录`remote.example.com`时，只要执行`ssh remoteserver`命令，就会自动套用 config 文件里面指定的参数。
 
 ```bash
-$ ssh remoteserver
+ssh remoteserver
 # 等同于
-$ ssh -p 2112 neo@remote.example.com
+ssh -p 2112 neo@remote.example.com
 ```
 
 ###  配置命令的语法

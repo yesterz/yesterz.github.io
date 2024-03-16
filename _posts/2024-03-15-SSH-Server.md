@@ -17,23 +17,23 @@ SSH 的架构是服务器/客户端模式，两端运行的软件是不一样的
 
 ```bash
 # Debian
-$ sudo aptitude install openssh-server
+sudo aptitude install openssh-server
 
 # Red Hat
-$ sudo yum install openssh-server
+sudo yum install openssh-server
 ```
 
 一般来说，sshd 安装后会跟着系统一起启动。如果当前 sshd 没有启动，可以用下面的命令启动。
 
 ```bash
-$ sshd
+sshd
 ```
 
 上面的命令运行后，如果提示“sshd re-exec requires execution with an absolute path”，就需要使用绝对路径来启动。这是为了防止有人出于各种目的，放置同名软件在`$PATH`变量指向的目录中，代替真正的 sshd。
 
 ```bash
 # Centos、Ubuntu、OS X
-$ /usr/sbin/sshd
+/usr/sbin/sshd
 ```
 
 上面的命令运行以后，sshd 自动进入后台，所以命令后面不需要加上`&`。
@@ -42,19 +42,19 @@ $ /usr/sbin/sshd
 
 ```bash
 # 启动
-$ sudo systemctl start sshd.service
+sudo systemctl start sshd.service
 
 # 停止
-$ sudo systemctl stop sshd.service
+sudo systemctl stop sshd.service
 
 # 重启
-$ sudo systemctl restart sshd.service
+sudo systemctl restart sshd.service
 ```
 
 下面的命令让 sshd 在计算机下次启动时自动运行。
 
 ```bash
-$ sudo systemctl enable sshd.service
+sudo systemctl enable sshd.service
 ```
 
 ## sshd 配置文件
@@ -105,7 +105,7 @@ Port 2034 # 此处不允许注释
 sshd 启动时会自动读取默认的配置文件。如果希望使用其他的配置文件，可以用 sshd 命令的`-f`参数指定。
 
 ```bash
-$ sshd -f /usr/local/ssh/my_config
+sshd -f /usr/local/ssh/my_config
 ```
 
 上面的命令指定 sshd 使用另一个配置文件`my_config`。
@@ -113,13 +113,13 @@ $ sshd -f /usr/local/ssh/my_config
 修改配置文件以后，可以用 sshd 命令的`-t`（test）检查有没有语法错误。
 
 ```bash
-$ sshd -t
+sshd -t
 ```
 
 配置文件修改以后，并不会自动生效，必须重新启动 sshd。
 
 ```bash
-$ sudo systemctl restart sshd.service
+sudo systemctl restart sshd.service
 ```
 
 ## sshd 密钥
@@ -352,13 +352,13 @@ SSH 2 版本专用，指定日志输出详细的 Debug 信息（`VerboseMode yes
 修改配置文件以后，可以使用下面的命令验证，配置文件是否有语法错误。
 
 ```bash
-$ sshd -t
+sshd -t
 ```
 
 新的配置文件生效，必须重启 sshd。
 
 ```bash
-$ sudo systemctl restart sshd
+sudo systemctl restart sshd
 ```
 
 ## sshd 的命令行配置项
@@ -370,7 +370,7 @@ sshd 命令有一些配置项。这些配置项在调用时指定，可以覆盖
 `-d`参数用于显示 debug 信息。
 
 ```bash
-$ sshd -d
+sshd -d
 ```
 
 （2）`-D`
@@ -378,7 +378,7 @@ $ sshd -d
 `-D`参数指定 sshd 不作为后台守护进程运行。
 
 ```bash
-$ sshd -D
+sshd -D
 ```
 
 （3）`-e`
@@ -394,7 +394,7 @@ $ sshd -D
 `-h`参数用于指定密钥。
 
 ```bash
-$ sshd -h /usr/local/ssh/my_rsa_key
+sshd -h /usr/local/ssh/my_rsa_key
 ```
 
 （6）`-o`
@@ -402,19 +402,19 @@ $ sshd -h /usr/local/ssh/my_rsa_key
 `-o`参数指定配置文件的一个配置项和对应的值。
 
 ```bash
-$ sshd -o "Port 2034"
+sshd -o "Port 2034"
 ```
 
 配置项和对应值之间，可以使用等号。
 
 ```bash
-$ sshd -o "Port = 2034"
+sshd -o "Port = 2034"
 ```
 
 如果省略等号前后的空格，也可以不使用引号。
 
 ```bash
-$ sshd -o Port=2034
+sshd -o Port=2034
 ```
 
 `-o`参数可以多个一起使用，用来指定多个配置关键字。
@@ -424,7 +424,7 @@ $ sshd -o Port=2034
 `-p`参数指定 sshd 的服务端口。
 
 ```bash
-$ sshd -p 2034
+sshd -p 2034
 ```
 
 上面命令指定 sshd 在`2034`端口启动。
@@ -432,7 +432,7 @@ $ sshd -p 2034
 `-p`参数可以指定多个端口。
 
 ```bash
-$ sshd -p 2222 -p 3333
+sshd -p 2222 -p 3333
 ```
 
 （8）`-t`
