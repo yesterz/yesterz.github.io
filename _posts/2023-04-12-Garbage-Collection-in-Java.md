@@ -107,14 +107,24 @@ Ans: 从 GC Roots 出发，根据对象的引用关系向下搜索，搜索走�
     出来一个隐含的推论，存在相互引用关系的两个对象，是应该倾向于同时生存或者同时消亡的。
     
     依据这条假说只需在新生代上建立一个全局的数据结构（记忆集 Remembered Set），这个结构把老年代划分成若干小块，标识出老年代的哪一块内存会存在跨代引用。
-    
+
+!(Hotspot Heap Structure)[Hotspot_Heap_Structure.png]
+
+JVM 将堆分成了二个大区新生代（Young）和老年代（Old），新生代又被进一步划分为 Eden（伊甸园空间）和 Survivor（幸存者空间）区，而Survivor 由 Survivor0 和 Survivor1 组成，也有些人喜欢用 FromSpace 和 ToSpace 来代替。
+
+这里为什么要将 Young Generation 划分为 Eden、Survivor0、Survivor1 这三块，给出的解释是 Young 中的98%的对象都是死朝生夕死，所以将内存分为一块较大的 Eden 和两块较小的 Survivor0、Survivor1，JVM 默认分配是 8:1:1，每次调用 Eden 和其中的 Survivor0（FromSpace），当发生回收的时候，将 Eden 和 Survivor0（FromSpace）存活的对象复制到 Survivor2（ToSpace），然后直接清理掉 Eden 和 Survivor0 的空间。
+
+**Q:** 为什么 Survivor 区分成两个？
+
+**Ans** The reason for the HotSpot JVM's two survivor spaces is to reduce the need to deal with fragmentation. New objects are allocated in eden space. All well and good. When that's full, you need a GC, so kill stale objects and move live ones to a survivor space, where they can mature for a while before being promoted to the old generation. Still good so far. The next time we run out of eden space, though, we have a conundrum. The next GC comes along and clears out some space in both eden and our survivor space, but the spaces aren't contiguous.[^ref_2]
+
 ---
 
-* **部分收集（ Partial GC） ：**指目标不是完整收集整个Java堆的垃圾收集，其中又分为：
-    - **新生代收集（ Minor GC/Young GC）：**指目标只是新生代的垃圾收集。
-    - **老年代收集（ Major GC/Old GC）：**指目标只是老年代的垃圾收集。目前只有CMS收集器会有单独收集老年代的行为。另外请注意“Major GC”这个说法现在有点混淆，在不同资料上常有不同所指，读者需按上下文区分到底是指老年代的收集还是整堆收集。
-    - **混合收集（ Mixed GC）：**指目标是收集整个新生代以及部分老年代的垃圾收集。目前只有G1收集器会有这种行为。
-* **整堆收集（ Full GC）：**收集整个Java堆和方法区的垃圾收集。
+* **部分收集（Partial GC） ：**指目标不是完整收集整个 Java 堆的垃圾收集，其中又分为：
+    - **新生代收集（Minor GC/Young GC）：**指目标只是新生代的垃圾收集。
+    - **老年代收集（Major GC/Old GC）：**指目标只是老年代的垃圾收集。目前只有 CMS 收集器会有单独收集老年代的行为。另外请注意“Major GC”这个说法现在有点混淆，在不同资料上常有不同所指，读者需按上下文区分到底是指老年代的收集还是整堆收集。
+    - **混合收集（Mixed GC）：**指目标是收集整个新生代以及部分老年代的垃圾收集。目前只有 G1 收集器会有这种行为。
+* **整堆收集（Full GC）：**收集整个 Java 堆和方法区的垃圾收集。
 
 ---
     
@@ -464,6 +474,8 @@ Process finished with exit code 0
 ### 长期存活的对象将进入老年代
 
 
+
+
 ### 动态对象年龄判定
 
 
@@ -473,3 +485,4 @@ Process finished with exit code 0
 ## Reference
 
 [^ref_1]: [Garbage Collection Roots](https://help.eclipse.org/latest/index.jsp?topic=%2Forg.eclipse.mat.ui.help%2Fconcepts%2Fgcroots.html&cp=37_2_3)
+[^ref_2]: [Java GC: why two survivor regions?](https://stackoverflow.com/questions/10695298/java-gc-why-two-survivor-regions)
