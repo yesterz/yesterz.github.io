@@ -412,10 +412,54 @@ Output:
 Process finished with exit code 0
 ```
 
-
 ### 大对象直接进入老年代
 
+大对象就是指需要大量连续内存空间的 Java 对象，最典型的大对象便是那种很长的字符串，或者元素数量很庞大的数组，本节例子中的 byte[] 数组就是典型的大对象。
 
+大对象对虚拟机的内存分配来说就是一个不折不扣的坏消息，比遇到一个大对象更加坏的消息就是遇到一群“朝生夕灭”的“短命大对象”，我们写程序的时候应注意避免。在 Java 虚拟机中要避免大对象的原因是，在分配空间时，它容易导致内存明明还有不少空间时就提前触发垃圾收集，以获取足够的连续空间才能安置好它们，而当复制对象时，大对象就意味着高额的内存复制开销。HotSpot 虚拟机提供了`-XX：PretenureSizeThreshold`参数，指定大于该设置值的对象直接在老年代分配，这样做的目的就是避免在 Eden 区及两个 Survivor 区之间来回复制，产生大量的内存复制操作。
+
+虚拟机参数配置：
+
+1. -verbose:gc
+2. -Xms20M
+3. -Xmx20M
+4. -Xmn10M
+5. -XX:+UseSerialGC
+6. -XX:+PrintGCDetails
+7. -XX:SurvivorRatio=8
+8. -XX:PretenureSizeThreshold=3145728
+
+```java
+public class PretenureSizeThresholdTest {
+
+    private static final int _1MB = 1024 * 1024;
+
+    public static void main(String[] args) {
+        byte[] allocation;
+        allocation = new byte[4 * _1MB];
+    }
+}
+```
+
+output:
+
+```console
+/usr/lib/jvm/java-11-openjdk-amd64/bin/java -verbose:gc -Xms20M -Xmx20M -Xmn10M -XX:+UseSerialGC -XX:+PrintGCDetails -XX:SurvivorRatio=8 -XX:PretenureSizeThreshold=3145728 -Dfile.encoding=UTF-8 -classpath /home/risk/ideaProject/Java-learning/out/production/JVM PretenureSizeThresholdTest
+[0.000s][warning][gc] -XX:+PrintGCDetails is deprecated. Will use -Xlog:gc* instead.
+[0.002s][info   ][gc] Using Serial
+[0.002s][info   ][gc,heap,coops] Heap address: 0x00000000fec00000, size: 20 MB, Compressed Oops mode: 32-bit
+[0.022s][info   ][gc,heap,exit ] Heap
+[0.022s][info   ][gc,heap,exit ]  def new generation   total 9216K, used 1147K [0x00000000fec00000, 0x00000000ff600000, 0x00000000ff600000)
+[0.022s][info   ][gc,heap,exit ]   eden space 8192K,  14% used [0x00000000fec00000, 0x00000000fed1ee98, 0x00000000ff400000)
+[0.022s][info   ][gc,heap,exit ]   from space 1024K,   0% used [0x00000000ff400000, 0x00000000ff400000, 0x00000000ff500000)
+[0.022s][info   ][gc,heap,exit ]   to   space 1024K,   0% used [0x00000000ff500000, 0x00000000ff500000, 0x00000000ff600000)
+[0.022s][info   ][gc,heap,exit ]  tenured generation   total 10240K, used 4096K [0x00000000ff600000, 0x0000000100000000, 0x0000000100000000)
+[0.022s][info   ][gc,heap,exit ]    the space 10240K,  40% used [0x00000000ff600000, 0x00000000ffa00010, 0x00000000ffa00200, 0x0000000100000000)
+[0.022s][info   ][gc,heap,exit ]  Metaspace       used 177K, capacity 4486K, committed 4864K, reserved 1056768K
+[0.022s][info   ][gc,heap,exit ]   class space    used 5K, capacity 386K, committed 512K, reserved 1048576K
+
+Process finished with exit code 0
+```
 
 ### 长期存活的对象将进入老年代
 

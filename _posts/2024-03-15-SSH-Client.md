@@ -184,7 +184,7 @@ TLS_RSA_WITH_AES_128_CBC_SHA
 
 下面是一个例子，客户端向服务器发出的握手信息。
 
-```http
+```
 Handshake protocol: ClientHello
     Version: TLS 1.2
     Random
@@ -220,7 +220,7 @@ Handshake protocol: ClientHello
 
 服务器选择完毕之后，向客户端发出回应。
 
-```http
+```
 Handshake protocol: ServerHello
     Version: TLS 1.2
     Random
@@ -483,7 +483,7 @@ SSH 客户端的全局配置文件是`/etc/ssh/ssh_config`，用户个人的配�
 
 用户个人的配置文件`~/.ssh/config`，可以按照不同服务器，列出各自的连接参数，从而不必每一次登录都输入重复的参数。下面是一个例子。
 
-```bash
+```yaml
 Host remoteserver
      HostName remote.example.com
      User neo
@@ -554,4 +554,3 @@ Compression = yes
 - `User userName`：指定远程登录的账户名。
 - `UserKnownHostsFile /users/smith/.ssh/my_local_hosts_file`：指定当前用户的`known_hosts`文件（服务器公钥指纹列表）的位置。
 - `VerifyHostKeyDNS yes`：是否通过检查 SSH 服务器的 DNS 记录，确认公钥指纹是否与`known_hosts`文件保存的一致。
-

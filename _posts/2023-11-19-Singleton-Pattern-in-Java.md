@@ -9,7 +9,7 @@ math: false
 mermaid: false
 ---
 
-## 饿汉式:
+## 饿汉式
 
 ```java
 public final class Singleton {
