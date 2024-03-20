@@ -11,7 +11,7 @@ mermaid: false
 
 LeetCode <https://leetcode.cn/problems/search-a-2d-matrix-ii/>
 
-* from bottom-left to up-right corner
+## from bottom-left to up-right corner
 
 ```java
 class Solution {
@@ -35,7 +35,7 @@ class Solution {
 }
 ```
 
-* from up-right to bottom-left corner
+## from up-right to bottom-left corner
 
 ```java
 class Solution {
