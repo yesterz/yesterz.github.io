@@ -283,7 +283,7 @@ Klass Word 类型指针是指向该对象所属类对象的指针，Mark Word �
 
 ### Monitor 结构
 
-![Untitled](/assets/images/MonitorImages/Untitled%202.png)
+![Monitor Structure](/assets/images/MonitorImages/Monitor-Structure.png)
 
 1. 刚开始 Monitor 中 Owner 为 null
 2. 当 Thread-2 执行 synchronized(obj) 就会将 Monitor 的所有者 Owner 置为 Thread-2，Monitor 中只能有一个 Owner
