@@ -12,7 +12,7 @@ img_path: /assets/images/
 
 要了解用户态和内核态需要先了解Linux系统的体系架构：
 
-![用户空间（应用程序的活动空间）和内核](./Kernel-Mode-vs-User-Mode-in-Linux/images.png)
+![用户空间（应用程序的活动空间）和内核](Kernel-Mode-vs-User-Mode-in-Linux/images.png)
 
 Linux 操作系统的体系架构分为：用户空间（应用程序的活动空间）和内核。
 
