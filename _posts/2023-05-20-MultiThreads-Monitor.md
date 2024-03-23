@@ -206,7 +206,10 @@ Monitor 被翻译为监视器或管程，关注访问共享变量时，保证临
 
 ### Java 对象头
 
-以32位虚拟机为例，对象在堆内存中的存储布局可以划分为三个部分：1️⃣对象头（Header）、2️⃣实例数据（Instance Data）和3️⃣对齐填充（Padding）
+以32位虚拟机为例，对象在堆内存中的存储布局可以划分为三个部分：
+  - 1️⃣对象头（Header）
+  - 2️⃣实例数据（Instance Data）
+  - 3️⃣对齐填充（Padding）
 
 对象头部分包括两类信息。第一类是用于存储对象自身的运行时数据，称之为 Mark Word。
 
@@ -284,6 +287,8 @@ Klass Word 类型指针是指向该对象所属类对象的指针，Mark Word �
 ### Monitor 结构
 
 ![Monitor Structure](/assets/images/MonitorImages/Monitor-Structure.png)
+
+
 
 1. 刚开始 Monitor 中 Owner 为 null
 2. 当 Thread-2 执行 synchronized(obj) 就会将 Monitor 的所有者 Owner 置为 Thread-2，Monitor 中只能有一个 Owner

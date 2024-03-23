@@ -20,7 +20,7 @@ https://man7.org/linux/man-pages/man1/top.1.html
 
 这块就是顶部信息的含义
 
-```C
+```shell
 top - 11:25:31 up 1 day,  1:15,  1 user,  load average: 2.81, 1.98, 1.86
 Tasks: 527 total,   2 running, 523 sleeping,   0 stopped,   2 zombie
 %Cpu(s):  3.3 us,  2.0 sy,  2.2 ni, 91.9 id,  0.5 wa,  0.0 hi,  0.1 si,  0.0 st
