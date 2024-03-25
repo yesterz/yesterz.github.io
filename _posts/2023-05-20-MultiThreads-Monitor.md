@@ -81,9 +81,10 @@ Synchronized keyword enable a simple strategy for preventing thread interference
 
 ### synchronized 语法
 
-    1. 对于普通同步方法，锁是当前实例对象
-    2. 对于同步方法块，锁是 synchronized 括号里配置的对象
-    3. 对于静态同步方法，锁是当前类的 Class 对象
+如下
+1. 对于普通同步方法，锁是当前实例对象
+2. 对于同步方法块，锁是 synchronized 括号里配置的对象
+3. 对于静态同步方法，锁是当前类的 Class 对象
 
 ```java
 synchronized(对象) { // 线程1，线程2（BLOCKED）
