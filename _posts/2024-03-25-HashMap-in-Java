@@ -33,3 +33,60 @@ static class Entry<K, V> implements Map.Entry<K, V> {
     }
 }
 ```
+
+重要字段
+
+```java
+transient int size;
+
+int threshold;
+
+final float loadFactor;
+
+transient int modCount;
+```
+
+其中一个构造器
+
+```java
+public HashMap(int initialCapacity, float loadFactor) {
+    if (initialCapacity < 0)
+        throw new IllegalArgumentException("Illegal initial capacity: " + initialCapacity);
+    if (initialCapacity > MAXIMUM_CAPACITY)
+        initialCapacity = MAXIMUM_CAPACITY;
+    if (loadFactor <= 0 || Float.isNaN(loadFactor))
+        throw new IllegalArgumentException("Illegal load factor: " + loadFactor);
+
+    this.loadFactor = loadFactor;
+    threshold = initialCapacity;　　　　　s
+    init();
+}
+```
+
+put 方法
+
+```java
+public V put(K key, V value) {
+    if (table == EMPTY_TABLE) {
+        inflateTable(threshold);
+    }
+    if (key == null)
+        return putForNullKey(value);
+    int hash = hash(key);
+    int i = indexFor(hash, table.length);
+    for (Entry<K, V> e = table[i]; e != null; e = e.next) {
+        Object k;
+        if (e.hash == hash && ((k = e.key) == key || key.equals(k))) {
+            V oldValue = e.value;
+            e.value = value;
+            e.recordAccess(this);
+            return oldValue;
+        }
+    }
+    modCount++;
+    addEntry(hash, key, value, i);
+    return null;
+}
+```
+> If you inflate something such as a balloon or tyre, or if it inflates, it becomes bigger as it is filled with air or a gas. (Definition of 'inflate' from Collins)
+{: .prompt-info }
