@@ -10,7 +10,7 @@ toc: true
 
 ## man top
 
-https://man7.org/linux/man-pages/man1/top.1.html
+Docs <https://man7.org/linux/man-pages/man1/top.1.html>
 
 ## top 然后按下h
 
@@ -20,7 +20,7 @@ https://man7.org/linux/man-pages/man1/top.1.html
 
 这块就是顶部信息的含义
 
-```shell
+```terminal
 top - 11:25:31 up 1 day,  1:15,  1 user,  load average: 2.81, 1.98, 1.86
 Tasks: 527 total,   2 running, 523 sleeping,   0 stopped,   2 zombie
 %Cpu(s):  3.3 us,  2.0 sy,  2.2 ni, 91.9 id,  0.5 wa,  0.0 hi,  0.1 si,  0.0 st
@@ -38,7 +38,7 @@ MiB Swap:  16212.0 total,  13956.2 free,   2255.8 used.   3878.9 avail Mem
 
 其实第一行的内容类似命令`uptime`的输出信息
 
-```C
+```terminal
  11:26:43 up 1 day,  1:17,  1 user,  load average: 2.66, 2.10, 1.91
 ```
 
@@ -48,7 +48,7 @@ MiB Swap:  16212.0 total,  13956.2 free,   2255.8 used.   3878.9 avail Mem
 
 第2行显示的是任务或者进程的总结，进程可以处于不同的状态。
 
-```C
+```terminal
 Tasks: 527 total,   1 running, 524 sleeping,   0 stopped,   2 zombie
 ```
 
@@ -62,7 +62,7 @@ Tasks: 527 total,   1 running, 524 sleeping,   0 stopped,   2 zombie
 
 第3行显示的是CPU状态，这里显示了不同模式下的所占CPU时间的百分比。这些不同的CPU时间表示
 
-```C
+```terminal
 %Cpu(s):  5.3 us,  1.9 sy,  0.6 ni, 91.8 id,  0.3 wa,  0.0 hi,  0.1 si,  0.0 st
 ```
 
@@ -98,7 +98,7 @@ st : time stolen from this vm by the hypervisor
 
 ### MEMORY Usage
 
-```C
+```terminal
 MiB Mem :  15712.8 total,    652.8 free,   9137.5 used,   5922.5 buff/cache
 MiB Swap:  16212.0 total,  13956.2 free,   2255.8 used.   3878.9 avail Mem 
 ```
@@ -107,29 +107,18 @@ MiB Swap:  16212.0 total,  13956.2 free,   2255.8 used.   3878.9 avail Mem
 
 字段/列，在横向列出的系统属性和状态下面，是以列显示的进程。不同的列代表下面要解释的不同属性。
 
-PID【进程id】
-
-USER【进程所有者的用户名】      
-
-PR【优先级】  
-
-NI【nice值】    
-
-VIRT【进程使用的虚拟内存总量】    
-
-RES【进程使用的、未被换出的物理内存大小】   
-
-SHR【共享内存大小】 
-
-S【进程状态】 
-
-%CPU【上次更新到现在的CPU时间占用百分比】 
-
-%MEM【进程使用的物理内存百分比】     
-
-TIME+【进程使用的CPU时间总计】 
-
-COMMAND【命令名/命令行】 
+1. PID【进程id】
+2. USER【进程所有者的用户名】      
+3. PR【优先级】  
+4. NI【nice值】    
+5. VIRT【进程使用的虚拟内存总量】    
+6. RES【进程使用的、未被换出的物理内存大小】   
+7. SHR【共享内存大小】 
+8. S【进程状态】 
+9. %CPU【上次更新到现在的CPU时间占用百分比】 
+10. %MEM【进程使用的物理内存百分比】     
+11. TIME+【进程使用的CPU时间总计】 
+12. COMMAND【命令名/命令行】 
 
 | 列名    | 含义                                                         |
 | ------- | ------------------------------------------------------------ |
