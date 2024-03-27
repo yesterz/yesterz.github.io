@@ -1,6 +1,6 @@
 ---
-title: Permutations
-date: 2024-03-26 08:16:00 +0800
+title: Best Time to Buy and Sell Stock
+date: 2024-03-27 07:51:00 +0800
 author: Algorithms-Notes
 categories: [Algorithms]
 tags: [Easy, top-100-liked, Array, Dynamic Programming]
