@@ -1,5 +1,5 @@
 ---
-title: 互联网协议入门（一）
+title: 互联网协议入门（一）✅
 date: 2023-06-01 21:09:00 +0800
 categories: [Computer Networking]
 tags: [Computer Networking]
@@ -7,8 +7,6 @@ pin: false
 math: false
 mermaid: false
 ---
-
-# 【网络协议 2】互联网协议入门（一）✅
 
 作者： [阮一峰](https://www.ruanyifeng.com/)
 
@@ -22,7 +20,7 @@ mermaid: false
 
 下面就是我的学习笔记。因为这些协议实在太复杂、太庞大，我想整理一个简洁的框架，帮助自己从总体上把握它们。为了保证简单易懂，我做了大量的简化，有些地方并不全面和精确，但是应该能够说清楚互联网的原理。
 
-=================================================
+---
 
 **互联网协议入门**
 
@@ -245,6 +243,5 @@ TCP 数据包和 UDP 数据包一样，都是内嵌在 IP 数据包的"数据"�
 
 （完）
 
-****文档信息
-• 版权声明：自由转载-非商用-非衍生-保持署名（[创意共享3.0许可证](https://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh)）
-• 发表日期： 2012年5月31日**
+> 版权声明：自由转载-非商用-非衍生-保持署名（[创意共享3.0许可证](https://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh)）<br>发表日期： 2012年5月31日
+{: .prompt-info }
