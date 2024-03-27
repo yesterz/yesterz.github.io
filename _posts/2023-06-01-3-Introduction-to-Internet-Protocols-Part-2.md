@@ -137,7 +137,7 @@ DHCP 协议做了一些巧妙的规定。
 > * DNS的IP地址：8.8.8.8
 > 
 
-然后他打开浏览器，想要访问Google，在地址栏输入了网址：www.google.com。
+然后他打开浏览器，想要访问 Google，在地址栏输入了网址：<www.google.com>。
 
 ![https://www.ruanyifeng.com/blogimg/asset/201206/bg2012061103.png](https://www.ruanyifeng.com/blogimg/asset/201206/bg2012061103.png)
 
