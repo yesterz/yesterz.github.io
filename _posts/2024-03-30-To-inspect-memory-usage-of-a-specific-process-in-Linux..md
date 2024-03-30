@@ -1,6 +1,6 @@
 ---
 title: Linux下查看某一进程占用的内存
-date: 2023-03-30 21:09:00 +0800
+date: 2023-03-30 07:09:00 +0800
 categories: [Computer Networking]
 tags: [Computer Networking]
 pin: false
