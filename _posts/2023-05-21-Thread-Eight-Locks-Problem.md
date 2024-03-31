@@ -18,10 +18,10 @@ mermaid: false
 class Number{
     public synchronized void a() {
         log.debug("1");
-    }
+    }
     public synchronized void b() {
         log.debug("2");
-    }
+    }
 }
 ​
 public static void main(String[] args) {
@@ -39,10 +39,10 @@ class Number{
     public synchronized void a() {
         sleep(1); //睡眠1秒
         log.debug("1");
-    }
+    }
     public synchronized void b() {
         log.debug("2");
-    }
+    }
 }
 ​
 public static void main(String[] args) {
@@ -60,13 +60,13 @@ class Number{
     public synchronized void a() {
         sleep(1);//睡眠1秒
         log.debug("1");
-    }
+    }
     public synchronized void b() {
         log.debug("2");
-    }
+    }
     public void c() { // 未加锁
         log.debug("3");
-    }
+    }
 }
 ​
 public static void main(String[] args) {
@@ -85,10 +85,10 @@ class Number{
     public synchronized void a() {
         sleep(1);//睡眠1秒
         log.debug("1");
-    }
+    }
     public synchronized void b() {
         log.debug("2");
-    }
+    }
 }
 ​
 public static void main(String[] args) {
@@ -107,10 +107,10 @@ class Number{
     public static synchronized void a() {
         sleep(1);//睡眠1秒
         log.debug("1");
-    }
+    }
     public synchronized void b() {
         log.debug("2");
-    }
+    }
 }
 ​
 public static void main(String[] args) {
@@ -128,10 +128,10 @@ class Number{
     public static synchronized void a() {
         sleep(1);//睡眠1秒
         log.debug("1");
-    }
+    }
     public static synchronized void b() {
         log.debug("2");
-    }
+    }
 }
 ​
 public static void main(String[] args) {
@@ -149,10 +149,10 @@ class Number{
     public static synchronized void a() {
         sleep(1);// 睡眠1秒
         log.debug("1");
-    }
+    }
     public synchronized void b() {
         log.debug("2");
-    }
+    }
 }
 ​
 public static void main(String[] args) {
@@ -171,10 +171,10 @@ class Number{
     public static synchronized void a() {
         sleep(1); // 睡眠1秒
         log.debug("1");
-    }
+    }
     public static synchronized void b() {
         log.debug("2");
-    }
+    }
 }
 ​
 public static void main(String[] args) {
