@@ -11,13 +11,13 @@ mermaid: false
 
 使用方式如下：
 
-```Bash
+```bash
 top [-d number] | top [-bnp]
 ```
 
 ## Top display
 
-```Bash
+```terminal
 top - 10:19:24 up 2 days, 51 min,  1 user,  load average: 0.94, 1.27, 1.51
 Tasks: 522 total,   2 running, 516 sleeping,   0 stopped,   4 zombie
 %Cpu(s):  1.5 us,  1.3 sy,  0.0 ni, 97.2 id,  0.1 wa,  0.0 hi,  0.0 si,  0.0 st
@@ -51,7 +51,7 @@ top 主要分为两个画面，上面的画面为整个系统的资源使用状�
 
 耗用 CPU 的资源喔！ 另外，如果是多核心的设备，可以按下数字键『1』来切换成不同 CPU 的负载率。比如如下这样子：
 
-```Bash
+```terminal
 top - 10:23:22 up 2 days, 55 min,  1 user,  load average: 1.03, 1.26, 1.46
 Tasks: 521 total,   1 running, 516 sleeping,   0 stopped,   4 zombie
 %Cpu0  :  2.0 us,  6.6 sy,  0.0 ni, 91.4 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
@@ -103,15 +103,15 @@ MiB Swap:  16212.0 total,  12832.7 free,   3379.2 used.   7270.9 avail Mem
 
 `-n` 与 -b 搭配，意义是“需要进行几次 top 的输出结果”。使用方式如下：
 
-```Bash
+```bash
 # 将 top 的信息进行 2 次，然后将结果输出到 /tmp/top.txt
 top -b -n 2 > /tmp/top.txt
 ```
 
 `-p` 指定某些个 PID 来进行观察监测而已。使用方式如下：
 
-```Bash
--pN1 -pN2 ...  or  -pN1,N2,N3 ...
+```bash
+top -pN1 -pN2 ...  or  -pN1,N2,N3 ...
 ```
 
 ## INTERACTIVE Commands
@@ -132,7 +132,7 @@ top -b -n 2 > /tmp/top.txt
 
 `k` 给予某个 PID 一个讯号(signal)。默认排第一的程序
 
-```Bash
+```bash
 PID to signal/kill [default pid = 5859] 
     PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND                       
    5859 root      20   0   24.7g 119956  78288 S   5.9   0.7  50:28.52 Xorg 
