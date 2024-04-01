@@ -6,7 +6,6 @@ tags:
   - Linux
 toc: true
 ---
-# Top 命令
 
 ## man top
 
