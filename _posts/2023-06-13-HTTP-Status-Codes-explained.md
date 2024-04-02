@@ -104,4 +104,5 @@ mermaid: false
 
 ## Reference
 
-HTTP Status Codes <https://http.dev/status>
+1. HTTP Status Codes <https://http.dev/status>
+2. Status Code Definitions in RFC2616 <https://www.rfc-editor.org/rfc/rfc2616#page-57>
