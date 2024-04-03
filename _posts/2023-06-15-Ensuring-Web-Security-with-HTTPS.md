@@ -7,6 +7,7 @@ tags: [Computer Networking]
 pin: false
 math: false
 mermaid: false
+img_path: /assets/images/2023-06-15-Ensuring-Web-Security-with-HTTPS
 ---
 
 ## HTTP 的缺点
@@ -31,7 +32,7 @@ mermaid: false
         
     2. 内容的加密
         
-        还有一种将参与通信的内容本身加密的方式。由于 HTTP 协议中没有加密机制，那么就对 HTTP 协议传输的内容本身加密。即把 HTTP 报文里所含的内容进行加密处理。
+        还有一种将参与通信的内容本身加密的方式。由于 HTTP 协议中没有加密机制，那么就对 HTTP 协议传输的内容本身（报文主体）加密。即把 HTTP 报文里所含的内容进行加密处理。
         
 
 ### 不验证通信方的身份就可能遭遇伪装
@@ -46,25 +47,28 @@ HTTP 协议中的请求和响应不会对通信方进行确认。也就是说存
 所谓完整性是指信息的准确度。若无法证明其完整性，通常也就意味着无法判断信息是否准确。
 
 - 接收到的内容可能有误
+
+    比如，从某个 Web 网站上下载内容，是无法确定客户端下载的文件和服务器上存放的文件是否前后一致的。文件内容在传输途中可能已经被篡改为其他的内容。即使内容真的已改变，作为接收方的客户端也是觉察不到的。
     
-    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c52dffd0-dcc3-40c3-ad32-f12756bf91ac/Untitled.png)
+    像这样，请求或响应在传输途中，遭攻击者拦截并篡改内容的攻击称为中间人攻击（Man-in-the-Middle attack，MITM）。
     
 - 如何防止篡改
     
     其中常用的是 MD5 和 SHA-1 等散列值校验的方法，以及用来确认文件的数字签名方法。
-    
 
-## HTTP + 加密 + 认证 + 完整性保护 = HTTPS
+    提供文件下载服务的 Web 网站也会提供相应的以 PGP（Pretty Good Privacy，完美隐私）创建的数字签名及 MD5 算法生成的散列值。PGP 是用来证明创建文件的数字签名，MD5 是由单向函数生成的散列值。
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/15ac419e-f23e-4ad3-9e50-b378348d6726/Untitled.png)
+## HTTPS = HTTP + 加密 + 认证 + 完整性保护
 
 ### HTTPS 是身披 SSL 外壳的 HTTP
 
+![HTTP and HTTPS](image.png)
+
 HTTPS 并非是应用层的一种新协议。只是 HTTP 通信接口部分用 SSL（Secure Socket Layer）和 TLS（Transport Layer Security）协议代替而已。
 
-通常，HTTP 直接和 TCP 通信。当使用 SSL时，则演变成先和 SSL通信，再由 SSL和 TCP 通信了。简言之，所谓 HTTPS，其实就是身披SSL协议这层外壳的 HTTP。
+通常，HTTP 直接和 TCP 通信。当使用 SSL时，则演变成先和 SSL通信，再由 SSL 和 TCP 通信了。简言之，所谓 HTTPS，其实就是身披SSL协议这层外壳的 HTTP。
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/71d712f5-8694-46a9-9b90-315122f3e7d4/Untitled.png)
+SSL 是独立于 HTTP 的协议，所以不光是 HTTP 协议，其他运行在应用层的 SMTP 和 Telnet 等协议均可配合 SSL协议使用。可以说 SSL 是当今世界上应用最为广泛的网络安全技术。
 
 ### 相互交换密钥的公开密钥加密技术
 
@@ -77,6 +81,8 @@ SSL采用一种叫做公开密钥加密（Public-key cryptography）的加密处
 - 使用两把密钥的公开密钥加密
     
     公开密钥加密使用一对非对称的密钥。一把叫做私有密钥（private key），另一把叫做公开密钥（public key）。顾名思义，私有密钥不能让其他任何人知道，而公开密钥则可以随意发布，任何人都可以获得。
+
+    使用公开密钥加密方式，发送密文的一方使用对方的公开密钥进行加密处理，对方收到被加密的信息后，再使用自己的私有密钥进行解密。
     
 - HTTPS 采用混合加密机制
     
@@ -85,15 +91,24 @@ SSL采用一种叫做公开密钥加密（Public-key cryptography）的加密处
 
 ### 证明公开密钥正确性的证书
 
+Q: 如果在传输过程中，公开密钥被攻击者替换掉了呢？
+
+Ans:
+
 使用由数字证书认证机构（CA，Certificate Authority）和其相关机关颁发的公开密钥证书。
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/209effc5-2f60-45ce-8993-8ed5a1021257/Untitled.png)
+数字证书认证机构的业务流程。首先，服务器的运营人员向数字证书认证机构提出公开密钥的申请。数字证书认证机构在判明提出申请者的身份之后，会对已申请的公开密钥做数字签名，然后分配这个已签名的公开密钥，并将该公开密钥放入公钥证书后绑定在一起。
+
+服务器会将这份由数字证书认证机构颁发的公钥证书发送给客户端，以进行公开密钥加密方式通信。公钥证书也可叫做数字证书或直接称为证书。
+
+接到证书的客户端可使用数字证书认证机构的公开密钥，对那张证书上的数字签名进行验证，一旦验证通过，客户端便可明确两件事：一，认证服务器的公开密钥的是真实有效的数字证书认证机构。二，服务器的公开密钥是值得信赖的。
+
+此处认证机关的公开密钥必须安全地转交给客户端。使用通信方式时，如何安全转交是一件很困难的事，因此，多数浏览器开发商发布版本时，会事先在内部植入常用认证机关的公开密钥。
+
 
 ### HTTPS 的安全通信机制
 
 HTTPS 的安全通信机制
-
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/cfb77b92-ee84-45d2-9699-2a8485cddfef/Untitled.png)
 
 步骤 1： 客户端通过发送 Client Hello 报文开始 SSL通信。报文中包含客户端支持的 SSL的指定版本、加密组件（Cipher Suite）列表（所使用的加密算法及密钥长度等）。
 
@@ -121,6 +136,4 @@ HTTPS 的安全通信机制
 
 在以上流程中，应用层发送数据时会附加一种叫做 MAC（Message Authentication Code）的报文摘要。MAC 能够查知报文是否遭到篡改，从而保护报文的完整性。
 
-![图中说明了从仅使用服务器端的公开密钥证书（服务器证书）建立 HTTPS 通信的整个过程。](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/389da85d-3c3e-4674-8f66-d3c857084704/Untitled.png)
-
-图中说明了从仅使用服务器端的公开密钥证书（服务器证书）建立 HTTPS 通信的整个过程。
+说明了从仅使用服务器端的公开密钥证书（服务器证书）建立 HTTPS 通信的整个过程。
