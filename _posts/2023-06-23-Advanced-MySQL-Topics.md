@@ -140,14 +140,14 @@ SQL命令传递到解析器的时候会被解析器验证和解析。解析器�
 
 ### 隔离级别 isolation level
   
-    当数据库上有多个事务同时执行的时候，就可能出现脏读（dirty read）、不可重复读（non-repeatable read）、幻读（phantom read）的问题，所以就有了隔离级别的概念。
+当数据库上有多个事务同时执行的时候，就可能出现脏读（dirty read）、不可重复读（non-repeatable read）、幻读（phantom read）的问题，所以就有了隔离级别的概念。
     
-    | isolation level | 脏读可能性 | 不可重复读可能性 | 幻读可能性 | 加锁读 |
-    | --- | --- | --- | --- | --- |
-    | READ UNCOMMITTED | Yes | Yes | Yes | No |
-    | READ COMMITTED | No | Yes | Yes | No |
-    | REPEATABLE READ | No | No | Yes | No |
-    | SERIALIZABLE | No | No | No | Yes |
+| isolation level | 脏读可能性 | 不可重复读可能性 | 幻读可能性 | 加锁读 |
+| --- | --- | --- | --- | --- |
+| READ UNCOMMITTED | Yes | Yes | Yes | No |
+| READ COMMITTED | No | Yes | Yes | No |
+| REPEATABLE READ | No | No | Yes | No |
+| SERIALIZABLE | No | No | No | Yes |
 
 1. READ UNCOMMITTED （未提交读）
   
