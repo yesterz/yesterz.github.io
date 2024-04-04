@@ -6,7 +6,7 @@ categories: [Computer Networking]
 tags: [Computer Networking]
 pin: false
 math: false
-mermaid: false
+mermaid: true
 img_path: /assets/images/2024-04-04-Network-Layering-Model-and-Network-Troubleshooting-Tools
 ---
 
@@ -85,7 +85,7 @@ mindmap
 
 当然，你通过删除浏览器缓存的方式也行。但开发者工具的优点是，可以细粒度到这个网站级别，而删除缓存的方式，删除的就是所有站点的 Cookie 了，这未必是你想要的。
 
-## 表示层和会话层
+### 表示层和会话层
 
 第一种，还是基于浏览器做初步的检查，主要是围绕证书本身做检查。在浏览器的地址栏那里，有一个按钮，点开后就可以查看 TLS 证书等信息：
 
@@ -123,7 +123,7 @@ Cipher suite 通常由以下几个部分组成：
 
 ![image-20240404110611099](./assets/image-20240404110611099.png)
 
-## 传输层
+### 传输层
 
 分场景介绍工具
 
@@ -144,7 +144,7 @@ Escape character is '^]'.
 
 测试连接到百度网站的443端口（HTTPS端口）
 
-```
+```terminal
 # nc -w 2 -zv www.baidu.com 443
 Connection to www.baidu.com (183.2.172.185) 443 port [tcp/https] succeeded!
 ```
@@ -162,7 +162,7 @@ Connection to www.baidu.com (183.2.172.185) 443 port [tcp/https] succeeded!
 
 显示当前系统上所有的 TCP 连接的状态
 
-```
+```terminal
 # netstat -ant
 Proto Recv-Q Send-Q Local Address           Foreign Address         State
 tcp        0      0 127.0.0.53:53           0.0.0.0:*               LISTEN
@@ -185,8 +185,8 @@ tcp6       0      0 127.0.0.1:8000          :::*                    LISTEN
 
 `iftop`这个命令需要安装
 
-```
-# sudo iftop
+```terminal
+sudo iftop
 ```
 
 ![image-20240404121910270](./assets/image-20240404121910270.png)
@@ -195,7 +195,7 @@ tcp6       0      0 127.0.0.1:8000          :::*                    LISTEN
 
 其实，用 netstat 除了可以获取实时连接状况，还可以获取历史统计信息。比如，你怀疑一台机器的网络很不稳定，除了用 ping 做简单的测试，你还可以用`netstat -s`来获取更加详细的统计信息。比如，其中的 TCP 丢包和乱序计数值，就能帮助你判断传输层的状况。下面是我截取了一次 netstat -s 命令的输出：
 
-```
+```terminal
 # netstat -s
 Ip:
     Forwarding: 2
@@ -292,7 +292,7 @@ watch --diff netstat -s
 
  `ss`命令是 Iproute2 包里的命令，也是 netstat 的“取代者”。它提供了对 socket 的丰富的统计信息。比如`ss -s`可以查看到当前连接的统计信息：
 
-```
+```terminal
 # ss -s
 Total: 224
 TCP:   6 (estab 2, closed 0, orphaned 0, timewait 0)
@@ -311,7 +311,7 @@ FRAG      0         0         0
 
 traceroute or tracepath ?
 
-```
+```terminal
 # traceroute www.baidu.com
 traceroute to www.baidu.com (183.2.172.185), 30 hops max, 60 byte packets
  1  _gateway (192.168.10.1)  0.715 ms  0.787 ms  0.902 ms
@@ -348,7 +348,7 @@ traceroute to www.baidu.com (183.2.172.185), 30 hops max, 60 byte packets
 
 后面某些跳就没地址了，。。
 
-```
+```terminal
 # traceroute www.baidu.com -I
 traceroute to www.baidu.com (183.2.172.185), 30 hops max, 60 byte packets
  1  _gateway (192.168.10.1)  9.537 ms  9.528 ms  9.526 ms
@@ -368,7 +368,7 @@ traceroute to www.baidu.com (183.2.172.185), 30 hops max, 60 byte packets
 
 tracepath - traces path to a network host discovering MTU along this path
 
-```
+```terminal
 # tracepath
 1?: [LOCALHOST]                      pmtu 1500
  1:  DESKTOP-0VC22M5.mshome.net                            0.299ms
@@ -411,7 +411,7 @@ tracepath - traces path to a network host discovering MTU along this path
 
 于是，mtr 出现了，它可以说是 traceroute 的超集，除了 traceroute 的功能，还能实现丰富的探测报告。尤其是它对每一跳的丢包率的百分比，是用来定位路径中节点问题的重要指标。所以，当你在遇到“连接状况时好时坏的问题”的时候，单纯用一次性的 traceroute 恐怕难以看清楚，那就可以用 mtr，来获取更加全面和动态的链路状态信息了。
 
-```
+```terminal
 # mtr www.baidu.com -r -c 10
 Start: 2024-04-04T14:26:17+0800
 HOST: DESKTOP-0VC22M5             Loss%   Snt   Last   Avg  Best  Wrst StDev
@@ -434,9 +434,9 @@ HOST: DESKTOP-0VC22M5             Loss%   Snt   Last   Avg  Best  Wrst StDev
 
 #### 查看路由
 
-* route -n
+* `route -n`
 
-```
+```terminal
 Kernel IP routing table
 Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
 0.0.0.0         192.168.10.1    0.0.0.0         UG    600    0        0 wlp0s20f3
@@ -455,9 +455,9 @@ Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
 10.140.0.32     0.0.0.0         255.255.255.255 UH    0      0        0 utun7
 ```
 
-* netstat -r
+* `netstat -r`
 
-```
+```terminal
 Kernel IP routing table
 Destination     Gateway         Genmask         Flags   MSS Window  irtt Iface
 default         _gateway        0.0.0.0         UG        0 0          0 wlp0s20f3
@@ -474,9 +474,9 @@ default         _gateway        0.0.0.0         UG        0 0          0 wlp0s20
 10.64.0.0       0.0.0.0         255.192.0.0     U         0 0          0 utun7
 ```
 
-* ip route
+* `ip route`
 
-```
+```terminal
 default via 192.168.10.1 dev wlp0s20f3 proto dhcp metric 600 
 2.0.0.0/24 dev utun7 proto kernel scope link src 2.0.0.1 
 10.1.72.0/21 dev utun7 scope link 
@@ -505,9 +505,9 @@ default via 192.168.10.1 dev wlp0s20f3 proto dhcp metric 600
 
 一个稳定的数据链路层乃至物理层，是网络可靠性的基石。
 
-* ethtool
+* `ethtool`
 
-```
+```terminal
 # ethtool -S wlp0s20f3
 NIC statistics:
      rx_packets: 283710
