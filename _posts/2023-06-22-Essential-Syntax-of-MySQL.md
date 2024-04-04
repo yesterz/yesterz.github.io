@@ -191,11 +191,12 @@ create table emp(empno int primary key, empname varchar(10));
 
 * 如果新插入一条记录时没有为该字段赋值，系统会自动为这个字段赋值为默认约束设定的值
 * 创建默认约束：
+
 ```sql
-create table <表名> 
-(<字段名1> <字段类型1> default value, 
+create table <table_name> 
+(<column_name1> <data_type1> default value, 
 ......
-<字段名n> <字段类型n>);
+<column_namen> <data_typen>);
 ```
 
 ### 外键约束（foreign key）
@@ -206,41 +207,53 @@ create table <表名>
 * 主键所在的表为主表，外键所在的表为从表
 * 每一个外键值必须与另一个表中的主键值相对应
 * 创建外键约束：
+
 ```sql
 create table <表名> (<字段名1> <字段类型1>, ......<字段名n> <字段类型n>, [constraint 外键约束名] foreign key(字段名) references <主表>(主键字段));
 ```
 
-## ！！！修改数据表
+## 修改数据表
 
 修改数据库中已经存在的数据表的结构
 
 * **修改表名：**
+
 ```sql
 alter table 原表名 rename 新表名;
 ```
+
 * **修改字段名：**
+
 ```sql
 alter table 表名 change 原字段名 新字段名 数据类型 [自增/非空/默认] [字段位置];
 ```
+
 * **修改字段类型：**
+
 ```sql
 alter table 表名 modify 字段名 新数据类型 [自增/非空/默认] [字段位置];
 ```
+
 * **添加字段：**
+
 ```sql
 alter table 表名 add 新字段名 数据类型;
 ```
+
 * **修改字段的排列位置：**
+
 ```sql
 alter table 表名 modify 字段名 数据类型 first;
 alter table 表名 modify 要排列的字段名 数据类型 after 参照字段;
 ```
+
 * **删除字段：**
+
 ```sql
 alter table 表名 drop 字段名;
 ```
 
-## DML data  manipulation language
+### DML data  manipulation language
 
 插入，添加，修改，删除
 
@@ -249,15 +262,20 @@ alter table 表名 drop 字段名;
 字段名与字段值的数据类型、个数顺序必须一一对应
 
 * **指定字段名插入：**
+
 ```sql
 insert into 表名(字段名1[, 字段名2, ...]) values(字段值1[, 字段值2, ...]);
 ```
+
 * **不指定字段名插入：**
+
 ```sql
 insert into 表名 values(字段值1[, 字段值2, ...]);
 ```
+
 需要为表中的每一个字段指定值，且值的顺序需和数据表中字段顺序相同
 * **批量导入数据：**（路径中不能有中文，并且要将 '\' 改为 '\\' 或 '/'）
+
 ```sql
 load data infile '文件路径.csv' into table 表名[ fields terminated by ',' ignore 1 lines];
 ```
@@ -269,6 +287,7 @@ update 表名 set 字段名1=字段值1 [, 字段名2=字段值2[,...]] [where �
 ```
 
 >Error Code: 1175. You are using safe update mode and you tried to update a table without a WHERE that uses a KEY column.  To disable safe mode, toggle the option in Preferences -> SQL Editor and reconnect.
+
 ```sql
 set SQL_SAFE_UPDATES=0;
 ```
@@ -278,63 +297,86 @@ set SQL_SAFE_UPDATES=0;
 ```sql
 delete from 表名 [where 删除条件];
 ```
+
 * truncate 表名;
+
 与 delete from 表名一样，都是**删除表中全部数据，保留表结构**
 
 * delete 和 truncate 的区别：
+
 delete 可以添加 where 子句删除表中部分数据，turncate 只能删除表中全部数据
 
 truncate 删除表中数据保留表结构，turncate 直接把表删除（drop table）然后再创建一张新表（create table），执行速度比 delete 快。
 
-
 ## 单表查询
 
 * 全表查询：
+
 ```sql
 select * from 表名;
 ```
+
 * 查询指定列：
+
 ```sql
 select 字段1[, 字段2, ...] from 表名;
 ```
+
 * 别名的设置：
+
 ```sql
 select 字段名 [as] 列别名 from 原表名 [as] 表别名;
 ```
+
 >as 关键字可以省略
+
 * 查询不重复的记录：
+
 ```sql
 select distinct 字段名 from 表名;
 ```
+
 * 条件查询：
+
 ```sql
 select 字段1[, 字段2, ...] from 表名 where 查询条件;
 ```
+
 * 空值查询：
+
 ```sql
 select 字段1[, 字段2, ...] from 表名 where 空值字段 is [not] null;
 ```
+
 * 模糊查询：
+
 ```sql
 select 字段1[, 字段2, ...] from 表名 where 字符串字段 [not] like 通配符;
 ```
+
     * **百分号（%）通配符：**匹配**任意字符出现任意次数**
     * **下划线（_）通配符：**总是匹配**一个字符**
+
 模糊查询只能用于**字符串类型**的字段
 
 * 查询结果排序： 
+
 ```sql
 select 字段1[,字段2,…] 
 from 表名 
 order by 字段1[ 排序方向,字段2 排序方向,…];
 ```
+
 **解释：多字段排序时**，先按第一个字段排序，第一个字段值相同时再按第二个字段排序，指定排序方向： asc升序， desc降序（没有指定排序方向时，默认是asc升序）
+
 * 限制查询结果数量： 
+
 ```sql
 select 字段1[,字段2,…] 
 from 表名 
 limit [偏移量,] 行数;
 ```
+
 **注意：**limit接受一个或两个数字参数，参数必须是一个整数常量，第一个参数指定第一个返回记录行的偏移量，第二个参数指定返回记录行的最大数目，如果只给定一个参数，表示返回最大的记录行数目，初始记录行的偏移量是0(而不是1)
 
 ## 分组查询
@@ -344,6 +386,7 @@ select 字段1[,字段2,…]
 from 表名[ where 查询条件] 
 group by 分组字段1[,分组字段2,…];
 ```
+
 将查询结果按照一个或多个字段进行分组， 字段值相同的为一组，对每个组进行聚合计算
 
 ### **分组后筛选**
@@ -406,6 +449,7 @@ having groupCondition
 order by columnName asc/desc
 limit [offset,] count;
 ```
+
 >select后面出现的列名必须在 group by 中或者必须使用聚合函数。
 
 ## 运算符与优先级
@@ -463,7 +507,7 @@ limit [offset,] count;
 查询语句的**select**，**group by**和**having**字句是**聚合函数唯一出现的地方**，在where子句中不能出现聚组函数。
 
 >[https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html](https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html)
-# 
+
 ### **Table 12.25 Aggregate Functions**
 
 |Name|Description|
@@ -582,6 +626,7 @@ union all
 select 字段1[,字段2,…] 
 from 表名;
 ```
+
 纵向合并
 
 ### 不等值连接
@@ -618,7 +663,9 @@ select *
 from Websites 
 where name in ('Google','Baidu');
 ```
+
 **=** 的等效表达：
+
 ```sql
 select * 
 from Websites 
@@ -696,13 +743,14 @@ MySQL 使用下列数据类型在数据库中存储日期或日期/时间值：
 
 ### 字符串函数
 
-|函数|说明|
-|:----|:----|
-|    |    |
-|    |    |
-|    |    |
-|    |    |
-|    |    |
+| 函数               | 说明                                     |
+|------------------|----------------------------------------|
+| CONCAT(str1, str2)  | 将两个或多个字符串连接起来                        |
+| SUBSTRING(str, pos, len) | 返回字符串的一个子串，从指定位置开始，指定长度       |
+| REPLACE(str, from_str, to_str) | 替换字符串中所有出现的 from_str 为 to_str |
+| UPPER(str)         | 将字符串转换为大写                              |
+| LOWER(str)         | 将字符串转换为小写                              |
+| LENGTH(str)        | 返回字符串的长度                                |
 
 #### MID( ) 函数
 
@@ -712,6 +760,7 @@ MID 函数用于从文本字段中提取字符。
 SELECT MID(column_name,start[,length]) 
 FROM table_name
 ```
+
 |参数|描述|
 |:----|:----|
 |column_name|必需。要提取字符的字段。|
@@ -726,6 +775,7 @@ LEN 函数返回文本字段中值的长度。
 SELECT LEN(column_name) 
 FROM table_name
 ```
+
 #### UCASE() 函数
 
 UCASE 函数把字段的值转换为大写。
@@ -734,6 +784,7 @@ UCASE 函数把字段的值转换为大写。
 SELECT UCASE(column_name) 
 FROM table_name
 ```
+
 #### LCASE() 函数
 
 LCASE 函数把字段的值转换为小写。
@@ -794,6 +845,7 @@ sum (case course when 'English' then grade else 0 end) as English
 from Table_A
 group by name
 ```
+
 >一个横标转纵表的例子，分段统计的例子
 **Note**
 
@@ -835,6 +887,7 @@ Note:
 ```sql
 case when expr1=expr2 then null else expr1 end
 ```
+
 返回值的类型与第一个参数相同
 
 ### if Satement
@@ -855,7 +908,9 @@ CASE case_value
     [ELSE statement_list]
 END CASE
 ```
+
 或者
+
 ```sql
 CASE
     WHEN search_condition THEN statement_list
@@ -870,7 +925,7 @@ This section describes how to use window functions. Examples use the same sales 
 
 这一章节描述了怎么使用窗口函数。例子用的是同样的一个销售信息数据集。
 
-```plain
+```plaintext
 mysql> SELECT * FROM sales ORDER BY country, year, product;
 +------+---------+------------+--------+
 | year | country | product    | profit |
@@ -891,6 +946,7 @@ mysql> SELECT * FROM sales ORDER BY country, year, product;
 +------+---------+------------+--------+
 
 ```
+
 A window function performs an aggregate-like operation on a set of query rows. 
 一个窗口函数类似于执行在一系列查询行的聚集函数。
 
@@ -906,7 +962,7 @@ However, whereas an aggregate operation groups query rows into a single result r
 
 For example, using the sales information table, these two queries perform aggregate operations that produce a single global sum for all rows taken as a group, and sums grouped per country:
 
-```plain
+```plaintext
 mysql> SELECT SUM(profit) AS total_profit
        FROM sales;
 +--------------+
@@ -927,10 +983,12 @@ mysql> SELECT country, SUM(profit) AS country_profit
 +---------+----------------+
 
 ```
+
 By contrast, window operations do not collapse groups of query rows to a single output row. Instead, they produce a result for each row. Like the preceding queries, the following query uses `SUM()`, but this time as a window function:
+
 进行对比，窗口函数将产生的结果作为每一行的结果集输出
 
-```plain
+```plaintext
 mysql> SELECT
          year, country, product, profit,
          SUM(profit) OVER() AS total_profit,
@@ -963,7 +1021,7 @@ Each window operation in the query is signified by inclusion of an `OVER` clau
 
 **The**`OVER`**clause is permitted for many aggregate functions,** which therefore can be used as window or nonwindow functions, depending on whether the `OVER` clause is present or absent:
 
-```plain
+```plaintext
 AVG()
 BIT_AND()
 BIT_OR()
@@ -978,12 +1036,13 @@ STDDEV_SAMP()
 SUM()
 VAR_POP(), VARIANCE()
 VAR_SAMP()
-
 ```
+
 For details about each aggregate function, see [Section 12.20.1, “Aggregate Function Descriptions”](https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html).
+
 MySQL also supports nonaggregate functions that are used only as window functions. For these, the `OVER` clause is mandatory（必须的，强制性的）:
 
-```plain
+```plaintext
 CUME_DIST()
 DENSE_RANK()
 FIRST_VALUE()
@@ -996,10 +1055,12 @@ PERCENT_RANK()
 RANK()
 ROW_NUMBER()
 ```
+
 For details about each nonaggregate function, see [Section 12.21.1, “Window Function Descriptions”](https://dev.mysql.com/doc/refman/8.0/en/window-function-descriptions.html).
+
 As an example of one of those nonaggregate window functions, this query uses `ROW_NUMBER()`, which **produces the row number of each row within its partition.** In this case, rows are numbered per country. By default, partition rows are unordered and row numbering is nondeterministic. To sort partition rows, include an `ORDER BY` clause within the window definition. The query uses unordered and ordered partitions (the `row_num1` and `row_num2` columns) to illustrate the difference between omitting and including `ORDER BY`:
 
-```plain
+```plaintext
 mysql> SELECT
          year, country, product, profit,
          ROW_NUMBER() OVER(PARTITION BY country) AS row_num1,
@@ -1022,24 +1083,27 @@ mysql> SELECT
 | 2001 | USA     | TV         |    150 |        1 |        6 |
 | 2001 | USA     | TV         |    100 |        6 |        7 |
 +------+---------+------------+--------+----------+----------+
-
 ```
+
 As mentioned previously, to use a window function (or treat an aggregate function as a window function), include an `OVER` clause following the function call. The `OVER` clause has two forms:
-```plain
+
+```plaintext
 over_clause:
     {OVER (window_spec) | OVER window_name}
 
 ```
+
 Both forms define how the window function should process query rows. They differ in whether the window is defined directly in the `OVER` clause, or supplied by a reference to a named window defined elsewhere in the query:
 * In the first case, the window specification appears directly in the `OVER` clause, between the parentheses.
 * In the second case, `window_name` is the name for a window specification defined by a `WINDOW` clause elsewhere in the query. For details, see [Section 12.21.4, “Named Windows”](https://dev.mysql.com/doc/refman/8.0/en/window-functions-named-windows.html).
+
 **For**`OVER (``window_spec``)`**syntax, the window specification has several parts, all optional:**
 
-```plain
+```plaintext
 window_spec:
     [window_name] [partition_clause] [order_clause] [frame_clause]
-
 ```
+
 **If**`OVER()`**is empty, the window consists of all query rows and the window function computes a result using all rows.** Otherwise, the clauses present within the parentheses determine which query rows are used to compute the function result and how they are partitioned and ordered:
 * `window_name`: The name of a window defined by a `WINDOW` clause elsewhere in the query. If `window_name` appears by itself within the `OVER` clause, it completely defines the window. If partitioning, ordering, or framing clauses are also given, they modify interpretation of the named window. For details, see [Section 12.21.4, “Named Windows”](https://dev.mysql.com/doc/refman/8.0/en/window-functions-named-windows.html).
 `partition_clause`: A `PARTITION BY` clause indicates how to divide the query rows into groups. The window function result for a given row is based on the rows of the partition that contains the row. If `PARTITION BY` is omitted, there is a single partition consisting of all query rows.
@@ -1050,21 +1114,23 @@ Partitioning for window functions differs from table partitioning. For informati
 
 `partition_clause` has this syntax:
 
-```plain
+```plaintext
 partition_clause:
     PARTITION BY expr [, expr] ...
 
 ```
+
 * Standard SQL requires `PARTITION BY` to be followed by column names only. A MySQL extension is to permit expressions, not just column names. For example, if a table contains a `TIMESTAMP` column named `ts`, standard SQL permits `PARTITION BY ts` but not `PARTITION BY HOUR(ts)`, whereas MySQL permits both.
 `order_clause`: An `ORDER BY` clause indicates how to sort rows in each partition. Partition rows that are equal according to the `ORDER BY` clause are considered peers. If `ORDER BY` is omitted, partition rows are unordered, with no processing order implied, and all partition rows are peers.
 
 `order_clause` has this syntax:
 
-```plain
+```plaintext
 order_clause:
     ORDER BY expr [ASC|DESC] [, expr [ASC|DESC]] ...
 
 ```
+
 Each `ORDER BY` expression optionally can be followed by `ASC` or `DESC` to indicate sort direction. The default is `ASC` if no direction is specified. `NULL` values sort first for ascending sorts, last for descending sorts.
 * An `ORDER BY` in a window definition applies within individual partitions. To sort the result set as a whole, include an `ORDER BY` at the query top level.
 * `frame_clause`: A frame is a subset of the current partition and the frame clause specifies how to define the subset. The frame clause has many subclauses of its own. For details, see [Section 12.21.3, “Window Function Frame Specification”](https://dev.mysql.com/doc/refman/8.0/en/window-functions-frames.html).
@@ -1080,7 +1146,7 @@ Frames are determined with respect to the current row, which enables a frame to 
 * By defining a frame as extending `N` rows on either side of the current row, you can compute rolling averages.
 The following query demonstrates the use of moving frames to compute running totals within each group of time-ordered `level` values, as well as rolling averages computed from the current row and the rows that immediately precede and follow it:
 
-```plain
+```plaintext
 mysql> SELECT
          time, subject, val,
          SUM(val) OVER (PARTITION BY subject ORDER BY time
@@ -1105,17 +1171,20 @@ mysql> SELECT
 +----------+---------+------+---------------+-----------------+
 
 ```
+
 For the `running_average` column, there is no frame row preceding the first one or following the last. In these cases, `AVG()` computes the average of the rows that are available.
 Aggregate functions used as window functions operate on rows in the current row frame, as do these nonaggregate window functions:
 
-```plain
+```plaintext
 FIRST_VALUE()
 LAST_VALUE()
 NTH_VALUE()
 
 ```
+
 Standard SQL specifies that window functions that operate on the entire partition should have no frame clause. MySQL permits a frame clause for such functions but ignores it. These functions use the entire partition even if a frame is specified:
-```plain
+
+```plaintext
 CUME_DIST()
 DENSE_RANK()
 LAG()
@@ -1126,8 +1195,10 @@ RANK()
 ROW_NUMBER()
 
 ```
+
 The frame clause, if given, has this syntax:
-```plain
+
+```plaintext
 frame_clause:
     frame_units frame_extent
 
@@ -1135,6 +1206,7 @@ frame_units:
     {ROWS | RANGE}
 
 ```
+
 In the absence of a frame clause, the default frame depends on whether an `ORDER BY` clause is present, as described later in this section.
 The `frame_units` value indicates the type of relationship between the current row and frame rows:
 
@@ -1142,7 +1214,7 @@ The `frame_units` value indicates the type of relationship between the current
 * `RANGE`: The frame is defined by rows within a value range. Offsets are differences in row values from the current row value.
 The `frame_extent` value indicates the start and end points of the frame. You can specify just the start of the frame (in which case the current row is implicitly the end) or use `BETWEEN` to specify both frame endpoints:
 
-```plain
+```plaintext
 frame_extent:
     {frame_start | frame_between}
 
@@ -1158,6 +1230,7 @@ frame_start, frame_end: {
 }
 
 ```
+
 With `BETWEEN` syntax, `frame_start` must not occur later than `frame_end`.
 The permitted `frame_start` and `frame_end` values have these meanings:
 
@@ -1172,18 +1245,21 @@ For `expr``PRECEDING` (and `expr``FOLLOWING`), `expr` can be a `?` parame
 
 Examples of valid `expr``PRECEDING` and `expr``FOLLOWING` indicators:
 
-```plain
+```plaintext
 10 PRECEDING
 INTERVAL 5 DAY PRECEDING
 5 FOLLOWING
 INTERVAL '2:30' MINUTE_SECOND FOLLOWING
 
 ```
+
 `expr``FOLLOWING`: For `ROWS`, the bound is `expr` rows after the current row. For `RANGE`, the bound is the rows with values equal to the current row value plus `expr`; if the current row value is `NULL`, the bound is the peers of the row.
+
 * For permitted values of `expr`, see the description of `expr``PRECEDING`.
+
 The following query demonstrates `FIRST_VALUE()`, `LAST_VALUE()`, and two instances of `NTH_VALUE()`:
 
-```plain
+```plaintext
 mysql> SELECT
          time, subject, val,
          FIRST_VALUE(val)  OVER w AS 'first',
@@ -1208,21 +1284,27 @@ mysql> SELECT
 +----------+---------+------+-------+------+--------+--------+
 
 ```
+
 Each function uses the rows in the current frame, which, per the window definition shown, extends from the first partition row to the current row. For the `NTH_VALUE()` calls, the current frame does not always include the requested row; in such cases, the return value is `NULL`.
+
 In the absence of a frame clause, the default frame depends on whether an `ORDER BY` clause is present:
 
 With `ORDER BY`: The default frame includes rows from the partition start through the current row, including all peers of the current row (rows equal to the current row according to the `ORDER BY` clause). The default is equivalent to this frame specification:
 
-```plain
+```plaintext
 RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
 
 ```
+
 Without `ORDER BY`: The default frame includes all partition rows (because, without `ORDER BY`, all partition rows are peers). The default is equivalent to this frame specification:
-```plain
+
+```plaintext
 RANGE BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING
 
 ```
+
 Because the default frame differs depending on presence or absence of `ORDER BY`, adding `ORDER BY` to a query to get deterministic results may change the results. (For example, the values produced by `SUM()` might change.) To obtain the same results but ordered per `ORDER BY`, provide an explicit frame specification to be used regardless of whether `ORDER BY` is present.
+
 The meaning of a frame specification can be nonobvious when the current row value is `NULL`. Assuming that to be the case, these examples illustrate how various frame specifications apply:
 
 `ORDER BY X ASC RANGE BETWEEN 10 FOLLOWING AND 15 FOLLOWING`
@@ -1247,11 +1329,6 @@ The meaning of a frame specification can be nonobvious when the current row valu
 
 * The frame starts at the beginning of the partition and stops at rows with value `NULL`. Because an `ASC` sort puts `NULL` values first, the frame is only the `NULL` values.
 * 
-
- 
-
-
-
 
 ### Window Function Descriptions
 
@@ -1302,7 +1379,7 @@ This function should be used with `ORDER BY` to sort partition rows into the d
 
 The following query shows, for the set of values in the `val` column, the `CUME_DIST()` value for each row, as well as the percentage rank value returned by the similar `PERCENT_RANK()` function. For reference, the query also displays row numbers using `ROW_NUMBER()`:
 
-```plain
+```plaintext
 mysql> SELECT
          val,
          ROW_NUMBER()   OVER w AS 'row_number',
@@ -1325,6 +1402,7 @@ mysql> SELECT
 +------+------------+--------------------+--------------+
 
 ```
+
 `DENSE_RANK()` `over_clause`
 Returns the rank of the current row within its partition, without gaps. Peers are considered ties and receive the same rank. This function assigns consecutive ranks to peer groups; the result is that groups of size greater than one do not produce noncontiguous rank numbers. For an example, see the `RANK()` function description.
 
@@ -1339,7 +1417,7 @@ Returns the value of `expr` from the first row of the window frame.
 
 The following query demonstrates `FIRST_VALUE()`, `LAST_VALUE()`, and two instances of `NTH_VALUE()`:
 
-```plain
+```plaintext
 mysql> SELECT
          time, subject, val,
          FIRST_VALUE(val)  OVER w AS 'first',
@@ -1364,6 +1442,7 @@ mysql> SELECT
 +----------+---------+------+-------+------+--------+--------+
 
 ```
+
 * Each function uses the rows in the current frame, which, per the window definition shown, extends from the first partition row to the current row. For the `NTH_VALUE()` calls, the current frame does not always include the requested row; in such cases, the return value is `NULL`.
 `LAG(``expr``[,``N``[,``default``]])` [`null_treatment`] `over_clause`
 
@@ -1381,7 +1460,7 @@ Beginning with MySQL 8.0.22, `N` cannot be `NULL`. In addition, it must now b
 
 `LAG()` (and the similar `LEAD()` function) are often used to compute differences between rows. The following query shows a set of time-ordered observations and, for each one, the `LAG()` and `LEAD()` values from the adjoining rows, as well as the differences between the current and adjoining rows:
 
-```plain
+```plaintext
 mysql> SELECT
          t, val,
          LAG(val)        OVER w AS 'lag',
@@ -1408,7 +1487,7 @@ The first row shows what happens when there is no previous row for `LAG()`: The
 
 `LAG()` and `LEAD()` also serve to compute sums rather than differences. Consider this data set, which contains the first few numbers of the Fibonacci series:
 
-```plain
+```plaintext
 mysql> SELECT n FROM fib ORDER BY n;
 +------+
 | n    |
@@ -1423,7 +1502,7 @@ mysql> SELECT n FROM fib ORDER BY n;
 
 ```
 The following query shows the `LAG()` and `LEAD()` values for the rows adjacent to the current row. It also uses those functions to add to the current row value the values from the preceding and following rows. The effect is to generate the next number in the Fibonacci series, and the next number after that:
-```plain
+```plaintext
 mysql> SELECT
          n,
          LAG(n, 1, 0)      OVER w AS 'lag',
@@ -1501,7 +1580,7 @@ This function should be used with `ORDER BY` to sort partition rows into the d
 
 The following query shows, for the set of values in the `val` column, the percentile values resulting from dividing the rows into two or four groups. For reference, the query also displays row numbers using `ROW_NUMBER()`:
 
-```plain
+```plaintext
 mysql> SELECT
          val,
          ROW_NUMBER() OVER w AS 'row_number',
@@ -1524,15 +1603,17 @@ mysql> SELECT
 +------+------------+--------+--------+
 
 ```
+
 * Beginning with MySQL 8.0.22, the construct `NTILE(NULL)` is no longer permitted.
 `PERCENT_RANK()` `over_clause`
 
 Returns the percentage of partition values less than the value in the current row, excluding the highest value. Return values range from 0 to 1 and represent the row relative rank, calculated as the result of this formula, where `rank` is the row rank and `rows` is the number of partition rows:
 
-```plain
+```plaintext
 (rank - 1) / (rows - 1)
 
 ```
+
 This function should be used with `ORDER BY` to sort partition rows into the desired order. Without `ORDER BY`, all rows are peers.
 `over_clause` is as described in [Section 12.21.2, “Window Function Concepts and Syntax”](https://dev.mysql.com/doc/refman/8.0/en/window-functions-usage.html).
 
@@ -1547,7 +1628,7 @@ This function should be used with `ORDER BY` to sort partition rows into the d
 
 The following query shows the difference between `RANK()`, which produces ranks with gaps, and `DENSE_RANK()`, which produces ranks without gaps. The query shows rank values for each member of a set of values in the `val` column, which contains some duplicates. `RANK()` assigns peers (the duplicates) the same rank value, and the next greater value has a rank higher by the number of peers minus one. `DENSE_RANK()` also assigns peers the same rank value, but the next higher value has a rank one greater. For reference, the query also displays row numbers using `ROW_NUMBER()`:
 
-```plain
+```plaintext
 mysql> SELECT
          val,
          ROW_NUMBER() OVER w AS 'row_number',
@@ -1568,8 +1649,8 @@ mysql> SELECT
 |    4 |          8 |    7 |          4 |
 |    5 |          9 |    9 |          5 |
 +------+------------+------+------------+
-
 ```
+
 `ROW_NUMBER()` `over_clause`
 Returns the number of the current row within its partition. Rows numbers range from 1 to the number of partition rows.
 
@@ -1619,7 +1700,6 @@ SELECT
 +------+------------+------+------------+
 ```
 
-
 ### `ROW_NUMBER()` `over_clause`
 
 Returns the number of the current row within its partition. Rows numbers range from 1 to the number of partition rows.
@@ -1664,15 +1744,11 @@ rows between 1 preceding and 1 following 窗口范围是当前行、前一行、
 
 rows unbounded preceding 窗口范围是分区中的第一行到当前行。
 
-rows between unbounded preceding and unbounded following 窗口范围是当前分区中所有行，
-
-等同于不写。
+rows between unbounded preceding and unbounded following 窗口范围是当前分区中所有行等同于不写。
 
 开窗函数和普通聚合函数的区别：
 
-聚合函数是将多条记录聚合为一条；而开窗函数是每条记录都会执行，有几条记录执行完还是几
-
-条。
+聚合函数是将多条记录聚合为一条；而开窗函数是每条记录都会执行，有几条记录执行完还是几条。
 
 聚合函数也可以用于开窗函数中。
 
@@ -1689,4 +1765,3 @@ dense_rank()
 rank()
 
 显示分区中重复间断的序号
-
