@@ -1,6 +1,6 @@
 ---
 title: "MySQL的架构"
-categories: [Database, MySQL]
+categories: [Database]
 tags: [MySQL, Database]
 toc: true
 ---
