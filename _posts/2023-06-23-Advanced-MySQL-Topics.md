@@ -1,5 +1,5 @@
 ---
-title: "MySQL的架构"
+title: "MySQL 的架构"
 categories: [Database]
 tags: [MySQL, Database]
 toc: true
@@ -7,17 +7,18 @@ mermaid: true
 img_path: /assets/images/2023-06-23-Advanced-MySQL-Topics
 ---
 
-MySQL 可以分为 Server 层和存储引擎层两部分
-
 ch1 MySQL架构
+
+MySQL 可以分为 Server 层和存储引擎层两部分
 
 ## MySQL 的逻辑架构
 
 ![MySQL 的逻辑架构]({{ site.url }}/assets/images/sql1.png)
+_5.7，下面那个是8.x的_
 MySQL 可以分为 Server 层和存储引擎层两部分
 - Server 层
     - 连接器 → 管理链接，权限验证
-    - 查询缓存 → 8.0 后整块功能就删掉了
+    - 查询缓存 → <font color='red' style='font-weight:bold'>8.0 后整块功能就删掉了</font>
     - 分析器 → 词法分析，语法分析
     - 优化器 → 执行计划生成，索引选择
     - 执行器 → 与存储引擎交互，返回结果
@@ -56,9 +57,16 @@ SQL命令传递到解析器的时候会被解析器验证和解析。解析器�
 
 查询缓存，如果查询缓存有命中的查询结果，查询语句就可以直接去查询缓存中取数据。这个缓存机制是由一系列小缓存组成的。比如表缓存，记录缓存，key缓存，权限缓存等。
 
-存储引擎
+**存储引擎 **
 
-文件系统
+不同的数据文件在磁盘的不同组织形式。服务器通过 API 与存储引擎进行通信。
+1. InnoDB 支持事务，MyISAM 不支持
+2. InnoDB 支持外键，MyISAM 不支持
+3. InnoDB 支持表锁和行锁，但是 MyISAM 支持表锁
+4. InnoDB 在 5.6 版本之后支持全文索引
+5. InnoDB 索引的叶子节点直接存放数据，而 MyISAM 存放地址
+
+文件系统 File System
 
 ## 并发控制
 
@@ -282,7 +290,7 @@ SERIALIZABLE 则会对所有读取的行都加锁
 
 ### InnoDB 存储引擎
 
-InnoDB 是 MySQL 的默认事务型引擎。被设计用来处理大量短期（short-lived）事务
+InnoDB 是 MySQL 的默认事务型引擎。被设计用来处理大量短期（short-lived）事务，MySQL数据库OLTP(Online Transaction Processing在线事务处理）应用中使用最广泛的存储引擎。
 
 InnoDB 的数据存储在表空间（tablespace）中，表空间是由 InnoDB 管理的一个黑盒子，由一系列的数据文件组成。
 
@@ -294,9 +302,7 @@ InnoDB 表是基于聚簇索引建立的。
 
 聚簇索引对主键查询有很高的性能，不过它的二级索引（secondary index，非主键索引）中必须包含主键列
 
-InnoDB 内部做了很多优化。
-
-包括从磁盘读取数据时采用的可预测性预读，能够自动在内存中创建 hash 索引以加速读操作的自适应哈希索引（adaptive hash index），以及能够加速插入操作的插入缓冲区（insert buffer）等
+InnoDB 内部做了很多优化。包括从磁盘读取数据时采用的可预测性预读，能够自动在内存中创建 hash 索引以加速读操作的自适应哈希索引（adaptive hash index），以及能够加速插入操作的插入缓冲区（insert buffer）等
 
 ### MyISAM 存储引擎
 
