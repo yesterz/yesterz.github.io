@@ -3,6 +3,8 @@ title: "MySQL的架构"
 categories: [Database]
 tags: [MySQL, Database]
 toc: true
+mermaid: true
+img_path: /assets/images/2023-06-23-Advanced-MySQL-Topics
 ---
 
 MySQL 可以分为 Server 层和存储引擎层两部分
@@ -25,11 +27,46 @@ MySQL 可以分为 Server 层和存储引擎层两部分
     - MyISAM
     - Memory
 
+![MySQL Architecture with Pluggable Storage Engines](mysql-architecture.png)
+_MySQL Architecture with Pluggable Storage Engines_
+
+可以看出MySQL是由**连接池、管理工具和服务、SQL接口、解析器、优化器、缓存、存储引擎、文件系统**组成。
+
+**连接池**
+
+由于每次建立建立需要消耗很多时间，连接池的作用就是将这些连接缓存下来，下次可以直接用已经建立好的连接，提升服务器性能。
+
+**管理工具和服务**
+
+系统管理和控制工具，例如备份恢复、MySQL 复制、集群等
+
+**SQL接口**
+
+接受用户的 SQL 命令，并且返回用户需要查询的结果。比如 select ... from 就是调用SQL接口
+
+**解析器**
+
+SQL命令传递到解析器的时候会被解析器验证和解析。解析器主要功能：1、将SQL语句分解成数据结构，后续步骤的传递和处理就是基于这个结构的。2、将SQL语句分解成数据结构，后续步骤的传递和处理就是基于这个结构的。
+
+**优化器**
+
+查询优化器，SQL语句在查询之前会使用查询优化器对查询进行优化。
+
+**缓存器**
+
+查询缓存，如果查询缓存有命中的查询结果，查询语句就可以直接去查询缓存中取数据。这个缓存机制是由一系列小缓存组成的。比如表缓存，记录缓存，key缓存，权限缓存等。
+
+存储引擎
+
+文件系统
+
 ## 并发控制
 
-> 数据库锁设计的初衷是处理并发问题。作为多用户共享的资源，当出现并发访问的时候，数据库需要合理地控制资源的访问规则。而锁就是用来实现这些访问规则的重要数据结构。
+数据库锁设计的初衷是处理并发问题。作为多用户共享的资源，当出现并发访问的时候，数据库需要合理地控制资源的访问规则。而锁就是用来实现这些访问规则的重要数据结构。
 
 在处理并发读或者写的时候，可以通过实现一个由两种类型的锁组成的锁系统来解决问题。
+
+![锁的模式和锁的算法](image.png)
 
 通常称之为**共享锁（shared lock）**和**排他锁（exclusive lock）**，也叫读锁（read lock）和写锁（write lock）。
 
@@ -71,7 +108,7 @@ MySQL 可以分为 Server 层和存储引擎层两部分
 
 当你需要让整个库处于只读状态的时候，可以使用这个命令，之后其他线程的以下语句会被阻塞：数据更新语句（数据的增删改）、数据定义语句（包括建表、修改表结构等）和更新类事务的提交语句。**全局锁的典型使用场景是，做全库逻辑备份。**也就是把整库每个表都select出来存成文本。
 
-## 事务
+## 事务 Transaction
 
 1. ~~基础概念介绍~~
 2. ~~隔离级别~~
@@ -111,6 +148,7 @@ MySQL 可以分为 Server 层和存储引擎层两部分
     | READ COMMITTED | No | Yes | Yes | No |
     | REPEATABLE READ | No | No | Yes | No |
     | SERIALIZABLE | No | No | No | Yes |
+
 1. READ UNCOMMITTED （未提交读）
   
     读未提交是指，一个事务还没提交时，它做的变更就能被别的事务看到。
@@ -138,6 +176,9 @@ MySQL 可以分为 Server 层和存储引擎层两部分
     最高的隔离执行。它强制事务串行执行，避免了幻读问题。它会在读取的每一行数据上都加锁，可能会导致超时和锁竞争的问题。
     
     实际开发很少用，非常需要确保数据的一致性时且可以接受没有并发的情况，才考虑。
+
+    > 只要涉及到金钱都给我串行化去处理
+    {: .prompt-warning }
     
 
 在实现上，数据库里面会创建一个视图，访问的时候以视图的逻辑结果为准。在“可重复读”隔离级别下，这个视图是在事务启动时创建的，整个事务存在期间都用这个视图。在“读提交”隔离级别下，这个视图是在每个SQL语句开始执行的时候创建的。这里需要注意的是，“读未提交”隔离级别下直接返回记录上的最新值，没有视图概念；而“串行化”隔离级别下直接用加锁的方式来避免并行访问。
@@ -183,6 +224,24 @@ show variables like 'transaction_isolation';
 可以认为 MVCC 是行级锁的一个变种，但是它在很多情况下避免了加锁操作，因此开销更低。实现了非阻塞的读操作，写操作也只锁定必要的行。
 
 MVCC 的实现，是通过**保存数据在某个时间点的快照**来实现的。不管需要执行多长时间，每个事物看到的数据都是一致的。根据事务开始的时间不同，每个事务对同一张表，同一时刻看到的数据可能是不一样的。
+
+```mermaid
+sequenceDiagram
+    事务 A->>行: A 写入
+    InnoDB 引擎->Undo 日志: helping line 1
+    note right of InnoDB 引擎: This line assists<br>in rendering what I want.
+    Undo 日志->Redo 日志: helping line 2
+    note right of Redo 日志: This line assists<br>in rendering what I want too.
+    事务 A->>Undo 日志: 带有 txn ID A 的 Undo 日志
+    Undo 日志->>事务 A: 回滚指针
+    事务 A->>Redo 日志: Redo 日志记录
+    InnoDB 引擎->>事务 B: 读取行
+    loop 比较事务 ID 循环
+        事务 B->>InnoDB 引擎: 应用 Undo 记录知道正确的 txn ID
+    end
+```
+_跨不同事务处理同一行多个版本的序列图_
+
 
 通过 InnoDB 简化版行为说明 MVCC 是如何工作的：
 
