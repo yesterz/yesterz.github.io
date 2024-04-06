@@ -40,5 +40,3 @@ the shield that guards the realms of men.
 I pledge my life and honor to the Night's Watch,
 
 for this night and all the nights to come.
-
-虽然配图不是权游的剧照但是我还是喜欢这张图片，嗯。

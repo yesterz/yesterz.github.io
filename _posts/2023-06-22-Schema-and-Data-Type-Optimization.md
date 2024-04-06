@@ -114,6 +114,8 @@ SET
 
 某些类型的数据并不直接与内置类型一致。
 
+---
+
 ## schema 设计中的陷阱
 
 有些普遍的好或坏的设计原则，本小节讨论设计 MySQL 的 schema 的问题。
@@ -149,6 +151,8 @@ SET
   避免使用 NULL；即使需要存储一个事实上的“空值”到表中时，也不一定非得使用 NULL。
 
   也许可以使用 0、某个特殊值，或者空字符串作为代替。
+
+---
 
 ## 范式和反范式
 
@@ -193,6 +197,8 @@ SET
 | 内存占用       | 小           | 大         |
 | 查询表关联     | 较多         | 较少       |
 | 查询索引命中   | 较少命中     | 更多命中   |
+
+---
 
 ## 缓存表和汇总表
 
@@ -260,8 +266,8 @@ UPDATE daily _hit_counter as c
     FROM daily hit counter
     GROUP BY day
   ) AS x USING(day)
-SET c.cnt = IF(c.slot = x.mslot，x.cnt，0),
-    c.slot = IF(c.slot=x.mslot, 0，c.slot);
+SET c.cnt = IF(c.slot = x.mslot, x.cnt, 0),
+    c.slot = IF(c.slot=x.mslot, 0, c.slot);
 DELETE FROM daily_hit_counter WHERE slot<>0 AND cnt = 0;
 ```
 
@@ -270,6 +276,8 @@ DELETE FROM daily_hit_counter WHERE slot<>0 AND cnt = 0;
 为了提升读查询的速度，经常会需要建一些额外索引，增加冗余列，甚至是创建缓存表和汇总表。这些方法会增加写查询的负担，也需要额外的维护任务，但在设计高性能数据库时，这些都是常见的技巧:虽然写操作变得更慢了，但更显著地提高了读操作的性能。
 
 然而，写操作变慢并不是读操作变得更快所付出的唯一代价，还可能同时增加了读操作和写操作的开发难度。
+
+---
 
 ## 加快 ALTER TABLE 操作的速度
 

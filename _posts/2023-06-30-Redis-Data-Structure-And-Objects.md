@@ -1,16 +1,26 @@
 ---
 title: "Redis 数据结构与对象"
-categories: [Cache, Redis]
+categories: [Cache]
 tags: [Cache]
 toc: true
+img_path: /assets/images/2023-06-30-Redis-Data-Structure-And-Objects
 ---
 
+Redis 数据库里面的每个键值对（key-value pair）都是由对象（object）组成的，其中:
+1. 数据库键总是一个字符串对象（string object）;
+2. 而数据库键的值则可以是字符串对象、列表对象（list object）、哈希对象（hash object）、集合对象（set object）、有序集合对象（sorted set object）这五种对象中的其中一种。
+
 ## 简单动态字符串 sinple dynamic string, SDS
+
+字符串字面量：string literal
+
+Redis 只会使用 C 字符串作为字面量，在大多数情况下，Redis 使用 SDS（Simple Dynamic String，简单动态字符串）作为字符串表示。
 
 ### SDS 的定义
 
 ```c
 struct sdsdr {
+
     // 记录 buf 数组中已使用的字节的数量
     // 等于 SDS 所保存字符串的长度
     int len;
@@ -20,12 +30,63 @@ struct sdsdr {
 
     // 字节数组，用于保存字符串
     char buf[];
+
 }
 ```
 
+### O(1) 获取字符串长度
+
+因为 C 字符串并不记录自身的长度信息，所以为了获取一个 C 字符串的长度，程序必须遍历整个字符串，对遇到的每个字符进行计数，直到遇到代表字符串结尾的空字符为止，这个操作的复杂度为 O(N)。
+
+和 C 字符串不同，因为 SDS 在 len 属性中记录了 SDS 本身的长度，所以获取一个 SDS 长度的复杂度仅为 O(1)。
+
+设置和更新 SDS 长度的工作是由 SDS 的 API 在执行时自动完成的，使用 SDS 无须进行任何手动修改长度的工作。
+
+### 杜绝缓冲区溢出
+
+与 C 字符串不同，SDS 的空间分配策略完全杜绝了发生缓冲区溢出的可能性:
+
+当 SDS API 需要对 SDS 进行修改时，API 会先检査 SDS 的空间是否满足修改所需的要求，如果不满足的话，API 会自动将 SDS 的空间扩展至执行修改所需的大小，然后才执行实际的修改操作，所以使用 SDS 既不需要手动修改 SDS 的空间大小，也不会出现前面所说的缓冲区出问题。
+
+### SDS 内存分配策略
+
+为了避免 C 字符串的这种缺陷，SDS 通过未使用空间（free 变量）解除了字符串长度和底层数组长度之间的关联:
+
+在 SDS 中，buf 数组的长度不一定就是字符数量加一，数组里面可以包含未使用的字节，而这些字节的数量就由 SDS 的 free 属性记录。通过未使用空间，SDS 实现了空间预分配和惰性空间释放两种优化策略。
+
+<font color='red' style='font-weight:bold'>1. 空间预分配 -> 用于优化 SDS 的字符串增长操作:</font>
+
+当 SDS 的 API 对一个 SDS 进行修改，并且需要对 SDS 进行空间扩展的时候，程序不仅会为 SDS 分配修改所必须要的空间，还会为 SDS 分配额外的未使用空间。
+
+如果对 SDS 进行修改之后，SDS 的长度（也即是 len 属性的值）将小于 1MB，那么程序分配和 1en 属性同样大小的未使用空间，这时 SDS len 属性的值将和 free 属性的值相同。
+
+如果对 SDS 进行修改之后，SDS 的长度将大于等于 1MB，那么程序会分配 1MB 的未使用空间。
+
+通过空间预分配策略，Redis 可以减少连续执行字符串增长操作所需的内存重分配次数。在扩展 SDS 空间之前，SDS API 会先检查未使用空间是否足够，如果足够的话，API 就会直接使用未使用空间，而无须执行内存重分配。**通过这种预分配策略，SDS 将连续增长 N 次字符串所需的内存重分配次数从必定 N 次降低为最多 N 次。**
+
+<font color='red' style='font-weight:bold'>2. 惰性空间释放 -> 用于优化 SDS 的字符串缩短操作：</font>
+
+当 SDS 的 API 需要缩短 SDS 保存的字符串时，程序并不立即使用内存重分配来回收缩短后多出来的字节，而是使用 free 属性将这些字节的数量记录起来，并等待将来使用。
+
+### binary-safe 二进制安全
+
+binary-safe
+
+所有 SDS API 都会以处理二进制的方式来处理 SDS 存放在 buf 数组里的数据程序不会对其中的数据做任何限制、过滤、或者假设，数据在写人时是什么样的，它被读取时就是什么样。
+
+这也是我们将 SDS 的 buf 属性称为字节数组的原因--Redis 不是用这个数组来保存字符，而是用它来保存一系列二进制数据。
+
+### 兼容部分 C 字符串函数
+
+虽然 SDS 的 API 都是二进制安全的，但它们一样遵循 C 字符串以空字符结尾的惯例：
+
+SDS 遵循 C 字符串以空字符结尾的惯例，保存空字符的 1 字节空间不计算在 SDS 的 len 属性里面，并且为空字符分配额外的 1 字节空间，以及添加空字符到字符串末尾等操作，都是由 SDS 函数自动完成的，所以这个空字符对于 SDS 的使用者来说是完全透明的。遵循空字符结尾这一惯例的好处是，SDS 可以直接重用一部分C字符串函数库里面的函数。
+
+这些 API 总会将 SDS 保存的数据的末尾设置为空字符，并且总会在为 buf 数组分配空间时多分配一个字节来容纳这个空字符，这是为了让那些保存文本数据的 SDS 可以重用一部分<string.h>库定义的函数。
+
 ### SDS 与 C 字符串的区别
 
-1. 常数复杂度 O(1) 获取字符串长度
+1. 常数复杂度 O(1) 获取字符串长度，SDS 属性就有 len 字符串长度属性。
 2. 杜绝缓冲区溢出的问题
 3. 减少修改字符串长度时所需的内存重新分配的次数
    1. 空间预分配策略：连续增长 N 次字符串所需要的内存分配次数必定 N 次**降低为最多 N 次**
@@ -33,25 +94,81 @@ struct sdsdr {
 4. 二进制安全（binary-safe）可以保存文本或者二进制数据
 5. 兼容部分 C 字符串函数
 
-## 链表
+| C字符串                                     | SDS                                       |
+|-----------------------------------------|-----------------------------------------|
+| 获取字符串长度的复杂度为 O(N)            | 获取字符串长度的复杂度为 O(1)            |
+| API是不安全的，可能会造成缓冲区溢出      | API是安全的，不会造成缓冲区溢出          |
+| 修改字符串长度 N 次必然需要执行 N 次内存重分配 | 修改字符串长度 N 次最多需要执行 N 次内存重分配 |
+| 只能保存文本数据                         | 可以保存文本或者二进制数据                |
+| 可以使用所有<string.h>库中的函数         | 可以使用一部分<string.h>库中的函数         |
 
-### 链表和链表节点的实现
+---
+
+## 链表 list
+
+链表在 Redis 中的应用非常广泛，比如列表键的底层实现之一就是链表。当一个列表键包含了数量比较多的元素，又或者列表中包含的元素都是比较长的字符串时，Redis 就会使用链表作为列表键的底层实现。
+
+除了链表键之外，发布与订阅、慢查询、监视器等功能也用到了链表，Redis 服务器本身还使用链表来保存多个客户端的状态信息，以及使用链表来构建客户端输出缓冲区 output buffer )，本书后续的章节将陆续对这些链表应用进行介绍。
+
+### list & listNode
 
 ```c
 typedef struct listNode {
+
     // 前置节点
     struct listNode *prev;
+
     // 后置节点
     struct listNode *next;
+
     // 节点的值
     void *value;
-}listNode;
-```
-多个 `listNode` 可以通过 prev 和 next 指针组成双端链表。
-`list` 结构和 `listNode` 结构组成的链表示意图如下
-![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1688295927751-381ccdc3-0234-47ee-bfcf-131b2c7da72c.png#averageHue=%23f2f2f2&clientId=u15a65edc-38b9-4&from=paste&height=230&id=u2edfdb21&originHeight=230&originWidth=599&originalType=binary&ratio=1&rotation=0&showTitle=false&size=63689&status=done&style=none&taskId=u1af440c5-91bc-4f4b-b21e-df5fe6d30fe&title=&width=599)
 
-### Redis 的链表实现的特性总结如下：
+} listNode;
+```
+
+多个 listNode 可以通过 prev 和 next 指针组成双端链表。
+
+![由多个 listNode 组成的双端链表](listNodes.png)
+_由多个 listNode 组成的双端链表_
+
+```c
+typedef struct list {
+
+    // 表头节点
+    listNode *head;
+
+    // 表尾节点
+    listNode *tail;
+
+    // 链表所包含的节点数量
+    unsigned long len;
+
+    // 节点值复制函数
+    void *(*dup)(void *ptr);
+
+    // 节点值释放函数
+    void (*free)(void *ptr);
+
+    // 节点值对比函数
+    int (*match)(void *ptr, void *key);
+
+} list;
+```
+
+list 结构为链表提供了表头指针 head、表尾指针 tail，以及链表长度计数器 len，而 dup、free 和 match 成员则是用于实现多态链表所需的类型特定函数:
+- dup 函数用于复制链表节点所保存的值；
+- free 函数用于释放链表节点所保存的值；
+- match 函数则用于对比链表节点所保存的值和另一个输入值是否相等。
+
+`list` 结构和 `listNode` 结构组成的链表示意图如下
+
+![由 list 结构和 listNode 结构组成的链表](List.png)
+_由 list 结构和 listNode 结构组成的链表_
+
+### 链表实现的特性
+
+总结如下：
 
 - **双端：**链表节点带 `prev` 和 `next` 指针，获取某个节点的前置节点和后置节点的复杂度都是 O(1)。
 - **无环：**表头节点的 `prev` 指针和表尾节点的 `next` 指针都指向 `NULL`，对链表的访问以 `NULL` 为终点。
@@ -59,66 +176,132 @@ typedef struct listNode {
 - **带链表长度计数器：**程序使用 list 结构的 len 属性来对 list 持有的链表节点进行行计数，程序获取链表中节点数量的复杂度为 O(1)。
 - **多态：**链表节点使用 void* 指针来保存节点值，并且可以通过 list 结构的 dup、free、match 三个属性为节点值设置类型特定函数，所以链表可以用于保存各种不同类型的值。
 
+---
+
 ## 字典 dictionary
 
 字典，又称为符号表（symbol table）、关联数组（associative array）或映射（map），是一种用于保存键值对（key-value pair）的抽象数据结构。
 
+在字典中，一个键（key）可以和一个值（value）进行关联（或者说将键映射为值），这些关联的键和值就称为键值对。Redis 的数据库底层就是用字典来实现的。
+
+字典中的每个键都是独一无二的，程序可以在字典中根据键查找与之关联的值，或者通过键来更新值，又或者根据键来删除整个键值对，等等。
+
+**参考资料：**
+1. Associative Array <https://en.wikipedia.org/wiki/Associative_array>
+2. Hash Table <https://en.wikipedia.org/wiki/Hash_table>
+
 ### 字典的实现
 
-Redis 的字典使用哈希表作为底层实现，一个哈希表里面可以有多个哈希表节点，而每个哈希表节点就保存了字典中的一个键值对。
+<font color='red' style='font-weight:bold'>Redis 的字典使用哈希表作为底层实现，一个哈希表里面可以有多个哈希表节点，而每个哈希表节点就保存了字典中的一个键值对。</font>
 
-#### 哈希表
+#### 哈希表 dictht
 
 ```c
 typedef struct dictht {
+
     // 哈希表数组
     dictEntry **table;
+
     // 哈希表大小
     unsigned long size;
+
     // 哈希表大小掩码，用于计算索引值
     // 总是等于 size-1
     unsigned long sizemask;
+
     // 该哈希表已有节点的数量
     unsigned long used;
+
 } dictht;
 ```
-table 属性是一个数组，数组中的每一个元素都是一个指向 dict.h/dictEntry 结构的指针，每个 dictEntry 结构保存着一个键值对。
 
-#### 哈希表节点
+table 属性是一个数组，数组中的每一个元素都是一个指向 dictEntry 结构的指针，每个 dictEntry 结构保存着一个键值对。size 属性记录了哈希表的大小，也即是 table 数组的大小，而 used 属性则记录了哈希表目前已有节点（键值对）的数量。sizemask 属性的值总是等于 size-1，这个属性和哈希值一起决定一个键应该被放到 table 数组的哪个索引上面。
+
+#### 哈希表节点 dictEntry
+
+哈希表节点使用 dictEntry 结构表示，每个 dictEntry 结构都保存着一个键值对:
 
 ```c
 typedef struct dictEntry {
+
     // 键
     void *key;
+
     // 值
     union{
         void *val;
         uint64_t u64;
         int64_t s64;
     } v;
+
     // 指向下个哈希表节点，形成链表
-    struct dictEntry *next;
+    struct dictEntry *next;  /* Next entry in the same hash bucket. */
+
 } dictEntry;
 ```
+
+key 属性保存着键值对中的键，而 v 属性则保存着键值对中的值，其中键值对的值可以是一个指针，或者是一个uint64_t 整数，又或者是一个 int64_t 整数。
+
 `next`属性是指向另一个哈希表节点的指针，这个指针可以将多个哈希值相同的键值对连接在一起，来解决键冲突（collision）的问题。
 
-#### 字典的实现
+#### 字典 dict
 
 ```c
 typedef struct dict {
+
     // 类型特定函数
     dictType *type;
+
     // 私有数据
     void *privdata;
+
     // 哈希表
     dictht ht[2];
+
     // rehash 索引
     // 当 rehash 不在进行时，值为 -1
-    int rehashidx;
-    /* rehashing not in progress'if rehashidx == -1*/
+    int rehashidx; /* rehashing not in progress'if rehashidx == -1*/
+
 }
 ```
+
+type 属性和 privdata 属性是针对不同类型的键值对，为创建多态字典而设置的：
+- type 属性是一个指向 dictrype 结构的指针，每个 dictType 结构保存了一簇用于操作特定类型键值对的函数，Redis 会为用途不同的字典设置不同的类型特定函数。
+- 而 privdata 属性则保存了需要传给那些类型特定函数的可选参数。
+
+```c
+typedef struct dictType {
+    
+    // 计算哈希值的函数
+    uint64_t (*hashFunction)(const void *key);
+
+    // 复制键的函数
+    void *(*keyDup)(dict *d, const void *key);
+
+    // 复制值的函数
+    void *(*valDup)(dict *d, const void *obj);
+
+    // 对比键的函数
+    int (*keyCompare)(dict *d, const void *key1, const void *key2);
+
+    // 销毁键的函数
+    void (*keyDestructor)(dict *d, void *key);
+
+    // 销毁值的函数
+    void (*valDestructor)(dict *d, void *obj);
+} dictType;
+```
+
 ht 属性是一个包含两个项的数组，数组中的每个项都是一个 dictht 哈希表，一般情况下，字典只使用 ht[0] 哈希表，ht[1] 哈希表只会在对 ht[0] 哈希表进行 rehash 时使用。
+
+除了 ht[1] 之外，另一个和 rehash 有关的属性就是 rehashidx，它记录了 rehash 目前的进度，如果目前没有在进行 rehash，那么它的值为 -1。
+
+<font color='red' style='font-weight:bold'>Redis 的字典使用哈希表作为底层实现，一个哈希表里面可以有多个哈希表节点，而每个哈希表节点就保存了字典中的一个键值对。</font>
+
+**dict, dictht 和 dictEntry 结构示意图如下**
+
+![普通状态下的字典](normal_dict.png)
+_一个普通状态下（没有进行 rehash）的字典_
 
 ### 哈希算法
 
@@ -273,7 +456,7 @@ ziplist 是为了节约内存而开发的，是由一系列特殊编码的连续
 
 连续多次空间扩展操作 
 
-## 对象
+## 对象 object
 
 Redis 基于上述介绍的数据结构创建了一个对象系统，这个系统包含字符串对象、列表对象、哈希对象、集合对象、有序集合对象，每种对象都用到了至少一种上述总结的数据结构。
 

@@ -721,7 +721,7 @@ log-bin=name;
 show variables like 'log_bin';
 ```
 
-mysql安装目录下修改my.cnf
+MySQL 安装目录下修改 my.cnf
 
 ```sql
 log_bin=mysql-bin
