@@ -595,6 +595,12 @@ typedef struct redisObject {
     // 编码
     unsigned encoding:4;
 
+    // LRU 计时时钟
+    unsigned lru:22;
+
+    // 引用计数
+    int refcount;
+
     // 指向底层实现数据结构的指针
     void *ptr;
 
@@ -602,6 +608,35 @@ typedef struct redisObject {
 
 } robj;
 ```
+
+- type 字段
+
+type 字段:表示当前对象使用的数据类型，Redis 主要支持 5 种数据类型:string, hash, list, set, zset。可以使用 type { key }命令查看对象所属类型,type 命令返回的是值对象类型,键都是 string 类型。
+
+- encoding 字段
+
+**encoding** **字段** ：表示Redis内部编码类型，encoding 在 Redis 内部使用，代表当前对象内部采用哪种数据结构实现。理解Redis内部编码方式对于优化内存非常重要，同一个对象采用不同的编码实现内存占用存在明显差异。
+
+- lru 字段
+
+lru 字段：记录对象最后次被访问的时间，当配置了 maxmemory 和 maxmemory-policy=volatile-lru 或者 allkeys-lru 时，用于辅助 LRU 算法删除键数据。可以使用 object idletime {key} 命令在不更新 lru 字段情况下查看当前键的空闲时间。
+
+
+*可以使用 scan + object idletime* *命令批量查询哪些键长时间未被访问，找出长时间不访问的键进行清理,* *可降低内存占用。*
+
+- refcount 字段
+
+refcount 字段：记录当前对象被引用的次数，用于通过引用次数回收内存，当 refcount=0 时，可以安全回收当前对象空间。使用 object refcount(key} 获取当前对象引用。当对象为整数且范围在[0-9999]时，Redis 可以使用共享对象的方式来节省内存。
+
+PS 面试题，Redis 的对象垃圾回收算法-----引用计数法。
+
+- *ptr 字段
+
+*ptr 字段:与对象的数据内容相关，如果是整数，直接存储数据；否则表示指向数据的指针。
+
+Redis 新版本字符串且长度 <=44 字节的数据，字符串 sds 和 redisobject 一起分配，从而只要一次内存操作即可。
+
+*PS* *：高并发写入场景中，在条件允许的情况下，建议字符串长度控制在44**字节以内，减少创建redisobject**内存分配次数，从而提高性能。*
 
 #### 类型 type
 

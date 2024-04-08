@@ -195,9 +195,13 @@ Redis 服务器时一个事件驱动程序，服务器需要处理以下两类�
 2. 当被监听的套接字准备好执行连接应答（accept）、读取（read）、写入（write）、关闭（close）等操作时，与操作相对应的文件事件就会产生，这时文件事件处理器就会调用套接字之间关联好的事件处理器来处理这些事件。
 
 文件事件处理器构成
+
 ![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1688397593558-b9dec125-5733-456b-a202-82d0a70a8bb6.png#averageHue=%23eeeeee&clientId=u87ed6a2f-8d93-4&from=paste&height=310&id=u5337ddb4&originHeight=310&originWidth=417&originalType=binary&ratio=1&rotation=0&showTitle=false&size=77373&status=done&style=none&taskId=u9799d40f-dd78-49d8-bcf0-2d7c2e9c5dc&title=&width=417)
+
 I/O 多路复用程序的实现：都是通过包装常见的 select、epoll、evport 和 kqueue 这些 I/O 多路复用函数库来实现的。
+
 ![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1688397723209-b81e231b-34af-4a21-9ad6-b2cae1ea5339.png#averageHue=%23ebebeb&clientId=u87ed6a2f-8d93-4&from=paste&height=137&id=u2ce8461b&originHeight=137&originWidth=381&originalType=binary&ratio=1&rotation=0&showTitle=false&size=33980&status=done&style=none&taskId=u776b42ef-256f-4fc4-adaa-eaca4468ee9&title=&width=381)
+
 问？[套接字是什么玩意](https://zh.wikipedia.org/wiki/%E7%B6%B2%E8%B7%AF%E6%8F%92%E5%BA%A7)
 
 1. 连接应答处理器：对连接服务器的各个客户端进行应答
