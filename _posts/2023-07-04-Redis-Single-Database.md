@@ -3,6 +3,7 @@ title: "Redis 单机数据库的实现"
 categories: [Cache, Redis]
 tags: [Cache]
 toc: true
+mermaid: true
 ---
 
 ## 数据库
@@ -291,13 +292,18 @@ Redis 服务器周期性操作函数 serverCron 默认每隔 100 ms就会执行�
 
 我们使用`od`命令来分析 Redis 服务器产生的 RDB 文件，该命令可以用给定的格式转存(dump)并打印输人文件。比如说，给定 -c 参数可以以 ASCI 编码的方式打印输人文件给定 -x 参数可以以十六进制的方式打印输入文件，诸如此类，具体的信息可以参考`od`命令的文档。
 
-
+```bash
+# -c 以 ASCII 编码的方式打印 RDB 文件
+od -c dump.rdb
+# -cx 同时以 ASCII 编码和十六进制格式打印 RDB 文件
+od -cx dump.rdb
+```
 
 另外 Redis 本身带有 RDB 文件检查工具 redis-check-dump。
 
 ## AOF 持久化
 
-AOF 持久化（Append Only File）通过保存 Redis 服务器所执行的写命令来记录数据库状态的。
+<font color='red' style='font-weight:bold'>AOF 持久化（Append Only File）通过保存 Redis 服务器所执行的写命令来记录数据库状态的。</font>
 
 以独立日志的方式记录每次写命令，重启时再重新执行 AOF 文件中的命令达到恢复数据的目的。AOF 的主要作用是解决了数据持久化的实时性,目前已经是 Redis 持久化的主流方式。
 
@@ -322,11 +328,50 @@ AOF 持久化（Append Only File）通过保存 Redis 服务器所执行的写�
 
 ### AOF 文件的载入与数据还原
 
+```mermaid
+flowchart LR
+    A[服务器启动载入程序] --> B[创建伪客户端]
+    B --> C[从 AOF 文件中分析<br>并读出一条写命令]
+    C --> D[使用伪客户端执行写命令]
+    D --> E{AOF 文件中的所有写<br>命令都已经被执行完毕？}
+    E -->|否| B
+    E -->|是| F[载入完毕]
+```
 
+Redis 读取 AOF 文件并还原数据库状态的详细步骤如下：
+
+1. 创建一个不带网络连接的伪客户端（fake client）：因为 Redis 的命令只能在客户端上下文中执行，而载入 AOF 文件时所使用的命令直接来源于AOF文件而不是网络连接，所以服务器使用了一个没有网络连接的伪客户端来执行 AOF 文件保存的写命令，伪客户端执行命令的效果和带网络连接的客户端执行命令的效果完全一样。
+2. 从 AOF 文件中分析并读取出一条写命令。
+3. 使用伪客户端执行被读出的写命令。
+4. 一直执行步骤 2. 和步骤 3.，直到 AOF文件中的所有写命令都被处理完毕为止。
 
 ### AOF 重写
 
+随着服务器运行时间的流逝，AOF文件中的内容会越来越多，文件的体积也会越来越大
 
+AOF 文件重写并不需要对现有的AOF 文件进行任何读取、分析或者写人操作，这个功能是**通过读取服务器当前的数据库状态来实现的。**
+
+原理就是：首先从数据库中读取键现在的值，然后用一条命令去记录键值对，代替之前记录这个键值对的多条命令，这就是 AOF 重写功能的`aof_rewrite`实现原理。因为`aof_rewrite`函数生成的新 AOF 文件只包含还原当前数据库状态所必须的命令，所以新 AOF 文件不会浪费任何硬盘空间。
+
+但是，因为这个函数会进行大量的写人操作，所以调用这个函数的线程将被长时间阻塞因为 Redis 服务器使用单个线程来处理命令请求，所以如果由服务器直接调用`aof_rewrite`函数的话，那么在重写 AOF 文件期间，服务期将无法处理客户端发来的命令请求。
+
+为了解决这种数据不一致问题，Redis服务器设置了一个 AOF 重写缓冲区，这个缓冲区在服务器创建子进程之后开始使用，当 Redis 服务器执行完一个写命令之后，它会同时将这个写命令发送给 AOF 缓冲区和 AOF 重写缓冲区。
+
+这也就是说，在子进程执行 AOF 重写期间，服务器进程需要执行以下三个工作：
+
+1. 执行客户端发来的命令。
+2. 将执行后的写命令追加到 AOF 缓冲区。
+3. 将执行后的写命令追加到 AOF 重写缓冲区。
+
+**这样一来可以保证：**
+
+- AOF缓冲区的内容会定期被写人和同步到AOF文件，对现有AOF文件的处理工作会如常进行。
+- 从创建子进程开始，服务器执行的所有写命令都会被记录到 AOF 重写缓冲区里面。
+
+当子进程完成 AOF 重写工作之后，它会向父进程发送一个信号，父进程在接到该信号之后，会调用一个信号处理函数，并执行以下工作:
+
+1. 将 AOF 重写缓冲区中的所有内容写人到新 AOF 文件中，这时新 AOF 文件所保存的数据库状态将和服务器当前的数据库状态一致。
+2. 对新的 AOF 文件进行改名，原子地（atomic）覆盖现有的 AOF 文件，完成新旧两个 AOF 文件的替换。这个信号处理函数执行完毕之后，父进程就可以继续像往常一样接受命令请求了。在整个 AOF后台重写过程中，只有信号处理函数执行时会对服务器进程（父进程）造成阻塞，在其他时候，AOF 后台重写都不会阻父进程，这将 AOF 重写对服务器性能造成的影响降到了最低。
 
 ## 事件
 
@@ -344,11 +389,11 @@ Redis 服务器时一个事件驱动程序，服务器需要处理以下两类�
 
 文件事件处理器构成
 
-![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1688397593558-b9dec125-5733-456b-a202-82d0a70a8bb6.png#averageHue=%23eeeeee&clientId=u87ed6a2f-8d93-4&from=paste&height=310&id=u5337ddb4&originHeight=310&originWidth=417&originalType=binary&ratio=1&rotation=0&showTitle=false&size=77373&status=done&style=none&taskId=u9799d40f-dd78-49d8-bcf0-2d7c2e9c5dc&title=&width=417)
+
 
 I/O 多路复用程序的实现：都是通过包装常见的 select、epoll、evport 和 kqueue 这些 I/O 多路复用函数库来实现的。
 
-![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1688397723209-b81e231b-34af-4a21-9ad6-b2cae1ea5339.png#averageHue=%23ebebeb&clientId=u87ed6a2f-8d93-4&from=paste&height=137&id=u2ce8461b&originHeight=137&originWidth=381&originalType=binary&ratio=1&rotation=0&showTitle=false&size=33980&status=done&style=none&taskId=u776b42ef-256f-4fc4-adaa-eaca4468ee9&title=&width=381)
+
 
 问？[套接字是什么玩意](https://zh.wikipedia.org/wiki/%E7%B6%B2%E8%B7%AF%E6%8F%92%E5%BA%A7)
 

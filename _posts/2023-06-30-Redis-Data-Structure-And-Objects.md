@@ -3,6 +3,7 @@ title: "Redis 数据结构与对象"
 categories: [Cache]
 tags: [Cache]
 toc: true
+mermaid: true
 img_path: /assets/images/2023-06-30-Redis-Data-Structure-And-Objects
 ---
 
