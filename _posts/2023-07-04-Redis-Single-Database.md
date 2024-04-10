@@ -382,14 +382,14 @@ Redis 服务器时一个事件驱动程序，服务器需要处理以下两类�
 
 ### 文件事件
 
-文件事件处理器（file event handler）：Redis 基于 Reactor 模式开发了自己的网络事件处理器；
+文件事件处理器（file event handler）：Redis 基于 Reactor 模式开发了自己的网络事件处理器（file event handler）；
 
 1. 使用 I/O 多路复用（multiplexing）程序来同时监听多个套接字，并根据套接字目前执行的任务来为套接字关联不同的事件处理器。
 2. 当被监听的套接字准备好执行连接应答（accept）、读取（read）、写入（write）、关闭（close）等操作时，与操作相对应的文件事件就会产生，这时文件事件处理器就会调用套接字之间关联好的事件处理器来处理这些事件。
 
 文件事件处理器构成
 
-
+![]()
 
 I/O 多路复用程序的实现：都是通过包装常见的 select、epoll、evport 和 kqueue 这些 I/O 多路复用函数库来实现的。
 
