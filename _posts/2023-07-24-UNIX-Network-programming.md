@@ -17,10 +17,15 @@ toc: true
 ### 图解：OSI模型和网际协议族中的各层
 
 OSI模型就是描述一个网络中各个协议层的，中文是计算机通信开放系统互连（OSI）模型，是一个七层模型
+
 ![OSI模型和网际协议族中的各层](https://cdn.nlark.com/yuque/0/2023/png/22241519/1689684032849-f2d0ae00-5ffb-4960-86bb-a7af7e520c96.png#averageHue=%23f3f3f3&clientId=ub548144e-fd56-4&from=paste&height=451&id=ubbb409f8&originHeight=451&originWidth=797&originalType=binary&ratio=1&rotation=0&showTitle=true&size=85821&status=done&style=none&taskId=ubaab4875-5553-4d5e-8401-aeded4174d5&title=OSI%E6%A8%A1%E5%9E%8B%E5%92%8C%E7%BD%91%E9%99%85%E5%8D%8F%E8%AE%AE%E6%97%8F%E4%B8%AD%E7%9A%84%E5%90%84%E5%B1%82&width=797 "OSI模型和网际协议族中的各层")
+
 网络层由IPv4和IPv6这两个协议处理。传输层有TCP和UDP协议。注意TCP和UDP中间用间隙，表明应用层的网络应用可以绕过传输层直接使用IPv4和IPv6，即使用原始套接字（row socket）
+
 应用层是由OSI模型的顶上三层被合并成一层，称之为应用层。Web客户（浏览器）、Telnet客户、Web服务器、FTP服务器和其他我们在使用的网络应用所在的层。
+
 所谓的套接字编程接口：从顶上三层（网际协议的应用层）进入传输层的接口。本书聚焦于怎么使用套接字编写使用TCP或UDP的网络应用程序。
+
 > 图1-14中，XTI是啥？XTI（X/Open Transport Interface，X/Open传输接口）是一个面向连接的网络编程接口规范，由X/Open组织定义。它提供了一种独立于网络协议的编程接口，使应用程序能够在不同的操作系统和网络环境中进行网络通信。
 
 ### Q：为什么套接字提供的是从OSI模型的顶上三层进入传输层的接口？
@@ -37,8 +42,7 @@ Ans：
 
 ### 传输层概述
 
-传输层包括TCP、UDP和SCTP
-这些传输层协议都转而使用网络层协议IP：IPv4或者IPv6
+传输层包括 TCP、UDP 和 SCTP 这些传输层协议都转而使用网络层协议 IP IPv4 或者 IPv6
 
 - UDP：简单的，不可靠的用户数据报协议
 - TCP：复杂的、可靠的，基于字节流的传输控制协议
@@ -105,19 +109,20 @@ Ans：1 这些传输层协议提供给应用进程的服务是啥？弄清这些
 ### TCP连接的建立和终止
 
 完整的TCP连接：1 连接TCP建立 2 数据传送 3 释放TCP连接
-> 物理层：二进制比特流传输；bit（比特流）；
-> 数据链路层：：介质访问控制；frame（帧）；
-> 网络层：确定地址和路由选择；packet（包），又叫做分组
-> 传输层：端到端连接；也叫作数据包。但是谈论TCP等具体协议时有特殊叫法，TCP的数据单元叫数据段，segment（段），而UDP协议的数据单元称为数据报（datagram）
-> 会话层、表示层、应用层：一般就称呼为消息（message)
+
+1. 物理层：二进制比特流传输；bit（比特流）；
+2. 数据链路层：：介质访问控制；frame（帧）；
+3. 网络层：确定地址和路由选择；packet（包），又叫做分组
+4. 传输层：端到端连接；也叫作数据包。但是谈论TCP等具体协议时有特殊叫法，TCP的数据单元叫数据段，segment（段），而UDP协议的数据单元称为数据报（datagram）
+5. 会话层、表示层、应用层：一般就称呼为消息（message）
 
 #### TCP连接建立：三次握手
 
 建立一个TCP连接时会发生：
 
-1. **Server **必须ready，服务器已经准备好接受外来的连接。
+1. **Server**必须ready，服务器已经准备好接受外来的连接。
    1. 通常调用`socket`、`bind`和`listen`三个函数来完成
-   2. 称之为 被动打开（passive open）
+   2. 称之为被动打开（passive open）
 2. **Client** 通过调用`connect`发起主动打开（active open）
    1. 客户TCP发送一个SYN（同步）分节，它告诉服务器将在（待建立的）连接中发送的数据的初始序列号。
    2. 通常SYN分节不携带数据
@@ -127,7 +132,9 @@ Ans：1 这些传输层协议提供给应用进程的服务是啥？弄清这些
 4. Client 必须确认服务器的SYN
 
 这些至少需要3个分组，所以叫TCP的三路握手（three-way handshake），如下图所示
+
 ![TCP的三路握手](https://cdn.nlark.com/yuque/0/2023/png/22241519/1689690614099-9fd9015c-ee1c-49d9-947f-7e6f1a1e9394.png#averageHue=%23f6f6f6&clientId=ub548144e-fd56-4&from=paste&height=281&id=uf179cf8a&originHeight=281&originWidth=663&originalType=binary&ratio=1&rotation=0&showTitle=true&size=55532&status=done&style=none&taskId=u695000a3-1caf-452b-a9c9-ae324d75ed8&title=TCP%E7%9A%84%E4%B8%89%E8%B7%AF%E6%8F%A1%E6%89%8B&width=663 "TCP的三路握手")
+
 根据图，对于SYN序列号和ACK中确认号的说明：
 
 1. 客户的初始序列号为J，服务器的初始序列号为K。
@@ -158,6 +165,7 @@ TCP建立一个连接需要3个分节，终止一个连接则需要4个分节
    1. 原发送端TCP，就是执行主动关闭的那一端
 
 ![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1689693383444-ed3d33e0-ce67-48a6-982f-e6794eb61423.png#averageHue=%23f4f4f4&clientId=ub548144e-fd56-4&from=paste&height=350&id=u6f7d17d6&originHeight=350&originWidth=659&originalType=binary&ratio=1&rotation=0&showTitle=false&size=65901&status=done&style=none&taskId=u243ed0bd-a127-449a-a3b8-b18f4cd540f&title=&width=659)
+
 **NOTES：**图片中是客户执行主动关闭的，其实无论客户还是服务器都可以执行主动关闭。
 
 #### TCP状态转换图
@@ -166,6 +174,7 @@ TCP为一个连接定义了11中状态。也叫TCP有限状态机【研究生课
 > 有限状态机（英语：finite-state machine，缩写：FSM）又称有限状态自动机，简称状态机， 是表示有限个状态以及在这些状态之间的转移和动作等行为的数学模型。 有限状态机是一种用来进行对象行为建模的工具，其作用主要是描述对象在它的生命周期内所经历的状态序列， 以及如何响应来自外界的各种事件。 在计算机科学中，有限状态机被广泛用于建模应用行为、硬件电路系统设计、软件工程， 编译器、网络协议、和计算与语言的研究。比如非常有名的 TCP 协议状态机。
 
 ![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1689693559854-e2ccf762-2d4e-4a1d-b9ad-6f27d4df7ad8.png#averageHue=%23f4f4f4&clientId=ub548144e-fd56-4&from=paste&height=898&id=u6a34e4a4&originHeight=898&originWidth=745&originalType=binary&ratio=1&rotation=0&showTitle=false&size=229848&status=done&style=none&taskId=u056d6a03-62b3-4b46-b596-652a3ea2662&title=&width=745)
+
 基于TCP状态转换图的说明：
 
 1. 从`ESTABLISHED`状态引出的两个箭头处理连接的终止。两种情况
@@ -195,9 +204,12 @@ TCP为一个连接定义了11中状态。也叫TCP有限状态机【研究生课
 ### TIME_WAIT 状态
 
 【`TIME_WAIT`状态是TCP中网络编程最不容易理解的部分】
+
 等待
+
 **执行主动关闭的一端**经历了这个状态。该端点停留在这个状态的持续时间是MSL的两倍，有时候也称之为2MSL。
-MSL是任何IP数据报能够在因特网中存活的最长时间。这个时间是有限的，因为每个数据报含有一个称为跳限的8位字段（最大值255）。跳数有限制。
+
+MSL 是任何IP数据报能够在因特网中存活的最长时间。这个时间是有限的，因为每个数据报含有一个称为跳限的8位字段（最大值255）。跳数有限制。
 
 #### 解释两个概念MSL&TTL
 
