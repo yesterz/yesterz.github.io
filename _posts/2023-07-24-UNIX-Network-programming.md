@@ -1,10 +1,13 @@
 ---
-title: "UNIX网络编程笔记"
-categories:
-  - Computer Networking
-tags:
-  - Computer Networking
-toc: true
+title: UNIX 网络编程笔记
+date: 2024-03-29 08:14:00 +0800
+author: 
+categories: [Computer Networking]
+tags: [Computer Networking]
+pin: false
+math: false
+mermaid: false
+img_path: /assets/images/2023-07-24-UNIX-Network-programming
 ---
 
 ## OSI模型
@@ -16,17 +19,29 @@ toc: true
 
 ### 图解：OSI模型和网际协议族中的各层
 
+描述一个网络中各个协议层的常用方法是使用国际标准化组织（Intermational Orgamization for Standardization，ISO）的计算机通信开放系统互连（open systems interconnection, OSI）模型。这是一个七层模型，如下图所示。图中同时给出了它与网际协议族的近似映射，
+
 OSI模型就是描述一个网络中各个协议层的，中文是计算机通信开放系统互连（OSI）模型，是一个七层模型
 
-![OSI模型和网际协议族中的各层](https://cdn.nlark.com/yuque/0/2023/png/22241519/1689684032849-f2d0ae00-5ffb-4960-86bb-a7af7e520c96.png#averageHue=%23f3f3f3&clientId=ub548144e-fd56-4&from=paste&height=451&id=ubbb409f8&originHeight=451&originWidth=797&originalType=binary&ratio=1&rotation=0&showTitle=true&size=85821&status=done&style=none&taskId=ubaab4875-5553-4d5e-8401-aeded4174d5&title=OSI%E6%A8%A1%E5%9E%8B%E5%92%8C%E7%BD%91%E9%99%85%E5%8D%8F%E8%AE%AE%E6%97%8F%E4%B8%AD%E7%9A%84%E5%90%84%E5%B1%82&width=797 "OSI模型和网际协议族中的各层")
+![OSI模型和网际协议族中的各层](OSI-Modeling.png)
+_OSI模型和网际协议族中的各层_
 
-网络层由IPv4和IPv6这两个协议处理。传输层有TCP和UDP协议。注意TCP和UDP中间用间隙，表明应用层的网络应用可以绕过传输层直接使用IPv4和IPv6，即使用原始套接字（row socket）
+网络层由 IPv4 和 IPv6 这两个协议处理。传输层有 TCP 和 UDP 协议。注意 TCP 和 UDP 中间用间隙，表明应用层的网络应用可以绕过传输层直接使用 IPv4 和 IPv6，即使用原始套接字（row socket）
 
-应用层是由OSI模型的顶上三层被合并成一层，称之为应用层。Web客户（浏览器）、Telnet客户、Web服务器、FTP服务器和其他我们在使用的网络应用所在的层。
+应用层是由 OSI 模型的顶上三层被合并成一层，称之为应用层。Web 客户（浏览器）、Telnet 客户、Web 服务器、FTP 服务器和其他我们在使用的网络应用所在的层。
 
 所谓的套接字编程接口：从顶上三层（网际协议的应用层）进入传输层的接口。本书聚焦于怎么使用套接字编写使用TCP或UDP的网络应用程序。
 
-> 图1-14中，XTI是啥？XTI（X/Open Transport Interface，X/Open传输接口）是一个面向连接的网络编程接口规范，由X/Open组织定义。它提供了一种独立于网络协议的编程接口，使应用程序能够在不同的操作系统和网络环境中进行网络通信。
+**Q:** 上图中，XTI 是啥？
+
+**Ans:** XTI（X/Open Transport Interface，X/Open 传输接口）是一个面向连接的网络编程接口规范，由 X/Open 组织定义。它提供了一种独立于网络协议的编程接口，使应用程序能够在不同的操作系统和网络环境中进行网络通信。Socket 是一种通用的网络编程接口，而 XTI 是一种在 UNIX 系统中特定的标准接口，提供了更高层次的抽象和功能。XTI 在一些旧的 UNIX 系统中使用较多，而 Socket 则是更通用且在各种操作系统中都可用的网络编程接口。fron Wiki X/Open Transport Interface <https://en.wikipedia.org/wiki/X/Open_Transport_Interface>
+
+**Q:** 为什么套接字提供的是从 OSI 模型的顶上三层进入传输层的接口？
+
+**Ans:** 这样设计有两个理由，如上图右侧所注
+
+1. 理由之一是顶上三层处理具体网络应用（如 FTP、Telnet 或 HTTP）的所有细节，却对通信细节了解很少；底下四层对具体网络应用了解不多，却处理所有的通信细节：发送数据，等待确认，给无序到达的数据排序，计算并验证校验和，等等。
+2. 理由之二是顶上三层通常构成所谓的用户进程（user process），底下四层却通常作为操作系统内核的一部分提供。Unix 与其他现代操作系统都提供分隔用户进程与内核的机制。由此可见，第 4 层和第 5 层之间的接口是构建 API 的自然位置。
 
 ### Q：为什么套接字提供的是从OSI模型的顶上三层进入传输层的接口？
 
@@ -47,28 +62,29 @@ Ans：
 - UDP：简单的，不可靠的用户数据报协议
 - TCP：复杂的、可靠的，基于字节流的传输控制协议
 
-Q：需要理解什么
+**Q:** 需要理解什么？
+
 Ans：1 这些传输层协议提供给应用进程的服务是啥？弄清这些协议处理什么？应用进程中又需要处理什么？重点理解TCP
 
 - 调试工具：调试客户和服务器程序用`netstat`
 
 ### 总图：传输层协议一览表
 
-协议族被称为“TCP/IP”，但是除了TCP、IP这俩主要协议外还要其他的，如图
-> 协议族（Protocol family）是指一组相关的网络协议的集合
+协议族被称为“TCP/IP”，但是除了TCP、IP这俩主要协议外还要其他的，如图，协议族（Protocol family）是指一组相关的网络协议的集合
 
-![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1689686633870-bb13202a-07ab-4183-9a34-152bfd33d3a4.png#averageHue=%23f5f5f5&clientId=ub548144e-fd56-4&from=paste&height=610&id=ue8e8c912&originHeight=610&originWidth=908&originalType=binary&ratio=1&rotation=0&showTitle=false&size=150131&status=done&style=none&taskId=u9671a78c-65ec-44d2-8f35-00f0b1845f2&title=&width=908)
+![TCP/IP 协议概况](tcp-ip-protocol.png)
+_TCP/IP 协议概况_
 
 #### 从最左边说起tcpdump
 
-1. 命令 `**tcpdump**`
-   1. 使用BSD分组过滤器（BSD packet filter, BPF），或者使用数据链路提供者接口（datalink provider interface, DLPI）直接与数据链路进行通信
-   2. 图示右边9个应用下面的虚线标记为API，它通常是套接字或XTI（X/Open Transport Interface，X/Open传输接口），tcpdump应用则不使用socket或XTI
-2. **命令**`**mrouted**`
-3. **命令**`**ping**`
-4. **命令**`**traceroute**`
+1. 命令 `tcpdump`
+   1. 使用 BSD 分组过滤器（BSD packet filter, BPF），或者使用数据链路提供者接口（datalink provider interface, DLPI）直接与数据链路进行通信
+   2. 图示右边9个应用下面的虚线标记为API，它通常是套接字或 XTI（X/Open Transport Interface，X/Open传输接口），tcpdump 应用则不使用 socket 或 XTI
+2. **命令**`mrouted`
+3. **命令**`ping`
+4. **命令**`traceroute`
    1. 使用两种套接字：1 IP套接字 2 ICMP套接字
-   2. IP套接字用于访问IP，ICMP套接字用于访问ICMP
+   2. IP 套接字用于访问 IP，ICMP 套接字用于访问 ICMP
 
 #### 简单解释图中每个协议框
 
@@ -133,9 +149,10 @@ Ans：1 这些传输层协议提供给应用进程的服务是啥？弄清这些
 
 这些至少需要3个分组，所以叫TCP的三路握手（three-way handshake），如下图所示
 
-![TCP的三路握手](https://cdn.nlark.com/yuque/0/2023/png/22241519/1689690614099-9fd9015c-ee1c-49d9-947f-7e6f1a1e9394.png#averageHue=%23f6f6f6&clientId=ub548144e-fd56-4&from=paste&height=281&id=uf179cf8a&originHeight=281&originWidth=663&originalType=binary&ratio=1&rotation=0&showTitle=true&size=55532&status=done&style=none&taskId=u695000a3-1caf-452b-a9c9-ae324d75ed8&title=TCP%E7%9A%84%E4%B8%89%E8%B7%AF%E6%8F%A1%E6%89%8B&width=663 "TCP的三路握手")
+![TCP的三路握手](TCP-three-way-handshake.png)
+_TCP 的三路握手_
 
-根据图，对于SYN序列号和ACK中确认号的说明：
+根据图，对于 SYN 序列号和 ACK 中确认号的说明：
 
 1. 客户的初始序列号为J，服务器的初始序列号为K。
 2. ACK中的确认号：指的是发送这个ACK的一端所期待的下一个序列号
@@ -153,18 +170,19 @@ Ans：1 这些传输层协议提供给应用进程的服务是啥？弄清这些
 
 TCP建立一个连接需要3个分节，终止一个连接则需要4个分节
 
-1. 某个应用进程首先调用`close`，该端的TCP于是乎发送一个FIN分节
+1. 某个应用进程首先调用`close`，该端的 TCP 于是乎发送一个 FIN 分节
    1. 进程调用了`close`，我们称之为该端执行主动关闭（active close）
-   2. FIN分节（finish），表示数据发送完毕,FIN标志告知对端，我已经没有更多的数据要发送了，并且请求关闭连接。
+   2. FIN 分节（finish），表示数据发送完毕，FIN 标志告知对端，我已经没有更多的数据要发送了，并且请求关闭连接。
 2. 接收到这个FIN的对端执行被动关闭（passive close）
-   1. 这个FIN由TCP确认？？？？
+   1. 这个 FIN 由 TCP 确认？？？？
    2. 这个接收了也作为一个文件结束符（end-of-file）传递给接收端应用进程
 3. 一端时间后，接收到这个文件结束符的应用进程将调用`close`关闭它的套接字
    1. 它的TCP同样要发送一个FIN
 4. 接收这个最终FIN的原发送端TCP确认这个FIN
    1. 原发送端TCP，就是执行主动关闭的那一端
 
-![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1689693383444-ed3d33e0-ce67-48a6-982f-e6794eb61423.png#averageHue=%23f4f4f4&clientId=ub548144e-fd56-4&from=paste&height=350&id=u6f7d17d6&originHeight=350&originWidth=659&originalType=binary&ratio=1&rotation=0&showTitle=false&size=65901&status=done&style=none&taskId=u243ed0bd-a127-449a-a3b8-b18f4cd540f&title=&width=659)
+![TCP 连接关闭时的分组交换](TCP-close.png)
+_TCP 连接关闭时的分组交换_
 
 **NOTES：**图片中是客户执行主动关闭的，其实无论客户还是服务器都可以执行主动关闭。
 
