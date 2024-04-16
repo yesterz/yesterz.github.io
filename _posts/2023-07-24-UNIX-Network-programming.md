@@ -191,7 +191,7 @@ _TCP 连接关闭时的分组交换_
 TCP为一个连接定义了11中状态。也叫TCP有限状态机【研究生课程的学习的内容？？】
 > 有限状态机（英语：finite-state machine，缩写：FSM）又称有限状态自动机，简称状态机， 是表示有限个状态以及在这些状态之间的转移和动作等行为的数学模型。 有限状态机是一种用来进行对象行为建模的工具，其作用主要是描述对象在它的生命周期内所经历的状态序列， 以及如何响应来自外界的各种事件。 在计算机科学中，有限状态机被广泛用于建模应用行为、硬件电路系统设计、软件工程， 编译器、网络协议、和计算与语言的研究。比如非常有名的 TCP 协议状态机。
 
-![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1689693559854-e2ccf762-2d4e-4a1d-b9ad-6f27d4df7ad8.png#averageHue=%23f4f4f4&clientId=ub548144e-fd56-4&from=paste&height=898&id=u6a34e4a4&originHeight=898&originWidth=745&originalType=binary&ratio=1&rotation=0&showTitle=false&size=229848&status=done&style=none&taskId=u056d6a03-62b3-4b46-b596-652a3ea2662&title=&width=745)
+![TCP 状态转换](tcp-state-machine.jpg)
 
 基于TCP状态转换图的说明：
 
@@ -217,7 +217,8 @@ TCP为一个连接定义了11中状态。也叫TCP有限状态机【研究生课
 
 #### 图示一个完整的TCP连接所发生的实际分组交换情况
 
-![TCP连接的分组交换](https://cdn.nlark.com/yuque/0/2023/png/22241519/1689694485497-15bc7fc2-748d-48ae-bc05-ddd7eeecf76c.png#averageHue=%23f2f2f2&clientId=ub548144e-fd56-4&from=paste&height=562&id=u4c57b77c&originHeight=562&originWidth=604&originalType=binary&ratio=1&rotation=0&showTitle=true&size=137600&status=done&style=none&taskId=ua138caa6-5629-4639-bc74-ec839b47914&title=TCP%E8%BF%9E%E6%8E%A5%E7%9A%84%E5%88%86%E7%BB%84%E4%BA%A4%E6%8D%A2&width=604 "TCP连接的分组交换")
+![TCP连接的分组交换](Packet-exchange-for-TCP-connection.jpg)
+_Packet exchange for TCP connection_
 
 ### TIME_WAIT 状态
 
