@@ -342,7 +342,7 @@ TCP需要保证每一包数据都可靠的到达对端，包括正常连接状�
 
 主机B
 
-   - 这个主机是多宿主机，有两个IP地址，12.106.32.254和192.168.42.1
+   - 这个主机是多宿主机，有两个IP地址，12.106.32.254 和 192.168.42.1
    - 监听套接字是**{*:21, *:*}**
 
 **过程说明：**
@@ -387,7 +387,10 @@ TCP需要保证每一包数据都可靠的到达对端，包括正常连接状�
 #### TCP 输出
 
 某个应用进程写数据到一个TCP套接字中发生的步骤如下图
-![应用进程写TCP套接字时涉及的步骤和缓冲区](https://cdn.nlark.com/yuque/0/2023/png/22241519/1689744371062-4685ba9c-2881-4827-8931-dd1c32a602ee.png#averageHue=%23f5f5f5&clientId=u5afcfbca-2f92-4&from=paste&height=603&id=ubeb12186&originHeight=603&originWidth=941&originalType=binary&ratio=1&rotation=0&showTitle=true&size=128860&status=done&style=none&taskId=u8e337c54-dbb5-4b02-93bc-fb120e70fe8&title=%E5%BA%94%E7%94%A8%E8%BF%9B%E7%A8%8B%E5%86%99TCP%E5%A5%97%E6%8E%A5%E5%AD%97%E6%97%B6%E6%B6%89%E5%8F%8A%E7%9A%84%E6%AD%A5%E9%AA%A4%E5%92%8C%E7%BC%93%E5%86%B2%E5%8C%BA&width=941 "应用进程写TCP套接字时涉及的步骤和缓冲区")
+
+![应用进程写 TCP 套接字时涉及的步骤和缓冲区](TCP-buffer.png)
+_应用进程写 TCP 套接字时涉及的步骤和缓冲区_
+
 对步骤进行说明：
 
 1. 当某个应用进程调用`write`时，内核从该应用进程的缓冲区中复制所有数据到所写套接字的发送缓冲区。
