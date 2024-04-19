@@ -443,7 +443,8 @@ _基本 TCP 客户端/服务器的套接字函数_
 
 #### IPv4 套接字地址结构
 
-也叫“网际套接字地址结构”，命名为`sockaddr_in`
+也叫“网际套接字地址结构”，命名为`sockaddr_in`；
+
 网际（IPv4）套接字地址结构：`sockaddr_in` POSIX 定义如下
 
 ```c
@@ -451,6 +452,7 @@ struct in_addr {
   int_addr_t s_addr; /* 32-bit IPv4 address */
                      /* network byte ordered */
 };
+
 struct sockaddr_in {
   uint8_t sin_len;           /* length of structure (16) */
   sa_family_t sin_family;    /* AF_INET */
@@ -539,35 +541,38 @@ int connect(int sockfd, const struct sockaddr *servaddr, socklen_t addrlen);
 - servaddr：指向套接字地址结构的指针
 - addrlen：该结构的大小
 
-客户在调用`connect`之前不用非得调用`bind`函数，如果需要的话内核会去确定源IP地址，并选择一个临时端口作为源端口。
-如果是TCP套接字，调用`connect`函数将触发TCP的三路握手过程，而且尽在连接建立成功或出错的时候才返回，出错返回可能的几种情况：
+客户在调用`connect()`之前不用非得调用`bind()`函数，如果需要的话内核会去确定源 IP 地址，并选择一个临时端口作为源端口。
 
-1. 若TCP客户没有收到SYN分节的响应，则返回ETIMEDOUT错误。就是报文超时。
-2. 若对客户的SYN的响应是RST（表示复位），则表明该服务器主机在我们指定的端口上没有进程在等待与之连接
+如果是 TCP 套接字，调用`connect()`函数将触发TCP的三路握手过程，而且尽在连接建立成功或出错的时候才返回，出错返回可能的几种情况：
+
+1. 若 TCP 客户没有收到 SYN 分节的响应，则返回 ETIMEDOUT 错误。就是报文超时。
+2. 若对客户的 SYN 的响应是 RST（表示复位），则表明该服务器主机在我们指定的端口上没有进程在等待与之连接
    1. 服务器进程也许就没在运行
    2. 这是一种硬错误（hard error），客户一接收RST就马上返回ECONNREFUSED错误
    3. RST是TCP在发生错误时发送的一种TCP分节。产生的三个条件
       1. 目的地为某端口的SYN到达，然而这个端口上没有正在监听的服务器
       2. TCP想取消一个已有连接
       3. TCP接收到一个根本不存在的连接的分节
-3. 若客户发出的SYN在中间的某个路由器上引发了一个“destination unreadable”（目的地不可达）ICMP错误
-   1. 这是一种软错误（soft error），就是不会立刻返回错误，会按照一定时间间隔继续发送SYN。
-   2. 如果在规定的时间还没收到响应就将ICMP错误，作为EHOSTUNREACH或ENETUNREACH错误返回给进程。
+3. 若客户发出的SYN在中间的某个路由器上引发了一个“destination unreadable”（目的地不可达）ICMP 错误
+   1. 这是一种软错误（soft error），就是不会立刻返回错误，会按照一定时间间隔继续发送 SYN。
+   2. 如果在规定的时间还没收到响应就将 ICMP 错误，作为 EHOSTUNREACH 或 ENETUNREACH 错误返回给进程。
    3. 可能原因：
       1. 按照本地系统的转发表，根本没有到达远程系统的路径
-      2. connect调用根本不等待就返回
+      2. `connect()`调用根本不等待就返回
 
-根据TCP状态转换图，`connect`函数导致当前套接字从`CLOSED`状态转移到`SYN_SENT`状态
+根据 TCP 状态转换图，`connect()`函数导致当前套接字从`CLOSED`状态转移到`SYN_SENT`状态
 
    1. 成功，再转移到`ESTABLISHED`状态
-   2. 失败，则该套接字不再可用，必须关闭，这个套接字就不能再次调用connect函数来。
-   3. 所以在每次`connect`失败后，都必须`close`当前的套接字描述符并重新调用`socket`
+   2. 失败，则该套接字不再可用，必须关闭，这个套接字就不能再次调用`connect()`函数来。
+   3. 所以在每次`connect()`失败后，都必须`close()`当前的套接字描述符并重新调用`socket()`
 
 ### bind 函数
 
-`bind`函数把本地协议地址**赋予一个套接字**。
-协议地址：32位的IPv4地址（或128位的IPv6地址）与16位的TCP（或UDP端口号）组合
-```
+`bind()`函数把本地协议地址**赋予一个套接字**。
+
+协议地址：32位的IPv4地址（或128位的IPv6地址）与16位的TCP（或UDP端口号）组合。
+
+```c
 #include <sys/socket.h>
 int bind(int sockdf, const struct sockaddr *myaddr, socklen_t addrlen);
 ```
@@ -577,45 +582,53 @@ int bind(int sockdf, const struct sockaddr *myaddr, socklen_t addrlen);
 - addrlen：该地址结构的长度
 
 对于TCP，调用`bind`函数可以指定一个端口号，或指定一个IP地址，也能都指定，或者都不指定。
+
 常见返回的错误`EADDRINUSE`（“Address already in use”，地址已使用）
 
 ### listen 函数
 
-`listen`函数仅由TCP服务器调用，做2件事情：
-当`socket`函数创建一个套接字时，假定为一个主动套接字（就是将会调用`connect`发起连接的客户套接字）
+`listen()`函数仅由 TCP 服务器调用，做 2 件事情：
+当`socket()`函数创建一个套接字时，假定为一个主动套接字（就是将会调用`connect()`发起连接的客户套接字）
 
-1. `listen`函数把一个未连接的套接字转换成一个被动套接字，指示内核要接受指向这个套接字的连接请求。
-2. 调用`listen`函数会导致套接字从`CLOSED`状态转换到`LISTEN`状态。
+1. `listen()`函数把一个未连接的套接字转换成一个被动套接字，指示内核要接受指向这个套接字的连接请求。
+2. 调用`listen()`函数会导致套接字从`CLOSED`状态转换到`LISTEN`状态。
 
-`listen`函数的第二个参数是内核应该为相应套接字排队的最大连接个数。
-```
+`listen()`函数的第二个参数是内核应该为相应套接字排队的最大连接个数。
+
+```c
 #include <sys/socket.h>
 int listen(int sockfd, int backlog);
 ```
 
 - 返回值：成功0,出错-1
 
-一般`listen`函数在调用`socket`和`bind`两个函数之后，并在调用`accept`之前调用。
+一般`listen()`函数在调用`socket()`和`bind()`两个函数之后，并在调用`accept()`之前调用。
+
 对于`backlog`参数，内核为任何一个给定的监听套接字维护两个队列：
 
-1. 未完成连接队列，某些SYN分节对应其中一项，这些套接字处于`SYN_RCVD`状态
-   1. 某个客户以及发出并到达服务器，而服务器在等待完成相应的TCP三路握手过程。
-2. 已完成连接队列，每个已完成TCP三路握手过程的客户对应其中的一项。这些套接字处于`ESTABLISHED`状态
+1. 未完成连接队列，某些 SYN 分节对应其中一项，这些套接字处于`SYN_RCVD`状态
+   1. 某个客户以及发出并到达服务器，而服务器在等待完成相应的 TCP 三路握手过程。
+2. 已完成连接队列，每个已完成 TCP 三路握手过程的客户对应其中的一项。这些套接字处于`ESTABLISHED`状态
 
 ![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1689774170276-38ad8989-9ee8-405f-8eea-0c1f71d13a63.png#averageHue=%23f5f5f5&clientId=uda2ebabe-7b59-4&from=paste&height=420&id=u485d308b&originHeight=420&originWidth=649&originalType=binary&ratio=1&rotation=0&showTitle=false&size=74758&status=done&style=none&taskId=uba0f9eb8-9ec7-49f6-9269-5aa2eae94d0&title=&width=649)
+
 每当在未完成连接队列中创建一项时，来自监听套接字的参数就复制到即将建立的连接中。
+
 连接的创建过程完全自动，无需服务器进程插手。
+
 ![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1689774192860-cdbcb17d-e97e-4281-a7d5-a4dab91bbc0f.png#averageHue=%23f4f4f4&clientId=uda2ebabe-7b59-4&from=paste&height=294&id=ubdb94ddb&originHeight=294&originWidth=615&originalType=binary&ratio=1&rotation=0&showTitle=false&size=63991&status=done&style=none&taskId=u9907c6b5-0739-4b8e-b97d-14d06766ca6&title=&width=615)
 
-1. 当来自客户的SYN到达时，TCP在未完成连接队列中创建一个新项，然后响应以三路握手的第二个分节：服务器的SYN响应，其中捎带对客户SYN的ACK。
-2. 这一项一直保留在未完成连接队列中，直到三路握手的第三个分节（客户对服务器SYN的ACK）到达或者该项超时为止。
+1. 当来自客户的 SYN 到达时，TCP 在未完成连接队列中创建一个新项，然后响应以三路握手的第二个分节：服务器的 SYN 响应，其中捎带对客户 SYN 的 ACK。
+2. 这一项一直保留在未完成连接队列中，直到三路握手的第三个分节（客户对服务器 SYN 的 ACK）到达或者该项超时为止。
 3. 如果三路握手正常完成，该项从未完成队列移到已完成连接队列的队尾。
-4. 当进程调用accept时，已完成连接队列中的队头项将返回给进程，或者如果该队列为空，那么进程将被投入睡眠，直到TCP在该队列放入一项才唤醒它。
+4. 当进程调用`accept()`时，已完成连接队列中的队头项将返回给进程，或者如果该队列为空，那么进程将被投入睡眠，直到 TCP 在该队列放入一项才唤醒它。
 
 ### accept 函数
 
-accept函数由TCP服务器调用，用于从已完成队列队头返回下一个已完成连接。
-如果已完成队列为空，那么进程将被投入睡眠（假定套接字为默认的阻塞方式）
+`accept()`函数由 TCP 服务器调用，用于从已完成队列队头返回下一个已完成连接。
+
+如果已完成队列为空，那么进程将被投入睡眠（假定套接字为默认的阻塞方式）。
+
 ```c
 #include <sys/socket.h>
 int accept(int sockfd, struct sockaddr *cliaddr, socklen_t *addrlen);
@@ -625,7 +638,7 @@ int accept(int sockfd, struct sockaddr *cliaddr, socklen_t *addrlen);
 - cliaddr：已连接的对端进程（客户）的协议地址
 - addrlen：值-结果参数，调用前，将*addrlen所引用的整数值置为由cliaddr所指的套接字地址结构的长度，返回时，该整数值即为内核存放在该套接字地址结构内的确切字节数。
 
-如果accept成功，其返回值时由内核自动生成的一个全新描述符，代表与返回客户的TCP连接。
+如果`accept()`成功，其返回值时由内核自动生成的一个全新描述符，代表与返回客户的TCP连接。
 本函数最多返回三个值
 
 1. 可能新套接字描述符
