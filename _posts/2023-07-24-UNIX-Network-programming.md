@@ -382,7 +382,7 @@ TCP需要保证每一包数据都可靠的到达对端，包括正常连接状�
    3. IPv6**只有主机**对其产生的数据报执行分片，IPv6路由器**不会**对其转发的数据报执行分片
 6. IPv4首部的“不分片（don't fragment）”位（即DF位）若被设置，那么不管是发送数据报的主机还是转发数据报的路由器，都不允许对它们分片。
 7. IPv4和IPv6都定义了最小重组缓冲区大小（minimum reassembly buffer size），它是IPv4或IPv6的任何实现都必须保证支持的最小数据报大小。
-8. TCP有一个MSS（maximum segment size，最大分节大小），用于向对端TCP通告对端在每个分节中能发送的最大TCP数据量。
+8. TCP 有一个 MSS（maximum segment size，最大分节大小），用于向对端 TCP 通告对端在每个分节中能发送的最大TCP数据量。
 
 #### TCP 输出
 
@@ -418,23 +418,23 @@ _应用进程写 TCP 套接字时涉及的步骤和缓冲区_
 
 ## 基本套接字编程
 
-这里整理套接字API，从套接字地址结构开始。
+这里整理套接字 API，从套接字地址结构开始。
 
 - 这些结构可以在两个方向上传递：
    1. 从进程到内核
    2. 从内核到进程
 - **地址转换函数**：在地址的文本表达和它们存放在套接字地址结构中的二进制值之间进行转换。
-   - 地址转换函数有个问题：它们与所转换的地址类型协议相关，要考虑是IPv4还是IPv6地址。
-   - 解决：有一组sock_开头的函数，会以协议无关的方式使用套接字地址结构。
-- 编写一个完整的TCP客户/服务器程序所需的基本套接字函数`socket`、`connect`、`bind`、`listen`、`accept`、`fork & exec`、`close`
-- 图示在一对TCP客户和服务器进程之间发生的一些典型事件的时间表。
+   - 地址转换函数有个问题：它们与所转换的地址类型协议相关，要考虑是 IPv4 还是 IPv6 地址。
+   - 解决：有一组 sock_ 开头的函数，会以协议无关的方式使用套接字地址结构。
+- 编写一个完整的 TCP 客户/服务器程序所需的基本套接字函数`socket()`、`connect()`、`bind()`、`listen()`、`accept()`、`fork()` & `exec()`、`close()`
+- 图示在一对 TCP 客户和服务器进程之间发生的一些典型事件的时间表。
 
 ![基本 TCP 客户端/服务器的套接字函数](tcp-figure.png)
 _基本 TCP 客户端/服务器的套接字函数_
 
 1. 服务器首先启动，稍后某时刻客户启动，它试图连接到服务器。
 2. 假设客户给服务器发送一个请求，服务器处理该请求，并且给客户发回一个响应。
-3. 这个过程一致持续下去，直到客户关闭连接的客户端，从而给服务器发送一个EOF（文件结束）通知为止。
+3. 这个过程一致持续下去，直到客户关闭连接的客户端，从而给服务器发送一个 EOF（文件结束）通知为止。
 4. 服务器接着也关闭连接的服务器端，然后结束运行或者等待新的客户连接。
 
 ### 套接字地址结构
@@ -499,60 +499,61 @@ struct sockaddr_in {
 
 IPv4、IPv6、Unix域、数据链路和存储对比
 
-![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1689752300475-2798bcba-eb6e-4ab1-876f-0bcce1ce630f.png#averageHue=%23e9e9e9&clientId=ufed1eac9-eea6-4&from=paste&height=603&id=u9eb2b9a1&originHeight=603&originWidth=809&originalType=binary&ratio=1&rotation=0&showTitle=false&size=252876&status=done&style=none&taskId=u742d2731-ac02-4536-bac6-733bec32fe3&title=&width=809)
+![image.png](bt.png)
 
-### socket 函数
+### socket() 函数
 
-要执行网络I/O，一个进程必须做的第一件事情就是调用`socket`函数，指定期望的通信协议类型（使用IPv4的TCP、使用IPv6的UDP、Unix域字节流协议等）
+要执行网络 I/O，一个进程必须做的第一件事情就是调用`socket()`函数，指定期望的通信协议类型（使用 IPv4 的 TCP、使用 IPv6 的 UDP、Unix 域字节流协议等）
 
-```
+```c
 # include <sys/socket.h>
 int socket(int family, int type, int protocol);
 ```
 
 - 返回值：若成功则为非负描述符， 出错则为-1
-- 参数family指明协议族，这个参数也叫协议域。
+- 参数 family 指明协议族，这个参数也叫协议域。
 
-协议族family常数值：AF_INET（IPv4协议）、AF_INET6（IPv6协议）、AF_LOCA（Unix域套接字）L、AF_ROUTE（路由套接字）、AF_KEY（密钥套接字）	
+协议族 family 常数值：AF_INET（IPv4 协议）、AF_INET6（IPv6 协议）、AF_LOCA（Unix 域套接字）L、AF_ROUTE（路由套接字）、AF_KEY（密钥套接字）	
 
-- 参数type指明套接字类型
+- 参数 type 指明套接字类型
 
-套接字类型type常数值：SOCK_STREAM（字节流套接字）、SOCK_DGRAM（数据报套接字）、SOCK_SEQPACKET（有序分组套接字）、SOCK_RAW（原始套接字）
+套接字类型 type 常数值：SOCK_STREAM（字节流套接字）、SOCK_DGRAM（数据报套接字）、SOCK_SEQPACKET（有序分组套接字）、SOCK_RAW（原始套接字）
 
-- 参数protocol指明某个协议类型常值或者设置为0（置为0会选择给定family和type组合的系统默认值）
+- 参数 protocol 指明某个协议类型常值或者设置为 0（置为 0 会选择给定 family 和 type 组合的系统默认值）
 
-注意：也不是所有套接字family与type的组合都是有效的。
-协议类型常值protocol：IPPROTO_CP（TCP传输协议）、IPPROTO_UDP（UDP传输协议）、IPPROTO_SCTP（SCTP传输协议）
-`socket`函数在成功时返回一个小的非负整数，它与文件描述符类似，叫它套接字描述符（socket descriptor），简称`sockfd`。
-看函数原型可知socket函数只制订了协议族和套接字类型，并没指定本地协议地址或远程协议地址。
+**注意：**也不是所有套接字 family 与 type 的组合都是有效的。
+协议类型常值 protocol：IPPROTO_CP（TCP 传输协议）、IPPROTO_UDP（UDP 传输协议）、IPPROTO_SCTP（SCTP 传输协议）
+`socket()`函数在成功时返回一个小的非负整数，它与文件描述符类似，叫它套接字描述符（socket descriptor），简称`sockfd`。
+看函数原型可知`socket()`函数只制订了协议族和套接字类型，并没指定本地协议地址或远程协议地址。
 
 对比`AF_XXX`和`PF_XXX`：AF_前缀表示地址族（Address Family）、PF_前缀表示协议族（Protocol Family）
 
-### connect 函数
+### connect() 函数
 
-TCP客户用`connect`函数来建立与TCP服务器端连接。
-```
+TCP 客户用`connect()`函数来建立与 TCP 服务器端连接。
+
+```c
 #include <sys/socket.h>
 int connect(int sockfd, const struct sockaddr *servaddr, socklen_t addrlen);
 ```
 
-- 返回值：成功0,出错-1
-- sockfd：是`socket`函数返回的套接字描述符
+- 返回值：成功 0,出错 -1
+- sockfd：是`socket()`函数返回的套接字描述符
 - servaddr：指向套接字地址结构的指针
 - addrlen：该结构的大小
 
 客户在调用`connect()`之前不用非得调用`bind()`函数，如果需要的话内核会去确定源 IP 地址，并选择一个临时端口作为源端口。
 
-如果是 TCP 套接字，调用`connect()`函数将触发TCP的三路握手过程，而且尽在连接建立成功或出错的时候才返回，出错返回可能的几种情况：
+如果是 TCP 套接字，调用`connect()`函数将触发 TCP 的三路握手过程，而且尽在连接建立成功或出错的时候才返回，出错返回可能的几种情况：
 
 1. 若 TCP 客户没有收到 SYN 分节的响应，则返回 ETIMEDOUT 错误。就是报文超时。
 2. 若对客户的 SYN 的响应是 RST（表示复位），则表明该服务器主机在我们指定的端口上没有进程在等待与之连接
    1. 服务器进程也许就没在运行
-   2. 这是一种硬错误（hard error），客户一接收RST就马上返回ECONNREFUSED错误
-   3. RST是TCP在发生错误时发送的一种TCP分节。产生的三个条件
-      1. 目的地为某端口的SYN到达，然而这个端口上没有正在监听的服务器
-      2. TCP想取消一个已有连接
-      3. TCP接收到一个根本不存在的连接的分节
+   2. 这是一种硬错误（hard error），客户一接收 RST 就马上返回 ECONNREFUSED 错误
+   3. RST 是 TCP 在发生错误时发送的一种 TCP 分节。产生的三个条件
+      1. 目的地为某端口的 SYN 到达，然而这个端口上没有正在监听的服务器
+      2. TCP 想取消一个已有连接
+      3. TCP 接收到一个根本不存在的连接的分节
 3. 若客户发出的SYN在中间的某个路由器上引发了一个“destination unreadable”（目的地不可达）ICMP 错误
    1. 这是一种软错误（soft error），就是不会立刻返回错误，会按照一定时间间隔继续发送 SYN。
    2. 如果在规定的时间还没收到响应就将 ICMP 错误，作为 EHOSTUNREACH 或 ENETUNREACH 错误返回给进程。
@@ -566,26 +567,26 @@ int connect(int sockfd, const struct sockaddr *servaddr, socklen_t addrlen);
    2. 失败，则该套接字不再可用，必须关闭，这个套接字就不能再次调用`connect()`函数来。
    3. 所以在每次`connect()`失败后，都必须`close()`当前的套接字描述符并重新调用`socket()`
 
-### bind 函数
+### bind() 函数
 
 `bind()`函数把本地协议地址**赋予一个套接字**。
 
-协议地址：32位的IPv4地址（或128位的IPv6地址）与16位的TCP（或UDP端口号）组合。
+协议地址：32 位的 IPv4 地址（或 128 位的 IPv6 地址）与 16 位的 TCP（或 UDP 端口号）组合。
 
 ```c
 #include <sys/socket.h>
 int bind(int sockdf, const struct sockaddr *myaddr, socklen_t addrlen);
 ```
 
-- 返回值：成功0，出错-1
+- 返回值：成功 0，出错 -1
 - myaddr：指向特定于协议的地址结构的指针
 - addrlen：该地址结构的长度
 
-对于TCP，调用`bind`函数可以指定一个端口号，或指定一个IP地址，也能都指定，或者都不指定。
+对于 TCP，调用`bind()`函数可以指定一个端口号，或指定一个 IP 地址，也能都指定，或者都不指定。
 
-常见返回的错误`EADDRINUSE`（“Address already in use”，地址已使用）
+常见返回的错误`EADDRINUSE`（Address already in use，地址已使用）
 
-### listen 函数
+### listen() 函数
 
 `listen()`函数仅由 TCP 服务器调用，做 2 件事情：
 当`socket()`函数创建一个套接字时，假定为一个主动套接字（就是将会调用`connect()`发起连接的客户套接字）
@@ -600,7 +601,7 @@ int bind(int sockdf, const struct sockaddr *myaddr, socklen_t addrlen);
 int listen(int sockfd, int backlog);
 ```
 
-- 返回值：成功0,出错-1
+- 返回值：成功 0,出错 -1
 
 一般`listen()`函数在调用`socket()`和`bind()`两个函数之后，并在调用`accept()`之前调用。
 
@@ -610,20 +611,19 @@ int listen(int sockfd, int backlog);
    1. 某个客户以及发出并到达服务器，而服务器在等待完成相应的 TCP 三路握手过程。
 2. 已完成连接队列，每个已完成 TCP 三路握手过程的客户对应其中的一项。这些套接字处于`ESTABLISHED`状态
 
-![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1689774170276-38ad8989-9ee8-405f-8eea-0c1f71d13a63.png#averageHue=%23f5f5f5&clientId=uda2ebabe-7b59-4&from=paste&height=420&id=u485d308b&originHeight=420&originWidth=649&originalType=binary&ratio=1&rotation=0&showTitle=false&size=74758&status=done&style=none&taskId=uba0f9eb8-9ec7-49f6-9269-5aa2eae94d0&title=&width=649)
+![image.png](tcp-2.png)
+_TCP 为监听套接字维护的两个队列_
 
-每当在未完成连接队列中创建一项时，来自监听套接字的参数就复制到即将建立的连接中。
+每当在未完成连接队列中创建一项时，来自监听套接字的参数就复制到即将建立的连接中。连接的创建过程完全自动，无需服务器进程插手。
 
-连接的创建过程完全自动，无需服务器进程插手。
-
-![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1689774192860-cdbcb17d-e97e-4281-a7d5-a4dab91bbc0f.png#averageHue=%23f4f4f4&clientId=uda2ebabe-7b59-4&from=paste&height=294&id=ubdb94ddb&originHeight=294&originWidth=615&originalType=binary&ratio=1&rotation=0&showTitle=false&size=63991&status=done&style=none&taskId=u9907c6b5-0739-4b8e-b97d-14d06766ca6&title=&width=615)
+![image.png](tcp-3.png)
 
 1. 当来自客户的 SYN 到达时，TCP 在未完成连接队列中创建一个新项，然后响应以三路握手的第二个分节：服务器的 SYN 响应，其中捎带对客户 SYN 的 ACK。
 2. 这一项一直保留在未完成连接队列中，直到三路握手的第三个分节（客户对服务器 SYN 的 ACK）到达或者该项超时为止。
 3. 如果三路握手正常完成，该项从未完成队列移到已完成连接队列的队尾。
 4. 当进程调用`accept()`时，已完成连接队列中的队头项将返回给进程，或者如果该队列为空，那么进程将被投入睡眠，直到 TCP 在该队列放入一项才唤醒它。
 
-### accept 函数
+### accept() 函数
 
 `accept()`函数由 TCP 服务器调用，用于从已完成队列队头返回下一个已完成连接。
 
@@ -636,10 +636,11 @@ int accept(int sockfd, struct sockaddr *cliaddr, socklen_t *addrlen);
 
 - 返回值：成功为非负描述符，出错-1
 - cliaddr：已连接的对端进程（客户）的协议地址
-- addrlen：值-结果参数，调用前，将*addrlen所引用的整数值置为由cliaddr所指的套接字地址结构的长度，返回时，该整数值即为内核存放在该套接字地址结构内的确切字节数。
+- addrlen：值-结果参数，调用前，将`*addrlen`所引用的整数值置为由`cliaddr`所指的套接字地址结构的长度，返回时，该整数值即为内核存放在该套接字地址结构内的确切字节数。
 
-如果`accept()`成功，其返回值时由内核自动生成的一个全新描述符，代表与返回客户的TCP连接。
-本函数最多返回三个值
+如果`accept()`成功，其返回值时由内核自动生成的一个全新描述符，代表与返回客户的 TCP 连接。
+
+**本函数最多返回三个值**
 
 1. 可能新套接字描述符
 2. 可能出错指示的整数
@@ -649,11 +650,11 @@ int accept(int sockfd, struct sockaddr *cliaddr, socklen_t *addrlen);
 
 1. 一个服务器通常仅仅创建1个监听套接字，在服务器的生命期内一直存在。
 2. 内核为每个服务器进程接受的客户连接创建一个已连接套接字（对于它的TCP三次握手已完成）。
-3. 当服务器完成对某个给定客户的服务时，相应的已连接套接字就被关闭（关闭指调用`close`）。
+3. 当服务器完成对某个给定客户的服务时，相应的已连接套接字就被关闭（关闭指调用`close()`）。
 
-### fork 和 exec 函数
+### fork() 和 exec() 函数
 
-`fork`是 Unix 中派生新进程的唯一办法。
+`fork()`是 Unix 中派生新进程的唯一办法。
 ```c
 #include <unistd.h>
 pid_t fork(void)
@@ -663,87 +664,84 @@ pid_t fork(void)
    - 在调用进程（父进程）返回一次，返回值是新派生进程（子进程）的 PID；
    - 在子进程又返回一次，返回值是 0.
 
-**Q：**fork在子进程返回0而不是父进程的PID？
+**Q：**`fork()`在子进程返回 0 而不是父进程的 PID？
 
-Ans：任何子进程只有一个父进程，子进程总是可以getppid获得父进程PID。相反，父进程可以只有许多子进程，而且无法获取各个子进程的PID。
-如果父进程想要跟踪所有子进程的PID，则必须记录每次调用fork的返回值。
-父进程中调用fork之前打开的所有描述符在fork返回之后由子进程分享。
+Ans：任何子进程只有一个父进程，子进程总是可以 getppid 获得父进程 PID。相反，父进程可以只有许多子进程，而且无法获取各个子进程的 PID。如果父进程想要跟踪所有子进程的 PID，则必须记录每次调用`fork()`的返回值。父进程中调用`fork()`之前打开的所有描述符在`fork()`返回之后由子进程分享。
 
-1. 父进程调用accept之后调用fork。
+1. 父进程调用`accept()`之后调用`fork()`。
 2. 所接受的已连接套接字随后就在父进程与子进程之间共享。
-3. 一般，子进程接着读写这个已连接套接字，父进程则关闭这个已连接套接字（关闭是指调用`close`）。
+3. 一般，子进程接着读写这个已连接套接字，父进程则关闭这个已连接套接字（关闭是指调用`close()`）。
 
-#### fork 两个典型用法
+#### fork() 两个典型用法
 
 1. 一个进程创建一个自身的副本，每个副本都可以在另一个副本执行其他任务的同时处理各自的某个操作。
-2. 一个进程想要执行另一个程序，就创建新进程的唯一办法是调用 fork，该进程于是首先调用 fork 创建一个自身副本，然后其中一个副本（通常为子进程）调用 exec 把自身替换成新的程序。（像shell之类程序的典型用法）
+2. 一个进程想要执行另一个程序，就创建新进程的唯一办法是调用`fork()`，该进程于是首先调用`fork()`创建一个自身副本，然后其中一个副本（通常为子进程）调用`exec()`把自身替换成新的程序。（像 shell 之类程序的典型用法）
 
-#### 介绍 exec 函数
+#### 介绍 exec() 函数
 
 存放在硬盘上的可执行程序文件能够被 Unix 执行的唯一办法：由现有进程调用 6 个 exec 函数中的一个。
 
 exec 把当前进程映像替换成新的程序文件，而且该新程序通常从 main 函数开始执行。进程 ID 不改变。称调用 exec 的进程为调用进程（calling process），称新执行的程序为新程序（new program）
 
-![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1689776601567-92140b12-1684-4b33-a42e-db78ffb9af14.png#averageHue=%23f3f3f3&clientId=uda2ebabe-7b59-4&from=paste&height=252&id=u8eac372a&originHeight=252&originWidth=856&originalType=binary&ratio=1&rotation=0&showTitle=false&size=64718&status=done&style=none&taskId=ud71ecd57-9be2-466e-90bd-027047ac1fc&title=&width=856)
+![image.png](exec-6.png)
 
-一般只有execve是内核中的系统调用，其他是调用execve的库函数。
+一般只有 execve 是内核中的系统调用，其他是调用 execve 的库函数。
 
-### close函数
+### close() 函数
 
-通常的Unix `close`函数也用来关闭套接字，并终止TCP连接。
+通常的 Unix `close()`函数也用来关闭套接字，并终止 TCP 连接。
+
 ```c
 #include <unistd.h>
 int close(int sockfd);
 ```
 
-- 返回值：成功0，出错-1
+- 返回值：成功 0，出错 -1
 
-close一个TCP套接字的默认行为是把该套接字标记成已关闭，然后立即返回到调用进程。可以用SO_LINGER套接字选项来改变这个默认行为。
+close一个TCP套接字的默认行为是把该套接字标记成已关闭，然后立即返回到调用进程。可以用 SO_LINGER 套接字选项来改变这个默认行为。
 
 #### 描述符引用计数
 
-并发服务器中父进程关闭已连接套接字只会让对应描述符的引用计数减1。
+并发服务器中父进程关闭已连接套接字只会让对应描述符的引用计数减 1。
 
-引用计数大于0，close调用并不引发TCP的四分组连接终止序列。
+引用计数大于 0，`close()`调用并不引发 TCP 的四分组连接终止序列。
 
-如果我们确实想关闭某个TCP连接，发送一个FIN，用shutdown函数，不用close。
+如果我们确实想关闭某个 TCP 连接，发送一个 FIN，用`shutdown()`函数，不用`close()`。
 
-如果父进程对每个由accept返回的已连接套接字都不调用close，那么TCP的四次挥手永远也不会发生，引用计数永远大于0，没有客户连接会被终止。
+如果父进程对每个由`accept()`返回的已连接套接字都不调用`close()`，那么 TCP 的四次挥手永远也不会发生，引用计数永远大于 0，没有客户连接会被终止。
 
 ### 并发服务器
 
-大多数TCP服务器是并发的，来一个客户连接就调用`fork`派生一个子进程。
+大多数 TCP 服务器是并发的，来一个客户连接就调用`fork()`派生一个子进程。
 
 #### 并发服务器程序大致过程
 
-1. 当一个连接建立时，accept返回，服务器接着调用fork，
-   1. 连接被内核接受，新的套接字connfd（已连接套接字）被创建，由此跨连接读写数据。
-   2. 并发服务器下一步调用fork，搞出一个子进程
-   3. 此时listenfd和connfd这两个描述符都在父进程和子进程之间共享（被复制）
-2. 然后由子进程服务客户（通过已连接套接字connfd），父进程则等待另一个连接（通过监听套接字listenfd）
-   1. 这里父进程关闭已连接套接字，子进程关闭监听套接字，分别close。
-   2. 引用计数减1
+1. 当一个连接建立时，`accept()`返回，服务器接着调用`fork()`，
+   1. 连接被内核接受，新的套接字 connfd（已连接套接字）被创建，由此跨连接读写数据。
+   2. 并发服务器下一步调用`fork()`，搞出一个子进程
+   3. 此时 listenfd 和 connfd 这两个描述符都在父进程和子进程之间共享（被复制）
+2. 然后由子进程服务客户（通过已连接套接字 connfd），父进程则等待另一个连接（通过监听套接字 listenfd）
+   1. 这里父进程关闭已连接套接字，子进程关闭监听套接字，分别`close()`。
+   2. 引用计数减 1
 3. 此时新的客户由子进程服务，父进程就关闭已连接套接字（close）。
 
 ## I/O 复用：select 和 poll 函数
 
-TCP客户会同时处理两个输入：1 标准输入（fgets） 2 TCP套接字
+TCP 客户会同时处理两个输入：1 标准输入（fgets） 2 TCP 套接字
 
-**出现的问题：**客户将阻塞在fgets期间，另一个客户数据到达，服务器忙不过来无法及时处理。
+**出现的问题：**客户将阻塞在 fgets 期间，另一个客户数据到达，服务器忙不过来无法及时处理。
 
-解决：I/O 多路复用，即同时监听N个客户，解决对多个I/O监听时，一个I/O阻塞影响其他I/O的问题。
+解决：I/O 多路复用，即同时监听 N 个客户，解决对多个 I/O 监听时，一个 I/O 阻塞影响其他 I/O 的问题。
 
-I/O 复用（I/O multiplexing）：内核一旦发现进程指定的一个或多个I/O条件就绪，他就通知进程。
+I/O 复用（I/O multiplexing）：内核一旦发现进程指定的一个或多个 I/O 条件就绪，他就通知进程。
 
-I/O复用的典型应用：
+I/O 复用的典型应用：
 
 1. 客户处理多个描述符（交互式输入和网络套接字）
 2. 一个客户同时处理多个套接字
-3. 一个TCP服务器既要处理监听套接字，又要处理已连接套接字
-4. 一个服务器既要处理TCP，又要处理UDP
+3. 一个 TCP 服务器既要处理监听套接字，又要处理已连接套接字
+4. 一个服务器既要处理 TCP，又要处理 UDP
 5. 如果服务器要处理多个服务或者多个协议
-
-### 五种 I/O 模型
 
 **一个输入操作通常包括两个不同的阶段：**
 
@@ -752,6 +750,8 @@ I/O复用的典型应用：
    2. 所有等待的分组到达时候，它被复制到内核中某个缓冲区
 2. 从内核向进程复制数据
    1. 把数据从内核缓冲区复制到应用缓冲区
+
+### 五种 I/O 模型
 
 **五种I/O模型有**
 
@@ -765,19 +765,21 @@ I/O复用的典型应用：
 
 默认情况，所有的套接字都是阻塞的。图示如下
 
-![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1689779357438-84d3c65a-7160-4222-b597-4d646c057dad.png#averageHue=%23f7f7f7&clientId=uda2ebabe-7b59-4&from=paste&height=386&id=u80bca29e&originHeight=386&originWidth=678&originalType=binary&ratio=1&rotation=0&showTitle=false&size=64900&status=done&style=none&taskId=u1abee93f-4460-49ad-ac68-23af4d10a44&title=&width=678)
+![image.png](blocking-i-o.png)
 
 #### 2 非阻塞式 I/O 模型
 
 把套接字设置为非阻塞就是通知内核，所请求的I/O操作需要将进程投入睡眠时候才能完成，不要投入睡眠，而是返回一个错误。
-如图，当一个进程像这样对一个非阻塞描述符循环调用recvfrom时，就叫轮询（polling）
-![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1689779566129-f3a456b0-e9c0-4515-90ee-5152167798aa.png#averageHue=%23f2f2f2&clientId=uda2ebabe-7b59-4&from=paste&height=422&id=ubb7e2d26&originHeight=422&originWidth=757&originalType=binary&ratio=1&rotation=0&showTitle=false&size=111294&status=done&style=none&taskId=u281a9ed4-205b-4eb2-bfd0-728f22d8c5b&title=&width=757)
+
+如图，当一个进程像这样对一个非阻塞描述符循环调用 recvfrom 时，就叫轮询（polling）
+
+![image.png](nonblocking-i-o.png)
 
 #### 3 I/O 复用模型
 
-调用select或poll，阻塞在这两个系统调用某一个之上，而不是阻塞在真正的I/O系统调用上。
+调用 select 或 poll，阻塞在这两个系统调用某一个之上，而不是阻塞在真正的 I/O 系统调用上。
 
-![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1689779665235-7589f4ba-c9d0-4518-8409-270a75bac450.png#averageHue=%23f2f2f2&clientId=uda2ebabe-7b59-4&from=paste&height=416&id=u05c6084a&originHeight=416&originWidth=759&originalType=binary&ratio=1&rotation=0&showTitle=false&size=109642&status=done&style=none&taskId=u69fb4df4-e794-47fb-b868-756c1bab5b5&title=&width=759)
+![image.png](i-o-multiplexing.png)
 
 阻塞于select调用，等待数据报套接字可读。当返回可读时，就调用recvfrom把所读数据报复制到应用进程缓冲区。
 
@@ -787,20 +789,20 @@ select的优势在于可以等待多个描述符就绪。
 
 用信号，让内核在描述符就绪时发送SIGIO信号通知。
 
-![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1689779828775-ef31656a-e365-4418-bb9c-4f86cc243d7c.png#averageHue=%23f7f7f7&clientId=uda2ebabe-7b59-4&from=paste&height=451&id=uf8a48e80&originHeight=451&originWidth=804&originalType=binary&ratio=1&rotation=0&showTitle=false&size=93108&status=done&style=none&taskId=u38d4c13b-670a-43c5-8b85-9b3a983f201&title=&width=804)
+![image.png](signal-driveni-o.png)
 
 #### 5 异步 I/O 模型
 
 异步I/O模型是指内核会在I/O操作完成时通知你，等待I/O完成期间你不会被阻塞。
 
-![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1689780316848-9829e959-d6aa-462b-9fe7-e23aaf65b9c0.png#averageHue=%23f8f8f8&clientId=ufe7ed435-70df-4&from=paste&height=482&id=ua442647b&originHeight=482&originWidth=773&originalType=binary&ratio=1&rotation=0&showTitle=false&size=71826&status=done&style=none&taskId=u24f9f6a0-5691-4f1f-b0c9-ce01ae4ca4f&title=&width=773)
+![image.png](asynchronous-i-o.png)
 
 #### 各种 I/O 模型对比
 
 - 同步I/O操作（synchronous I/O opetaion）导致请求进程阻塞，直到I/O操作完成；
 - 异步I/O操作（asynchronous I/O opetaion）不导致请求进程阻塞。
 
-![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1689780447961-cad2a9a0-664e-4d94-bbe6-7efdecfed838.png#averageHue=%23f3f3f3&clientId=ufe7ed435-70df-4&from=paste&height=464&id=ua9677cf0&originHeight=464&originWidth=863&originalType=binary&ratio=1&rotation=0&showTitle=false&size=112557&status=done&style=none&taskId=u12b70622-4b75-4cb0-911d-14b165976d7&title=&width=863)
+![image.png](i-o-vs.png)
 
 ### select 函数
 
@@ -859,8 +861,6 @@ int select(int maxfdpl, fd_set *readset, fd_set *writeset, fd_set *exceptset,
 
 下图汇总了上述导致`select`返回某个套接字就绪的条件：
 
-![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1689866089469-b86ec7df-c884-47a1-a520-2bcf1342d700.png#averageHue=%23ebebeb&clientId=ucb60fe23-2424-4&from=paste&height=255&id=u3295e7a7&originHeight=255&originWidth=639&originalType=binary&ratio=1&rotation=0&showTitle=false&size=60769&status=done&style=none&taskId=u90892e30-58f0-48d7-975a-39284357188&title=&width=639)
-
 #### select 的最大描述符数
 
 大多数应用不会用到很多描述符，如果有那他也往往用`select`来复选描述符。
@@ -875,16 +875,16 @@ int select(int maxfdpl, fd_set *readset, fd_set *writeset, fd_set *exceptset,
 
 **在解释一下**
 
-当调用`**poll()**`函数时，它会阻塞当前进程或线程，等待指定的文件描述符上发生感兴趣的事件。`**poll()**`函数使用**struct pollfd**数组来传递要监视的文件描述符和感兴趣的事件，并将实际发生的事件填充到同样的数组中的**revents**字段中。
+当调用`poll()`函数时，它会阻塞当前进程或线程，等待指定的文件描述符上发生感兴趣的事件。`poll()`函数使用 struct pollfd 数组来传递要监视的文件描述符和感兴趣的事件，并将实际发生的事件填充到同样的数组中的 revents 字段中。
 
-poll的机制与select类似，与select在本质上没有多大差别，管理多个描述符也是进行轮询，根据描述符的状态进行处理，但是poll没有最大文件描述符数量的限制。
+poll 的机制与 select 类似，与 select 在本质上没有多大差别，管理多个描述符也是进行轮询，根据描述符的状态进行处理，但是 poll 没有最大文件描述符数量的限制。
 
 ```c
 #include <poll.h>
 int poll(struct pollfd *fdarray, unsigned long nfds, int timeout)
 ```
 
-- 返回值：若有就绪描述符则为其数目，若超时为0，出错-1
+- 返回值：若有就绪描述符则为其数目，若超时为 0，出错 -1
 - nfds：设置结构数组fdarray中的元素的个数
 - timeout：指定`poll`函数返回前等待多长时间。
    - INFTIM：永远等待
@@ -901,8 +901,6 @@ struct pollfd {
 ```
 
 测试条件由`events`成员指定，函数在相应的`revents`成员中返回该描述符的状态。
-
-![image.png](https://cdn.nlark.com/yuque/0/2023/png/22241519/1689867085773-7aaaf6ab-9fe1-4409-9af6-82ca823eeae1.png#averageHue=%23ededed&clientId=ucb60fe23-2424-4&from=paste&height=323&id=ue7a7f4bc&originHeight=323&originWidth=713&originalType=binary&ratio=1&rotation=0&showTitle=false&size=97988&status=done&style=none&taskId=u4ef13775-3fb0-443c-afb2-66701c609fb&title=&width=713)
 
 **这个图的意思是**三个部分
 
