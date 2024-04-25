@@ -10,3 +10,12 @@ mermaid: false
 ---
 
 LeetCode <https://leetcode.cn/problems/search-in-rotated-sorted-array/>
+
+```java
+
+```
+
+**Complexity**
+
+* Time = O(2^n) 
+* Space = O(n) 
