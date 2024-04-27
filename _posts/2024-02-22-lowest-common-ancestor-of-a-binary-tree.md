@@ -2,8 +2,8 @@
 title: Lowest Common Ancestor of a Binary Tree
 date: 2024-02-22 06:53:00 +0800
 author: Algorithms-Notes
-categories: [Algorithms, LeetCode Hot 100]
-tags: [Medium, top-100-liked, Tree, Depth-First Search, Binary Tree]
+categories: [Algorithms]
+tags: [Medium, top-100-liked, Sword To Offer, Tree, Depth-First Search, Binary Tree]
 pin: false
 math: false
 mermaid: true
@@ -106,7 +106,9 @@ Output: 1
  * }
  */
 class Solution {
+
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+
         if (root == null || p == root || q == root) {
             return root;
         }
@@ -120,6 +122,7 @@ class Solution {
 
         return left == null ? right : left;
     }
+
 }
 ```
 
