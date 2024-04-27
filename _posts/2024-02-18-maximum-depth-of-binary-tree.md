@@ -3,7 +3,7 @@ title: Maximum Depth of Binary Tree
 date: 2024-02-18 08:38:00 +0800
 author: Algorithms-Notes
 categories: [Algorithms, LeetCode Hot 100]
-tags: [Easy, top-100-liked, Depth-First Search, Breadth-First Search, Binary Tree]
+tags: [Easy, top-100-liked, Sword To Offer, Depth-First Search, Breadth-First Search, Binary Tree]
 pin: false
 math: false
 mermaid: false

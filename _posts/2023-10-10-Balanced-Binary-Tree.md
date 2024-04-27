@@ -3,7 +3,7 @@ title: Balanced Binary Tree
 date: 2023-10-10 22:03:00 +0800
 author: Algorithms-Notes
 categories: [Leetcode]
-tags: [Leetcode, Binary Tree]
+tags: [Easy, Sword To Offer, Tree, Depth-First Search, Binary Tree]
 pin: false
 math: true
 mermaid: false
