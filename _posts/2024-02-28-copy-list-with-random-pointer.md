@@ -3,7 +3,7 @@ title: Copy List with Random Pointer
 date: 2024-02-28 07:11:00 +0800
 author: Algorithms-Notes
 categories: [Algorithms, LeetCode Hot 100]
-tags: [Medium, top-100-liked, Hash Table, Linked List]
+tags: [Medium, top-100-liked, Sword To Offer, Hash Table, Linked List]
 pin: false
 math: false
 mermaid: false
@@ -40,7 +40,9 @@ class Node {
 */
 
 class Solution {
+
     public Node copyRandomList(Node head) {
+
         if (head == null) {
             return null;
         }
@@ -98,7 +100,9 @@ class Node {
 */
 
 class Solution {
+
     public Node copyRandomList(Node head) {
+        
         if (head == null) {
             return null;
         }
