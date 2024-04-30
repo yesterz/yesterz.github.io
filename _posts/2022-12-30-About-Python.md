@@ -1,6 +1,6 @@
 ---
 title: Python 基础内容
-date: 2023-08-01 15:01:00 +0800
+date: 2022-12-30 15:01:00 +0800
 author: 
 categories: [Python]
 tags: [Python, Notes]
