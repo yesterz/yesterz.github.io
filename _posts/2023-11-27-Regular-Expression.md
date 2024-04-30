@@ -9,7 +9,140 @@ math: true
 mermaid: false
 ---
 
-[TODO] 重新排版
+其他参考资料：
+1. Wikipedia <https://en.wikipedia.org/wiki/Regular_expression>
+2. zytrax <https://www.zytrax.com/tech/web/regex.htm>
+
+1 []  原子表
+[a]   匹配小写字母a
+[x]   匹配小写字母x
+[ab]  匹配小写字母a或b
+[abc] 匹配小写字母a或者b或者c
+[0123456789]  匹配任意一位数字
+[0-9] 匹配任意一位数字
+[a-z] 匹配任意一位小写字母
+[A-Z] 匹配任意一位大写字母
+[a-zA-Z]  匹配任意一位字母
+[0-9a-zA-Z]  匹配任意一位字母或一位数字
+以上都是一位
+
+2 ^ 以...开头
+^a     匹配一个小写字母a 并且必须作为开头  ba   ab
+^abc   匹配小写字母abc  并且abc作为开头   abcd    bbabcd
+^[a]   等同于^a
+^[abc] 匹配一位小写字母a或b或c 并且作为开头
+[^abc] 匹配一位非小写字母a或b或c
+
+
+3 $  以...作为结尾 一般用不到  ^ 和 $通常是组合匹配
+^123456$   完全匹配  通常这样的写法使用  完全匹配  咱们上面讲的都是包含关系
+^1[3-9][0-9]{9}$  匹配第一位为1 第二位为3-9 剩下的9位为0-9   完全匹配
+                    199012345678
+                    1990123456789
+
+4 {m}  限定符  前面正则的m次  不能单独使用
+[a-z]{9}  匹配9位小写字母
+[0-9][a-z]{9}  匹配一位数字和9位小写字母
+
+5 {m, n}    限定符  前面正则的m-n次  不能单独使用
+[a-zA-Z]{3, 5}  匹配3-5位的字母
+
+6 {m, }      限定符  前面正则的至少m次  不能单独使用
+[a-zA-Z]{3,}  匹配至少3位的字母
+
+7 ?     匹配0-1次
+-?[1-9]   匹配正负1-9
+-{0, 1}[1-9]  等同于上方
+
+-[1-9]{0,1}
+匹配一个符号-或-1-9 的数字
+
+8 .    匹配换行符以外的任意一位字符
+
+9 *    匹配任意次 {0, }
+
+10 .*?  匹配换行符以外的任意字符任意次  最重要的！！！！！！！ 非贪婪
+
+11 .*  匹配换行符以外的任意字符任意次  不重要！！！！！！！ 贪婪
+
+11 +   匹配至少次 {1, }
+
+12 .+?  匹配换行符以外的任意字符至少1次 非贪婪
+
+13 .+  匹配换行符以外的任意字符至少1次 贪婪
+
+14 ()   一个单元和子存储
+(ab)|(bc)
+
+15 |  或
+a|b
+
+16 \w  匹配数字字母下划线 一位
+
+17 \W  和上面取反  匹配非数字字母下划线 一位
+
+18 \d  匹配0-9  也就是[0-9]简写 一位
+
+19 \D  上面的取反
+
+20 \s  匹配空白字符
+
+21 \S  上面的取反
+
+## Regular Expression Patterns
+
+### 1. Character Sets [ ]
+- `[a]` matches the lowercase letter 'a'.
+- `[x]` matches the lowercase letter 'x'.
+- `[ab]` matches either 'a' or 'b'.
+- `[abc]` matches 'a', 'b', or 'c'.
+- `[0123456789]` matches any digit.
+- `[0-9]` matches any digit.
+- `[a-z]` matches any lowercase letter.
+- `[A-Z]` matches any uppercase letter.
+- `[a-zA-Z]` matches any letter.
+- `[0-9a-zA-Z]` matches any letter or digit.
+
+### 2. Anchors ^ and $
+- `^` matches the beginning of a string.
+  - `^a` matches 'a' at the beginning.
+  - `^abc` matches 'abc' at the beginning.
+- `^` is equivalent to `^[a]`.
+- `^` is equivalent to `^[abc]`.
+- `[^abc]` matches any character except 'a', 'b', or 'c'.
+- `$` matches the end of a string.
+  - `^123456$` matches '123456' exactly.
+  - `^1[3-9][0-9]{9}$` matches specific phone numbers.
+
+### 3. Quantifiers { }
+- `[a-z]{9}` matches exactly 9 lowercase letters.
+- `[0-9][a-z]{9}` matches a digit followed by 9 lowercase letters.
+- `[a-zA-Z]{3,5}` matches 3 to 5 letters.
+- `[a-zA-Z]{3,}` matches at least 3 letters.
+
+### 4. Optional ? and Wildcard .
+- `-?[1-9]` matches positive or negative single digits.
+- `-?[1-9]{0,1}` is equivalent.
+- `.` matches any character except a newline.
+- `*` matches zero or more occurrences.
+- `.*?` matches any characters non-greedyly.
+- `.*` matches any characters greedily.
+- `+` matches one or more occurrences.
+- `.+?` matches one or more characters non-greedyly.
+- `.+` matches one or more characters greedily.
+
+### 5. Groups ( ) and Alternation |
+- `(ab)|(bc)` matches 'ab' or 'bc'.
+- `a|b` matches 'a' or 'b'.
+
+### 6. Special Characters \w, \d, \s and their Negations
+- `\w` matches a single alphanumeric character.
+- `\W` matches any non-alphanumeric character.
+- `\d` matches a single digit.
+- `\D` matches any non-digit character.
+- `\s` matches any whitespace character.
+- `\S` matches any non-whitespace character.
+
 
 **字符** - **说明**
 
