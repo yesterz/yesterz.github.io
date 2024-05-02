@@ -3,7 +3,7 @@ title: Construct Binary Tree from Preorder and Inorder Traversal
 date: 2024-04-18 16:53:00 +0800
 author: Algorithms-Notes
 categories: [Algorithms]
-tags: [Medium, top-100-liked, Tree, Array, Hash Table, Divide and Conquer, Binary Tree]
+tags: [Medium, top-100-liked, Sword To Offer, Tree, Array, Hash Table, Divide and Conquer, Binary Tree]
 pin: false
 math: false
 mermaid: false

@@ -2,8 +2,8 @@
 title: Invert Binary Tree
 date: 2024-02-19 07:48:00 +0800
 author: Algorithms-Notes
-categories: [Algorithms, LeetCode Hot 100]
-tags: [Easy, top-100-liked, Depth-First Search, Breadth-First Search, Binary Tree]
+categories: [Algorithms]
+tags: [Easy, top-100-liked, Sword To Offer, Tree, Depth-First Search, Breadth-First Search, Binary Tree]
 pin: false
 math: false
 mermaid: false
@@ -30,6 +30,7 @@ LeetCode <https://leetcode.cn/problems/invert-binary-tree/>
  * }
  */
 class Solution {
+
     public TreeNode invertTree(TreeNode root) {
 
         // base case
@@ -66,6 +67,7 @@ class Solution {
  * }
  */
 class Solution {
+    
     public TreeNode invertTree(TreeNode root) {
 
         // base case
