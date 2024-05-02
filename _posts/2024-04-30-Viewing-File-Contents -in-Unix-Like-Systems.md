@@ -3,7 +3,7 @@ title: 查看文件内容
 date: 2024-04-30 17:18:00 +0800
 author: 
 categories: [Operating System]
-tags: [Operating System]
+tags: [Operating System, Coreutils]
 pin: false
 math: false
 mermaid: false
