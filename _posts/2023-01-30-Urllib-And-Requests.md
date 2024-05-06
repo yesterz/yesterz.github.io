@@ -10,47 +10,51 @@ mermaid: false
 img_path: /assets/images/
 ---
 
-## 一、urllib的学习
+## 一、urllib 的学习
 
 ##### 学习目标
 
-了解urllib的基本使用 
+了解 urllib 的基本使用 
 
-------
+### 1、urllib 介绍
 
-### 1、urllib介绍
+除了 requests 模块可以发送请求之外，urllib 模块也可以实现请求的发送，只是操作方法略有不同!
 
-除了requests模块可以发送请求之外, urllib模块也可以实现请求的发送,只是操作方法略有不同!
+urllib 在 Python 中分为 urllib 和 urllib2，在 Python3 中为 urllib
 
-urllib在python中分为urllib和urllib2，在python3中为urllib
+下面以 Python3 的 urllib 为例进行讲解
 
-下面以python3的urllib为例进行讲解
-
-### 2、urllib的基本方法介绍
+### 2、urllib 的基本方法介绍
 
 #### 2.1 urllib.Request
 
 1. 构造简单请求
 
-   ```python
-   import urllib
-   #构造请求
-   request = urllib.request.Request("http://www.baidu.com")
-   #发送请求获取响应
-   response = urllib.request.urlopen(request)
-   ```
+    ```python
+    import urllib
+
+    # 构造请求
+    request = urllib.request.Request("http://www.baidu.com")
+    # 发送请求获取响应
+    response = urllib.request.urlopen(request)
+
+    ```
 
 2. 传入headers参数
 
-   ```python
-   import urllib
-   #构造headers
-   headers = {"User-Agent" : "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)"} 
-   #构造请求
-   request = urllib.request.Request(url, headers=headers)
-   #发送请求
-   response = urllib.request.urlopen(request)
-   ```
+    ```python
+    import urllib
+
+    # 构造headers
+    headers = {
+        "User-Agent": "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)"
+    }
+    # 构造请求
+    request = urllib.request.Request(url, headers=headers)
+    # 发送请求
+    response = urllib.request.urlopen(request)
+
+    ```
 
 3. 传入data参数 实现发送post请求（示例）
 
@@ -96,26 +100,27 @@ response.read()
 
 ```python
 import urllib
-import json
 
-url = 'http://www.baidu.com'
-#构造headers
-headers = {"User-Agent" : "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)"}
-#构造请求
-request = urllib.request.Request(url, headers = headers)
-#发送请求
+url = "http://www.baidu.com"
+# 构造headers
+headers = {
+    "User-Agent": "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)"
+}
+# 构造请求
+request = urllib.request.Request(url, headers=headers)
+# 发送请求
 response = urllib.request.urlopen(request)
-#获取html字符串
-html_str = response.read().decode('utf-8')
+# 获取html字符串
+html_str = response.read().decode("utf-8")
 print(html_str)
 ```
 
 ### 4、小结
 
-1. urllib.request中实现了构造请求和发送请求的方法
-2. urllib.request.Request(url,headers,data)能够构造请求
-3. urllib.request.urlopen能够接受request请求或者url地址发送请求，获取响应
-4. response.read()能够实现获取响应中的bytes字符串
+1. urllib.request 中实现了构造请求和发送请求的方法
+2. urllib.request.Request(url,headers,data) 能够构造请求
+3. urllib.request.urlopen 能够接受 request 请求或者 url 地址发送请求，获取响应
+4. response.read() 能够实现获取响应中的 bytes 字符串
 
 
 

@@ -3,7 +3,7 @@ title: Python 基础内容
 date: 2022-12-30 15:01:00 +0800
 author: 
 categories: [Python]
-tags: [Python, Notes]
+tags: [Python, Web Crawler]
 pin: false
 math: true
 mermaid: false
