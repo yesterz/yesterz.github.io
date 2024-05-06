@@ -3,7 +3,7 @@ title: First Unique Character in a String
 date: 2024-02-17 19:46:00 +0800
 author: Algorithms-Notes
 categories: [Algorithms]
-tags: [Easy, Queue, Hash Table, String, Counting]
+tags: [Easy, Sword To Offer, Queue, Hash Table, String, Counting]
 pin: false
 math: false
 mermaid: false
