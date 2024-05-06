@@ -600,7 +600,7 @@ requests.get(url, params=kw)
 
 + 浏览器配置代理
 
-  右边三点\==> 设置\==> 高级\==> 代理\==> 局域网设置\==> 为LAN使用代理==> 输入ip和端口号即可
+  右边三点 -> 设置 -> 高级 -> 代理 -> 局域网设置 -> 为 LAN 使用代理 -> 输入 ip 和端口号即可
 
   参考网址：<https://jingyan.baidu.com/article/a681b0dece76407a1843468d.html>
 
