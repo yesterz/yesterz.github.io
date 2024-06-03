@@ -12,37 +12,37 @@ img_path: /assets/images/
 
 ## 学习目标
 
-- [ ] 能够说出Spring的体系结构
-- [ ] 能够编写IOC入门案例
-- [ ] 能够编写DI入门案例
-- [ ] 能够配置setter方式注入属性值
+- [ ] 能够说出 Spring 的体系结构
+- [ ] 能够编写 IoC 入门案例
+- [ ] 能够编写 DI 入门案例
+- [ ] 能够配置 setter 方式注入属性值
 - [ ] 能够配置构造方式注入属性值
 - [ ] 能够理解什么是自动装配
 
-## 一、Spring简介
+## 一、Spring 简介
 
-### 1 Spring课程介绍
+### 1 Spring 课程介绍
 
 #### 问题导入
 
-我们为什么要学习Spring框架？
+我们为什么要学习 Spring 框架？
 
 #### 1.1 为什么要学
 
-- Spring技术是JavaEE开发必备技能，企业开发技术选型命中率>==90%==
+- Spring 技术是 JavaEE 开发必备技能，企业开发技术选型命中率大于90%。
 
 - 专业角度
-  - ==**简化开发**==，降低企业级开发的复杂性
-  - **==框架整合==**，高效整合其他技术，提高企业级应用开发与运行效率
+  - **简化开发**，降低企业级开发的复杂性。
+  - **框架整合**，高效整合其他技术，提高企业级应用开发与运行效率。
 
 ![image-20210729171139088](framework-Spring-1/image-20210729171139088.png)
 
 #### 1.2 学什么
 
 - 简化开发
-  - ==IOC(反转控制)==
-  - ==AOP(面向切面编程)==
-    - ==事务处理==
+  - **IoC(反转控制)**
+  - **AOP(面向切面编程)**
+    - **事务处理**
 
 - 框架整合
   - MyBatis
@@ -54,60 +54,60 @@ img_path: /assets/images/
 
 #### 1.3 怎么学
 
-- 学习Spring框架设计思想
-- 学习基础操作，思考操作与思想间的联系
-- 学习案例，熟练应用操作的同时，体会思想
+- 学习 Spring 框架设计思想。
+- 学习基础操作，思考操作与思想间的联系。
+- 学习案例，熟练应用操作的同时，体会思想。
 
 ![image-20210729171346022](framework-Spring-1/image-20210729171346022.png)
 
 
 
-### 2 初识Spring
+### 2 初识 Spring
 
 #### 问题导入
 
-目前我们使用的是Spring几版本？
+目前我们使用的是 Spring 几版本？
 
-#### 2.1 Spring家族
+#### 2.1 Spring 家族
 
-- 官网：https://spring.io
-- Spring发展到今天已经形成了一种开发的生态圈，Spring提供了若干个项目，每个项目用于完成特定的功能。
+- 官网：<https://spring.io>
+- Spring 发展到今天已经形成了一种开发的生态圈，Spring 提供了若干个项目，每个项目用于完成特定的功能。
 
 ![image-20210729171850181](framework-Spring-1/image-20210729171850181.png)
 
-#### 2.2 Spring发展史
+#### 2.2 Spring 发展史
 
 ![image-20210729171926576](framework-Spring-1/image-20210729171926576.png)
 
 
 
-### 3 Spring体系结构
+### 3 Spring 体系结构
 
 #### 问题导入
 
-通过系统架构图，Spring能不能进行数据层开发？Spring能不能进行web层开发？
+通过系统架构图，Spring 能不能进行数据层开发？Spring 能不能进行 Web 层开发？
 
-#### 3.1 Spring Framework系统架构图
+#### 3.1 Spring Framework 系统架构图
 
-- Spring Framework是Spring生态圈中最基础的项目，是其他项目的根基
+- Spring Framework 是 Spring 生态圈中最基础的项目，是其他项目的根基
 
 ![image-20210729172153796](framework-Spring-1/image-20210729172153796.png)
 
 ![image-20210729172352627](framework-Spring-1/image-20210729172352627.png)
 
-#### 3.2 Spring Framework课程学习路线
+#### 3.2 Spring Framework 课程学习路线
 
 ![image-20210729172513669](framework-Spring-1/image-20210729172513669.png)
 
 
 
-### 4 Spring核心概念
+### 4 Spring 核心概念
 
 #### 问题导入
 
 问题1：目前我们的代码存在什么问题以及怎么解决这些问题？
 
-问题2：请描述什么是IOC，什么是DI？
+问题2：请描述什么是 IoC，什么是 DI？
 
 #### 4.1 目前我们代码存在的问题
 
@@ -116,36 +116,36 @@ img_path: /assets/images/
 - 代码书写现状
   - 耦合度偏高
 - 解决方案
-  - 使用对象时，在程序中不要主动使用new产生对象，转换为由外部提供对象
+  - 使用对象时，在程序中不要主动使用 new 产生对象，转换为由外部提供对象
 
 #### 4.2 核心概念
 
-- ==IOC（Inversion of Control）控制反转==
+- IoC（Inversion of Control）控制反转
 
-  使用对象时，由主动new产生对象转换为由==外部==提供对象，此过程中对象创建控制权由程序转移到外部，此思想称为控制反转。通俗的讲就是“==将new对象的权利交给Spring，我们从Spring中获取对象使用即可==”
+  使用对象时，由主动 new 产生对象转换为由外部提供对象，此过程中对象创建控制权由程序转移到外部，此思想称为控制反转。通俗的讲就是“将 new 对象的权利交给 Spring，我们从 Spring 中获取对象使用即可”
 
-- Spring技术对IoC思想进行了实现
+- Spring 技术对 IoC 思想进行了实现
 
-  - Spring提供了一个容器，称为==IOC容器==，用来充当IoC思想中的“外部”
-  - IOC容器负责对象的创建、初始化等一系列工作，被创建或被管理的对象在IoC容器中统称为==Bean==
+  - Spring 提供了一个容器，称为**IOC容器**，用来充当 IoC 思想中的“外部”
+  - IoC容器负责对象的创建、初始化等一系列工作，被创建或被管理的对象在IoC容器中统称为**Bean**
 
-- ==DI（Dependency Injection）依赖注入==
+- **DI（Dependency Injection）依赖注入**
   
   - 在容器中建立bean与bean之间的依赖关系的整个过程，称为依赖注入。
 
 ![image-20210729174148134](framework-Spring-1/image-20210729174148134.png)
 
 - 目标：充分解耦
-  - 使用IoC容器管理bean（IOC)
+  - 使用IoC容器管理bean（IoC)
   - 在IoC容器内将有依赖关系的bean进行关系绑定（DI）
 - 最终效果
   - 使用对象时不仅可以直接从IoC容器中获取，并且获取到的bean已经绑定了所有的依赖关系
 
 
 
-## 二、IOC和DI入门案例【重点】
+## 二、IoC和DI入门案例【重点】
 
-### 1 IOC入门案例【重点】
+### 1 IoC入门案例【重点】
 
 #### 问题导入
 
@@ -154,23 +154,21 @@ img_path: /assets/images/
 #### 1.1 门案例思路分析
 
 1. 管理什么？(Service与Dao)
-2. 如何将被管理的对象告知IOC容器？(配置文件)
-3. 被管理的对象交给IOC容器，如何获取到IoC容器？(接口)
-4. IOC容器得到后，如何从容器中获取bean？(接口方法)
+2. 如何将被管理的对象告知IoC容器？(配置文件)
+3. 被管理的对象交给IoC容器，如何获取到IoC容器？(接口)
+4. IoC容器得到后，如何从容器中获取bean？(接口方法)
 5. 使用Spring导入哪些坐标？(pom.xml)
 
 #### 1.2 实现步骤
 
-```
-【第一步】导入Spring坐标
-【第二步】定义Spring管理的类（接口）
-【第三步】创建Spring配置文件，配置对应类作为Spring管理的bean对象
-【第四步】初始化IOC容器（Spring核心容器/Spring容器），通过容器获取bean对象
-```
+1. 导入Spring坐标
+2. 定义Spring管理的类（接口）
+3. 创建Spring配置文件，配置对应类作为Spring管理的bean对象
+4. 初始化IoC容器（Spring核心容器/Spring容器），通过容器获取bean对象
 
 #### 1.3 实现代码
 
-**【第一步】导入Spring坐标**
+**【第一步】导入 Spring 坐标**
 
 ```xml
 <dependencies>
@@ -183,7 +181,7 @@ img_path: /assets/images/
 </dependencies>
 ```
 
-**【第二步】定义Spring管理的类（接口）**
+**【第二步】定义 Spring 管理的类（接口）**
 
 - BookDao接口和BookDaoImpl实现类
 
@@ -215,9 +213,9 @@ public class BookServiceImpl implements BookService {
 }
 ```
 
-**【第三步】创建Spring配置文件，配置对应类作为Spring管理的bean对象**
+**【第三步】创建 Spring 配置文件，配置对应类作为 Spring 管理的 bean 对象**
 
-- 定义applicationContext.xml配置文件并配置BookServiceImpl
+- 定义 applicationContext.xml 配置文件并配置 BookServiceImpl
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -226,25 +224,26 @@ public class BookServiceImpl implements BookService {
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
  
     <!--
-		bean标签：表示配置bean
-    	id属性：表示给bean起名字
-    	class属性：表示给bean定义类型
+		bean 标签：表示配置 bean
+    	id 属性：表示给 bean 起名字
+    	class 属性：表示给 bean 定义类型
 	-->
     <bean id="bookService" class="com.itheima.service.impl.BookServiceImpl"></bean>
 
 </beans>
 ```
 
-**==注意事项：bean定义时id属性在同一个上下文中(IOC容器中)不能重复==**
+> 注意事项：bean 定义时 id 属性在同一个上下文中（IoC 容器中）不能重复
+{: .prompt-danger }
 
-**【第四步】初始化IOC容器（Spring核心容器/Spring容器），通过容器获取Bean对象**
+**【第四步】初始化IoC容器（Spring核心容器/Spring容器），通过容器获取Bean对象**
 
 ```java
 public class App {
     public static void main(String[] args) {
         //1.创建IoC容器对象，加载spring核心配置文件
         ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
-        //2 从IOC容器中获取Bean对象(BookService对象)
+        //2 从IoC容器中获取Bean对象(BookService对象)
         BookService bookService= (BookService)ctx.getBean("bookService");
         //3 调用Bean对象(BookService对象)的方法
         bookService.save();
@@ -266,18 +265,16 @@ public class App {
 
 #### 2.1 DI入门案例思路分析
 
-1. 基于IOC管理bean
+1. 基于IoC管理bean
 2. Service中使用new形式创建的Dao对象是否保留？(否)
 3. Service中需要的Dao对象如何进入到Service中？(提供方法)
 4. Service与Dao间的关系如何描述？(配置)
 
 #### 2.2 实现步骤
 
-```
-【第一步】删除使用new的形式创建对象的代码
-【第二步】提供依赖对象对应的setter方法
-【第三步】配置service与dao之间的关系
-```
+1. 删除使用new的形式创建对象的代码
+2. 提供依赖对象对应的setter方法
+3. 配置service与dao之间的关系
 
 #### 2.3 实现代码
 
@@ -358,11 +355,11 @@ public class BookServiceImpl implements BookService {
 
 #### 代码演示
 
-> 见《IOC入门案例》applicationContext.xml配置
+> 见《IoC入门案例》applicationContext.xml配置
 
 #### 运行结果
 
-> 见《IOC入门案例》运行结果
+> 见《IoC入门案例》运行结果
 
 
 
@@ -456,7 +453,7 @@ public class AppForInstanceBook {
 
 ![image-20210729194137151](framework-Spring-1/image-20210729194137151.png)
 
-==注意：无参构造方法如果不存在，将抛出异常`BeanCreationException`==
+**注意：无参构造方法如果不存在，将抛出异常`BeanCreationException`**
 
 #### 2.2 静态工厂方式
 
@@ -729,7 +726,7 @@ public class AppForLifeCycle {
 
 - setter注入
   简单类型
-  ==**引用类型(很常用)**==
+  **引用类型(很常用)**
 - 构造器注入
   简单类型
   引用类型
@@ -773,7 +770,7 @@ setter方式注入使用什么子标签？
 3. Spring框架倡导使用构造器，第三方框架内部大多数采用构造器注入的形式进行数据初始化，相对严谨
 4. 如果有必要可以两者同时使用，使用构造器注入完成强制依赖的注入，使用setter注入完成可选依赖的注入
 5. 实际开发过程中还要根据实际情况分析，如果受控对象没有提供setter方法就必须使用构造器注入
-6. **==自己开发的模块推荐使用setter注入==**
+6. **自己开发的模块推荐使用setter注入**
 
 
 
@@ -787,7 +784,7 @@ setter方式注入使用什么子标签？
 
 - IoC容器根据bean所依赖的资源在容器中自动查找并注入到bean中的过程称为自动装配
 - 自动装配方式
-  ==按类型（常用）==
+  **按类型（常用）**
   按名称
   按构造方法
   不启用自动装配
