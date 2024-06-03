@@ -34,7 +34,12 @@ class Solution {
             return true;
         }
         visited[i][j] = true;
-        int[][] directions = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+        int[][] directions = {
+            {0, 1}, 
+            {0, -1}, 
+            {1, 0}, 
+            {-1, 0}
+        };
         boolean result = false;
         for (int[] dir : directions) {
             int newi = i + dir[0], newj = j + dir[1];
