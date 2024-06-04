@@ -131,7 +131,7 @@ img_path: /assets/images/
 
 - **DI（Dependency Injection）依赖注入**
   
-  - 在容器中建立bean与bean之间的依赖关系的整个过程，称为依赖注入。
+  - 在容器中建立 bean 与 bean 之间的依赖关系的整个过程，称为依赖注入。
 
 ![image-20210729174148134](framework-Spring-1/image-20210729174148134.png)
 
