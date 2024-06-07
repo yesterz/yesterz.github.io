@@ -3,7 +3,7 @@ title: 剑指Offer的链表题目
 author: Algorithms-Notes
 date: 2023-08-23 11:33:00 +0800
 categories: [Algorithms]
-tags: [剑指Offer, Linked List]
+tags: [剑指 Offer, Linked List]
 pin: false
 math: false
 mermaid: false
