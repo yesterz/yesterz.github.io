@@ -7,6 +7,7 @@ tags: [Linux]
 pin: false
 math: true
 mermaid: false
+img_path: /assets/images/
 ---
 
 # 正则表达式
@@ -477,13 +478,13 @@ linux命令行里，提取系统中的文件名信息的
 
 # 基础语法
 
-![image-20220405213956490](pic/image-20220405213956490.png)
+![image-20220405213956490](Learning-Regular-Expression/image-20220405213956490.png)
 
-![image-20220412102654664](pic/image-20220412102654664.png)
+![image-20220412102654664](Learning-Regular-Expression/image-20220412102654664.png)
 
 --
 
-![image-20220412102835864](pic/image-20220412102835864.png)
+![image-20220412102835864](Learning-Regular-Expression/image-20220412102835864.png)
 
 
 
@@ -508,13 +509,13 @@ linux的换行符 \n
 
 --
 
-![image-20220412103112419](pic/image-20220412103112419.png)
+![image-20220412103112419](Learning-Regular-Expression/image-20220412103112419.png)
 
 ---
 
 
 
-![image-20220411095133446](pic/image-20220411095133446.png)
+![image-20220411095133446](Learning-Regular-Expression/image-20220411095133446.png)
 
 # 如何用正则表达式
 
@@ -1474,7 +1475,7 @@ p.*$的作用
 
 等于找出文件中所有的小写字母
 
-![image-20220412114250564](pic/image-20220412114250564.png)
+![image-20220412114250564](Learning-Regular-Expression/image-20220412114250564.png)
 
 
 
@@ -1484,7 +1485,7 @@ p.*$的作用
 
 [A-Z] 匹配大写字母
 
-![image-20220412114318524](pic/image-20220412114318524.png)
+![image-20220412114318524](Learning-Regular-Expression/image-20220412114318524.png)
 
 
 
@@ -1494,7 +1495,7 @@ p.*$的作用
 
 [a-z0-9] 匹配小写字母和数字
 
-![image-20220412114346269](pic/image-20220412114346269.png)
+![image-20220412114346269](Learning-Regular-Expression/image-20220412114346269.png)
 
 
 
@@ -1504,7 +1505,7 @@ p.*$的作用
 grep '[0-9A-Z]' t1.log
 ```
 
-![image-20220412114410501](pic/image-20220412114410501.png)
+![image-20220412114410501](Learning-Regular-Expression/image-20220412114410501.png)
 
 
 
@@ -1524,7 +1525,7 @@ grep '[a-z0-9A-Z]' t1.log -n
 grep '[^a-z0-9A-Z]'  t1.log -n
 ```
 
-![image-20220412114602263](pic/image-20220412114602263.png)
+![image-20220412114602263](Learning-Regular-Expression/image-20220412114602263.png)
 
 
 
@@ -1552,7 +1553,7 @@ grep '[^a-z0-9A-Z]'  t1.log -n
 grep '[^a-z]'  t1.log 
 ```
 
-![image-20220412114758551](pic/image-20220412114758551.png)
+![image-20220412114758551](Learning-Regular-Expression/image-20220412114758551.png)
 
 
 
@@ -1598,7 +1599,7 @@ my name is wwwwwwwwwwwwwwwwwwwwwwwwu yifan.
 
 ```
 
-![image-20220412120805682](pic/image-20220412120805682.png)
+![image-20220412120805682](Learning-Regular-Expression/image-20220412120805682.png)
 
 
 
@@ -1687,7 +1688,7 @@ grep -E '8{2,3}' t1.log
 
 每次只找出3个8
 
-![image-20220412121153854](pic/image-20220412121153854.png)
+![image-20220412121153854](Learning-Regular-Expression/image-20220412121153854.png)
 
 
 
@@ -1836,7 +1837,7 @@ grep '0+'  t1.log
 收件人：
 ```
 
-![image-20220412121957567](pic/image-20220412121957567.png)
+![image-20220412121957567](Learning-Regular-Expression/image-20220412121957567.png)
 
 
 
@@ -1868,9 +1869,9 @@ grep -E '[A-Za-z0-9]+'  t1.log
 
 ```
 
-![image-20220412122236714](pic/image-20220412122236714.png)
+![image-20220412122236714](Learning-Regular-Expression/image-20220412122236714.png)
 
-![image-20220412122326865](pic/image-20220412122326865.png)
+![image-20220412122326865](Learning-Regular-Expression/image-20220412122326865.png)
 
 
 
@@ -1958,7 +1959,7 @@ go?d 可以找到啥
 
 ```
 
-![image-20220412122850895](pic/image-20220412122850895.png)
+![image-20220412122850895](Learning-Regular-Expression/image-20220412122850895.png)
 
 
 
