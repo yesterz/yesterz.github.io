@@ -1,9 +1,9 @@
 ---
-title: 正儿远程登陆 SSH 命令
+title: 正经儿远程登陆 SSH 命令
 date: 2024-06-21 10:20:00 +0800
 author: 
 categories: [Linux]
-tags: [Linux]
+tags: [SSH]
 pin: false
 math: true
 mermaid: false

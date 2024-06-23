@@ -1,9 +1,9 @@
 ---
-title: 正经 SSH 命令 in advanced
+title: SSH 命令 in advanced
 date: 2024-06-21 10:56:00 +0800
 author: 
 categories: [Linux]
-tags: [Linux]
+tags: [SSH]
 pin: false
 math: true
 mermaid: false

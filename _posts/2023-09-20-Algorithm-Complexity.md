@@ -160,4 +160,30 @@ for (int i = 1; i <= n; i++) {
 - 递归的深度（栈上消耗的空间）
 - 动态 new 的空间（堆上消耗的空间）
 
-linux 栈默认8M，堆（内存大小，256MB）溢出就是stackOverFlow
+Linux 栈默认 8M 溢出就是 StackOverFlow
+
+```console
+➜  ~ ulimit -a
+-t: cpu time (seconds)              unlimited
+-f: file size (blocks)              unlimited
+-d: data seg size (kbytes)          unlimited
+-s: stack size (kbytes)             8192
+-c: core file size (blocks)         0
+-m: resident set size (kbytes)      unlimited
+-u: processes                       55327
+-n: file descriptors                1024
+-l: locked-in-memory size (kbytes)  65536
+-v: address space (kbytes)          unlimited
+-x: file locks                      unlimited
+-i: pending signals                 55327
+-q: bytes in POSIX msg queues       819200
+-e: max nice                        0
+-r: max rt priority                 0
+-N 15:                              unlimited
+➜  ~ ulimit -s
+8192
+➜  ~
+```
+
+> B 是 byte，1 KB = 1024 Bytes，1 MB = 1024 KB
+{: .prompt-danger }

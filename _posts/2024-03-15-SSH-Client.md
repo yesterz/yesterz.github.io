@@ -3,7 +3,7 @@ title: SSH Client
 date: 2024-03-15 07:30:00 +0800
 author: 
 categories: [Linux]
-tags: [ssh]
+tags: [SSH]
 pin: false
 math: true
 mermaid: false
