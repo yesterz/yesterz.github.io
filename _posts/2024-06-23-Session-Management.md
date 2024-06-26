@@ -60,13 +60,13 @@ Cookie 曾一度用于客户端数据的存储，因当时并没有其它合适�
 4. 用户每次向服务器发送的访问，都会自动带上该网站所有的 cookie；
 5. 此时服务器拿到 cookie 中的 session_key，在 Session Table 中检测是否存在，是否过期。
 
+* Session Table
 | Field       | Type        | Description                   |
 | ----------- | ----------- | ----------------------------- |
 | session_key | string      | 1个 hash 值，全局唯一，无规律 |
 | user_id     | Foreign key | 指向 User Table               |
 | expire_at   | timestamp   | 什么时候过期                  |
 
-_Session Table_
 
 > **Cookie：**HTTP 协议中浏览器和服务器的沟通机制，服务器把一些用于标记用户身份的信息，传递给浏览器，浏览器每次访问任何网页链接的时候，都会在 HTTP 请求中带上所有的该网站相关的 Cookie 信息。Cookie 可以理解为一个 Client 端的 hash table.
 {: .prompt-info }
@@ -85,9 +85,8 @@ _Session Table_
 
 
 
+## Read Later
 
 1. <https://jakarta.ee/specifications/servlet/5.0/apidocs/jakarta/servlet/http/httpsession>
-
-2. <https://jakarta.ee/specifications/platform/8/apidocs/>
-
-JDK1.8 -> javax.servlet.http -> Interface HttpSession
+2. <https://jakarta.ee/specifications/platform/8/apidocs/> JDK1.8 -> javax.servlet.http -> Interface HttpSession
+3. <https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html>
