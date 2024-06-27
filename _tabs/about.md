@@ -8,14 +8,20 @@ mermaid: true
 > 日常学习记录 💕❌✅✔️☑️
 {: .prompt-danger }
 
+> a tip prompt
+{: .prompt-tip }
+
+> a info prompt
+{: .prompt-info }
+
+> a warning prompt
+{: .prompt-warning}
 
 <font color='red' style='font-weight:bold'>Getting Things DONE</font>
 
 <h1 color='red' style='font-weight:bold'>Getting Things DONE</h1>
 
-
 <span style="font-size: 2em; color: red; font-weight: bold;">Getting Things DONE</span>
-
 
 ### Todo
 

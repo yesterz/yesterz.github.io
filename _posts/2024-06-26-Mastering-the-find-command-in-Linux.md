@@ -14,7 +14,7 @@ Linux 中的 find命令是一个非常强大的工具，可基于各种条件搜
 
 ## **基本语法**
 
-```text
+```plaintext
 find 目录 [选项] [表达式]
 ```
 
@@ -49,7 +49,7 @@ find 目录 [选项] [表达式]
 
 **1. 按名称搜索文件**
 
-- 查找 /path/to/somewhere 目录下的 MP4 视频文件：
+- 查找`/path/to/somewhere`{: .filepath}目录下的 MP4 视频文件：
 
 ```bash
 find /path/to/somewhere -name '*.mp4' -print -exec mv '{}' ~/Videos \;
@@ -90,13 +90,13 @@ s      socket
 D      door (Solaris)
 ```
 
-- 查找/path/to/somewhere目录下的所有目录
+- 查找`/path/to/somewhere`{: .filepath}目录下的所有目录
 
 ```bash
 find /path/to/somewhere -type d
 ```
 
-- 查找/path/to/somewhere目录下的所有文件
+- 查找`/path/to/somewhere`{: .filepath}目录下的所有文件
 
 ```bash
  find /path/to/somewhere -type f 
@@ -122,13 +122,13 @@ find /path/to/somewhere -type d
 
 +表示大于，-表示小于
 
-- 查找 /path/to/somewhere 目录下小于 10MB 的文件
+- 查找`/path/to/somewhere`{: .filepath}目录下小于 10MB 的文件
 
 ```bash
  find /path/to/somewhere -size -10M -print
 ```
 
-- 查找 /path/to/somewhere 目录中占用空间最大的文件
+- 查找`/path/to/somewhere`{: .filepath}目录中占用空间最大的文件
 
 ```bash
  find /path/to/somewhere -size +3000k -print
@@ -153,13 +153,13 @@ find /path/to/somewhere -size +3000k -print -delete
 
 修改时间：代表这个文件什么时间被修改（mtime）
 
-- 查找/path/to/somewhere目录下过去 7 天内修改过的文件
+- 查找`/path/to/somewhere`{: .filepath}目录下过去 7 天内修改过的文件
 
 ```bash
  find /path/to/somewhere '*.jpg' -mtime -7 -print
 ```
 
-- 查找/path/to/somewhere目录下 7 天前修改过**并且不超过14天**的文件
+- 查找`/path/to/somewhere`{: .filepath}目录下 7 天前修改过**并且不超过14天**的文件
 
 ```bash
  find /path/to/somewhere '*.jpg' -mtime +7 -a -mtime -14 -print
@@ -170,7 +170,7 @@ find /path/to/somewhere -size +3000k -print -delete
 
 **5. 按权限搜索**
 
-- 查找/path/to/somewhere目录下权限为644的文件
+- 查找`/path/to/somewhere`{: .filepath}目录下权限为644的文件
 
 ```bash
 find /path/to/somewhere '*.jpg' -perm 644
@@ -178,13 +178,13 @@ find /path/to/somewhere '*.jpg' -perm 644
 
 **6. 按用户和组搜索**
 
-- 查找/path/to/somewhere目录下特定用户拥有的文件
+- 查找`/path/to/somewhere`{: .filepath}目录下特定用户拥有的文件
 
 ```bash
 find /path/to/somewhere -user username
 ```
 
-- 查找/path/to/somewhere目录下特定组拥有的文件
+- 查找`/path/to/somewhere`{: .filepath}目录下特定组拥有的文件
 
 ```bash
 find /path/to/somewhere -group groupname
@@ -198,13 +198,13 @@ find /path/to/somewhere -group groupname
 
 `{}`只允许存在一个，如果由shell调用这个的话，则需要加引号`'{}'`来防止它被shell解析。
 
-- 删除/path/to/somewhere目录下搜到的demo.txt文件
+- 删除`/path/to/somewhere`{: .filepath}目录下搜到的demo.txt文件
 
 ```bash
 find /path/to/somewhere -name "demo.txt" -exec rm {} \;
 ```
 
-- 将搜索到的文件复制到另一个目录，将/path/to/somewhere搜索到的demo.txt复制到/path/to/destination目录下
+- 将搜索到的文件复制到另一个目录，将`/path/to/somewhere`{: .filepath}搜索到的demo.txt复制到`/path/to/destination`{: .filepath}目录下
 
 ```bash
 find /path/to/somewhere -name "demo.txt" -exec cp {} /path/to/destination/ \;
@@ -212,7 +212,7 @@ find /path/to/somewhere -name "demo.txt" -exec cp {} /path/to/destination/ \;
 
 **8. 排除特定目录**
 
-- 搜索/path/to/somewhere目录，但/path/to/somewhere/skipdir该目录排除掉不作搜索，来找到demo.txt文件
+- 搜索`/path/to/somewhere`{: .filepath}目录，但`/path/to/somewhere/skipdir`{: .filepath}该目录排除掉不作搜索，来找到 demo.txt 文件
 
 ```bash
 find /path/to/somewhere -path /path/to/somewhere/skipdir -prune -o -name "demo.txt" -print
@@ -220,7 +220,7 @@ find /path/to/somewhere -path /path/to/somewhere/skipdir -prune -o -name "demo.t
 
 **9. 结合使用多个条件**
 
-- 搜索特定类型且大小在特定范围内的文件：搜索/path/to/somewhere下为文件类型，且文件大小大于10M，小于等于100M
+- 搜索特定类型且大小在特定范围内的文件：搜索`/path/to/somewhere`{: .filepath}下为文件类型，且文件大小大于10M，小于等于100M
 
 ```bash
 find /path/to/somewhere -type f -size +10M -size -100M
@@ -228,7 +228,7 @@ find /path/to/somewhere -type f -size +10M -size -100M
 
 **10. 按深度搜索**
 
-- 限制搜索深度：搜索当前目录/path/to/somewhere，其直接子目录及其子目录下的所有文件：
+- 限制搜索深度：搜索当前目录`/path/to/somewhere`{: .filepath}，其直接子目录及其子目录下的所有文件：
 
 ```bash
 find /path/to/somewhere -maxdepth 2 -name "demo.txt"
