@@ -43,8 +43,215 @@ Facebook为了将其网站的访问速度提升两倍，在上面的寻找性能
 
 在 Linux 中，CPU 主要用于中断、内核以及用户进程的任务处理，优先级为中断 > 内核 > 用户进程。
 
+在学习如何分析 CPU 消耗状况前，还有三个重要的概念要阐述。
+
+#### 上下文切换
+
+每个 CPU（或多核 CPU 中的每核 CPU）在同一时间只能执行一个线程，Linux 采用的是抢占式调度。即为每个线程分配一定的执行时间，当到达执行时间、线程中有 IO 阻塞或高优先级线程要执行时，Linux 将切换执行的线程，在切换时要存储目前线程的执行状态，并恢复要执行的线程的状态，这个过程就称为上下文切换。对于 Java 应用，典型的是在进行文件 IO 操作、网络 IO 操作、锁等待或线程 Sleep 时，当前线程会进入阻塞或休眠状态，从而触发上下文切换，上下文切换过多会造成内核占据较多的 CPU 使用，使得应用的响应速度下降。
+
+#### 运行队列
+
+每个 CPU 核都维护了一个可运行的线程队列，例如一个 4 核的 CPU，Java 应用中启动了 8 个线程，且这 8 个线程都处于可运行状态，那么在分配平均的情况下每个 CPU 中的运行队列里就会有两个线程。通常而言，系统的 load 主要由 CPU 的运行队列来决定，假设以上状况维持了 1 分钟，那么这 1 分钟内系统的 load 就会是 2，但由于 load 是个复杂的值，因此也不是绝对的，运行队列值越大，就意味着线程会要消耗越长的时间才能执行完。Linux System and NetWork Performance Monitoring 中建议控制在每个 CPU 核上的运行队列为 1~3 个。
+
+#### 利用率
+
+CPU 利用率为 CPU 在用户进程、内核、中断处理、IO 等待以及空闲五个部分使用百分比，这五个值是用来分析 CPU 消耗情况的关键指标。Linux System and NetWork Performance Monitoring 中建议用户进程的 CPU 消耗/内核的 CPU 消耗的比率在 65% ~ 70%/30% ~ 35% 左右。
+
+在 Linux 中，可通过 top 或 pidstat 方式来查看进程中线程的 CPU 的消耗状况。
+
+1. top
+
+输入 top 命令后即可查看 CPU 的消耗情况,CPU 的信息在 TOP 视图的上面几行中。
+
+```console
+top - 08:14:36 up 8 min,  1 user,  load average: 0.82, 0.21, 0.06
+Tasks:  59 total,   1 running,  58 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  1.5 us,  0.3 sy,  0.0 ni, 97.8 id,  0.0 wa,  0.0 hi,  0.4 si,  0.0 st
+MiB Mem :  13838.3 total,   9923.8 free,   2687.4 used,   1227.1 buff/cache
+MiB Swap:   4096.0 total,   4096.0 free,      0.0 used.  10887.7 avail Mem
+```
+
+在此需要关注的是第三行的信息，其中 `1.5 us` 表示为用户进程处理所占的百分比；`0.3 sy` 表示为内核线程处理所占的百分比；`0.0 ni` 表示被 nice 命令改变优先级的任务所占的百分比；`97.8 id` 表示 CPU 的空闲时间所占的百分比；`0.0 wa` 表示为在执行的过程中等待 IO 所占的百分比；`0.0 hi` 表示为硬件中断所占的百分比；`0.4 si` 表示为软件中断所占的百分比；`0.0 st` 见下面的解释。
+
+```plaintext
+# from `man top`
+us, user    : time running un-niced user processes
+sy, system  : time running kernel processes
+ni, nice    : time running niced user processes
+id, idle    : time spent in the kernel idle handler
+wa, IO-wait : time waiting for I/O completion
+hi : time spent servicing hardware interrupts
+si : time spent servicing software interrupts
+st : time stolen from this vm by the hypervisor
+```
+
+对于多个或多核的 CPU，上面的显示则会是多个 CPU 所占用的百分比的总和，因此会出现 160% us 这样的现象。如须查看每个核的消耗情况，可在进入top视图后按 1，就会按核来显示消耗情况，如下面所示:
+
+```console
+top - 08:15:06 up 9 min,  1 user,  load average: 0.46, 0.19, 0.06
+Tasks:  59 total,   1 running,  58 sleeping,   0 stopped,   0 zombie
+%Cpu0  :  0.3 us,  0.3 sy,  0.0 ni, 99.3 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+%Cpu1  :  0.7 us,  0.0 sy,  0.0 ni, 99.3 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+%Cpu2  :  0.3 us,  0.0 sy,  0.0 ni, 99.7 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+%Cpu3  :  0.0 us,  0.3 sy,  0.0 ni, 99.3 id,  0.3 wa,  0.0 hi,  0.0 si,  0.0 st
+%Cpu4  :  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+%Cpu5  :  2.0 us,  0.7 sy,  0.0 ni, 97.3 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+%Cpu6  :  0.3 us,  0.0 sy,  0.0 ni, 99.7 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+%Cpu7  :  0.0 us,  0.3 sy,  0.0 ni, 99.7 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+%Cpu8  :  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+%Cpu9  :  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+%Cpu10 :  0.0 us,  0.7 sy,  0.0 ni, 99.3 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+%Cpu11 :  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+%Cpu12 :  0.0 us,  0.3 sy,  0.0 ni, 99.7 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+%Cpu13 :  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+%Cpu14 :  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+%Cpu15 :  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+MiB Mem :  13838.3 total,   9919.4 free,   2691.6 used,   1227.3 buff/cache
+MiB Swap:   4096.0 total,   4096.0 free,      0.0 used.  10883.5 avail Mem
+```
+
+默认情况下，TOP 视图中显示的为进程的 CPU 消耗状况，在 TOP 视图中按 shit+h 后，可按线程查看 CPU 的消耗状况，如下所示。
+
+此时的 PID 即为线程 ID，其后的 %CPU 表示该线程所消耗的 CPU 百分比。
+
+```console
+top - 08:25:08 up 19 min,  1 user,  load average: 0.14, 0.10, 0.08
+Threads: 404 total,   2 running, 402 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  1.4 us,  0.3 sy,  0.9 ni, 96.6 id,  0.5 wa,  0.0 hi,  0.3 si,  0.0 st
+MiB Mem :  13838.3 total,   9944.5 free,   3012.7 used,    881.1 buff/cache
+MiB Swap:   4096.0 total,   4096.0 free,      0.0 used.  10561.4 avail Mem
+
+    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND
+   9599 root      20   0  281092 114112  71200 R  26.2   0.8   0:01.04 unattended-upgr
+    614 risk      20   0   11.3g 134608  48684 S   3.8   0.9   0:20.25 node
+      1 root      20   0  165844  11148   8172 S   0.8   0.1   0:05.37 systemd
+    397 mysql     20   0 2270696 419880  36420 S   0.3   3.0   0:00.21 ib_log_writer
+    398 mysql     20   0 2270696 419880  36420 S   0.3   3.0   0:02.51 ib_log_files_g
+    622 risk      20   0   11.3g 134608  48684 S   0.3   0.9   0:00.63 node
+    677 root      20   0   44256  37620  10212 S   0.3   0.3   0:04.22 python3
+   4556 risk      20   0   15.1g   2.0g 509856 S   0.3  15.1   0:00.88 DefaultDispatch
+```
+
+2. pidstat
+
+pidstat 是 SYSSTAT 中的工具，如须使用 pidstat，请先安装 SYSSTAT。
+
+输入`pidstat 1 2`，在 console 上将会每隔 1 秒输出目前活动进程的 CPU 消耗状况，共输出 2 次，结果如下图所示：
+
+```console
+➜  ~ sudo apt install sysstat
+➜  ~ pidstat 1 2
+Linux 5.15.153.1-microsoft-standard-WSL2 (DESKTOP-0VC22M5)      06/27/24        _x86_64_        (16 CPU)
+
+08:28:13      UID       PID    %usr %system  %guest   %wait    %CPU   CPU  Command
+08:28:14      108       307    0.00    0.99    0.00    0.00    0.99     0  mysqld
+08:28:14        0       556    0.00    0.99    0.00    0.00    0.99     2  Relay(557)
+08:28:14     1000      4448    0.00    0.99    0.00    0.00    0.99    12  java
+08:28:14     1000      9313    0.00    0.99    0.00    0.00    0.99     0  java
+
+08:28:14      UID       PID    %usr %system  %guest   %wait    %CPU   CPU  Command
+08:28:15     1000       614    8.00    1.00    0.00    0.00    9.00     2  node
+08:28:15        0       677    1.00    0.00    0.00    0.00    1.00    12  python3
+08:28:15     1000      4448    0.00    1.00    0.00    0.00    1.00    12  java
+
+Average:      UID       PID    %usr %system  %guest   %wait    %CPU   CPU  Command
+Average:      108       307    0.00    0.50    0.00    0.00    0.50     -  mysqld
+Average:        0       556    0.00    0.50    0.00    0.00    0.50     -  Relay(557)
+Average:     1000       614    3.98    0.50    0.00    0.00    4.48     -  node
+Average:        0       677    0.50    0.00    0.00    0.00    0.50     -  python3
+Average:     1000      4448    0.00    1.00    0.00    0.00    1.00     -  java
+Average:     1000      9313    0.00    0.50    0.00    0.00    0.50     -  java
+➜  ~
+```
+
+其中 CPU 表示的为当前进程所使用到的 CPU 个数，如须查看某进程中线程的 CPU 消耗状况，可输入`pidstat -p [PID] -t 1 5`这样的方式来查看，执行后的输出如下图所示：
+
+```console
+➜  ~ pidstat -p 4448 -t 1 5
+Linux 5.15.153.1-microsoft-standard-WSL2 (DESKTOP-0VC22M5)      06/27/24        _x86_64_        (16 CPU)
+
+08:30:20      UID      TGID       TID    %usr %system  %guest   %wait    %CPU   CPU  Command
+08:30:21     1000      4448         -    0.00    1.00    0.00    0.00    1.00    12  java
+08:30:21     1000         -      4448    0.00    0.00    0.00    0.00    0.00    12  |__java
+08:30:21     1000         -      4465    0.00    0.00    0.00    0.00    0.00     0  |__java
+08:30:21     1000         -      4467    0.00    0.00    0.00    0.00    0.00    11  |__GC Thread#0
+08:30:21     1000         -      4468    0.00    0.00    0.00    0.00    0.00     9  |__G1 Main Marker
+08:30:21     1000         -      4469    0.00    0.00    0.00    0.00    0.00     2  |__G1 Conc#0
+08:30:21     1000         -      4470    0.00    0.00    0.00    0.00    0.00     0  |__G1 Refine#0
+08:30:21     1000         -      4471    0.00    0.00    0.00    0.00    0.00    12  |__G1 Service
+08:30:21     1000         -      4472    0.00    0.00    0.00    0.00    0.00    13  |__VM Thread
+08:30:21     1000         -      4473    0.00    0.00    0.00    0.00    0.00    10  |__Reference Handl
+08:30:21     1000         -      4474    0.00    0.00    0.00    0.00    0.00     6  |__Finalizer
+08:30:21     1000         -      4475    0.00    0.00    0.00    0.00    0.00     5  |__Signal Dispatch
+08:30:21     1000         -      4476    0.00    0.00    0.00    0.00    0.00     0  |__Service Thread
+08:30:21     1000         -      4477    0.00    0.00    0.00    0.00    0.00    10  |__Monitor Deflati
+08:30:21     1000         -      4478    0.00    0.00    0.00    0.00    0.00    15  |__C2 CompilerThre
+08:30:21     1000         -      4479    0.00    0.00    0.00    0.00    0.00     9  |__C1 CompilerThre
+08:30:21     1000         -      4480    0.00    0.00    0.00    0.00    0.00    14  |__Sweeper thread
+08:30:21     1000         -      4481    0.00    0.00    0.00    0.00    0.00     1  |__Common-Cleaner
+08:30:21     1000         -      4482    0.00    0.00    0.00    0.00    0.00     1  |__Notification Th
+08:30:21     1000         -      4483    0.00    0.00    0.00    0.00    0.00    10  |__VM Periodic Tas
+08:30:21     1000         -      4486    0.00    0.00    0.00    0.00    0.00     6  |__DefaultDispatch
+```
+
+图中的 TID 即为线程 ID，较之 top 命令方式而言，pidstat 的好处为可查看每个线程的具体 CPU 利用率的状况（例如 %system）。
+
+除`top`、`pidstat`外，Linux 中还可使用 vmstat 来采样（例如每秒 vmstat 1）查看 CPU 的上下文切换运行队列、利用率的具体信息。`ps Hh -eo tid,pcpu`方式也可用来查看具体线程的 CPU 消耗状况（再`grep`一把）；`sar`来查看一定时间范围内以及历史的 cpu 消耗状况信息。
+
+当CPU消耗严重时，主要体现在 us、sy、wa 或 hi 的值变高，wa的值是 IO 等待造成的，这个在之后的章节中阐述；hi 的值变高主要为硬件中断造成的，例如网卡接收数据频繁的状况。
+
+对于 Java 应用而言，CPU 消耗严重主要体现在 us、sy 两个值上，来分别看看 Java 应用在这两个值高的情况下应如何寻找对应造成瓶颈的代码。
+
+1. us
+
+当 us 值过高时，表示运行的应用消耗了大部分的 CPU。在这种情况下，对于 Java 应用而言，最重要的为找到具体消耗 CPU 的线程所执行的代码，可采用如下方法做到。
+
+首先通过 linux 提供的命令找到消耗 CPU 严重的线程及其ID，将此线程ID 转化为十六进制的值。之后通过 kill -3 [javapid]或jstack 的方式 dump 出应用的 Java 线程信息，通过之前转化出的十六进制的值找到对应的 nid 值的线程。该线程即为消耗 CPU 的线程，在采样时须多执行儿次上述的过程，以确保找到真实的消耗 CPU 的线程。
+
+> kill -l
+> 1) SIGHUP       2) SIGINT       3) SIGQUIT      4) SIGILL       5) SIGTRAP
+> 6) SIGABRT      7) SIGBUS       8) SIGFPE       9) SIGKILL     10) SIGUSR1
+> ...
+{: .prompt-info }
+
+
+Java 应用造成 us 高的原因主要是线程一直处于可运行（Runnable）状态，通常是这些线程在执行无阻塞、循环、正则或纯粹的计算等动作造成：另外一个可能也会造成 us 高的原因是频繁的 GC。如每次请求都需要分配较多内存，当访问量高的时候就将导致不断地进行 GC，系统响应速度下降，进而造成堆积的请求更多，消耗的内存更严重，最严重的时候有可能会导致系统不断进行 FullGC，对于频繁 GC 的状况要通过分析 JVM 内存的消耗来查找原因。
+
+2. sy
+
+当 sy 值高时，表示 Linux 花费了更多的时间在进行线程切换， Java 应用造成这种现象的主要原因是启动的线程比较多，且这些线程多数都处于不断的阻寒（例如锁等待、IO 等待状态）和执行状态的变化过程中，这就导致了操作系统要不断地切换执行的线程，产生大量的上下文切换。在这种状况下对 Java 应用而言，最重要的是找出线程要不断切换状态的原因，可采用的方法为通过`kill -3 [javapid]`或`jstack -1 [javapid]`的方式 dump 出 Java 应用程序的线程信息，查看线程的状态信息以及锁信息，找出等待状态或锁竞争过多的线程。
+
 ### 文件 IO 消耗分析
 
+Linux 在操作文件时，将数据放入文件缓存区，直到内存不够或系统要释放内存给用户进程使用，因此在查看 Linux 内存状况时经常会发现可用(free)的物理内存不多，但cached用了很多，这是 Linux提升文件 IO 速度的一种做法。在这样的做法下，如物理空闲内存够用，通常在 Linux 上只有写文件和第一次读取文件时会产生真正的文件 IO。
+
+在 Linux中，要跟踪线程的文件 IO 的消耗，主要方法是通过 pidstat 来查找。
+
+* pidstat
+
+输入如 pidstat-d-t-p[pid]1100 类似的命令即可査看线程的 10 消耗状况，必须在 2.6.20 以上版本的内核中执行才有效，执行后的效果如下图所示:
+
+其中KB rd/s 表示每秒读取的KB数，KB wr/s 表示每秒写入的 KB 数。
+
+在没有安装 pidstat 或内核版本为 2.6.20以后的版本的情况下，可通过iostat 来查看，但 iostat 只能查看整个系统的文件1O消耗情况，无法跟踪到进程的文件10消耗状况。
+
+* iostat
+
+直接输入iostat 命令，可查看各个设备的10历史状况，如下图所示:
+
+在上面的几项指标中，其中 Device 表示设备卷标名或分区名;tps 是每秒的IO请求数，这也是IO消耗情况中值得关注的数字;Blkread/s是指每秒读的块数量，通常块的大小为512字节;BlIk_wrtnis是指每秒写的块数量;Blkread是指总共读取的块数量:BIkwrtn是指总共写入的块数量。
+
+除了上面的方式外，还可通过输入`iostat -x xvda 3 5`这样的方式来定时采样查看 IO 的消耗状况，当使用上面的命令方式时，其输出信息会比直接输入 iostat 多一些：
+
+其中值得关注的主要有:r/s表示每秒读的请求数:ws表示每秒写的请求数:await表示平均每次I0操作的等待时间，单位为毫秒;avgqu-sz表示等待请求的队列的平均长度;svctm表示平均每次设备执行 1〇 操作的时间:util 表示一秒之中有百分之几用于10 操作。
+
+在使用iostat 查看10的消耗情况时，首先要关注的是CPU中的iowait%所占的百分比，当 iowait占据了主要的百分比时，就表示要关注I0方面的消耗状况了，这时可以再通过 iostat-x这样的方式来详细地查看具体状况。
+
+当文件 IO 消耗过高时，对于Java应用最重要的是找到造成文件I0 消耗高的代码，寻找的最佳方法为通过 pidstat 直接找到文件 10操作多的线程。之后结合jstack 找到对应的Java代码,如没有 pidstat,也可直接根据jstack 得到的线程信息来分析其中文件10操作较多的线程。
+
+Java 应用造成文件I0 消耗严重主要是多个线程需要进行大量内容写入(例如频繁的日志写入)的动作;或磁盘设备本身的处理速度慢:或文件系统慢;或操作的文件本身已经很大造成的。
+
+在下面的例子中，通过往一个文件中不断地增加内容，文件越来越大，造成写速度慢，最终 IOWait值高，代码如下:
 
 ### 网络 IO 消耗分析
 
