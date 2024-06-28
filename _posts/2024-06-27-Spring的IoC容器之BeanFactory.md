@@ -153,10 +153,7 @@ BeanFactory 作为一个 IoC Service Provider，为了能够明确管理各个�
 
 ### 4.2.1 直接编码方式
 
-其实，把编码方式单独提出来称作一种方式并不十分恰当。因为不管什么方式，最终都需要编码
-才能“落实”所有信息并付诸使用。不过，通过这些代码，起码可以让我们更加清楚BeanFactory在
-底层是如何运作的。
-下面来看一下我们的FX新闻系统相关类是如何注册并绑定的（见代码清单4-4）。 
+其实，把编码方式单独提出来称作一种方式并不十分恰当。因为不管什么方式，最终都需要编码才能“落实”所有信息并付诸使用。不过，通过这些代码，起码可以让我们更加清楚 BeanFactory 在底层是如何运作的。下面来看一下我们的FX新闻系统相关类是如何注册并绑定的（见代码清单4-4）。 
 
 代码清单4-4 通过编码方式使用BeanFactory实现FX新闻相关类的注册及绑定
 
@@ -193,114 +190,89 @@ public static BeanFactory bindViaCode(BeanDefinitionRegistry registry) {
 ```
 
 > 在Spring的术语中，把BeanFactory需要使用的对象注册和依赖绑定信息称为Configuration Metadata。我们这里所展示的，实际上就是组织这些Configuration Metadata的各种方式。因此这个标题才这么长
-{: .prompt-danger }
+{: .prompt-warning }
 
 BeanFactory 只是一个接口，我们最终需要一个该接口的实现来进行实际的Bean的管理，efaultListableBeanFactory 就是这么一个比较通用的 BeanFactory 实现类。DefaultListableBeanFactory除了间接地实现了 BeanFactory 接口，还实现了 BeanDefinitionRegistry 接口，该接口才是在BeanFactory的实现中担当Bean注册管理的角色。基本上，BeanFactory接口只定义如何访问容器内管理的Bean的方法，各个BeanFactory的具体实现类负责具体Bean的注册以及管理工作。BeanDefinitionRegistry接口定义抽象了Bean的注册逻辑。通常情况下，具体的BeanFactory实现类会实现这个接口来管理Bean的注册。
 
 它们之间的关系如图4-3所示。
 
 打个比方说，BeanDefinitionRegistry就像图书馆的书架，所有的书是放在书架上的。虽然你还书或者借书都是跟图书馆（也就是BeanFactory，或许BookFactory可能更好些）打交道，但书架才是图书馆存放各类图书的地方。所以，书架相对于图书馆来说，就是它的“BookDefinitionRegistry”。 11 每一个受管的对象，在容器中都会有一个BeanDefinition的实例（instance）与之相对应，该BeanDefinition的实例负责保存对象的所有必要信息，包括其对应的对象的class类型、是否是抽象类、构造方法参数以及其他属性等。当客户端向BeanFactory请求相应对象的时候，BeanFactory会通过这些信息为客户端返回一个完备可用的对象实例。RootBeanDefinition和ChildBeanDefinition是BeanDefinition的两个主要实现类。
-12 
-13 
-14 现在，我们再来看这段绑定代码，应该就有“柳暗花明”的感觉了。
- 在 main 方法中，首先构造一个 DefaultListableBeanFactory 作 为 BeanDefinitionRegistry，然后将其交给bindViaCode方法进行具体的对象注册和相关依赖管理，然后通过
-bindViaCode返回的BeanFactory取得需要的对象，最后执行相应逻辑。在我们的实例里，当
+
+现在，我们再来看这段绑定代码，应该就有“柳暗花明”的感觉了。
+
+在 main 方法中，首先构造一个 DefaultListableBeanFactory 作为 BeanDefinitionRegistry，然后将其交给bindViaCode方法进行具体的对象注册和相关依赖管理，然后通过bindViaCode返回的BeanFactory取得需要的对象，最后执行相应逻辑。在我们的实例里，当
 然就是取得FXNewsProvider进行新闻的处理。
-15 
- 在bindViaCode方法中，首先针对相应的业务对象构造与其相对应的BeanDefinition，使用
-了 RootBeanDefinition 作 为 BeanDefinition 的实现类。构造完成后，将这些
-BeanDefinition注册到通过方法参数传进来的BeanDefinitionRegistry中。之后，因为我
-们的FXNewsProvider是采用的构造方法注入，所以，需要通过ConstructorArgumentValues为其注入相关依赖。在这里为了同时说明setter方法注入，也同时展示了在Spring中如
-何使用代码实现setter方法注入。如果要运行这段代码，需要把setter方法注入部分的4行代码注
-释掉。最后，以BeanFactory的形式返回已经注册并绑定了所有相关业务对象的BeanDefinitionRegistry实例
 
-> 小心 最后一行的强制类型转换是有特定场景的。因为传入的DefaultListableBeanFactory同
-> 时实现了BeanFactory和BeanDefinitionRegistry接口，所以，这样做强制类型转换不会出
-> 现问题。但需要注意的是，单纯的BeanDefinitionRegistry是无法强制转换到BeanFactory
-> 类型的！
+在bindViaCode方法中，首先针对相应的业务对象构造与其相对应的BeanDefinition，使用了 RootBeanDefinition 作 为 BeanDefinition 的实现类。构造完成后，将这些BeanDefinition注册到通过方法参数传进来的BeanDefinitionRegistry中。之后，因为我们的FXNewsProvider是采用的构造方法注入，所以，需要通过ConstructorArgumentValues为其注入相关依赖。在这里为了同时说明setter方法注入，也同时展示了在Spring中如何使用代码实现setter方法注入。如果要运行这段代码，需要把setter方法注入部分的4行代码注释掉。最后，以BeanFactory的形式返回已经注册并绑定了所有相关业务对象的BeanDefinitionRegistry实例
 
-4.2.2 外部配置文件方式
-Spring的IoC容器支持两种配置文件格式：Properties文件格式和XML文件格式。当然，如果你愿
-意也可以引入自己的文件格式，前提是真的需要。
-采用外部配置文件时，Spring的IoC容器有一个统一的处理方式。通常情况下，需要根据不同的外
-部配置文件格式，给出相应的BeanDefinitionReader实现类，由BeanDefinitionReader的相应实
-现类负责将相应的配置文件内容读取并映射到BeanDefinition，然后将映射后的BeanDefinition注
-册到一个BeanDefinitionRegistry，之后，BeanDefinitionRegistry即完成Bean的注册和加载。
-当然，大部分工作，包括解析文件格式、装配BeanDefinition之类的工作，都是由BeanDefinitionReader的相应实现类来做的，BeanDefinitionRegistry只不过负责保管而已。整个过程类似于如下
-代码： 
-BeanDefinitionRegistry beanRegistry = <某个BeanDefinitionRegistry实现类，通常为 
-DefaultListableBeanFactory>; 
-BeanDefinitionReader beanDefinitionReader = new BeanDefinitionReaderImpl(beanRegistry); 
-beanDefinitionReader.loadBeanDefinitions("配置文件路径"); 
-// 现在我们就取得了一个可用的Bea nDefinitionRegistry实例
+> 小心 最后一行的强制类型转换是有特定场景的。因为传入的DefaultListableBeanFactory同时实现了BeanFactory和BeanDefinitionRegistry接口，所以，这样做强制类型转换不会出现问题。但需要注意的是，单纯的BeanDefinitionRegistry是无法强制转换到BeanFactory类型的！
+{: .prompt-warning}
+
+### 4.2.2 外部配置文件方式
+
+Spring的IoC容器支持两种配置文件格式：Properties文件格式和XML文件格式。当然，如果你愿意也可以引入自己的文件格式，前提是真的需要。
+采用外部配置文件时，Spring的IoC容器有一个统一的处理方式。通常情况下，需要根据不同的外部配置文件格式，给出相应的BeanDefinitionReader实现类，由BeanDefinitionReader的相应实现类负责将相应的配置文件内容读取并映射到BeanDefinition，然后将映射后的BeanDefinition注册到一个BeanDefinitionRegistry，之后，BeanDefinitionRegistry即完成Bean的注册和加载。
+
+当然，大部分工作，包括解析文件格式、装配BeanDefinition之类的工作，都是由BeanDefinitionReader的相应实现类来做的，BeanDefinitionRegistry只不过负责保管而已。整个过程类似于如下代码： 
+
+```java
+    BeanDefinitionRegistry beanRegistry = <某个BeanDefinitionRegistry实现类，通常为 
+    DefaultListableBeanFactory>; 
+    BeanDefinitionReader beanDefinitionReader = new BeanDefinitionReaderImpl(beanRegistry); 
+    beanDefinitionReader.loadBeanDefinitions("配置文件路径"); 
+    // 现在我们就取得了一个可用的Bea nDefinitionRegistry实例
+```
 1. Properties配置格式的加载
+
 Spring提供了org.springframework.beans.factory.support.PropertiesBeanDefinitionReader类用于Properties格式配置文件的加载，所以，我们不用自己去实现BeanDefinitionReader，
 只要根据该类的读取规则，提供相应的配置文件即可。
 对于FXNews系统的业务对象，我们采用如下文件内容（见代码清单4-5）进行配置加载。
+
 代码清单4-5 Properties格式表达的依赖注入配置内容
+
+```properties
 djNewsProvider.(class)=..FXNewsProvider 
 # ----------通过构造方法注入的时候------------- 
 djNewsProvider.$0(ref)=djListener 
 djNewsProvider.$1(ref)=djPersister 
 # ----------通过setter方法注入的时候--------- 
 # djNewsProvider.newsListener(ref)=djListener 
-# djNewsProvider.newPersistener(ref)=djPersister 
-djListener.(class)=..impl.DowJonesNewsListener 
-djPersister.(class)=..impl.DowJon
- esNewsPersister 
+# djNewsProvider.newPersistener(ref)=djPersister
+
+djListener.(class)=..impl.DowJonesNewsListener
+
+djPersister.(class)=..impl.DowJonesNewsPersister
+```
+
 这些内容是特定于Spring的PropertiesBeanDefinitionReader的，要了解更多内容，请参照 Spring的API参考文档。我们可以很容易地看明白代码清单4-5中的配置内容所要表达的意思。
- djNewsProvider作为beanName，后面通过.(class)表明对应的实现类是什么，实际上使用
-djNewsProvider.class=...的形式也是可以的，但Spring 1.2.6之后不再提倡使用，而提倡使
-用.(class)的形式。其他两个类的注册，djListener和djPersister，也是相同的道理。 2 
- 通过在表示beanName的名称后添加.$[number]后缀的形式，来表示当前beanName对应的对
-象需要通过构造方法注入的方式注入相应依赖对象。在这里，我们分别将构造方法的第一个
-参数和第二个参数对应到djListener和djPersister。需要注意的一点，就是$0和$1后面的
-(ref)，(ref)用来表示所依赖的是引用对象，而不是普通的类型。如果不加(ref)，
-PropertiesBeanDefinitionReader会将djListener和djPersister作为简单的String类型
-进行注入，异常自然不可避免啦。
-3 
-4 
- FXNewsProvider采用的是构造方法注入，而为了演示setter方法注入在Properties配置文件中又 5 
-是一个什么样子，以便于你更全面地了解基于Properties文件的配置方式，我们在下面增加了
-setter方法注入的例子，不过进行了注释。实际上，与构造方法注入最大的区别就是，它不使
-用数字顺序来指定注入的位置，而使用相应的属性名称来指定注入。newsListener和
-newPersistener恰好就是我们的FXNewsProvider类中所声明的属性名称。这印证了之前在
-比较构造方法注入和setter方法注入方式不同时提到的差异，即构造方法注入无法通过参数名
-称来标识注入的确切位置，而setter方法注入则可以通过属性名称来明确标识注入。与在
-Properties中表达构造方法注入一样，同样需要注意，如果属性名称所依赖的是引用对象，那
-么一定不要忘了(ref)。
-6 
-7 
-8 
-当这些对象之间的注册和依赖注入信息都表达清楚之后，就可以将其加载到BeanFactory而付诸
-使用了。而这个加载过程实际上也就像我们之前总体上所阐述的那样，代码清单4-6中的内容再次演示
-了类似的加载过程。
+
+- djNewsProvider作为beanName，后面通过.(class)表明对应的实现类是什么，实际上使用djNewsProvider.class=...的形式也是可以的，但Spring 1.2.6之后不再提倡使用，而提倡使用.(class)的形式。其他两个类的注册，djListener和djPersister，也是相同的道理。
+- 通过在表示beanName的名称后添加.$[number]后缀的形式，来表示当前beanName对应的对象需要通过构造方法注入的方式注入相应依赖对象。在这里，我们分别将构造方法的第一个参数和第二个参数对应到djListener和djPersister。需要注意的一点，就是$0和$1后面的(ref)，(ref)用来表示所依赖的是引用对象，而不是普通的类型。如果不加(ref)，PropertiesBeanDefinitionReader会将djListener和djPersister作为简单的String类型进行注入，异常自然不可避免啦。
+- FXNewsProvider采用的是构造方法注入，而为了演示setter方法注入在Properties配置文件中又是一个什么样子，以便于你更全面地了解基于Properties文件的配置方式，我们在下面增加了setter方法注入的例子，不过进行了注释。实际上，与构造方法注入最大的区别就是，它不使用数字顺序来指定注入的位置，而使用相应的属性名称来指定注入。newsListener和newPersistener恰好就是我们的FXNewsProvider类中所声明的属性名称。这印证了之前在比较构造方法注入和setter方法注入方式不同时提到的差异，即构造方法注入无法通过参数名称来标识注入的确切位置，而setter方法注入则可以通过属性名称来明确标识注入。与在Properties中表达构造方法注入一样，同样需要注意，如果属性名称所依赖的是引用对象，那么一定不要忘了(ref)。
+
+当这些对象之间的注册和依赖注入信息都表达清楚之后，就可以将其加载到BeanFactory而付诸使用了。而这个加载过程实际上也就像我们之前总体上所阐述的那样，代码清单4-6中的内容再次演示了类似的加载过程。
 
 代码清单4-6 加载Properties配置的BeanFactory的使用演示 
 
 ```java
-public static void main(String[] args) 
-11 { 
-DefaultListableBeanFactory beanRegistry = new DefaultListableBeanFactory(); 
- BeanFactory container = (BeanFactory)bindViaPropertiesFile(beanRegistry); 
-FXNewsProvider newsProvider = 
-(FXNewsProvider)container.getBean("djNewsProvider"); 12 
- newsProvider.getAndPersistNews(); 
+public static void main(String[] args) {
+
+    DefaultListableBeanFactory beanRegistry = new DefaultListableBeanFactory();
+    BeanFactory container = (BeanFactory)bindViaPropertiesFile(beanRegistry);
+    FXNewsProvider newsProvider = (FXNewsProvider)container.getBean("djNewsProvider");
+    newsProvider.getAndPersistNews(); 
 } 
-13 
-14 
-public static BeanFactory bindViaPropertiesFile(BeanDefinitionRegistry registry) 
-{ 
-PropertiesBeanDefinitionReader reader = 
-new PropertiesBeanDefinitionReader(registry); 
- reader.loadBeanDefinitions("classpath:../../binding-config.properties"); 
- return (BeanFactory)registry; 
-15 }
+
+public static BeanFactory bindViaPropertiesFile(BeanDefinitionRegistry registry) {
+
+    PropertiesBeanDefinitionReader reader = new PropertiesBeanDefinitionReader(registry);
+    reader.loadBeanDefinitions("classpath:../../binding-config.properties");
+
+    return (BeanFactory)registry; 
+}
 ```
 
-基于Properties的加载方式就是这么简单，所有的信息配置到Properties文件即可，不用再通过冗长
-的代码来完成对象的注册和依赖绑定。这些工作就交给相应的BeanDefinitionReader来做吧！哦，
-我的意思是，让给PropertiesBeanDefinitionReader来做。
+基于Properties的加载方式就是这么简单，所有的信息配置到Properties文件即可，不用再通过冗长的代码来完成对象的注册和依赖绑定。这些工作就交给相应的BeanDefinitionReader来做吧！哦，我的意思是，让给PropertiesBeanDefinitionReader来做。
 
 注意 Spring提供的PropertiesBeanDefinitionReader是按照Spring自己的文件配置规则进
 行加载的，而同样的道理，你也可以按照自己的规则①
