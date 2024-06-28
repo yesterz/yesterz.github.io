@@ -274,24 +274,21 @@ public static BeanFactory bindViaPropertiesFile(BeanDefinitionRegistry registry)
 
 基于Properties的加载方式就是这么简单，所有的信息配置到Properties文件即可，不用再通过冗长的代码来完成对象的注册和依赖绑定。这些工作就交给相应的BeanDefinitionReader来做吧！哦，我的意思是，让给PropertiesBeanDefinitionReader来做。
 
-注意 Spring提供的PropertiesBeanDefinitionReader是按照Spring自己的文件配置规则进
-行加载的，而同样的道理，你也可以按照自己的规则①
-来提供相应的Properties配置文件。只不
-过，现在需要实现你自己的“PropertiesBeanDefinitionReader”来读取并解析。这当然有“重新
-发明轮子”之嫌，不过，如果你只是想试验一下，也可以尝试哦。无非就是按照自己的规则把
-各个业务对象信息读取后，将编码方式的代码改造一下放到你自己的“PropertiesBeanDefinitionReader”而已。
+> 注意 Spring提供的PropertiesBeanDefinitionReader是按照Spring自己的文件配置规则进行加载的，而同样的道理，你也可以按照自己的规则来提供相应的Properties配置文件。只不过，现在需要实现你自己的“PropertiesBeanDefinitionReader”来读取并解析。这当然有“重新发明轮子”之嫌，不过，如果你只是想试验一下，也可以尝试哦。无非就是按照自己的规则把各个业务对象信息读取后，将编码方式的代码改造一下放到你自己的“PropertiesBeanDefinitionReader”而已。
+{: .prompt-info }
+
 2. XML配置格式的加载
-XML配置格式是Spring支持最完整，功能最强大的表达方式。当然，一方面这得益于XML良好的
-语意表达能力；另一方面，就是Spring框架从开始就自始至终保持XML配置加载的统一性。同Properties
-配置加载类似，现在只不过是转而使用XML而已。Spring 2.x之前，XML配置文件采用DTD（Document 
-Type Definition）实现文档的格式约束。2.x之后，引入了基于XSD（XML Schema Definition）的约束
-方式。不过，原来的基于DTD的方式依然有效，因为从DTD转向XSD只是“形式”上的转变，所以，
-后面的大部分讲解还会沿用DTD的方式，只有必要时才会给出特殊说明。
+
+XML配置格式是Spring支持最完整，功能最强大的表达方式。当然，一方面这得益于XML良好的语意表达能力；另一方面，就是Spring框架从开始就自始至终保持XML配置加载的统一性。同Properties配置加载类似，现在只不过是转而使用XML而已。Spring 2.x之前，XML配置文件采用DTD（Document Type Definition）实现文档的格式约束。2.x之后，引入了基于XSD（XML Schema Definition）的约束
+方式。不过，原来的基于DTD的方式依然有效，因为从DTD转向XSD只是“形式”上的转变，所以，后面的大部分讲解还会沿用DTD的方式，只有必要时才会给出特殊说明。
+
 如果FX新闻系统对象按照XML配置方式进行加载的话，配置文件内容如代码清单4-7所示。
+
 代码清单4-7 FX新闻系统相关类对应XML格式的配置内容
+
+```xml
 <?xml version="1.0" encoding="UTF-8"?> 
-<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"  
-"http://www.springframework.org/dtd/spring-beans.dtd"> 
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd"> 
 <beans> 
  <bean id="djNewsProvider" class="..FXNewsProvider"> 
  <constructor-arg index="0"> 
@@ -307,12 +304,15 @@ Type Definition）实现文档的格式约束。2.x之后，引入了基于XSD�
  <bean id="djNewsPersister" class="..impl.DowJonesNewsPersister"> 
  </bean> 
 </beans> 
- 
-我想这段内容不需要特殊说明吧，应该比Properties文件的内容要更容易理解。如果想知道这些内
-容背后的更多玄机，往后看吧！
-有了XML配置文件，我们需要将其内容加载到相应的BeanFactory实现中，以供使用，如代码清
-单4-8所示。
+```
+
+我想这段内容不需要特殊说明吧，应该比Properties文件的内容要更容易理解。如果想知道这些内容背后的更多玄机，往后看吧！
+
+有了XML配置文件，我们需要将其内容加载到相应的BeanFactory实现中，以供使用，如代码清单4-8所示。
+
 代码清单4-8 加载XML配置文件的BeanFactory的使用演示
+
+```java
 public static void main(String[] args) 
 {
      DefaultListableBeanFactory beanRegistry = new DefaultListableBeanFactory(); 
@@ -329,6 +329,7 @@ XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(registry);
  // 或者直接
  //return new XmlBeanFactory(new ClassPathResource("../news-config.xml")); 
 }
+```
 
 与为 5 Properties配置文件格式提供PropertiesBeanDefinitionReader相对应，Spring同样为XML
 格式的配置文件提供了现成的BeanDefinitionReader实现，即XmlBeanDefinitionReader。
@@ -345,18 +346,20 @@ XmlBeanDefinitionReader负责读取Spring指定格式的XML配置文件并解析
 XmlBeanDefinitionReader或者直接实现自己的BeanDefinitionReader来达到自定义XML
 配置文件加载的目的。Spring的可扩展性为你服务！ 
 
-4.2.3 注解方式 12 
-可能你没有注意到，我在提到BeanFactory所支持的对象注册与依赖绑定方式的时候，说的是
-BeanFactory“几乎”支持IoC Service Provider可能使用的所有方式。之所以这么说，有两个原因。 13 
-14 
- 在Spring 2.5发布之前，Spring框架并没有正式支持基于注解方式的依赖注入；
- Spring 2.5发布的基于注解的依赖注入方式，如果不使用classpath-scanning功能的话，仍然部分
-依赖于“基于XML配置文件”的依赖注入方式。
-另外，注解是Java 5之后才引入的，所以，以下内容只适用于应用程序使用了Spring 2.5以及Java 5
-或者更高版本的情况之下。 15 
-如果要通过注解标注的方式为FXNewsProvider注入所需要的依赖，现在可以使用@Autowired以
-及@Component对相关类进行标记。代码清单4-9演示了FXNews相关类使用指定注解标注后的情况。 16 
+### 4.2.3 注解方式
+
+可能你没有注意到，我在提到BeanFactory所支持的对象注册与依赖绑定方式的时候，说的是BeanFactory“几乎”支持IoC Service Provider可能使用的所有方式。之所以这么说，有两个原因。 
+
+- 在Spring 2.5发布之前，Spring框架并没有正式支持基于注解方式的依赖注入；
+- Spring 2.5发布的基于注解的依赖注入方式，如果不使用classpath-scanning功能的话，仍然部分依赖于“基于XML配置文件”的依赖注入方式。
+
+另外，注解是Java 5之后才引入的，所以，以下内容只适用于应用程序使用了Spring 2.5以及Java 5或者更高版本的情况之下。
+
+如果要通过注解标注的方式为FXNewsProvider注入所需要的依赖，现在可以使用@Autowired以及@Component对相关类进行标记。代码清单4-9演示了FXNews相关类使用指定注解标注后的情况。
+
 代码清单4-9 使用指定注解标注后的FXNews相关类
+
+```java
 @Component 
 public class FXNewsProvider 
 { 
@@ -382,11 +385,9 @@ public class DowJonesNewsPersister implements IFXNewsPersister
 { 
  ... 
 } 
+```
 
-@Autowired是这里的主角，它的存在将告知Spring容器需要为当前对象注入哪些依赖对象。而
-@Component则是配合Spring 2.5中新的classpath-scanning功能使用的。现在我们只要再向Spring的配置
-文件中增加一个“触发器”，使用@Autowired和@Component标注的类就能获得依赖对象的注入了。
-代码清单4-10给出的正是针对这部分功能的配置内容。
+@Autowired是这里的主角，它的存在将告知Spring容器需要为当前对象注入哪些依赖对象。而@Component则是配合Spring 2.5中新的classpath-scanning功能使用的。现在我们只要再向Spring的配置文件中增加一个“触发器”，使用@Autowired和@Component标注的类就能获得依赖对象的注入了。代码清单4-10给出的正是针对这部分功能的配置内容。
 
 代码清单4-10 配置使用classpath-scanning功能
 
@@ -406,45 +407,46 @@ http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 </beans> 
 ```
 
-<context:component-scan/>会到指定的包（package）下面扫描标注有@Component的类，如果
-找到，则将它们添加到容器进行管理，并根据它们所标注的@Autowired为这些类注入符合条件的依
-赖对象。
-在以上所有这些工作都完成之后，我们就可以像通常那样加载配置并执行当前应用程序了，如以
-下代码所示： 
+<context:component-scan/>会到指定的包（package）下面扫描标注有@Component的类，如果找到，则将它们添加到容器进行管理，并根据它们所标注的@Autowired为这些类注入符合条件的依赖对象。
+
+在以上所有这些工作都完成之后，我们就可以像通常那样加载配置并执行当前应用程序了，如以下代码所示：
+
+```java
 public static void main(String[] args) 
 { 
  ApplicationContext ctx = new ClassPathXmlApplicationContext("配置文件路径"); 
  FXNewsProvider newsProvider = (FXNewsProvider)container.getBean("FXNewsProvider"); 
  newsProvider.getAndPersistNews(); 
-} 
+}
+```
  
-本章最后将详细讲解Spring 2.5新引入的“基于注解的依赖注入”。当前的内容只是让我们先从总
-体上有一个大概的印象，所以，不必强求自己现在就完全理解它们。 2 
-注意 Google Guice是一个完全基于注解方式、提供依赖注入服务的轻量级依赖注入框架，可以
-从Google Guice的站点获取有关这个框架的更多信息。 3 
-4 4.3 BeanFactory的XML之旅
-XML格式的容器信息管理方式是Spring提供的最为强大、支持最为全面的方式。从Spring的参考
-文档到各Spring相关书籍，都是按照XML的配置进行说明的，这部分内容可以让你充分领略到Spring
-的IoC容器的魅力，以致于我们也不得不带你初次或者再次踏上Spring的XML之旅。
-5 
-6 4.3.1 <beans>和<bean>
-所有使用 XML 文件进行配置信息加载的 Spring IoC 容器，包括 BeanFactory 和
-ApplicationContext的所有XML相应实现，都使用统一的XML格式。在Spring 2.0版本之前，这种格
-式由Spring提供的DTD规定，也就是说，所有的Spring容器加载的XML配置文件的头部，都需要以下
-形式的DOCTYPE声明： 
-7 
-8 
+本章最后将详细讲解Spring 2.5新引入的“基于注解的依赖注入”。当前的内容只是让我们先从总体上有一个大概的印象，所以，不必强求自己现在就完全理解它们。
+
+注意 Google Guice是一个完全基于注解方式、提供依赖注入服务的轻量级依赖注入框架，可以 从Google Guice的站点获取有关这个框架的更多信息。
+{: .prompt-tip }
+
+## 4.3 BeanFactory的XML之旅
+
+XML格式的容器信息管理方式是Spring提供的最为强大、支持最为全面的方式。从Spring的参考文档到各Spring相关书籍，都是按照XML的配置进行说明的，这部分内容可以让你充分领略到Spring的IoC容器的魅力，以致于我们也不得不带你初次或者再次踏上Spring的XML之旅。
+
+### 4.3.1 <beans>和<bean>
+
+所有使用 XML 文件进行配置信息加载的 Spring IoC 容器，包括 BeanFactory 和ApplicationContext的所有XML相应实现，都使用统一的XML格式。在Spring 2.0版本之前，这种格式由Spring提供的DTD规定，也就是说，所有的Spring容器加载的XML配置文件的头部，都需要以下形式的DOCTYPE声明： 
+
+```xml
 <?xml version="1.0" encoding="UTF-8"?> 
 9 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"  
 "http://www.springframework.org/dtd/spring-beans.dtd"> 
 <beans> 
  ... 
-</beans> 10 
-从Spring 2.0版本之后，Spring在继续保持向前兼容的前提下，既可以继续使用DTD方式的DOCTYPE
-进行配置文件格式的限定，又引入了基于XML Schema的文档声明。所以，Spring 2.0之后，同样可以
-使用代码清单4-11所展示的基于XSD的文档声明。
-11 
+</beans>
+```
+
+从Spring 2.0版本之后，Spring在继续保持向前兼容的前提下，既可以继续使用DTD方式的DOCTYPE进行配置文件格式的限定，又引入了基于XML Schema的文档声明。所以，Spring 2.0之后，同样可以使用代码清单4-11所展示的基于XSD的文档声明。
+
 代码清单 12 4-11 基于XSD的Spring配置文件文档声明
+
+```xml
 <beans xmlns="http://www.springframework.org/schema/beans" 
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
 13 
@@ -469,123 +471,127 @@ http://www.springframework.org/schema/tx
 http://www.springframework.org/schema/tx/spring-tx-2.0.xsd"> 
  
 </beans> 
- 
-不过，不管使用哪一种形式的文档声明，实际上限定的元素基本上是相同的。让我们从最顶层的
-元素开始，看一下这两种文档声明都限定了哪些元素吧！ 
-所有注册到容器的业务对象，在Spring中称之为Bean。所以，每一个对象在XML中的映射也自然
-而然地对应一个叫做<bean>的元素。既然容器最终可以管理所有的业务对象，那么在XML中把这些
-叫做<bean>的元素组织起来的，就叫做<beans>。多个<bean>组成一个<beans>很容易理解，不是吗？ 
-1. <beans>之唯我独尊
+```
+
+不过，不管使用哪一种形式的文档声明，实际上限定的元素基本上是相同的。让我们从最顶层的元素开始，看一下这两种文档声明都限定了哪些元素吧！
+
+所有注册到容器的业务对象，在Spring中称之为Bean。所以，每一个对象在XML中的映射也自然而然地对应一个叫做<bean>的元素。既然容器最终可以管理所有的业务对象，那么在XML中把这些叫做<bean>的元素组织起来的，就叫做<beans>。多个<bean>组成一个<beans>很容易理解，不是吗？
+
+#### 1. <beans>之唯我独尊
+
 <beans>是XML配置文件中最顶层的元素，它下面可以包含0或者1个<description>和多个
 <bean>以及<import>或者<alias>，如图4-4所示。 
+
 图4-4 <beans>与下一层元素的关系
+
 <beans>作为所有<bean>的“统帅”，它拥有相应的属性（attribute）对所辖的<bean>进行统一
 的默认行为设置，包括如下几个。
- default-lazy-init。其值可以指定为true或者false，默认值为false。用来标志是否对所
-有的<bean>进行延迟初始化。
- default-autowire。可以取值为no、byName、byType、constructor以及autodetect。默
-认值为no，如果使用自动绑定的话，用来标志全体bean使用哪一种默认绑定方式。
- default-dependency-check。可以取值none、objects、simple以及all，默认值为none，
-即不做依赖检查。
- default-init-method。如果所管辖的<bean>按照某种规则，都有同样名称的初始化方法的
-话，可以在这里统一指定这个初始化方法名，而不用在每一个<bean>上都重复单独指定。
- default-destroy-method。与default-init-method相对应，如果所管辖的bean有按照某种
-规则使用了相同名称的对象销毁方法，可以通过这个属性统一指定。
-注意 当然，如果你不清楚上面这些默认的属性具体有什么用，那也不必着急。在看完对
-<bean>的讲解之后，再回头来看，就会明了多了。给出这些信息，是想让你知道，如果在某
-4.3 TBeanFactoryT 的 XML 之旅 33 
-个场景下需要对大部分<bean>都重复设置某些行为的话，可以回头看一下，利用<beans>是否
-可以减少这种不必要的工作。
-2 2. <description>、<import>和<alias>
-之所以把这几个元素放到一起讲解，是因为通常情况下它们不是必需的。不过，了解一下也没什
-么不好，不是吗？ 3  <description> 
+
+- default-lazy-init。其值可以指定为true或者false，默认值为false。用来标志是否对所有的<bean>进行延迟初始化。
+- default-autowire。可以取值为no、byName、byType、constructor以及autodetect。默认值为no，如果使用自动绑定的话，用来标志全体bean使用哪一种默认绑定方式。
+- default-dependency-check。可以取值none、objects、simple以及all，默认值为none，即不做依赖检查。
+- default-init-method。如果所管辖的<bean>按照某种规则，都有同样名称的初始化方法的话，可以在这里统一指定这个初始化方法名，而不用在每一个<bean>上都重复单独指定。
+- default-destroy-method。与default-init-method相对应，如果所管辖的bean有按照某种规则使用了相同名称的对象销毁方法，可以通过这个属性统一指定。
+
+> **注意** 当然，如果你不清楚上面这些默认的属性具体有什么用，那也不必着急。在看完对<bean>的讲解之后，再回头来看，就会明了多了。给出这些信息，是想让你知道，如果在某个场景下需要对大部分<bean>都重复设置某些行为的话，可以回头看一下，利用<beans>是否可以减少这种不必要的工作。
+{: .prompt-tip }
+
+#### 2. <description>、<import>和<alias>
+
+之所以把这几个元素放到一起讲解，是因为通常情况下它们不是必需的。不过，了解一下也没什么不好，不是吗？
+
+- <description> 
+
 可以通过<description>在配置的文件中指定一些描述性的信息。通常情况下，该元素是省略的。
 当然，如果愿意，<description>随时可以为我们效劳。 4 
- <import> 
-5 通常情况下，可以根据模块功能或者层次关系，将配置信息分门别类地放到多个配置文件中。在
-想加载主要配置文件，并将主要配置文件所依赖的配置文件同时加载时，可以在这个主要的配置文件
-中通过<import>元素对其所依赖的配置文件进行引用。比如，如果A.xml中的<bean>定义可能依赖
-B.xml中的某些<bean>定义，那么就可以在A.xml中使用<import>将B.xml引入到A.xml，以类似于
-<import resource="B.xml"/>的形式。
-6 
-但是，这个功能在我看来价值不大，因为容器实际上可以同时加载多个配置，没有必要非通过一 7 
-个配置文件来加载所有配置。不过，或许在有些场景中使用这种方式比较方便也说不定。
- <alias> 8 可以通过<alias>为某些<bean>起一些“外号”（别名），通常情况下是为了减少输入。比如，
-假设有个<bean>，它的名称为dataSourceForMasterDatabase，你可以为其添加一个<alias>，像
-这样<alias name="dataSourceForMasterDatabase" alias="masterDataSource"/>。以后通过
-dataSourceForMasterDatabase或者masterDataSource来引用这个<bean>都可以，只要你觉得方便
-就行。
-9 
-10 
-4.3.2 孤孤单单一个人
-哦，错了，是孤孤单单一个Bean。每个业务对象作为个体，在Spring的XML配置文件中是与<bean> 11 
-元素一一对应的。窥一斑而知全豹，只要我们了解单个的业务对象是如何配置的，剩下的就可以“依
-葫芦画瓢”了。所以，让我们先从最简单的单一对象配置开始吧！如下代码演示了最基础的对象配置
-形式：
-12 
-<bean id="djNewsListener" class="..impl.DowJonesNewsListener"> 13 
-14 
-</bean> 
- id属性
-通常，每个注册到容器的对象都需要一个唯一标志来将其与“同处一室”的“兄弟们”区分开来，
-就好像我们每一个人都有一个身份证号一样（重号的话就比较麻烦）。通过id属性来指定当前注册对
-象的beanName是什么。这里，通过id指定beanName为djNewsListener。实际上，并非任何情况下都
-需要指定每个<bean>的id，有些情况下，id可以省略，比如后面会提到的内部<bean>以及不需要根据
-beanName明确依赖关系的场合等。
-15 
-除了可以使用id来指定<bean>在容器中的标志，还可以使用name属性来指定<bean>的别名 16 
-（alias）。比如，以上定义，我们还可以像如下代码这样，为其添加别名： 
-17 <bean id="djNewsListener" 
-34 Spring 的 IoC 容器
- name="/news/djNewsListener,dowJonesNewsListener" 
- class="..impl.DowJonesNewsListener"> 
-</bean> 
-与id属性相比，name属性的灵活之处在于，name可以使用id不能使用的一些字符，比如/。而且
-还可以通过逗号、空格或者冒号分割指定多个name。name的作用跟使用<alias>为id指定多个别名基
-本相同： 
+
+- <import> 
+
+通常情况下，可以根据模块功能或者层次关系，将配置信息分门别类地放到多个配置文件中。在想加载主要配置文件，并将主要配置文件所依赖的配置文件同时加载时，可以在这个主要的配置文件中通过<import>元素对其所依赖的配置文件进行引用。比如，如果A.xml中的<bean>定义可能依赖B.xml中的某些<bean>定义，那么就可以在A.xml中使用<import>将B.xml引入到A.xml，以类似于<import resource="B.xml"/>的形式。
+
+但是，这个功能在我看来价值不大，因为容器实际上可以同时加载多个配置，没有必要非通过一个配置文件来加载所有配置。不过，或许在有些场景中使用这种方式比较方便也说不定。
+
+- <alias>
+
+可以通过<alias>为某些<bean>起一些“外号”（别名），通常情况下是为了减少输入。比如，假设有个<bean>，它的名称为dataSourceForMasterDatabase，你可以为其添加一个<alias>，像这样<alias name="dataSourceForMasterDatabase" alias="masterDataSource"/>。以后通过dataSourceForMasterDatabase或者masterDataSource来引用这个<bean>都可以，只要你觉得方便就行。
+
+### 4.3.2 孤孤单单一个人
+
+哦，错了，是孤孤单单一个Bean。每个业务对象作为个体，在Spring的XML配置文件中是与<bean>元素一一对应的。窥一斑而知全豹，只要我们了解单个的业务对象是如何配置的，剩下的就可以“依葫芦画瓢”了。所以，让我们先从最简单的单一对象配置开始吧！如下代码演示了最基础的对象配置形式：
+
+```xml
+    <bean id="djNewsListener" class="..impl.DowJonesNewsListener">
+    </bean>
+```
+
+- id属性
+
+通常，每个注册到容器的对象都需要一个唯一标志来将其与“同处一室”的“兄弟们”区分开来，就好像我们每一个人都有一个身份证号一样（重号的话就比较麻烦）。通过id属性来指定当前注册对象的beanName是什么。这里，通过id指定beanName为djNewsListener。实际上，并非任何情况下都需要指定每个<bean>的id，有些情况下，id可以省略，比如后面会提到的内部<bean>以及不需要根据beanName明确依赖关系的场合等。
+
+除了可以使用id来指定<bean>在容器中的标志，还可以使用name属性来指定<bean>的别名（alias）。比如，以上定义，我们还可以像如下代码这样，为其添加别名： 
+
+```xml
+<bean id="djNewsListener" 
+    name="/news/djNewsListener,dowJonesNewsListener" 
+    class="..impl.DowJonesNewsListener"> 
+</bean>
+```
+
+与id属性相比，name属性的灵活之处在于，name可以使用id不能使用的一些字符，比如/。而且还可以通过逗号、空格或者冒号分割指定多个name。name的作用跟使用<alias>为id指定多个别名基本相同： 
+
+```xml
 <alias name="djNewsListener" alias="/news/djNewsListener"/> 
-<alias name="djNewsListener" alias="dowJonesNewsListener"/> 
- class属性
-每个注册到容器的对象都需要通过<bean>元素的class属性指定其类型，否则，容器可不知道这
-个对象到底是何方神圣。在大部分情况下，该属性是必须的。仅在少数情况下不需要指定，如后面将
-提到的在使用抽象配置模板的情况下。
-4.3.3 Help Me, Help You①
-在大部分情况下，你不太可能选择单独“作战”，业务对象也是；各个业务对象之间会相互协作
-来更好地完成同一使命。这时，各个业务对象之间的相互依赖就是无法避免的。对象之间需要相互协
-作，在横向上它们存在一定的依赖性。而现在我们就是要看一下，在Spring的IoC容器的XML配置中，
-应该如何表达这种依赖性。
-既然业务对象现在都符合IoC的规则，那么要了解的表达方式其实也很简单，无非就是看一下构
-造方法注入和setter方法注入通过XML是如何表达的而已。那么，让我们开始吧！
-1. 构造方法注入的XML之道
-按照Spring的IoC容器配置格式，要通过构造方法注入方式，为当前业务对象注入其所依赖的对象，
-需要使用<constructor-arg>。正常情况下，如以下代码所示： 
+<alias name="djNewsListener" alias="dowJonesNewsListener"/>
+```
+
+- class属性
+
+每个注册到容器的对象都需要通过<bean>元素的class属性指定其类型，否则，容器可不知道这个对象到底是何方神圣。在大部分情况下，该属性是必须的。仅在少数情况下不需要指定，如后面将提到的在使用抽象配置模板的情况下。
+
+### 4.3.3 Help Me, Help You
+
+> 这句话是Warcraft中女巫的一句台词，这里用这句话来类比多个<bean>之间的关系：互相依赖，互相帮助以完成同一目标。
+{: .prompt-tip }
+
+在大部分情况下，你不太可能选择单独“作战”，业务对象也是；各个业务对象之间会相互协作来更好地完成同一使命。这时，各个业务对象之间的相互依赖就是无法避免的。对象之间需要相互协作，在横向上它们存在一定的依赖性。而现在我们就是要看一下，在Spring的IoC容器的XML配置中，应该如何表达这种依赖性。
+
+既然业务对象现在都符合IoC的规则，那么要了解的表达方式其实也很简单，无非就是看一下构造方法注入和setter方法注入通过XML是如何表达的而已。那么，让我们开始吧！
+
+#### 1. 构造方法注入的XML之道
+
+按照Spring的IoC容器配置格式，要通过构造方法注入方式，为当前业务对象注入其所依赖的对象，需要使用<constructor-arg>。正常情况下，如以下代码所示：
+
+```xml
 <bean id="djNewsProvider" class="..FXNewsProvider"> 
- <constructor-arg> 
- <ref bean="djNewsListener"/> 
- </constructor-arg> 
- <constructor-arg> 
- <ref bean="djNewsPersister"/> 
- </constructor-arg> 
-</bean> 
-对于<ref>元素，稍后会进行详细说明。这里你只需要知道，通过这个元素来指明容器将为
-djNewsProvider这个<bean>注入通过<ref>所引用的Bean实例。这种方式可能看起来或者编写起来
-不是很简洁，最新版本的Spring也支持配置简写形式，如以下代码所示： 
+    <constructor-arg> 
+        <ref bean="djNewsListener"/> 
+    </constructor-arg> 
+    <constructor-arg> 
+        <ref bean="djNewsPersister"/> 
+    </constructor-arg> 
+</bean>
+```
+
+对于<ref>元素，稍后会进行详细说明。这里你只需要知道，通过这个元素来指明容器将为djNewsProvider这个<bean>注入通过<ref>所引用的Bean实例。这种方式可能看起来或者编写起来不是很简洁，最新版本的Spring也支持配置简写形式，如以下代码所示：
+
+```xml
 <bean id="djNewsProvider" class="..FXNewsProvider"> 
  <constructor-arg ref="djNewsListener"/> 
  <constructor-arg ref="djNewsPersister"/> 
-</bean> 
+</bean>
+```
+
 简洁多了不是嘛？其实，无非就是表达方式不同而已，实际达到的效果是一样的。
-有些时候，容器在加载XML配置的时候，因为某些原因，无法明确配置项与对象的构造方法参数
-列表的一一对应关系，就需要请<constructor-arg>的type或者index属性出马。比如，对象存在多
- 
-① 这句话是Warcraft中女巫的一句台词，这里用这句话来类比多个<bean>之间的关系：互相依赖，互相帮助以完成
-同一目标。
-4.3 TBeanFactoryT 的 XML 之旅 35 
-个构造方法，当参数列表数目相同而类型不同的时候，容器无法区分应该使用哪个构造方法来实例化
-对象，或者构造方法可能同时传入最少两个类型相同的对象。
- type属性
-假设有一个对象定义如代码清单4-12所示。 2 
-代码清单4-12 随意声明的一个业务对象定义 
+
+有些时候，容器在加载XML配置的时候，因为某些原因，无法明确配置项与对象的构造方法参数列表的一一对应关系，就需要请<constructor-arg>的type或者index属性出马。比如，对象存在多个构造方法，当参数列表数目相同而类型不同的时候，容器无法区分应该使用哪个构造方法来实例化对象，或者构造方法可能同时传入最少两个类型相同的对象。
+
+- type属性
+
+假设有一个对象定义如代码清单4-12所示。
+
+代码清单4-12 随意声明的一个业务对象定义
+
+```java
 public class MockBusinessObject { 3 
  private String dependency1; 
  private int dependency2; 
@@ -607,32 +613,42 @@ public String toString() {
  .append("dependency2", dependency2).toString(); 
  } 
 9 }
-该类声明了两个构造方法，分别都只是传入一个参数，且参数类型不同。这时，我们可以进行配
-置，如以下代码所示： 10 
+```
+
+该类声明了两个构造方法，分别都只是传入一个参数，且参数类型不同。这时，我们可以进行配置，如以下代码所示：
+
+```xml
 <bean id="mockBO" class="..MockBusinessObject"> 
- <constructor-arg> 
- <value>111111</value> 
- </constructor-arg> 11 </bean> 
+    <constructor-arg> 
+        <value>111111</value> 
+    </constructor-arg> 11 </bean>
+```
+
 如果从BeanFactory取得该对象并调用toString()查看的话，我们会发现Spring调用的是第一个
-构造方法，因为输出是如下内容： 12 
+构造方法，因为输出是如下内容：
+
 ..MockBusinessObject@f73c1[dependency1=111111,dependency2=0] 
-13 
-14 
-但是，如果我们想调用的却是第二个传入int类型参数的构造方法，又该如何呢？可以使用type属
-性，通过指定构造方法的参数类型来解决这一问题，配置内容如下代码所示： 
+ 
+但是，如果我们想调用的却是第二个传入int类型参数的构造方法，又该如何呢？可以使用type属性，通过指定构造方法的参数类型来解决这一问题，配置内容如下代码所示：
+
+```xml
 <bean id="mockBO" class="..MockBusinessObject"> 
- <constructor-arg type="int"> 
- <value>111111</value> 
- </constructor-arg> 
-</bean> 15 
+    <constructor-arg type="int"> 
+        <value>111111</value> 
+    </constructor-arg> 
+</bean>
+```
+
 现在，我们得到了自己想要的对象实例，如下的控制台输出信息印证了这一点： 
 16 ..MockBusinessObject@f73c1[dependency1=<null>,dependency2=111111] 
  index属性
 当某个业务对象的构造方法同时传入了多个类型相同的参数时，Spring又该如何将这些配置中的
 信息与实际对象的参数一一对应呢？好在，如果配置项信息和对象参数可以按照顺序初步对应的话， 17 
-36 Spring 的 IoC 容器
 Spring还是可以正常工作的，如代码清单4-13所示。
-代码清单4-13 随意声明的一个业务对象定义 
+
+代码清单4-13 随意声明的一个业务对象定义
+
+```java
 public class MockBusinessObject { 
  private String dependency1; 
  private String dependency2; 
@@ -649,290 +665,309 @@ public class MockBusinessObject {
  .append("dependency1", dependency1)  
  .append("dependency2", dependency2).toString(); 
  } 
-} 
-并且，配置内容如以下代码所示： 
+}
+```
+
+并且，配置内容如以下代码所示：
+
+```xml
 <bean id="mockBO" class="..MockBusinessObject"> 
- <constructor-arg value="11111"/> 
- <constructor-arg value="22222"/> 
-</bean> 
-那么，我们可以得到如下对象： 
-..MockBusinessObject@1ef8cf3[dependency1=11111,dependency2=22222] 
-但是，如果要让“11111”作为对象的第二个参数，而将“22222”作为第一个参数来构造对象，
-又该如何呢？好！可以颠倒配置项，如以下代码所示： 
+    <constructor-arg value="11111"/> 
+    <constructor-arg value="22222"/> 
+</bean>
+``` 
+
+那么，我们可以得到如下对象：
+
+..MockBusinessObject@1ef8cf3[dependency1=11111,dependency2=22222]
+
+但是，如果要让“11111”作为对象的第二个参数，而将“22222”作为第一个参数来构造对象，又该如何呢？好！可以颠倒配置项，如以下代码所示：
+
+```xml
 <bean id="mockBO" class="..MockBusinessObject"> 
- <constructor-arg value="22222"/> 
- <constructor-arg value="11111"/> 
-</bean> 
-不过，还有一种方式，那就是像如下代码所示的那样，使用index属性： 
+    <constructor-arg value="22222"/> 
+    <constructor-arg value="11111"/> 
+</bean>
+```
+
+不过，还有一种方式，那就是像如下代码所示的那样，使用index属性：
+
+```xml
 <bean id="mockBO" class="..MockBusinessObject"> 
- <constructor-arg index="1" value="11111"/> 
- <constructor-arg index="0" value="22222"/> 
-</bean> 
+    <constructor-arg index="1" value="11111"/> 
+    <constructor-arg index="0" value="22222"/> 
+</bean>
+```
+
 这时，同样可以得到想要的对象实例，以下控制台输出表明了这一点：
-..MockBusinessObject@ecd7e[dependency1=22222,dependency2=11111] 
-注意 index属性的取值从0开始，与一般的数组下标取值相同。所以，指定的第一个参数的index
-应该是0，第二个参数的index应该是1，依此类推。
-2. setter方法注入的XML之道
-与构造方法注入可以使用<constructor-arg>注入配置相对应，Spring为setter方法注入提供了
-<property>元素。
-4.3 TBeanFactoryT 的 XML 之旅 37 
-<property>有一个name属性（attribute），用来指定该<property>将会注入的对象所对应的实例
-变量名称。之后通过value或者ref属性或者内嵌的其他元素来指定具体的依赖对象引用或者值，如以
-下代码所示： 
-<bean id="djNewsProvider" class="..FXNewsProvider"> 2 
- <property name="newsListener"> 
- <ref bean="djNewsListener"/> 
-3 </property> 
- <property name="newPersistener"> 
- <ref bean="djNewsPersister"/> 
- </property> 
-</bean> 4 
-当然，如果只是使用<property>进行依赖注入的话，请确保你的对象提供了默认的构造方法，
-也就是一个参数都没有的那个。 5 
+
+..MockBusinessObject@ecd7e[dependency1=22222,dependency2=11111]
+
+> 注意 index属性的取值从0开始，与一般的数组下标取值相同。所以，指定的第一个参数的index应该是0，第二个参数的index应该是1，依此类推。
+{: .prompt-info }
+
+#### 2. setter方法注入的XML之道
+
+与构造方法注入可以使用<constructor-arg>注入配置相对应，Spring为setter方法注入提供了<property>元素。
+
+<property>有一个name属性（attribute），用来指定该<property>将会注入的对象所对应的实例变量名称。之后通过value或者ref属性或者内嵌的其他元素来指定具体的依赖对象引用或者值，如以下代码所示：
+
+```xml
+<bean id="djNewsProvider" class="..FXNewsProvider"> 
+    <property name="newsListener"> 
+        <ref bean="djNewsListener"/> 
+    </property> 
+    <property name="newPersistener"> 
+        <ref bean="djNewsPersister"/> 
+    </property> 
+</bean>
+```
+
+当然，如果只是使用<property>进行依赖注入的话，请确保你的对象提供了默认的构造方法，也就是一个参数都没有的那个。
+
 以上配置形式还可以简化为如下形式： 
+
+```xml
 <bean id="djNewsProvider" class="..FXNewsProvider"> 
 <property name="newsListener" ref="djNewsListener"/> 6 
  <property name="newPersistener" ref="djNewsPersister"/> 
-</bean> 
-使用<property>的setter方法注入和使用<constructor-arg>的构造方法注入并不是水火不容 7 
-的。实际上，如果需要，可以同时使用这两个元素：
-8 <bean id="mockBO" class="..MockBusinessObject"> 
- <constructor-arg value="11111"/> 
- <property name="dependency2" value="22222"/> 
-</bean> 
-当然，现在需要 9 MockBusinessObject提供一个只有一个String类型参数的构造方法，并且为
-dependency2提供了相应的setter方法。代码清单4-14演示了符合条件的一个业务对象定义。
-10 代码清单4-14 随意声明的一个同时支持构造方法注入和setter方法注入的对象定义
+</bean>
+```
+
+使用<property>的setter方法注入和使用<constructor-arg>的构造方法注入并不是水火不容的。实际上，如果需要，可以同时使用这两个元素：
+
+```xml
+<bean id="mockBO" class="..MockBusinessObject"> 
+    <constructor-arg value="11111"/> 
+    <property name="dependency2" value="22222"/> 
+</bean>
+```
+
+当然，现在需要 9 MockBusinessObject提供一个只有一个String类型参数的构造方法，并且为dependency2提供了相应的setter方法。代码清单4-14演示了符合条件的一个业务对象定义。
+
+代码清单4-14 随意声明的一个同时支持构造方法注入和setter方法注入的对象定义
+
+```java
 public class MockBusinessObject { 
-11 private String dependency1; 
- private String dependency2; 
+
+    private String dependency1; 
+    private String dependency2; 
  
-public MockBusinessObject(String dependency) 
- { 12 
- this.dependency1 = dependency; 
- } 
-13 
-14 
+public MockBusinessObject(String dependency) { 
+
+    this.dependency1 = dependency; 
+} 
+
 public void setDependency2(String dependency2) { 
- this.dependency2 = dependency2; 
- } 
+
+    this.dependency2 = dependency2; 
+} 
  ... 
 }
-3. <property>和<constructor-arg>中可用的配置项
-之前我们看到，可以通过在 15 <property>和<constructor-arg>这两个元素内部嵌套<value>或者
-<ref>，来指定将为当前对象注入的简单数据类型或者某个对象的引用。不过，为了能够指定多种注
-入类型，Spring还提供了其他的元素供我们使用，这包括bean、ref、idref、value、null、list、set、map、
-props。下面我们来逐个详细讲述它们。
-16 
-17 
-38 Spring 的 IoC 容器
-提示 以下涉及的所有内嵌元素，对于 以下涉及的所有内嵌元素，对于<property> <property>和<constructor-arg> <constructor-arg>都是通用的。
-(1) <value>。可以通过value为主体对象注入简单的数据类型，不但可以指定String类型的数据，
-而且可以指定其他Java语言中的原始类型以及它们的包装器（wrapper）类型，比如int、Integer等。
-容器在注入的时候，会做适当的转换工作（我们会在后面揭示转换的奥秘）。你之前已经见过如何使
-用<value>了，不过让我们通过如下代码来重新认识一下它： 
+```
+
+#### 3. <property>和<constructor-arg>中可用的配置项
+
+之前我们看到，可以通过在<property>和<constructor-arg>这两个元素内部嵌套<value>或者<ref>，来指定将为当前对象注入的简单数据类型或者某个对象的引用。不过，为了能够指定多种注入类型，Spring还提供了其他的元素供我们使用，这包括bean、ref、idref、value、null、list、set、map、props。下面我们来逐个详细讲述它们。
+
+> **提示** 以下涉及的所有内嵌元素，对于 以下涉及的所有内嵌元素，对于<property> <property>和<constructor-arg> <constructor-arg>都是通用的。
+{: .prompt-tip }
+
+(1) <value>。可以通过value为主体对象注入简单的数据类型，不但可以指定String类型的数据，而且可以指定其他Java语言中的原始类型以及它们的包装器（wrapper）类型，比如int、Integer等。容器在注入的时候，会做适当的转换工作（我们会在后面揭示转换的奥秘）。你之前已经见过如何使用<value>了，不过让我们通过如下代码来重新认识一下它：
+
+```xml
 <constructor-arg> 
- <value>111111</value> 
+    <value>111111</value> 
 </constructor-arg> 
 <property name="attributeName"> 
- <value>222222</value> 
+    <value>222222</value> 
 </property> 
-当然，如果愿意，你也可以使用如下的简化形式（不过这里的value是以上一层元素的属性身份
-出现）： 
+```
+
+当然，如果愿意，你也可以使用如下的简化形式（不过这里的value是以上一层元素的属性身份出现）： 
+
+```xml
 <constructor-arg value="111111"/> 
 <property name="attributeName" value="222222"/> 
+```
+
 需要说明的是，<value>是最“底层”的元素，它内部不能再嵌套使用其他元素了。
-(2) <ref>。使用ref来引用容器中其他的对象实例，可以通过ref的local、parent和bean属性来
-指定引用的对象的beanName是什么。代码清单4-15演示了ref及其三个对应属性的使用情况。
-代码清单4-15 <ref>及其local、parent和bean属性的使用 
+
+(2) <ref>。使用ref来引用容器中其他的对象实例，可以通过ref的local、parent和bean属性来指定引用的对象的beanName是什么。代码清单4-15演示了ref及其三个对应属性的使用情况。
+
+代码清单4-15 <ref>及其local、parent和bean属性的使用
+
+```xml
 constructor-arg> 
- <ref local="djNewsPersister"/> 
-</constructor-arg> 
+    <ref local="djNewsPersister"/> 
+</constructor-arg>
+```
+
 或者
+
+```xml
 <constructor-arg> 
- <ref parent="djNewsPersister"/> 
+    <ref parent="djNewsPersister"/> 
 </constructor-arg> 
+```
+
 或者
+
+```xml
 <constructor-arg> 
- <ref bean="djNewsPersister"/> 
+    <ref bean="djNewsPersister"/> 
 </constructor-arg> 
+```
+
 local、parent和bean的区别在于：
- local只能指定与当前配置的对象在同一个配置文件的对象定义的名称（可以获得XML解析器
-的id约束验证支持）；
- parent则只能指定位于当前容器的父容器中定义的对象引用； 
-注意 BeanFactory可以分层次（通过实现HierarchicalBeanFactory接口），容器A在初始
-化的时候，可以首先加载容器B中的所有对象定义，然后再加载自身的对象定义，这样，容器
-B就成为了容器A的父容器，容器A可以引用容器B中的所有对象定义：
-BeanFactory parentContainer = new XmlBeanFactory(new ClassPathResource("父容器配置文件路
-径"));
-BeanFactory childContainer = new XmlBeanFactory(new ClassPathResource("子容器配置文件路
-径"),parentContainer);
-childContainer中定义的对象，如果通过parent指定依赖，则只能引用parentContainer中
-的对象定义。
-4.3 TBeanFactoryT 的 XML 之旅 39 
- bean则基本上通吃，所以，通常情况下，直接使用bean来指定对象引用就可以了。
-<ref>的定义为<!ELEMENT ref EMPTY>，也就是说，它下面没有其他子元素可用了，别硬往人家
-肚子里塞东西哦。
-(3) <idref>。如果要为当前对象注入所依赖的对象的名称，而不是引用，那么通常情况下，可以 2 
-使用<value>来达到这个目的，使用如下形式： 
-<property name="newsListenerBeanName"> 3 
- <value>djNewsListener</value> 
-</property> 
-但这种场合下，使用idref才是最为合适的。因为使用idref，容器在解析配置的时候就可以帮 4 
-你检查这个beanName到底是否存在，而不用等到运行时才发现这个beanName对应的对象实例不存在。
-毕竟，输错名字的问题很常见。以下代码演示了idref的使用： 5 
+
+- local只能指定与当前配置的对象在同一个配置文件的对象定义的名称（可以获得XML解析器的id约束验证支持）；
+- parent则只能指定位于当前容器的父容器中定义的对象引用；
+- bean则基本上通吃，所以，通常情况下，直接使用bean来指定对象引用就可以了。
+
+<ref>的定义为<!ELEMENT ref EMPTY>，也就是说，它下面没有其他子元素可用了，别硬往人家肚子里塞东西哦。
+
+> **注意** BeanFactory可以分层次（通过实现HierarchicalBeanFactory接口），容器A在初始化的时候，可以首先加载容器B中的所有对象定义，然后再加载自身的对象定义，这样，容器B就成为了容器A的父容器，容器A可以引用容器B中的所有对象定义：<br\>BeanFactory parentContainer = new XmlBeanFactory(new ClassPathResource("父容器配置文件路径"));<br\>BeanFactory childContainer = new XmlBeanFactory(new ClassPathResource("子容器配置文件路径"),parentContainer);<br\>childContainer中定义的对象，如果通过parent指定依赖，则只能引用parentContainer中的对象定义。
+{: .prompt-info }
+
+(3) <idref>。如果要为当前对象注入所依赖的对象的名称，而不是引用，那么通常情况下，可以使用<value>来达到这个目的，使用如下形式：
+
+```xml
+<property name="newsListenerBeanName">
+    <value>djNewsListener</value> 
+</property>
+```
+
+但这种场合下，使用idref才是最为合适的。因为使用idref，容器在解析配置的时候就可以帮你检查这个beanName到底是否存在，而不用等到运行时才发现这个beanName对应的对象实例不存在。毕竟，输错名字的问题很常见。以下代码演示了idref的使用：
+
+```xml
 <property name="newsListenerBeanName"> 
- <idref bean="djNewsListener"/> 
-6 </property> 
-这段配置跟上面使用<value>达到了相同的目的，不过更加保险。如果愿意，也可以通过local而
-不是bean来指定最终值，不过，bean比较大众化哦。
-7 (4) 内部<bean>。使用<ref>可以引用容器中独立定义的对象定义。但有时，可能我们所依赖的对
-象只有当前一个对象引用，或者某个对象定义我们不想其他对象通过<ref>引用到它。这时，我们可
-以使用内嵌的<bean>，将这个私有的对象定义仅局限在当前对象。对于FX新闻系统的DowJonesNewsListener而言，实际上只有道琼斯的FXNewsProvider会使用它。而且，我们也不想让其他对象引用
-到它。为此完全可以像代码清单4-16这样，将它配置为内部<bean>的形式。 
-8 
-9 
+    <idref bean="djNewsListener"/> 
+</property>
+```
+
+这段配置跟上面使用<value>达到了相同的目的，不过更加保险。如果愿意，也可以通过local而不是bean来指定最终值，不过，bean比较大众化哦。
+
+(4) 内部<bean>。使用<ref>可以引用容器中独立定义的对象定义。但有时，可能我们所依赖的对象只有当前一个对象引用，或者某个对象定义我们不想其他对象通过<ref>引用到它。这时，我们可以使用内嵌的<bean>，将这个私有的对象定义仅局限在当前对象。对于FX新闻系统的DowJonesNewsListener而言，实际上只有道琼斯的FXNewsProvider会使用它。而且，我们也不想让其他对象引用到它。为此完全可以像代码清单4-16这样，将它配置为内部<bean>的形式。 
+
 代码清单4-16 内部<bean>的配置演示
-10 <bean id="djNewsProvider" class="..FXNewsProvider"> 
- <constructor-arg index="0"> 
- <bean class="..impl.DowJonesNewsListener"> 
- </bean> 
- </constructor-arg> 11 
- <constructor-arg index="1"> 
- <ref bean="djNewsPersister"/> 
-12 </constructor-arg> 
-</bean> 
+
+```xml
+<bean id="djNewsProvider" class="..FXNewsProvider"> 
+    <constructor-arg index="0"> 
+        <bean class="..impl.DowJonesNewsListener"> 
+        </bean> 
+    </constructor-arg> 11 
+    <constructor-arg index="1"> 
+        <ref bean="djNewsPersister"/> 
+    </constructor-arg> 
+</bean>
+```
+
 这样，该对象实例就只有当前的djNewsProvider可以使用，其他对象无法取得该对象的引用。
-13 
-14 
-注意 因为就只有当前对象引用内部<bean>所指定的对象，所以，内部<bean>的id不是必须
-的。当然，如果你愿意指定id，那也是无所谓的。如下所示：
+ 
+> **注意** 因为就只有当前对象引用内部<bean>所指定的对象，所以，内部<bean>的id不是必须的。当然，如果你愿意指定id，那也是无所谓的。
+{: .prompt-info }
+
+如下所示：
+
+```xml
 <constructor-arg index="0"> 
- <bean id="djNewsListener" class="..impl.DowJonesNewsListener"> 
-17 
- </bean> 
-15 </constructor-arg>
-内部<bean>的配置只是在位置上有所差异，但配置项上与其他的<bean>是没有任何差别的。也
-就是说，<bean>内嵌的所有元素，内部<bean>的<bean>同样可以使用。如果内部<bean>对应的对象
-还依赖于其他对象，你完全可以像其他独立的<bean>定义一样为其配置相关依赖，没有任何差别。
-(5) <list>。<list>对应注入对象类型为java.util.List及其子类或者数组类型的依赖对象。
-16 
-40 Spring 的 IoC 容器
-通过<list>可以有序地为当前对象注入以collection形式声明的依赖。代码清单4-17给出了一个使用
-<list>的实例演示。
+    <bean id="djNewsListener" class="..impl.DowJonesNewsListener">
+    </bean> 
+</constructor-arg>
+```
+
+内部<bean>的配置只是在位置上有所差异，但配置项上与其他的<bean>是没有任何差别的。也就是说，<bean>内嵌的所有元素，内部<bean>的<bean>同样可以使用。如果内部<bean>对应的对象还依赖于其他对象，你完全可以像其他独立的<bean>定义一样为其配置相关依赖，没有任何差别。
+
+(5) <list>。<list>对应注入对象类型为java.util.List及其子类或者数组类型的依赖对象。通过<list>可以有序地为当前对象注入以collection形式声明的依赖。代码清单4-17给出了一个使用<list>的实例演示。
+
 代码清单4-17 使用<list>进行依赖注入的对象定义以及相关配置内容
-public class MockDemoObject 
-{ 
- private List param1; 
- private String[] param2; 
- ... 
- // 相应的setter和getter方法
- ... 
-} 
+
+```java
+public class MockDemoObject { 
+    private List param1; 
+    private String[] param2; 
+    ... 
+    // 相应的setter和getter方法
+    ... 
+}
+```
+
 配置类似于
+
+```xml
 <property name="param1"> 
- <list> 
- <value> something</value> 
- <ref bean="someBeanName"/> 
- <bean class="..."/> 
- </list> 
+    <list> 
+        <value> something</value> 
+        <ref bean="someBeanName"/> 
+        <bean class="..."/> 
+    </list> 
 </property> 
 <property name="param2"> 
- <list> 
- <value>stringValue1</value> 
- <value>stringValue2</value> 
- </list> 
-</property> 
-注意，<list>元素内部可以嵌套其他元素，并且可以像param1所展示的那样夹杂配置。但是，从
-好的编程实践来说，这样的处理并不恰当，除非你真的知道自己在做什么！（以上只是出于演示的目
-的才会如此配置）。
-(6) <set>。如果说<list>可以帮你有序地注入一系列依赖的话，那么<set>就是无序的，而且，
-对于set来说，元素的顺序本来就是无关紧要的。<set>对应注入Java Collection中类型为java.util. 
-Set或者其子类的依赖对象。代码清单4-18演示了通常情况下<set>的使用场景。
+    <list> 
+        <value>stringValue1</value> 
+        <value>stringValue2</value> 
+    </list> 
+</property>
+```
+
+> 注意，<list>元素内部可以嵌套其他元素，并且可以像param1所展示的那样夹杂配置。但是，从好的编程实践来说，这样的处理并不恰当，除非你真的知道自己在做什么！（以上只是出于演示的目的才会如此配置）。
+{: .prompt-tip }
+
+(6) <set>。如果说<list>可以帮你有序地注入一系列依赖的话，那么<set>就是无序的，而且，对于set来说，元素的顺序本来就是无关紧要的。<set>对应注入Java Collection中类型为java.util.Set或者其子类的依赖对象。代码清单4-18演示了通常情况下<set>的使用场景。
+
 代码清单4-18 使用<set>进行依赖注入的对象定义以及相关配置内容
-public class MockDemoObject 
-{ 
- private Set valueSet; 
- // 必要的setter和getter方法
- ... 
-} 
+
+```java
+public class MockDemoObject { 
+    private Set valueSet; 
+    // 必要的setter和getter方法
+    ... 
+}
+```
+
 配置类似于
+
+```xml
 <property name="valueSet"> 
- <set> 
- <value> something</value> 
- <ref bean="someBeanName"/> 
- <bean class="..."/> 
- <list> 
- ... 
- </list> 
- </set> 
-</property> 
-例子就是例子，只是为了给你演示这个元素到底有多少能耐。从配置上来说，这样多层嵌套、多
-4.3 TBeanFactoryT 的 XML 之旅 41 
-元素混杂配置是完全没有问题的。不过，各位在具体编程实践的时候可要小心了。如果你真的想这么
-夹杂配置的话，不好意思，估计ClassCastException会很愿意来亲近你，而这跟容器或者配置一点
-儿关系也没有。 
-(7) <map>。与列表（list）使用数字下标来标识元素不同，映射（map）可以通过指定的键（key） 2 
-来获取相应的值。如果说在<list>中混杂不同元素不是一个好的实践（方式）的话，你就应该求助
-<map>。<map>与<list>和<set>的相同点在于，都是为主体对象注入Collection类型的依赖，不同点
-在于它对应注入java.util.Map或者其子类类型的依赖对象。代码清单4-19演示了<map>的通常使用
-场景。
-3 
-4 
-代码清单4-19 使用<map>进行依赖注入的对象定义以及相关配置内容 
+    <set> 
+        <value> something</value> 
+        <ref bean="someBeanName"/> 
+        <bean class="..."/> 
+        <list> 
+        ... 
+        </list> 
+    </set> 
+</property>
+```
+
+例子就是例子，只是为了给你演示这个元素到底有多少能耐。从配置上来说，这样多层嵌套、多元素混杂配置是完全没有问题的。不过，各位在具体编程实践的时候可要小心了。如果你真的想这么夹杂配置的话，不好意思，估计ClassCastException会很愿意来亲近你，而这跟容器或者配置一点儿关系也没有。
+
+(7) <map>。与列表（list）使用数字下标来标识元素不同，映射（map）可以通过指定的键（key） 来获取相应的值。如果说在<list>中混杂不同元素不是一个好的实践（方式）的话，你就应该求助<map>。<map>与<list>和<set>的相同点在于，都是为主体对象注入Collection类型的依赖，不同点在于它对应注入java.util.Map或者其子类类型的依赖对象。代码清单4-19演示了<map>的通常使用场景。
+
+代码清单4-19 使用<map>进行依赖注入的对象定义以及相关配置内容
+
+```java
 5 public class MockDemoObject 
 { 
  private Map mapping; 
  // 必要的setter和getter方法
 6 ... 
-} 
+}
+```
+
 配置类似于
+
+```xml
 <property name="mapping"> 
  <map> 7 <entry key="strValueKey"> 
  <value>something</value> 
-8 </entry> 
+ </entry> 
  <entry> 
  <key>objectKey</key> 
  <ref bean="someObject"/> 
  </entry> 9 
- <entry key-ref="lstKey"> 
- <list> 
-10 ... 
- </list> 
- </entry> 
- ... 
-11 </map> 
-</property> 
-对于<map>来说，它可以内嵌任意多个<entry>，每一个<entry>都需要为其指定一个键和一个值，
-就跟真正的java.util.Map所要求的一样。 12 
- 指定entry的键。可以使用<entry>的属性——key或者key-ref来指定键，也可以使用<entry>
-的内嵌元素<key>来指定键，这完全看个人喜好，但两种方式可以达到相同的效果。在<key>内
-部，可以使用以上提到的任何元素来指定键，从简单的<value>到复杂的Collection，只要映射
-需要，你可以任意发挥。
-13 
-14 
- 指定entry对应的值。<entry>内部可以使用的元素，除了<key>是用来指定键的，其他元素
-可以任意使用，来指定entry对应的值。除了之前提到的那些元素，还包括马上就要谈到的
-<props>。如果对应的值只是简单的原始类型或者单一的对象引用，也可以直接使用<entry>
-的value或者value-ref这两个属性来指定，从而省却多敲入几个字符的工作量。
-15 
-16 注意 key属性用于指定通常的简单类型的键，而key-ref则用于指定对象的引用作为键。
-所以，如果你不想敲那么些字符，可以像代码清单4-20所展示的那样使用<map>进行依赖注入的 17 
- private Map mapping; 
-42 Spring 的 IoC 容器
-配置。
-代码清单4-20 简化版的<map>配置使用演示
-public class MockDemoObject 
-{ 
- private Map mapping; 
- // 必要的setter和getter方法
- ... 
-} 
-配置类似于
-<property name="valueSet"> 
- <map> 
- <entry key="strValueKey" value="something"/> 
- <entry key-ref="" value-ref="someObject"/> 
  <entry key-ref="lstKey"> 
  <list> 
  ... 
@@ -941,67 +976,118 @@ public class MockDemoObject
  ... 
  </map> 
 </property> 
- 
-(8) <props>。<props>是简化后了的<map>，或者说是特殊化的map，该元素对应配置类型为
-java.util.Properties的对象依赖。因为Properties只能指定String类型的键（key）和值，所以，
-<props>的配置简化很多，只有固定的格式，见代码清单4-21。 
+```
+
+对于<map>来说，它可以内嵌任意多个<entry>，每一个<entry>都需要为其指定一个键和一个值，就跟真正的java.util.Map所要求的一样。
+
+- 指定entry的键。可以使用<entry>的属性——key或者key-ref来指定键，也可以使用<entry>的内嵌元素<key>来指定键，这完全看个人喜好，但两种方式可以达到相同的效果。在<key>内部，可以使用以上提到的任何元素来指定键，从简单的<value>到复杂的Collection，只要映射需要，你可以任意发挥。
+- 指定entry对应的值。<entry>内部可以使用的元素，除了<key>是用来指定键的，其他元素可以任意使用，来指定entry对应的值。除了之前提到的那些元素，还包括马上就要谈到的<props>。如果对应的值只是简单的原始类型或者单一的对象引用，也可以直接使用<entry>的value或者value-ref这两个属性来指定，从而省却多敲入几个字符的工作量。
+
+> **注意** key属性用于指定通常的简单类型的键，而key-ref则用于指定对象的引用作为键。
+{: .prompt-info }
+
+所以，如果你不想敲那么些字符，可以像代码清单4-20所展示的那样使用<map>进行依赖注入的配置。
+
+代码清单4-20 简化版的<map>配置使用演示
+
+```java
+public class MockDemoObject { 
+    private Map mapping; 
+    // 必要的setter和getter方法
+    ... 
+}
+```
+
+配置类似于
+
+```xml
+<property name="valueSet"> 
+    <map> 
+    <entry key="strValueKey" value="something"/> 
+    <entry key-ref="" value-ref="someObject"/> 
+    <entry key-ref="lstKey"> 
+        <list> 
+        ... 
+        </list> 
+    </entry> 
+    ... 
+    </map> 
+</property> 
+```
+
+(8) <props>。<props>是简化后了的<map>，或者说是特殊化的map，该元素对应配置类型为java.util.Properties的对象依赖。因为Properties只能指定String类型的键（key）和值，所以，<props>的配置简化很多，只有固定的格式，见代码清单4-21。 
+
 代码清单4-21 使用<props>进行依赖注入的场景演示
+
+```java
 public class MockDemoObject 
 { 
  private Properties emailAddrs; 
  // 必要的setter和getter方法
  ... 
 } 
+```
+
 配置类似于
+
+```xml
 <property name="valueSet"> 
- <props> 
- <prop key="author">fujohnwang@gmail.com</prop> 
- <prop key="support">support@spring21.cn</prop> 
- ... 
- </props> 
-</property> 
-每个<props>可以嵌套多个<prop>，每个<prop>通过其key属性来指定键，在<prop>内部直接指
-定其所对应的值。<prop>内部没有任何元素可以使用，只能指定字符串，这个是由java.util. 
-Properties的语意决定的。
-(9) <null/>。最后一个提到的元素是<null/>，这是最简单的一个元素，因为它只是一个空元素，
-而且通常使用到它的场景也不是很多。对于String类型来说，如果通过value以这样的方式指定注入，
-即<value></value>，那么，得到的结果是""，而不是null。所以，如果需要为这个string对应的值
-注入null的话，请使用<null/>。当然，这并非仅限于String类型，如果某个对象也有类似需求，请
-不要犹豫。代码清单4-22演示了一个使用<null/>的简单场景。
-4.3 TBeanFactoryT 的 XML 之旅 43 
+    <props> 
+        <prop key="author">fujohnwang@gmail.com</prop> 
+        <prop key="support">support@spring21.cn</prop> 
+        ... 
+    </props> 
+</property>
+```
+
+每个<props>可以嵌套多个<prop>，每个<prop>通过其key属性来指定键，在<prop>内部直接指定其所对应的值。<prop>内部没有任何元素可以使用，只能指定字符串，这个是由java.util.Properties的语意决定的。
+
+(9) <null/>。最后一个提到的元素是<null/>，这是最简单的一个元素，因为它只是一个空元素，而且通常使用到它的场景也不是很多。对于String类型来说，如果通过value以这样的方式指定注入，即<value></value>，那么，得到的结果是""，而不是null。所以，如果需要为这个string对应的值注入null的话，请使用<null/>。当然，这并非仅限于String类型，如果某个对象也有类似需求，请不要犹豫。代码清单4-22演示了一个使用<null/>的简单场景。
+
 代码清单4-22 使用<null/>进行依赖注入的简单场景演示
-public class MockDemoObject 
-{ 
-2 private String param1; 
- private Object param2; 
- // 必要的setter和getter方法
- ... 
-3 } 
-配置为
-<property name="param1"> 
- <null/> 
-</property> 4 
-<property name="param2"> 
- <null/> 
-5 </property> 
-实际上就相当于
-public class MockDemoObject 
-{ 
-private String param1=null; 6 
- private Object param2=null; 
- // 必要的setter和getter方法
-7 ... 
+
+```java
+public class MockDemoObject { 
+    private String param1; 
+    private Object param2; 
+    // 必要的setter和getter方法
+    ... 
 } 
+```
+
+配置为
+
+```xml
+<property name="param1"> 
+    <null/> 
+</property>
+<property name="param2"> 
+    <null/> 
+</property>
+```
+
+实际上就相当于
+
+```java
+public class MockDemoObject { 
+
+    private String param1=null; 6 
+    private Object param2=null; 
+    // 必要的setter和getter方法
+    ... 
+}
+```
+
 虽然这里看起来没有太大意义！
-8 4. depends-on
-通常情况下，可以直接通过之前提到的所有元素，来显式地指定bean之间的依赖关系。这样，容
-器在初始化当前bean定义的时候，会根据这些元素所标记的依赖关系，首先实例化当前bean定义所依
-赖的其他bean定义。但是，如果某些时候，我们没有通过类似<ref>的元素明确指定对象A依赖于对象
-B的话，如何让容器在实例化对象A之前首先实例化对象B呢？ 
-9 
-考虑以下所示代码： 10 
-public class SystemConfigurationSetup 
-{ 
+
+#### 4. depends-on
+
+通常情况下，可以直接通过之前提到的所有元素，来显式地指定bean之间的依赖关系。这样，容器在初始化当前bean定义的时候，会根据这些元素所标记的依赖关系，首先实例化当前bean定义所依赖的其他bean定义。但是，如果某些时候，我们没有通过类似<ref>的元素明确指定对象A依赖于对象B的话，如何让容器在实例化对象A之前首先实例化对象B呢？ 
+
+考虑以下所示代码：
+
+```java
+public class SystemConfigurationSetup { 
  static 11 
  { 
  DOMConfigurator.configure("配置文件路径"); 
@@ -1009,24 +1095,25 @@ public class SystemConfigurationSetup
  } 
  ... 
 } 
-13 
-14 
-系统中所有需要日志记录的类，都需要在这些类使用之前首先初始化log4j。那么，就会非显式地
-依赖于SystemConfigurationSetup的静态初始化块。如果ClassA需要使用log4j，那么就必须在bean
-定义中使用depends-on来要求容器在初始化自身实例之前首先实例化SystemConfigurationSetup，
-以保证日志系统的可用，如下代码演示的正是这种情况： 
-15 <bean id="classAInstance" class="...ClassA" depends-on="configSetup"/> 
+```
+
+系统中所有需要日志记录的类，都需要在这些类使用之前首先初始化log4j。那么，就会非显式地依赖于SystemConfigurationSetup的静态初始化块。如果ClassA需要使用log4j，那么就必须在bean定义中使用depends-on来要求容器在初始化自身实例之前首先实例化SystemConfigurationSetup，以保证日志系统的可用，如下代码演示的正是这种情况： 
+
+```xml
+<bean id="classAInstance" class="...ClassA" depends-on="configSetup"/> 
 <bean id="configSetup" class="SystemConfigurationSetup"/> 
-举log4j在静态代码块（static block）中初始化的例子在实际系统中其实不是很合适，因为通常在 16 
-应用程序的主入口类初始化日志就可以了。这里主要是给出depends-on可能的使用场景，大部分情
-况下，是那些拥有静态代码块初始化代码或者数据库驱动注册之类的场景。 17 
-44 Spring 的 IoC 容器
-如果说ClassA拥有多个类似的非显式依赖关系，那么，你可以在ClassA的depends-on中通过逗号
-分割各个beanName，如下代码所示： 
+```
+
+举log4j在静态代码块（static block）中初始化的例子在实际系统中其实不是很合适，因为通常在应用程序的主入口类初始化日志就可以了。这里主要是给出depends-on可能的使用场景，大部分情况下，是那些拥有静态代码块初始化代码或者数据库驱动注册之类的场景。如果说ClassA拥有多个类似的非显式依赖关系，那么，你可以在ClassA的depends-on中通过逗号分割各个beanName，如下代码所示：
+
+```xml
 <bean id="classAInstance" class="...ClassA" depends-on="configSetup,configSetup2,..."/> 
 <bean id="configSetup" class="SystemConfigurationSetup"/> 
 <bean id="configSetup2" class="SystemConfigurationSetup2"/> 
-5. autowire
+```
+
+#### 5. autowire
+
 除了可以通过配置明确指定bean之间的依赖关系，Spirng还提供了根据bean定义的某些特点将相
 互依赖的某些bean直接自动绑定的功能。通过<bean>的autowire属性，可以指定当前bean定义采用某
 种类型的自动绑定模式。这样，你就无需手工明确指定该bean定义相关的依赖关系，从而也可以免去
@@ -1202,7 +1289,9 @@ bean定义类型给换掉，就会造成问题，而这些可能都是在不经�
  17 ① 对于singleton的概念，参考4.3.5节。
 48 Spring 的 IoC 容器
 这样我们就不用每个<bean>都设置一遍，省事儿多了不是吗？ 
-4.3.4 继承？我也会！
+
+### 4.3.4 继承？我也会！
+
 除了单独存在的bean以及多个bean之间的横向依赖关系，我们也不能忽略“纵向上”各个bean之
 间的关系。确切来讲，我其实是想说“类之间的继承关系”。不可否认，继承可是在面向对象界声名
 远扬啊。
@@ -1285,8 +1374,9 @@ abstract属性声明为true的bean定义。如果你不想容器在初始化的�
 其abstract属性赋值true，以避免容器将其实例化。对于ApplicationContext容器尤其如此，因为
 默认情况下，ApplicationContext会在容器启动的时候就对其管理的所有bean进行实例化，只有标
 志为abstract的bean除外。
-13 
-14 4.3.5 bean 的 scope 
+
+### 4.3.5 bean 的 scope
+
 BeanFactory除了拥有作为IoC Service Provider的职责，作为一个轻量级容器，它还有着其他一些
 职责，其中就包括对象的生命周期管理。 15 
 本节主要讲述容器中管理的对象的scope这个概念。多数中文资料在讲解bean的scope时喜欢用“作
@@ -1472,8 +1562,9 @@ beanFactory.registerScope("thread",threadScope);
 由于<aop:scoped-proxy/>涉及Spring AOP相关知识，这里不会详细讲述。需要注意的是，使用
 了自定义scope的bean定义，需要该元素来为其在合适的时间创建和销毁相应的代理对象实例。对于
 request、session和global session来说，也是如此。
-4.3.6 工厂方法与 FactoryBean 
-4.3 TBeanFactoryT 的 XML 之旅 55 
+
+### 4.3.6 工厂方法与 FactoryBean 
+
 在强调“面向接口编程”的同时，有一点需要注意：虽然对象可以通过声明接口来避免对特定接
 口实现类的过度耦合，但总归需要一种方式将声明依赖接口的对象与接口实现类关联起来。否则，只
 依赖一个不做任何事情的接口是没有任何用处的。假设我们有一个像代码清单4-30所声明的Foo类，
@@ -1680,7 +1771,9 @@ Spring容器内部许多地方了使用FactoryBean。下面是一些比较常见
 8  SqlMapClientFactoryBean 
  ProxyFactoryBean 
  TransactionProxyFactoryBean 9 
-4.3.7 偷梁换柱之术
+
+### 4.3.7 偷梁换柱之术
+
 在学习以下内容之前，先提一下有关 10 bean的scope的使用“陷阱”，特别是prototype在容器中的使
 用，以此引出本节将要介绍的Spring容器较为独特的功能特性：方法注入（Method Injection）以及方
 法替换（Method Replacement）。 11 我们知道，拥有prototype类型scope的bean，在请求方每次向容器请求该类型对象的时候，容器都
@@ -1937,118 +2030,93 @@ AOP之后，我想你也不会再回头求助这个特色功能。不过，怎�
 为何不用呢？ 
 哦，如果要替换的方法存在参数，或者对象存在多个重载的方法，可以在<replaced-method>内
 部通过<arg-type>明确指定将要替换的方法参数类型。祝“替换”愉快！ 
-4.4 容器背后的秘密
-子曰：学而不思则罔。除了了解Spring的IoC容器如何使用，了解Spring的IoC容器都提供了哪些功
-能，我们也应该想一下，Spring的IoC容器内部到底是如何来实现这些的呢？虽然我们不太可能“重新
-发明轮子”，但是，如图4-7（该图摘自Spring官方参考文档）所示的那样，只告诉你“Magic Happens 
-Here”，你是否就能心满意足呢？
 
-好，如果你的答案是“不”（我当然认为你说的是“不想一直被蒙在鼓里”），那么就随我一起 5 
-来探索一下这个“黑匣子”里面到底有些什么……
-6 4.4.1 “战略性观望” 
-Spring的IoC容器所起的作用，就像图4-7所展示的那样，它会以某种方式加载Configuration 
-Metadata（通常也就是XML格式的配置信息），然后根据这些信息绑定整个系统的对象，最终组装成
-一个可用的基于轻量级容器的应用系统。
-7 
-Spring的IoC容器实现以上功能的过程，基本上可以按照类似的流程划分为两个阶段，即容器启动 8 
-阶段和Bean实例化阶段，如图4-8所示。 
+## 4.4 容器背后的秘密
+
+子曰：学而不思则罔。除了了解Spring的IoC容器如何使用，了解Spring的IoC容器都提供了哪些功能，我们也应该想一下，Spring的IoC容器内部到底是如何来实现这些的呢？虽然我们不太可能“重新发明轮子”，但是，如图4-7（该图摘自Spring官方参考文档）所示的那样，只告诉你“Magic Happens Here”，你是否就能心满意足呢？
+
+好，如果你的答案是“不”（我当然认为你说的是“不想一直被蒙在鼓里”），那么就随我一起来探索一下这个“黑匣子”里面到底有些什么……
+
+### 4.4.1 “战略性观望”
+
+Spring的IoC容器所起的作用，就像图4-7所展示的那样，它会以某种方式加载Configuration Metadata（通常也就是XML格式的配置信息），然后根据这些信息绑定整个系统的对象，最终组装成一个可用的基于轻量级容器的应用系统。
+
+Spring的IoC容器实现以上功能的过程，基本上可以按照类似的流程划分为两个阶段，即容器启动阶段和Bean实例化阶段，如图4-8所示。
+
 Spring的IoC容器在实现的时候，充分运用了这两个实现阶段的不同特点，在每个阶段都加入了相
 应的容器扩展点，以便我们可以根据具体场景的需要加入自定义的扩展逻辑。
-9 
-10 
-11 
-12 
-13 
-14 
-15 
+
 图4-8 容器功能实现的各个阶段
-16 1. 容器启动阶段
-容器启动伊始，首先会通过某种途径加载Configuration MetaData。除了代码方式比较直接，在大
-部分情况下，容器需要依赖某些工具类（BeanDefinitionReader）对加载的Configuration MetaData 17 
-66 Spring 的 IoC 容器
-进行解析和分析，并将分析后的信息编组为相应的BeanDefinition，最后把这些保存了bean定义必
-要信息的BeanDefinition，注册到相应的BeanDefinitionRegistry，这样容器启动工作就完成了。
+
+#### 1. 容器启动阶段
+
+容器启动伊始，首先会通过某种途径加载Configuration MetaData。除了代码方式比较直接，在大部分情况下，容器需要依赖某些工具类（BeanDefinitionReader）对加载的Configuration MetaData进行解析和分析，并将分析后的信息编组为相应的BeanDefinition，最后把这些保存了bean定义必要信息的BeanDefinition，注册到相应的BeanDefinitionRegistry，这样容器启动工作就完成了。
+
 图4-9演示了这个阶段的主要工作。
+
 图4-9 XML配置信息到BeanDefinition的映射
-总地来说，该阶段所做的工作可以认为是准备性的，重点更加侧重于对象管理信息的收集。当然，
-一些验证性或者辅助性的工作也可以在这个阶段完成。
-2. Bean实例化阶段
-经过第一阶段，现在所有的bean定义信息都通过BeanDefinition的方式注册到了BeanDefinitionRegistry中。当某个请求方通过容器的getBean方法明确地请求某个对象，或者因依赖关系容器
-需要隐式地调用getBean方法时，就会触发第二阶段的活动。
-该阶段，容器会首先检查所请求的对象之前是否已经初始化。如果没有，则会根据注册的
-BeanDefinition所提供的信息实例化被请求对象，并为其注入依赖。如果该对象实现了某些回调接
-口，也会根据回调接口的要求来装配它。当该对象装配完毕之后，容器会立即将其返回请求方使用。
-如果说第一阶段只是根据图纸装配生产线的话，那么第二阶段就是使用装配好的生产线来生产具体的
-产品了。
-4.4.2 插手“容器的启动”
-Spring提供了一种叫做BeanFactoryPostProcessor的容器扩展机制。该机制允许我们在容器实
-例化相应对象之前，对注册到容器的BeanDefinition所保存的信息做相应的修改。这就相当于在容
-器实现的第一阶段最后加入一道工序，让我们对最终的BeanDefinition做一些额外的操作，比如修
-改其中bean定义的某些属性，为bean定义增加其他信息等。
-如果要自定义实现BeanFactoryPostProcessor，通常我们需要实现org.springframework. 
-beans.factory.config.BeanFactoryPostProcessor接口。同时，因为一个容器可能拥有多个BeanFactoryPostProcessor，这个时候可能需要实现类同时实现Spring的org.springframework.core. 
-Ordered接口，以保证各个BeanFactoryPostProcessor可以按照预先设定的顺序执行（如果顺序紧
-要的话）。但是，因为Spring已经提供了几个现成的BeanFactoryPostProcessor实现类，所以，大
-多时候，我们很少自己去实现某个BeanFactoryPostProcessor。其中，org.springframework.beans. 
-factory.config.PropertyPlaceholderConfigurer和org.springframework.beans.factory. 
-config.Property OverrideConfigurer是两个比较常用的BeanFactoryPostProcessor。另外，为
-了处理配置文件中的数据类型与真正的业务对象所定义的数据类型转换，Spring还允许我们通过
-org.springframework.beans.factory.config.CustomEditorConfigurer来注册自定义的PropertyEditor以补助容器中默认的PropertyEditor。可以参考BeanFactoryPostProcessor的Javadoc
-来了解更多其实现子类的情况。
-我们可以通过两种方式来应用 BeanFactoryPostProcessor，分别针对基本的 IoC 容 器
-BeanFactory和较为先进的容器ApplicationContext。 
-4.4 容器背后的秘密 67 
-对于BeanFactory来说，我们需要用手动方式应用所有的BeanFactoryPostProcessor，代码清
-单4-41演示了具体的做法。
-代码清单4-41 手动装配BeanFactory使用的BeanFactoryPostProcessor 2 
+
+总地来说，该阶段所做的工作可以认为是准备性的，重点更加侧重于对象管理信息的收集。当然，一些验证性或者辅助性的工作也可以在这个阶段完成。
+
+#### 2. Bean实例化阶段
+
+经过第一阶段，现在所有的bean定义信息都通过BeanDefinition的方式注册到了BeanDefinitionRegistry中。当某个请求方通过容器的getBean方法明确地请求某个对象，或者因依赖关系容器需要隐式地调用getBean方法时，就会触发第二阶段的活动。
+
+该阶段，容器会首先检查所请求的对象之前是否已经初始化。如果没有，则会根据注册的BeanDefinition所提供的信息实例化被请求对象，并为其注入依赖。如果该对象实现了某些回调接口，也会根据回调接口的要求来装配它。当该对象装配完毕之后，容器会立即将其返回请求方使用。如果说第一阶段只是根据图纸装配生产线的话，那么第二阶段就是使用装配好的生产线来生产具体的产品了。
+
+### 4.4.2 插手“容器的启动”
+
+Spring提供了一种叫做BeanFactoryPostProcessor的容器扩展机制。该机制允许我们在容器实例化相应对象之前，对注册到容器的BeanDefinition所保存的信息做相应的修改。这就相当于在容器实现的第一阶段最后加入一道工序，让我们对最终的BeanDefinition做一些额外的操作，比如修改其中bean定义的某些属性，为bean定义增加其他信息等。
+
+如果要自定义实现BeanFactoryPostProcessor，通常我们需要实现org.springframework.beans.factory.config.BeanFactoryPostProcessor接口。同时，因为一个容器可能拥有多个BeanFactoryPostProcessor，这个时候可能需要实现类同时实现Spring的org.springframework.core.Ordered接口，以保证各个BeanFactoryPostProcessor可以按照预先设定的顺序执行（如果顺序紧要的话）。但是，因为Spring已经提供了几个现成的BeanFactoryPostProcessor实现类，所以，大多时候，我们很少自己去实现某个BeanFactoryPostProcessor。其中，org.springframework.beans.factory.config.PropertyPlaceholderConfigurer和org.springframework.beans.factory.config.Property OverrideConfigurer是两个比较常用的BeanFactoryPostProcessor。另外，为了处理配置文件中的数据类型与真正的业务对象所定义的数据类型转换，Spring还允许我们通过org.springframework.beans.factory.config.CustomEditorConfigurer来注册自定义的PropertyEditor以补助容器中默认的PropertyEditor。可以参考BeanFactoryPostProcessor的Javadoc来了解更多其实现子类的情况。
+
+我们可以通过两种方式来应用 BeanFactoryPostProcessor，分别针对基本的 IoC 容器BeanFactory和较为先进的容器ApplicationContext。 
+
+
+对于BeanFactory来说，我们需要用手动方式应用所有的BeanFactoryPostProcessor，代码清单4-41演示了具体的做法。
+
+代码清单4-41 手动装配BeanFactory使用的BeanFactoryPostProcessor
+
+```java
 // 声明将被后处理的BeanFactory实例
 ConfigurableListableBeanFactory beanFactory = new XmlBeanFactory(new ClassPathResource("...")); 
 3 // 声明要使用的BeanFactoryPostProcessor 
 PropertyPlaceholderConfigurer propertyPostProcessor = new PropertyPlaceholderConfigurer(); 
 propertyPostProcessor.setLocation(new ClassPathResource("...")); 
 // 执行后处理操作
-propertyPostProcessor.postPro 4 cessBeanFactory(beanFactory); 
-如果拥有多个BeanFactoryPostProcessor，我们可以添加更多类似的代码来应用所有的这些
-BeanFactoryPostProcessor。 5 
-对于ApplicationContext来说，情况看起来要好得多。因为ApplicationContext会自动识别配
-置文件中的BeanFactoryPostProcessor并应用它，所以，相对于BeanFactory，在ApplicationContext
-中加载并应用BeanFactoryPostProcessor，仅需要在XML配置文件中将这些BeanFactoryPostProcessor简单配置一下即可。只要如代码清单4-42所示，将相应BeanFactoryPostProcessor实现类
-添加到配置文件，ApplicationContext将自动识别并应用它。
-6 
-7 
+propertyPostProcessor.postPro 4 cessBeanFactory(beanFactory);
+```
+
+如果拥有多个BeanFactoryPostProcessor，我们可以添加更多类似的代码来应用所有的这些BeanFactoryPostProcessor。
+
+对于ApplicationContext来说，情况看起来要好得多。因为ApplicationContext会自动识别配置文件中的BeanFactoryPostProcessor并应用它，所以，相对于BeanFactory，在ApplicationContext中加载并应用BeanFactoryPostProcessor，仅需要在XML配置文件中将这些BeanFactoryPostProcessor简单配置一下即可。只要如代码清单4-42所示，将相应BeanFactoryPostProcessor实现类添加到配置文件，ApplicationContext将自动识别并应用它。
+
 代码清单4-42 通过ApplicationContext使用BeanFactoryPostProcessor
 
-```java
+```xml
 <beans> 
  <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"> 
-9 <property name="locations"> 
+ <property name="locations"> 
  <list> 
  <value>conf/jdbc.properties</value> 
  <value>conf/mail.properties</value> 
- </list> 10 
+ </list>
  </property> 
  </bean> 
-11 ... 
+ ... 
 </beans>
 ```
  
 下面让我们看一下Spring提供的这几个BeanFactoryPostProcessor实现都可以完成什么功能。
-1. PropertyPlaceholderConfigurer 12 
-通常情况下，我们不想将类似于系统管理相关的信息同业务对象相关的配置信息混杂到XML配置
-文件中，以免部署或者维护期间因为改动繁杂的XML配置文件而出现问题。我们会将一些数据库连接
-信息、邮件服务器等相关信息单独配置到一个properties文件中，这样，如果因系统资源变动的话，只
-需要关注这些简单properties配置文件即可。
-13 
-14 PropertyPlaceholderConfigurer允许我们在XML配置文件中使用占位符（PlaceHolder），
-并将这些占位符所代表的资源单独配置到简单的properties文件中来加载。以数据源的配置为例，使用
-了PropertyPlaceholderConfigurer之后（这里沿用代码清单4-42的配置内容），可以在XML配
-置文件中按照代码清单4-43所示的方式配置数据源，而不用将连接地址、用户名和密码等都配置到
-XML中。
-15 
-16 
+
+#### 1. PropertyPlaceholderConfigurer
+通常情况下，我们不想将类似于系统管理相关的信息同业务对象相关的配置信息混杂到XML配置文件中，以免部署或者维护期间因为改动繁杂的XML配置文件而出现问题。我们会将一些数据库连接信息、邮件服务器等相关信息单独配置到一个properties文件中，这样，如果因系统资源变动的话，只需要关注这些简单properties配置文件即可。
+
+PropertyPlaceholderConfigurer允许我们在XML配置文件中使用占位符（PlaceHolder），并将这些占位符所代表的资源单独配置到简单的properties文件中来加载。以数据源的配置为例，使用了PropertyPlaceholderConfigurer之后（这里沿用代码清单4-42的配置内容），可以在XML配置文件中按照代码清单4-43所示的方式配置数据源，而不用将连接地址、用户名和密码等都配置到XML中。
+
 代码清单4-43 使用了占位符的数据源配置
 
-```java
+```xml
 17 <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"  
 destroy-method="close"> 
 68 Spring 的 IoC 容器
@@ -2088,125 +2156,81 @@ destroy-method="close">
 </bean> 
 ```
 
-如果你使用过Ant或者Velocity等工具，就会发现${property}之类的表达很熟悉。现在，所有这
-些占位符所代表的资源，都放到了jdbc.properties文件中，如下所示： 
+如果你使用过Ant或者Velocity等工具，就会发现${property}之类的表达很熟悉。现在，所有这些占位符所代表的资源，都放到了jdbc.properties文件中，如下所示：
+
+```plaintext
 jdbc.url=jdbc:mysql://server/MAIN?useUnicode=true&characterEncoding=ms932&  
 failOverReadOnly=false&roundRobinLoadBalance=true 
 jdbc.driver=com.mysql.jdbc.Driver 
 jdbc.username=your username 
-jdbc.password=your password 
-基本机制就是之前所说的那样。当BeanFactory在第一阶段加载完成所有配置信息时，BeanFactory中保存的对象的属性信息还只是以占位符的形式存在，如${jdbc.url}、${jdbc.driver}。当
-PropertyPlaceholderConfigurer作为BeanFactoryPostProcessor被应用时，它会使用properties
-配置文件中的配置信息来替换相应BeanDefinition中占位符所表示的属性值。这样，当进入容器实
-现的第二阶段实例化bean时，bean定义中的属性值就是最终替换完成的了。
-PropertyPlaceholderConfigurer不单会从其配置的properties文件中加载配置项，同时还会检
-查Java的System类中的Properties，可以通过setSystemPropertiesMode()或者setSystemPropertiesModeName()来控制是否加载或者覆盖System相应Properties的行为。PropertyPlaceholderConfigurer提供了SYSTEM_PROPERTIES_MODE_FALLBACK、SYSTEM_PROPERTIES_MODE_NEVER和SYSTEM_ 
-PROPERTIES_MODE_OVERRIDE三种模式。默认采用的是SYSTEM_PROPERTIES_ MODE_FALLBACK，即如
-4.4 容器背后的秘密 69 
-果properties文件中找不到相应配置项，则到System的Properties中查找，我们还可以选择不检查System
-的Properties或者覆盖它。更多信息请参照PropertyPlaceholderConfigurer的Javadoc文档。
-2. PropertyOverrideConfigurer
-PropertyPlaceholderConfigurer可以通过占位符，来明确表明bean定义中的property与 2 
-properties文件中的各配置项之间的对应关系。如果说PropertyPlaceholderConfigurer做的这些是
-“明事”的话，那相对来说，PropertyOverrideConfigurer所做的可能就有点儿“神不知鬼不觉”
-了。
-3 
-可以通过PropertyOverrideConfigurer对容器中配置的任何你想处理的bean定义的property信
-息进行覆盖替换。这听起来比较抽象，我们还是给个例子吧！比如之前的dataSource定义中，
-maxActive的值为100，如果我们觉得100不合适，那么可以通过PropertyOverrideConfigurer在其
-相应的properties文件中做如下所示配置，把100这个值给覆盖掉，如将其配置为200： 
-4 
-5 
-dataSource.maxActive=200 
-这样，当容器实例化对象的时候，该 6 dataSource对象对应的maxActive值就是200，而不是原来
-XML配置中的100。也就是说，PropertyOverrideConfigurer的properties文件中的配置项，覆盖掉
-了原来XML中的bean定义的property信息。但这样的活动，只看XML配置的话，你根本看不出哪个bean
-定义的哪个property会被覆盖替换掉，只有查看PropertyOverrideConfigurer指定的properties配置文
-件才会了解。基本上，这种覆盖替换对于bean定义来说是透明的。
-7 
-8 如果要对容器中的某些bean定义的property信息进行覆盖，我们需要按照如下规则提供一个
-PropertyOverrideConfigurer使用的配置文件： 
-9 beanName.propertyName=value 
-也就是说，properties文件中的键是以XML中配置的bean定义的beanName为标志开始的（通常就
-是id指定的值），后面跟着相应被覆盖的property的名称，比如上面的maxActive。 10 
-下面是针对dataSource定义给出的PropertyOverrideConfigurer的propeties文件配置信息： 
+jdbc.password=your password
+```
+
+基本机制就是之前所说的那样。当BeanFactory在第一阶段加载完成所有配置信息时，BeanFactory中保存的对象的属性信息还只是以占位符的形式存在，如${jdbc.url}、${jdbc.driver}。当PropertyPlaceholderConfigurer作为BeanFactoryPostProcessor被应用时，它会使用properties配置文件中的配置信息来替换相应BeanDefinition中占位符所表示的属性值。这样，当进入容器实现的第二阶段实例化bean时，bean定义中的属性值就是最终替换完成的了。
+
+PropertyPlaceholderConfigurer不单会从其配置的properties文件中加载配置项，同时还会检查Java的System类中的Properties，可以通过setSystemPropertiesMode()或者setSystemPropertiesModeName()来控制是否加载或者覆盖System相应Properties的行为。PropertyPlaceholderConfigurer提供了YSTEM_PROPERTIES_MODE_FALLBACK、SYSTEM_PROPERTIES_MODE_NEVER和SYSTEM_PROPERTIES_MODE_OVERRIDE三种模式。默认采用的是SYSTEM_PROPERTIES_ MODE_FALLBACK，即如果properties文件中找不到相应配置项，则到System的Properties中查找，我们还可以选择不检查System的Properties或者覆盖它。更多信息请参照PropertyPlaceholderConfigurer的Javadoc文档。
+
+#### 2. PropertyOverrideConfigurer
+
+PropertyPlaceholderConfigurer可以通过占位符，来明确表明bean定义中的property与properties文件中的各配置项之间的对应关系。如果说PropertyPlaceholderConfigurer做的这些是“明事”的话，那相对来说，PropertyOverrideConfigurer所做的可能就有点儿“神不知鬼不觉”了。
+
+可以通过PropertyOverrideConfigurer对容器中配置的任何你想处理的bean定义的property信息进行覆盖替换。这听起来比较抽象，我们还是给个例子吧！比如之前的dataSource定义中，maxActive的值为100，如果我们觉得100不合适，那么可以通过PropertyOverrideConfigurer在其相应的properties文件中做如下所示配置，把100这个值给覆盖掉，如将其配置为200： 
+
+dataSource.maxActive=200
+
+这样，当容器实例化对象的时候，该 6 dataSource对象对应的maxActive值就是200，而不是原来XML配置中的100。也就是说，PropertyOverrideConfigurer的properties文件中的配置项，覆盖掉了原来XML中的bean定义的property信息。但这样的活动，只看XML配置的话，你根本看不出哪个bean定义的哪个property会被覆盖替换掉，只有查看PropertyOverrideConfigurer指定的properties配置文件才会了解。基本上，这种覆盖替换对于bean定义来说是透明的。
+
+如果要对容器中的某些bean定义的property信息进行覆盖，我们需要按照如下规则提供一个PropertyOverrideConfigurer使用的配置文件： 
+
+beanName.propertyName=value 
+
+也就是说，properties文件中的键是以XML中配置的bean定义的beanName为标志开始的（通常就是id指定的值），后面跟着相应被覆盖的property的名称，比如上面的maxActive。下面是针对dataSource定义给出的PropertyOverrideConfigurer的propeties文件配置信息： 
+
+```plaintext
 # pool-adjustment.properties 11 
 dataSource.minEvictableIdleTimeMillis=1000 
 dataSource.maxActive=50 
-这样，当按照如下代码，将PropertyOverrideConfigurer加载到容器之后，dataSource原来定 12 
-义的默认值就会被pool-adjustment.properties文件中的信息所覆盖： 
+```
 
-```java
+这样，当按照如下代码，将PropertyOverrideConfigurer加载到容器之后，dataSource原来定义的默认值就会被pool-adjustment.properties文件中的信息所覆盖： 
+
+```xml
 <bean class="org.springframework.beans.factory.config.PropertyOverrideConfigurer"> 
- <property name="location" value="pool-adjustment.properties"/> 
+    <property name="location" value="pool-adjustment.properties"/> 
 </bean>
 ```
 pool-adjustment.properties中没有提供的配置项将继续使用原来XML配置中的默认值。
-当容器中配置的多个PropertyOverrideConfigurer对同一个bean定义的同一个property值进
-行处理的时候，最后一个将会生效。 15 配置在properties文件中的信息通常都以明文表示，PropertyOverrideConfigurer的父类
-PropertyResourceConfigurer提供了一个protected类型的方法convertPropertyValue，允许子类
-覆盖这个方法对相应的配置项进行转换，如对加密后的字符串解密之后再覆盖到相应的bean定义中。
-当然，既然PropertyPlaceholderConfigurer也同样继承了PropertyResourceConfigurer，我们
-也可以针对PropertyPlaceholderConfigurer应用类似的功能。
-16 
-17 
-70 Spring 的 IoC 容器
-3. CustomEditorConfigurer
-其他两个BeanFactoryPostProcessor都是通过对BeanDefinition中的数据进行变更以达到某
-种目的。与它们有所不同，CustomEditorConfigurer是另一种类型的BeanFactoryPostProcessor实
-现，它只是辅助性地将后期会用到的信息注册到容器，对BeanDefinition没有做任何变动。
-我们知道，不管对象是什么类型，也不管这些对象所声明的依赖对象是什么类型，通常都是通过
-XML（或者properties甚至其他媒介）文件格式来配置这些对象类型。但XML所记载的，都是String类
-型，即容器从XML格式的文件中读取的都是字符串形式，最终应用程序却是由各种类型的对象所构成。
-要想完成这种由字符串到具体对象的转换（不管这个转换工作最终由谁来做），都需要这种转换规则
-相关的信息，而CustomEditorConfigurer就是帮助我们传达类似信息的。
-Spring内部通过JavaBean的PropertyEditor来帮助进行String类型到其他类型的转换工作。只要
-为每种对象类型提供一个 PropertyEditor ，就可以根据该对象类型取得与其相对应的
-PropertyEditor来做具体的类型转换。Spring容器内部在做具体的类型转换的时候，会采用JavaBean
-框架内默认的PropertyEditor搜寻逻辑，从而继承了对原生类型以及java.lang.String.java.awt. 
-Color和java.awt.Font等类型的转换支持。同时，Spring框架还提供了自身实现的一些PropertyEditor，这些PropertyEditor大部分都位于org.springframework. beans.propertyeditors包
-下。以下是这些Spring提供的部分PropertyEditor的简要说明。 
- StringArrayPropertyEditor。该PropertyEditor会将符合CSV格式的字符串转换成
-String[]数组的形式，默认是以逗号（，）分隔的字符串，但可以指定自定义的字符串分隔
-符。ByteArrayPropertyEditor、CharArrayPropertyEditor等都属于类似功能的PropertyEditor，参照Javadoc可以取得相应的详细信息。
- ClassEditor。根据String类型的class名称，直接将其转换成相应的Class对象，相当于通
-过Class.forName(String)完成的功效。可以通过String[]数组的形式传入需转换的值，以
-达到与提供的ClassArrayEditor同样的目的。
- FileEditor。Spring提供的对应java.io.File类型的PropertyEditor。同属于对资源进行
-定位的PropertyEditor还有InputStreamEditor、URLEditor等。
- LocaleEditor。针对java.util.Locale类型的PropertyEditor，格式可以参照LocaleEditor和Locale的Javadoc说明。
- PatternEditor。针对Java SE 1.4之后才引入的java.util.regex.Pattern的PropertyEditor，格式可以参照java.util.regex.Pattern类的Javadoc。
-以上这些PropertyEditor，容器通常会默认加载使用，所以，即使我们不告诉容器应该如何对
-这些类型进行转换，容器同样可以正确地完成工作。但当我们需要指定的类型没有包含在以上所提到
-的PropertyEditor之列的时候，就需要给出针对这种类型的PropertyEditor实现，并通过
-CustomEditorConfigurer告知容器，以便容器在适当的时机使用到适当的PropertyEditor。
- 自定义PropertyEditor
-通常情况下，对于Date类型，不同的Locale、不同的系统在表现形式上存在不同的需求。如系统
-这个部分需要以yyyy-MM-dd的形式表现日期，系统那个部分可能又需要以yyyyMMdd的形式对日期进
-行转换。虽然可以使用Spring提供的CustomDateEditor，不过为了能够演示自定义PropertyEditor的
-详细流程，在此我们有必要“重新发明轮子”！
-下面是对自定义PropertyEditor实现的简单介绍。
-给出针对特定对象类型的PropertyEditor实现
-4.4 容器背后的秘密 71 
+
+当容器中配置的多个PropertyOverrideConfigurer对同一个bean定义的同一个property值进行处理的时候，最后一个将会生效。
+
+配置在properties文件中的信息通常都以明文表示，PropertyOverrideConfigurer的父类PropertyResourceConfigurer提供了一个protected类型的方法convertPropertyValue，允许子类覆盖这个方法对相应的配置项进行转换，如对加密后的字符串解密之后再覆盖到相应的bean定义中。当然，既然PropertyPlaceholderConfigurer也同样继承了PropertyResourceConfigurer，我们也可以针对PropertyPlaceholderConfigurer应用类似的功能。
  
-代码清单4-44
-所示。
-假设需要对yyyy/MM/dd形式的日期格式转换提供支持。虽然可以直接让PropertyEditor实现类
-去实现java.beans.PropertyEditor接口，不过，通常情况下，我们可以直接继承java.beans.PropertyEditorSupport类以避免实现java.beans.PropertyEditor接口的所有方法。就好像这次，我们仅
-仅 让 DatePropertyEditor 完成从 String 到 java.util.Date 的转换，只需要实现
-setAsText(String)方法，而其他方法一概不管。该自定义PropertyEditor类定义如
-代码
- extends PropertyEditorSupport { 
-ng datePattern; 
-tDatePattern()); 
-meFormatter.parseDateTime(text).toDate(); 
-ern() { 
-atePattern) { 
-is.datePattern = datePattern; 
-写方法setAsText(String)即
-可。
-类型的依赖声明，通常情况下，会以代码清单
-4-45 声明并将该
+#### 3. CustomEditorConfigurer
+
+其他两个BeanFactoryPostProcessor都是通过对BeanDefinition中的数据进行变更以达到某种目的。与它们有所不同，CustomEditorConfigurer是另一种类型的BeanFactoryPostProcessor实现，它只是辅助性地将后期会用到的信息注册到容器，对BeanDefinition没有做任何变动。
+
+我们知道，不管对象是什么类型，也不管这些对象所声明的依赖对象是什么类型，通常都是通过XML（或者properties甚至其他媒介）文件格式来配置这些对象类型。但XML所记载的，都是String类型，即容器从XML格式的文件中读取的都是字符串形式，最终应用程序却是由各种类型的对象所构成。要想完成这种由字符串到具体对象的转换（不管这个转换工作最终由谁来做），都需要这种转换规则相关的信息，而CustomEditorConfigurer就是帮助我们传达类似信息的。
+
+Spring内部通过JavaBean的PropertyEditor来帮助进行String类型到其他类型的转换工作。只要为每种对象类型提供一个 PropertyEditor ，就可以根据该对象类型取得与其相对应的PropertyEditor来做具体的类型转换。Spring容器内部在做具体的类型转换的时候，会采用JavaBean框架内默认的PropertyEditor搜寻逻辑，从而继承了对原生类型以及java.lang.String.java.awt.Color和java.awt.Font等类型的转换支持。同时，Spring框架还提供了自身实现的一些PropertyEditor，这些PropertyEditor大部分都位于org.springframework.beans.ropertyeditors包下。以下是这些Spring提供的部分PropertyEditor的简要说明。
+
+- StringArrayPropertyEditor。该PropertyEditor会将符合CSV格式的字符串转换成String[]数组的形式，默认是以逗号（，）分隔的字符串，但可以指定自定义的字符串分隔符。ByteArrayPropertyEditor、CharArrayPropertyEditor等都属于类似功能的PropertyEditor，参照Javadoc可以取得相应的详细信息。
+- ClassEditor。根据String类型的class名称，直接将其转换成相应的Class对象，相当于通过Class.forName(String)完成的功效。可以通过String[]数组的形式传入需转换的值，以达到与提供的ClassArrayEditor同样的目的。
+- FileEditor。Spring提供的对应java.io.File类型的PropertyEditor。同属于对资源进行定位的PropertyEditor还有InputStreamEditor、URLEditor等。
+- LocaleEditor。针对java.util.Locale类型的PropertyEditor，格式可以参照LocaleEditor和Locale的Javadoc说明。
+- PatternEditor。针对Java SE 1.4之后才引入的java.util.regex.Pattern的PropertyEditor，格式可以参照java.util.regex.Pattern类的Javadoc。
+
+以上这些PropertyEditor，容器通常会默认加载使用，所以，即使我们不告诉容器应该如何对这些类型进行转换，容器同样可以正确地完成工作。但当我们需要指定的类型没有包含在以上所提到的PropertyEditor之列的时候，就需要给出针对这种类型的PropertyEditor实现，并通过CustomEditorConfigurer告知容器，以便容器在适当的时机使用到适当的PropertyEditor。
+
+- 自定义PropertyEditor
+
+通常情况下，对于Date类型，不同的Locale、不同的系统在表现形式上存在不同的需求。如系统这个部分需要以yyyy-MM-dd的形式表现日期，系统那个部分可能又需要以yyyyMMdd的形式对日期进行转换。虽然可以使用Spring提供的CustomDateEditor，不过为了能够演示自定义PropertyEditor的详细流程，在此我们有必要“重新发明轮子”！
+
+下面是对自定义PropertyEditor实现的简单介绍。
+
+给出针对特定对象类型的PropertyEditor实现。
+
+假设需要对yyyy/MM/dd形式的日期格式转换提供支持。虽然可以直接让PropertyEditor实现类去实现java.beans.PropertyEditor接口，不过，通常情况下，我们可以直接继承java.beans.PropertyEditorSupport类以避免实现java.beans.PropertyEditor接口的所有方法。就好像这次，我们仅仅 让 DatePropertyEditor 完成从 String 到 java.util.Date 的转换，只需要实现setAsText(String)方法，而其他方法一概不管。该自定义PropertyEditor类定义如代码清单4-44所示。
+
 清单4-44 DatePropertyEditor定义
 
 ```java
@@ -2228,11 +2252,13 @@ public class DatePropertyEditor
 } 
 ```
 
-如果仅仅是支持单向的从String到相应对象类型的转换，只要覆
-如果想支持双向转换，需要同时考虑getAsText()方法的覆写。
+如果仅仅是支持单向的从String到相应对象类型的转换，只要覆如果想支持双向转换，需要同时考虑getAsText()方法的覆写。
+
 通过CustomEditorConfigurer注册自定义的PropertyEditor
-如果有类似于DateFoo这样的类对java.util.Date
-所示的形式 类配置到容器中。
+
+如果有类似于DateFoo这样的类对java.util.Date所示的形式 类配置到容器中。
+
+
 代码 ateFoo的定义声明以及相关配置
 e() { 
 ate date) { 
@@ -2251,12 +2277,15 @@ public class DateFoo {
  } 
 } 
 配置类似于
+
+```xml
 <bean id="dateFoo" class="...Date
- <property name="date"> 
- <value>2007/
- </property> 
+    <property name="date"> 
+        <value>2007/
+    </property> 
 </bean> 
- 
+```
+
 但是，默认情况下，Spring容器找不到合适的PropertyEditor将字符串“2007/10/16”转换成对
 72 Spring 的 IoC 容器
 象所声明的java.util.Date类型。所以，我们通过CustomEditorConfigurer将刚实现的DatePropertyEditor注册到容器，以告知容器按照DatePropertyEditor的形式进行String到java.util. 
@@ -2270,6 +2299,8 @@ FactoryPostProcessor 所示。
 类型的转换工作。
 如果使用的容器是BeanFactory的实现，比如Xml
 omEditorConfigurer到容器，类似如下形式： 
+
+```java
 XmlBeanFactory beanFactory = new XmlBeanFactory(new ClassPathResource
 // 
 CustomEditorConfigurer ceConfigurer = new CustomEditorConfigurer(); 
@@ -2278,7 +2309,8 @@ customerEditors.put(java.util.Date.class, new Dat
 ceConfigurer.setCustomEditors(customerEditors); 
 // 
 ceConfigurer.postProcessBeanFactory(beanFactory); 
- 
+```
+
 但如果使用的是ApplicationContext相应实现，因为ApplicationContext会自动识别Bean
 并应用，所以只需要在相应配置文件中配置一下，如代码清单4-46
 代码
@@ -2291,7 +2323,7 @@ work.beans.
 
 清单4-46 使用CustomEditorConfigurer注册自定义DatePropertyEditor到容器
 
-```java
+```xml
 <bean class="org.springframework.bean
  <property name="customEditors"> 
  <map> 
@@ -2330,23 +2362,7 @@ public class DatePropertyEditorRegistrar i
 } 
  public void setPropertyEditor(PropertyEdi
  th
-4.4 容器背后的秘密 73 
-17 
-2 
-3 
-4 
-5 
-6 
-7 
-8 
-10 
-9 
-11 
-12 
-13 
-14 
-15 
-16 
+ 
 } 
 这样，2.0之后所提倡的注册自定义PropertyEditor的方式，如代码清单4-48所示。
 } 
@@ -2373,6 +2389,8 @@ an方
 springframework.context.support. 
 的getBean()方法第一次被调用时，不管是显式的还是隐式的，Bean实例化阶段的活动才会被触发，
 PropertyEditor
+
+```
 <bean class="org.springframework.beans.factory.c
  <property na
  <list> 
@@ -2390,170 +2408,119 @@ PropertyEditor
  <value>yyyy/
  </property> 
 </bean> 
- 
-要是还
-4.4.3 了 bean
-在已经可以借助于BeanFactoryPostProcessor来干预Magic实现的第一个阶段
-动之后，我们就可以开始探索下一个阶段，即bean实例化阶段的实现逻辑了。
-容器启动之后，并不会马上就实例化相应的bean定义。我们知道，容器现在仅仅拥有所有对象的
-BeanDefinition来保存实例化阶段将要用的必要信息。只有当请求方通过BeanFactory的getBean()
-方法来请求某个对象实例的时候，才有可能触发Bean实例化阶段的活动。BeanFactory的getBe
-法可以被客户端对象显式调用，也可以在容器内部隐式地被调用。隐式调用有如下两种情况。 
- 对于BeanFactory来说，对象实例化默认采用延迟初始化。通常情况下，当对象A被请求而需
-要第一次实例化的时候，如果它所依赖的对象B之前同样没有被实例化，那么容器会先实例化
-对象A所依赖的对象。这时容器内部就会首先实例化对象B，以及对象 A依赖的其他还没有
-实例化的对象。这种情况是容器内部调用getBean()，对于本次请求的请求方是隐式的。
- ApplicationContext启动之后会实例化所有的bean定义，这个特性在本书中已经多次提到。
-但ApplicationContext在实现的过程中依然遵循Spring容器实现流程的两个阶段，只不过它
-会在启动阶段的活动完成之后，紧接着调用注册到该容器的所有bean定义的实例化方法
-getBean()。这就是为什么当你得到ApplicationContext类型的容器引用时，容器内所有对
-象已经被全部实例化完成。不信你查一下类org.
-AbstractApplicationContext的refresh()方法。
-之所以说getBean()方法是有可能触发Bean实例化阶段的活动，是因为只有当对应某个bean定义
-74 Spring 的 IoC 容器
-第二次被调用则会直接返回容器缓存的第一次实例化完的对象实例（prototype类型bean除外）。当
-getBean()方法内部发现该bean定义之前还没有被实例化之后，会通过createBean()方法来进行具体
-的对象实例化，实例化过程如图4-10所示。 
+```
+
+要是还有其他扩展类型的PropertyEditor，可以在propertyEditorRegistrars的<list>中一并指定。
+
+### 4.4.3 了解 bean 的一生
+
+在已经可以借助于BeanFactoryPostProcessor来干预Magic实现的第一个阶段动之后，我们就可以开始探索下一个阶段，即bean实例化阶段的实现逻辑了。
+
+容器启动之后，并不会马上就实例化相应的bean定义。我们知道，容器现在仅仅拥有所有对象的BeanDefinition来保存实例化阶段将要用的必要信息。只有当请求方通过BeanFactory的getBean()方法来请求某个对象实例的时候，才有可能触发Bean实例化阶段的活动。BeanFactory的getBean()方法可以被客户端对象显式调用，也可以在容器内部隐式地被调用。隐式调用有如下两种情况。 
+
+- 对于BeanFactory来说，对象实例化默认采用延迟初始化。通常情况下，当对象A被请求而需要第一次实例化的时候，如果它所依赖的对象B之前同样没有被实例化，那么容器会先实例化对象A所依赖的对象。这时容器内部就会首先实例化对象B，以及对象 A依赖的其他还没有实例化的对象。这种情况是容器内部调用getBean()，对于本次请求的请求方是隐式的。
+- ApplicationContext启动之后会实例化所有的bean定义，这个特性在本书中已经多次提到。但ApplicationContext在实现的过程中依然遵循Spring容器实现流程的两个阶段，只不过它会在启动阶段的活动完成之后，紧接着调用注册到该容器的所有bean定义的实例化方法getBean()。这就是为什么当你得到ApplicationContext类型的容器引用时，容器内所有对象已经被全部实例化完成。不信你查一下类org.AbstractApplicationContext的refresh()方法。
+
+之所以说getBean()方法是有可能触发Bean实例化阶段的活动，是因为只有当对应某个bean定义第二次被调用则会直接返回容器缓存的第一次实例化完的对象实例（prototype类型bean除外）。当getBean()方法内部发现该bean定义之前还没有被实例化之后，会通过createBean()方法来进行具体的对象实例化，实例化过程如图4-10所示。
+
 图4-10 Bean的实例化过程
-Spring容器将对其所管理的对象全部给予统一的生命周期管理，这些被管理的对象完全摆脱了原
-来那种“new完后被使用，脱离作用域后即被回收”的命运。下面我们将详细看一看现在的每个bean
-在容器中是如何走过其一生的。
-提示 可以在org.springframework.beans.factory.support.AbstractBeanFactory类的代
-码中查看到getBean()方法的完整实现逻辑，可以在其子类org.springframework.beans. 
-factory.support.AbstractAutowireCapableBeanFactory的代码中一窥createBean()方
-法的全貌。
-1. Bean的实例化与BeanWrapper
-容器在内部实现的时候，采用“策略模式（Strategy Pattern）”来决定采用何种方式初始化bean实例。
-通常，可以通过反射或者CGLIB动态字节码生成来初始化相应的bean实例或者动态生成其子类。
-org.springframework.beans.factory.support.InstantiationStrategy定义是实例化策略
-的抽象接口，其直接子类SimpleInstantiationStrategy实现了简单的对象实例化功能，可以通过
-反射来实例化对象实例，但不支持方法注入方式的对象实例化。CglibSubclassingInstantiationStrategy继承了SimpleInstantiationStrategy的以反射方式实例化对象的功能，并且通过CGLIB
-的动态字节码生成功能，该策略实现类可以动态生成某个类的子类，进而满足了方法注入所需的对象
-实例化需求。默认情况下，容器内部采用的是CglibSubclassingInstantiationStrategy。
-容器只要根据相应bean定义的BeanDefintion取得实例化信息，结合CglibSubclassingInstantiationStrategy以及不同的bean定义类型，就可以返回实例化完成的对象实例。但是，返回方
-式上有些“点缀”。不是直接返回构造完成的对象实例，而是以BeanWrapper对构造完成的对象实例
-进行包裹，返回相应的BeanWrapper实例。
+
+Spring容器将对其所管理的对象全部给予统一的生命周期管理，这些被管理的对象完全摆脱了原来那种“new完后被使用，脱离作用域后即被回收”的命运。下面我们将详细看一看现在的每个bean在容器中是如何走过其一生的。
+
+> **提示** 可以在org.springframework.beans.factory.support.AbstractBeanFactory类的代码中查看到getBean()方法的完整实现逻辑，可以在其子类org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory的代码中一窥createBean()方法的全貌。
+{: .prompt-tip }
+
+#### 1. Bean的实例化与BeanWrapper
+
+容器在内部实现的时候，采用“策略模式（Strategy Pattern）”来决定采用何种方式初始化bean实例。通常，可以通过反射或者CGLIB动态字节码生成来初始化相应的bean实例或者动态生成其子类。
+
+org.springframework.beans.factory.support.InstantiationStrategy定义是实例化策略的抽象接口，其直接子类SimpleInstantiationStrategy实现了简单的对象实例化功能，可以通过反射来实例化对象实例，但不支持方法注入方式的对象实例化。CglibSubclassingInstantiationStrategy继承了SimpleInstantiationStrategy的以反射方式实例化对象的功能，并且通过CGLIB的动态字节码生成功能，该策略实现类可以动态生成某个类的子类，进而满足了方法注入所需的对象实例化需求。默认情况下，容器内部采用的是CglibSubclassingInstantiationStrategy。
+
+容器只要根据相应bean定义的BeanDefintion取得实例化信息，结合CglibSubclassingInstantiationStrategy以及不同的bean定义类型，就可以返回实例化完成的对象实例。但是，返回方式上有些“点缀”。不是直接返回构造完成的对象实例，而是以BeanWrapper对构造完成的对象实例进行包裹，返回相应的BeanWrapper实例。
+
 至此，第一步结束。
-BeanWrapper接口通常在Spring框架内部使用，它有一个实现类org.springframework.beans. 
-BeanWrapperImpl。其作用是对某个bean进行“包裹”，然后对这个“包裹”的bean进行操作，比如
-4.4 容器背后的秘密 75 
-设置或者获取bean的相应属性值。而在第一步结束后返回BeanWrapper实例而不是原先的对象实例，
-就是为了第二步“设置对象属性”。
-BeanWrapper定义继承了org.springframework.beans.PropertyAccessor接口，可以以统一的
-方式对对象属性进行访问；BeanWrapper定义同时又直接或者间接继承了PropertyEditorRegistry
-和TypeConverter接口。不知你是否还记得CustomEditorConfigurer？当把各种PropertyEditor注
-册给容器时，知道后面谁用到这些PropertyEditor吗？对，就是BeanWrapper！在第一步构造完成
-对象之后，Spring会根据对象实例构造一个BeanWrapperImpl实例，然后将之前CustomEditorConfigurer注册的PropertyEditor复制一份给BeanWrapperImpl实例（这就是BeanWrapper同时又
-是PropertyEditorRegistry的原因）。这样，当BeanWrapper转换类型、设置对象属性值时，就不
-会无从下手了。
-2 
-3 
-4 
-使用BeanWrapper对bean实例操作很方便，可以免去直接使用Java反射API（Java Reflection API） 5 
-操作对象实例的烦琐。来看一段代码（见代码清单4-49），之后我们就会更加清楚Spring容器内部是
-如何设置对象属性的了！ 6 
+
+BeanWrapper接口通常在Spring框架内部使用，它有一个实现类org.springframework.beans.BeanWrapperImpl。其作用是对某个bean进行“包裹”，然后对这个“包裹”的bean进行操作，比如设置或者获取bean的相应属性值。而在第一步结束后返回BeanWrapper实例而不是原先的对象实例，就是为了第二步“设置对象属性”。
+
+BeanWrapper定义继承了org.springframework.beans.PropertyAccessor接口，可以以统一的方式对对象属性进行访问；BeanWrapper定义同时又直接或者间接继承了PropertyEditorRegistry和TypeConverter接口。不知你是否还记得CustomEditorConfigurer？当把各种PropertyEditor注册给容器时，知道后面谁用到这些PropertyEditor吗？对，就是BeanWrapper！在第一步构造完成对象之后，Spring会根据对象实例构造一个BeanWrapperImpl实例，然后将之前CustomEditorConfigurer注册的PropertyEditor复制一份给BeanWrapperImpl实例（这就是BeanWrapper同时又是PropertyEditorRegistry的原因）。这样，当BeanWrapper转换类型、设置对象属性值时，就不会无从下手了。
+
+使用BeanWrapper对bean实例操作很方便，可以免去直接使用Java反射API（Java Reflection API）操作对象实例的烦琐。来看一段代码（见代码清单4-49），之后我们就会更加清楚Spring容器内部是如何设置对象属性的了！
 
 代码清单4-49 使用BeanWrapper操作对象
 
 ```java
-7 Object provider = Class.forName("package.name.FXNewsProvider").newInstance(); 
+Object provider = Class.forName("package.name.FXNewsProvider").newInstance(); 
 Object listener = Class.forName("package.name.DowJonesNewsListener").newInstance(); 
 Object persister = Class.forName("package.name.DowJonesNewsPersister").newInstance(); 
-BeanWrapper newsProvider = new BeanWrapperImpl(provider); 8 
+BeanWrapper newsProvider = new BeanWrapperImpl(provider); 
 newsProvider.setPropertyValue("newsListener", listener); 
 newsProvider.setPropertyValue("newPersistener", persister); 
-9 assertTrue(newsProvider.getWrappedInstance() instanceof FXNewsProvider); 
+assertTrue(newsProvider.getWrappedInstance() instanceof FXNewsProvider); 
 assertSame(provider, newsProvider.getWrappedInstance()); 
 assertSame(listener, newsProvider.getPropertyValue("newsListener")); 
-10 assertSame(persister, newsProvider.getPropertyValue("newPersistener")); 
+assertSame(persister, newsProvider.getPropertyValue("newPersistener")); 
 ```
 
-我想有了BeanWrapper的帮助，你不会想直接使用Java反射API来做同样事情的。代码清单4-50
-演示了同样的功能，即直接使用Java反射API是如何实现的（忽略了异常处理相关代码）。 
+我想有了BeanWrapper的帮助，你不会想直接使用Java反射API来做同样事情的。代码清单4-50演示了同样的功能，即直接使用Java反射API是如何实现的（忽略了异常处理相关代码）。 
 
 代码清单4-50 直接使用Java反射API操作对象
 
 ```java
-12 Object provider = Class.forName("package.name.FXNewsProvider").newInstance(); 
+Object provider = Class.forName("package.name.FXNewsProvider").newInstance(); 
 Object listener = Class.forName("package.name.DowJonesNewsListener").newInstance(); 
 Object persister = Class.forName("package.name.DowJonesNewsPersister").newInstance(); 
-13 
-14 
+
 Class providerClazz = provider.getClass(); 
 Field listenerField = providerClazz.getField("newsListener"); 
 listenerField.set(provider, listener); 
 Field persisterField = providerClazz.getField("newsListener"); 
 persisterField.set(provider, persister); 
 assertSame(listener, listenerField.get(provider)); 
-assertSame(persister, persisterField.get(provider)); 15 
+assertSame(persister, persisterField.get(provider));
 ```
 
 如果你觉得没有太大差别，那是因为没有看到紧随其后的那些异常（exception）还有待处理！
-2. 各色的Aware接口 16 
-当对象实例化完成并且相关属性以及依赖设置完成之后，Spring容器会检查当前对象实例是否实
-现了一系列的以Aware命名结尾的接口定义。如果是，则将这些Aware接口定义中规定的依赖注入给 17 
-76 Spring 的 IoC 容器
-当前对象实例。
+
+#### 2. 各色的Aware接口
+
+当对象实例化完成并且相关属性以及依赖设置完成之后，Spring容器会检查当前对象实例是否实现了一系列的以Aware命名结尾的接口定义。如果是，则将这些Aware接口定义中规定的依赖注入给当前对象实例。
+
 这些Aware接口为如下几个。
- org.springframework.beans.factory.BeanNameAware。如果Spring容器检测到当前对象实
-例实现了该接口，会将该对象实例的bean定义对应的beanName设置到当前对象实例。
- org.springframework.beans.factory.BeanClassLoaderAware。如果容器检测到当前对
-象实例实现了该接口，会将对应加载当前bean的Classloader注入当前对象实例。默认会使用
-加载org.springframework.util.ClassUtils类的Classloader。
- org.springframework.beans.factory.BeanFactoryAware。在介绍方法注入的时候，我们
-提到过使用该接口以便每次获取prototype类型bean的不同实例。如果对象声明实现了
-BeanFactoryAware接口，BeanFactory容器会将自身设置到当前对象实例。这样，当前对象
-实例就拥有了一个BeanFactory容器的引用，并且可以对这个容器内允许访问的对象按照需要
-进行访问。
-以上几个Aware接口只是针对BeanFactory类型的容器而言，对于ApplicationContext类型的容
-器，也存在几个Aware相关接口。不过在检测这些接口并设置相关依赖的实现机理上，与以上几个接
-口处理方式有所不同，使用的是下面将要说到的BeanPostProcessor方式。不过，设置Aware接口这
-一步与BeanPostProcessor是相邻的，把这几个接口放到这里一起提及，也没什么不可以的。
+
+- org.springframework.beans.factory.BeanNameAware。如果Spring容器检测到当前对象实例实现了该接口，会将该对象实例的bean定义对应的beanName设置到当前对象实例。
+- org.springframework.beans.factory.BeanClassLoaderAware。如果容器检测到当前对象实例实现了该接口，会将对应加载当前bean的Classloader注入当前对象实例。默认会使用加载org.springframework.util.ClassUtils类的Classloader。
+- org.springframework.beans.factory.BeanFactoryAware。在介绍方法注入的时候，我们提到过使用该接口以便每次获取prototype类型bean的不同实例。如果对象声明实现了BeanFactoryAware接口，BeanFactory容器会将自身设置到当前对象实例。这样，当前对象实例就拥有了一个BeanFactory容器的引用，并且可以对这个容器内允许访问的对象按照需要进行访问。
+
+以上几个Aware接口只是针对BeanFactory类型的容器而言，对于ApplicationContext类型的容器，也存在几个Aware相关接口。不过在检测这些接口并设置相关依赖的实现机理上，与以上几个接口处理方式有所不同，使用的是下面将要说到的BeanPostProcessor方式。不过，设置Aware接口这一步与BeanPostProcessor是相邻的，把这几个接口放到这里一起提及，也没什么不可以的。
+
 对于ApplicationContext类型容器，容器在这一步还会检查以下几个Aware接口并根据接口定义
 设置相关依赖。
- org.springframework.context.ResourceLoaderAware 。 ApplicationContext 实现了
-Spring的ResourceLoader接口（后面会提及详细信息）。当容器检测到当前对象实例实现了
-ResourceLoaderAware接口之后，会将当前ApplicationContext自身设置到对象实例，这样
-当前对象实例就拥有了其所在ApplicationContext容器的一个引用。
- org.springframework.context.ApplicationEventPublisherAware。ApplicationContext
-作为一个容器，同时还实现了ApplicationEventPublisher接口，这样，它就可以作为ApplicationEventPublisher来使用。所以，当前ApplicationContext容器如果检测到当前实例
-化的对象实例声明了ApplicationEventPublisherAware接口，则会将自身注入当前对象。
- org.springframework.context.MessageSourceAware。ApplicationContext通过MessageSource接口提供国际化的信息支持，即I18n（Internationalization）。它自身就实现了MessageSource接口，所以当检测到当前对象实例实现了MessageSourceAware接口，则会将自身注入
-当前对象实例。
- org.springframework.context.ApplicationContextAware。 如果ApplicationContext
-容器检测到当前对象实现了ApplicationContextAware接口，则会将自身注入当前对象实例。
-3. BeanPostProcessor
-BeanPostProcessor的概念容易与BeanFactoryPostProcessor的概念混淆。但只要记住BeanPostProcessor是存在于对象实例化阶段，而BeanFactoryPostProcessor则是存在于容器启动阶段，
-这两个概念就比较容易区分了。
-与BeanFactoryPostProcessor通常会处理容器内所有符合条件的BeanDefinition类似，BeanPostProcessor会处理容器内所有符合条件的实例化后的对象实例。该接口声明了两个方法，分别在
-两个不同的时机执行，见如下代码定义： 
+
+- org.springframework.context.ResourceLoaderAware 。 ApplicationContext 实现了Spring的ResourceLoader接口（后面会提及详细信息）。当容器检测到当前对象实例实现了ResourceLoaderAware接口之后，会将当前ApplicationContext自身设置到对象实例，这样当前对象实例就拥有了其所在ApplicationContext容器的一个引用。
+- org.springframework.context.ApplicationEventPublisherAware。ApplicationContext作为一个容器，同时还实现了ApplicationEventPublisher接口，这样，它就可以作为ApplicationEventPublisher来使用。所以，当前ApplicationContext容器如果检测到当前实例化的对象实例声明了ApplicationEventPublisherAware接口，则会将自身注入当前对象。
+- org.springframework.context.MessageSourceAware。ApplicationContext通过MessageSource接口提供国际化的信息支持，即I18n（Internationalization）。它自身就实现了MessageSource接口，所以当检测到当前对象实例实现了MessageSourceAware接口，则会将自身注入当前对象实例。
+- org.springframework.context.ApplicationContextAware。 如果ApplicationContext容器检测到当前对象实现了ApplicationContextAware接口，则会将自身注入当前对象实例。
+
+#### 3. BeanPostProcessor
+
+BeanPostProcessor的概念容易与BeanFactoryPostProcessor的概念混淆。但只要记住BeanPostProcessor是存在于对象实例化阶段，而BeanFactoryPostProcessor则是存在于容器启动阶段，这两个概念就比较容易区分了。
+
+与BeanFactoryPostProcessor通常会处理容器内所有符合条件的BeanDefinition类似，BeanPostProcessor会处理容器内所有符合条件的实例化后的对象实例。该接口声明了两个方法，分别在两个不同的时机执行，见如下代码定义： 
 
 ```java
-public interface BeanPostProcessor 
-{ 
- Object postProcessBeforeInitialization(Object bean, String beanName) throws  
- BeansException; 
- Object postProcessAfterInitialization(Object bean, String beanName) throws  
-2 BeansException; 
+public interface BeanPostProcessor {
+    Object postProcessBeforeInitialization(Object bean, String beanName) throws  BeansException; 
+    Object postProcessAfterInitialization(Object bean, String beanName) throws   BeansException; 
 }
 ```
 
-postProcessBeforeInitialization()方法是图4-10中BeanPostProcessor前置处理这一步将
-会执行的方法，postProcessAfterInitialization()则是对应图4-10中BeanPostProcessor后置处
-理那一步将会执行的方法。BeanPostProcessor的两个方法中都传入了原来的对象实例的引用，这为
-我们扩展容器的对象实例化过程中的行为提供了极大的便利，我们几乎可以对传入的对象实例执行任
-何的操作。
-3 
-4 
-通常比较常见的使用BeanPostProcessor的场景，是处理标记接口实现类，或者为当前对象提供
-代理实现。在图4-10的第三步中，ApplicationContext对应的那些Aware接口实际上就是通过BeanPostProcessor的方式进行处理的。当ApplicationContext中每个对象的实例化过程走到BeanPostProcessor前置处理这一步时，ApplicationContext容器会检测到之前注册到容器的ApplicationContextAwareProcessor这个BeanPostProcessor的实现类，然后就会调用其postProcessBeforeInitialization()方法，检查并设置Aware相关依赖。ApplicationContextAwareProcessor的postProcessBeforeInitialization()代码很简单明了，见代码清单4-51。
-5 
-6 
-7 
+postProcessBeforeInitialization()方法是图4-10中BeanPostProcessor前置处理这一步将会执行的方法，postProcessAfterInitialization()则是对应图4-10中BeanPostProcessor后置处理那一步将会执行的方法。BeanPostProcessor的两个方法中都传入了原来的对象实例的引用，这为我们扩展容器的对象实例化过程中的行为提供了极大的便利，我们几乎可以对传入的对象实例执行任何的操作。
+
+通常比较常见的使用BeanPostProcessor的场景，是处理标记接口实现类，或者为当前对象提供代理实现。在图4-10的第三步中，ApplicationContext对应的那些Aware接口实际上就是通过BeanPostProcessor的方式进行处理的。当ApplicationContext中每个对象的实例化过程走到BeanPostProcessor前置处理这一步时，ApplicationContext容器会检测到之前注册到容器的ApplicationContextAwareProcessor这个BeanPostProcessor的实现类，然后就会调用其postProcessBeforeInitialization()方法，检查并设置Aware相关依赖。ApplicationContextAwareProcessor的postProcessBeforeInitialization()代码很简单明了，见代码清单4-51。
 
 代码清单4-51 postProcessBeforeInitialization方法定义 8 
 
-```
+```java
 public Object postProcessBeforeInitialization(Object bean, String beanName) throws  
 BeansException { 
 9 if (bean instanceof ResourceLoaderAware) { 
@@ -2573,22 +2540,15 @@ if (bean instanceof MessageSourceAware) {
 }
 ```
 
-除了检查标记接口以便应用自定义逻辑，还可以通过BeanPostProcessor对当前对象实例做更多
-的处理。比如替换当前对象实例或者字节码增强当前对象实例等。Spring的AOP则更多地使用
-BeanPostProcessor来为对象生成相应的代理对象，如org.springframework.aop.framework. 
-autoproxy.BeanNameAutoProxyCreator。我们将在Spring AOP部分详细介绍该类和AOP相关概念。 15 
-BeanPostProcessor是容器提供的对象实例化阶段的强有力的扩展点。为了进一步演示它的强大
-威力，我们有必要实现一个自定义的BeanPostProcessor。
- 自定义BeanPostProcessor 16 
-假设系统中所有的IFXNewsListener实现类需要从某个位置取得相应的服务器连接密码，而且系
-统中保存的密码是加密的，那么在IFXNewsListener发送这个密码给新闻服务器进行连接验证的时 17 
-78 Spring 的 IoC 容器
-候，首先需要对系统中取得的密码进行解密，然后才能发送。我们将采用BeanPostProcessor技术，
-对所有的IFXNewsListener的实现类进行统一的解密操作。
+除了检查标记接口以便应用自定义逻辑，还可以通过BeanPostProcessor对当前对象实例做更多的处理。比如替换当前对象实例或者字节码增强当前对象实例等。Spring的AOP则更多地使用BeanPostProcessor来为对象生成相应的代理对象，如org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator。我们将在Spring AOP部分详细介绍该类和AOP相关概念。BeanPostProcessor是容器提供的对象实例化阶段的强有力的扩展点。为了进一步演示它的强大威力，我们有必要实现一个自定义的BeanPostProcessor。
+
+- 自定义BeanPostProcessor
+
+假设系统中所有的IFXNewsListener实现类需要从某个位置取得相应的服务器连接密码，而且系统中保存的密码是加密的，那么在IFXNewsListener发送这个密码给新闻服务器进行连接验证的时候，首先需要对系统中取得的密码进行解密，然后才能发送。我们将采用BeanPostProcessor技术，对所有的IFXNewsListener的实现类进行统一的解密操作。
+
 (1) 标注需要进行解密的实现类
-为了能够识别那些需要对服务器连接密码进行解密的IFXNewsListener实现，我们声明了接口
-PasswordDecodable，并要求相关IFXNewsListener实现类实现该接口。PasswordDecodable接口声
-明以及相关的IFXNewsListener实现类定义见代码清单4-52。
+
+为了能够识别那些需要对服务器连接密码进行解密的IFXNewsListener实现，我们声明了接口PasswordDecodable，并要求相关IFXNewsListener实现类实现该接口。PasswordDecodable接口声明以及相关的IFXNewsListener实现类定义见代码清单4-52。
 
 代码清单4-52 PasswordDecodable接口声明以及相关的IFXNewsListener实现类
 
@@ -2619,9 +2579,8 @@ public class DowJonesNewsListener implements IFXNewsListener,PasswordDecodable {
 ```
 
 (2) 实现相应的BeanPostProcessor对符合条件的Bean实例进行处理
-我们通过PasswordDecodable接口声明来区分将要处理的对象实例①，当检查到当前对象实例实
-现了该接口之后，就会从当前对象实例取得加密后的密码，并对其解密。然后将解密后的密码设置回
-当前对象实例。之后，返回的对象实例所持有的就是解密后的密码，逻辑如代码清单4-53所示。
+
+我们通过PasswordDecodable接口声明来区分将要处理的对象实例①，当检查到当前对象实例实现了该接口之后，就会从当前对象实例取得加密后的密码，并对其解密。然后将解密后的密码设置回当前对象实例。之后，返回的对象实例所持有的就是解密后的密码，逻辑如代码清单4-53所示。
 
 代码清单4-53 用于解密的自定义BeanPostProcessor实现类
 
@@ -2652,10 +2611,10 @@ public class PasswordDecodePostProcessor implements BeanPostProcessor {
 ```
 
 (3) 将自定义的BeanPostProcessor注册到容器
-只有将自定义的BeanPostProcessor实现类告知容器，容器才会在合适的时机应用它。所以，我
-们需要将PasswordDecodePostProcessor注册到容器。 5 
-对于BeanFactory类型的容器来说，我们需要通过手工编码的方式将相应的BeanPostProcessor
-注册到容器，也就是调用ConfigurableBeanFactory的addBeanPostProcessor()方法，见如下代码： 6
+
+只有将自定义的BeanPostProcessor实现类告知容器，容器才会在合适的时机应用它。所以，我们需要将PasswordDecodePostProcessor注册到容器。
+
+对于BeanFactory类型的容器来说，我们需要通过手工编码的方式将相应的BeanPostProcessor注册到容器，也就是调用ConfigurableBeanFactory的addBeanPostProcessor()方法，见如下代码：
 
 ```java
 ConfigurableBeanFactory beanFactory = new XmlBeanFactory(new ClassPathResource(...)); 
@@ -2674,43 +2633,30 @@ beanFactory.addBeanPostProcessor(new PasswordDecodePostProcessor());
  ... 
 </beans> 
 ```
+
 合理利用BeanPostProcessor这种Spring的容器扩展机制，将可以构造强大而灵活的应用系统。
 
-提示 实际上，有一种特殊类型的BeanPostProcessor我们没有提到，它的执行时机与通常的 BeanPostProcessor 不同。
- 
-org.springframework.beans.factory.config.InstantiationAwareBeanPostProcessor
-接口可以在对象的实例化过程中导致某种类似于电路“短路”的效果。实际上，并非所有注册
-到Spring容器内的bean定义都是按照图4-10的流程实例化的。在所有的步骤之前，也就是实例
-化bean对象步骤之前，容器会首先检查容器中是否注册有InstantiationAwareBeanPostProcessor类型的BeanPostProcessor。如果有，首先使用相应的InstantiationAwareBeanPostProcessor来构造对象实例。构造成功后直接返回构造完成的对象实例，而不会按照“正
-规的流程”继续执行。这就是它可能造成“短路”的原因。
-15 
-不过，通常情况下都是Spring容器内部使用这种特殊类型的BeanPostProcessor做一些动态对
-象代理等工作，我们使用普通的BeanPostProcessor实现就可以。这里简单提及一下，目的是
-让大家有所了解。
-16 
-17 
-80 Spring 的 IoC 容器
-4. InitializingBean和init-method
-org.springframework.beans.factory.InitializingBean是容器内部广泛使用的一个对象生
-命周期标识接口，其定义如下：
+> 提示 实际上，有一种特殊类型的BeanPostProcessor我们没有提到，它的执行时机与通常的 BeanPostProcessor 不同。<br/>org.springframework.beans.factory.config.InstantiationAwareBeanPostProcessor接口可以在对象的实例化过程中导致某种类似于电路“短路”的效果。实际上，并非所有注册到Spring容器内的bean定义都是按照图4-10的流程实例化的。在所有的步骤之前，也就是实例
+化bean对象步骤之前，容器会首先检查容器中是否注册有InstantiationAwareBeanPostProcessor类型的BeanPostProcessor。如果有，首先使用相应的InstantiationAwareBeanPostProcessor来构造对象实例。构造成功后直接返回构造完成的对象实例，而不会按照“正规的流程”继续执行。这就是它可能造成“短路”的原因。<br/>不过，通常情况下都是Spring容器内部使用这种特殊类型的BeanPostProcessor做一些动态对象代理等工作，我们使用普通的BeanPostProcessor实现就可以。这里简单提及一下，目的是让大家有所了解。
+{: .prompt-tip }
+
+#### 4. InitializingBean和init-method
+
+org.springframework.beans.factory.InitializingBean是容器内部广泛使用的一个对象生命周期标识接口，其定义如下：
+
+```java
 public interface InitializingBean { 
  void afterPropertiesSet() throws Exception; 
-} 
-该接口定义很简单，其作用在于，在对象实例化过程调用过“BeanPostProcessor的前置处理”
-之后，会接着检测当前对象是否实现了InitializingBean接口，如果是，则会调用其afterPropertiesSet()方法进一步调整对象实例的状态。比如，在有些情况下，某个业务对象实例化完成后，还
-不能处于可以使用状态。这个时候就可以让该业务对象实现该接口，并在方法afterPropertiesSet()
-中完成对该业务对象的后续处理。
-虽然该接口在Spring容器内部广泛使用，但如果真的让我们的业务对象实现这个接口，则显得
-Spring容器比较具有侵入性。所以，Spring还提供了另一种方式来指定自定义的对象初始化操作，那就
-是在XML配置的时候，使用<bean>的init-method属性。
-通过init-method，系统中业务对象的自定义初始化操作可以以任何方式命名，而不再受制于
-InitializingBean的afterPropertiesSet()。如果系统开发过程中规定：所有业务对象的自定义初
-始化操作都必须以init()命名，为了省去挨个<bean>的设置init-method这样的烦琐，我们还可以通
-过最顶层的<beans>的default-init-method统一指定这一init()方法名。
-一般，我们是在集成第三方库，或者其他特殊的情况下，才会需要使用该特性。比如，ObjectLab
-提供了一个外汇系统交易日计算的开源实现——ObjectLabKit，系统在使用它提供的DateCalculator
-时，封装类会通过一个自定义的初始化方法来为这些DateCalculator提供计算交易日所需要排除的
-休息日信息。代码清单4-54给出了封装类的部分代码。
+}
+```
+
+该接口定义很简单，其作用在于，在对象实例化过程调用过“BeanPostProcessor的前置处理”之后，会接着检测当前对象是否实现了InitializingBean接口，如果是，则会调用其afterPropertiesSet()方法进一步调整对象实例的状态。比如，在有些情况下，某个业务对象实例化完成后，还不能处于可以使用状态。这个时候就可以让该业务对象实现该接口，并在方法afterPropertiesSet()中完成对该业务对象的后续处理。
+
+虽然该接口在Spring容器内部广泛使用，但如果真的让我们的业务对象实现这个接口，则显得Spring容器比较具有侵入性。所以，Spring还提供了另一种方式来指定自定义的对象初始化操作，那就是在XML配置的时候，使用<bean>的init-method属性。
+
+通过init-method，系统中业务对象的自定义初始化操作可以以任何方式命名，而不再受制于InitializingBean的afterPropertiesSet()。如果系统开发过程中规定：所有业务对象的自定义初始化操作都必须以init()命名，为了省去挨个<bean>的设置init-method这样的烦琐，我们还可以通过最顶层的<beans>的default-init-method统一指定这一init()方法名。
+
+一般，我们是在集成第三方库，或者其他特殊的情况下，才会需要使用该特性。比如，ObjectLab提供了一个外汇系统交易日计算的开源实现——ObjectLabKit，系统在使用它提供的DateCalculator时，封装类会通过一个自定义的初始化方法来为这些DateCalculator提供计算交易日所需要排除的休息日信息。代码清单4-54给出了封装类的部分代码。
 
 代码清单4-54 DateCalculator封装类定义 
 
@@ -2722,17 +2668,13 @@ public class FXTradeDateCalculator {
  new HashSet<LocalDate>(); 
  private static final String holidayKey = "JPY"; 
  private SqlMapClientTemplate sqlMapClientTemplate; 
- public FXTradeDateCalculator(SqlMapClientTemplate sqlMapClientTemplate) 
- { 
+ public FXTradeDateCalculator(SqlMapClientTemplate sqlMapClientTemplate) { 
  this.sqlMapClientTemplate = sqlMapClientTemplate; 
  } 
- public void setupHolidays() 
- { 
+ public void setupHolidays() { 
  List holidays = getSystemHolidays(); 
- if(!ListUtils.isEmpty(holidays)) 
- { 
- for(int i=0,size=holidays.size();i<size;i++) 
- { 
+ if(!ListUtils.isEmpty(holidays)) { 
+ for(int i=0,size=holidays.size();i<size;i++) { 
  String holiday = (String)holidays.get(i); 
  LocalDate date =  
  FRONT_DATE_FORMATTER.parseDateTime(holiday).toLocalDate(); 
@@ -2761,9 +2703,8 @@ public class FXTradeDateCalculator {
  } 
 }
 ```
-为了保证getForwardDateCalculator()和getBackwardDateCalculator()方法返回的DateCalculator已经将休息日考虑进去，在这两个方法被调用之前，我们需要setupHolidays()首先被
-调用，以保证将休息日告知DateCalculator，使它能够在计算交易日的时候排除掉这些休息日的日
-期。因此，我们需要在配置文件中完成类似代码清单4-55所示的配置，以保证在对象可用之前，setupHolidays()方法会首先被调用。
+
+为了保证getForwardDateCalculator()和getBackwardDateCalculator()方法返回的DateCalculator已经将休息日考虑进去，在这两个方法被调用之前，我们需要setupHolidays()首先被调用，以保证将休息日告知DateCalculator，使它能够在计算交易日的时候排除掉这些休息日的日期。因此，我们需要在配置文件中完成类似代码清单4-55所示的配置，以保证在对象可用之前，setupHolidays()方法会首先被调用。
 
 代码清单4-55 使用init-method保证封装类的初始化方法得以执行
 
@@ -2784,51 +2725,42 @@ public class FXTradeDateCalculator {
  ... 
 </beans>
 ```
-当然，我们也可以让FXTradeDateCalculator实现InitializingBean接口，然后将setupHolidays()方法的逻辑转移到afterPropertiesSet()方法。不过，相对来说还是采用init-method
-的方式比较灵活，并且没有那么强的侵入性。 16 
-可以认为在InitializingBean和init-method中任选其一就可以帮你完成类似的初始化工作。
-除非……，除非你真的那么“幸运”，居然需要在同一个业务对象上按照先后顺序执行两个初始化方 17 
-82 Spring 的 IoC 容器
-法。这个时候，就只好在同一对象上既实现InitializingBean的afterPropertiesSet()，又提供自
-定义初始化方法啦！
-5. DisposableBean与destroy-method
-当所有的一切，该设置的设置，该注入的注入，该调用的调用完成之后，容器将检查singleton类
-型的bean实例，看其是否实现了org.springframework.beans.factory.DisposableBean接口。或
-者其对应的bean定义是否通过<bean>的destroy-method属性指定了自定义的对象销毁方法。如果是，
-就会为该实例注册一个用于对象销毁的回调（Callback），以便在这些singleton类型的对象实例销毁之
-前，执行销毁逻辑。
-与InitializingBean和init-method用于对象的自定义初始化相对应，DisposableBean和
-destroy-method为对象提供了执行自定义销毁逻辑的机会。
-最常见到的该功能的使用场景就是在Spring容器中注册数据库连接池，在系统退出后，连接池应
-该关闭，以释放相应资源。代码清单4-56演示了通常情况下使用destroy-method处理资源释放的数据
-源注册配置。
+
+当然，我们也可以让FXTradeDateCalculator实现InitializingBean接口，然后将setupHolidays()方法的逻辑转移到afterPropertiesSet()方法。不过，相对来说还是采用init-method的方式比较灵活，并且没有那么强的侵入性。
+
+可以认为在InitializingBean和init-method中任选其一就可以帮你完成类似的初始化工作。除非……，除非你真的那么“幸运”，居然需要在同一个业务对象上按照先后顺序执行两个初始化方 Spring 的 IoC 容器法。这个时候，就只好在同一对象上既实现InitializingBean的afterPropertiesSet()，又提供自定义初始化方法啦！
+
+#### 5. DisposableBean与destroy-method
+
+当所有的一切，该设置的设置，该注入的注入，该调用的调用完成之后，容器将检查singleton类型的bean实例，看其是否实现了org.springframework.beans.factory.DisposableBean接口。或者其对应的bean定义是否通过<bean>的destroy-method属性指定了自定义的对象销毁方法。如果是，就会为该实例注册一个用于对象销毁的回调（Callback），以便在这些singleton类型的对象实例销毁之前，执行销毁逻辑。
+
+与InitializingBean和init-method用于对象的自定义初始化相对应，DisposableBean和destroy-method为对象提供了执行自定义销毁逻辑的机会。
+
+最常见到的该功能的使用场景就是在Spring容器中注册数据库连接池，在系统退出后，连接池应该关闭，以释放相应资源。代码清单4-56演示了通常情况下使用destroy-method处理资源释放的数据源注册配置。
+
 代码清单4-56 使用了自定义销毁方法的数据源配置定义
 
 ```xml
-<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"> 
- <property name="url"> 
- <value>${jdbc.url}</value> 
- </property> 
- <property name="driverClassName"> 
- <value>${jdbc.driver}</value> 
- </property> 
- <property name="username"> 
- <value>${jdbc.username}</value> 
- </property> 
- <property name="password"> 
- <value>${jdbc.password}</value> 
- </property> 
- ... 
+<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" estroy-method="close"> 
+    <property name="url"> 
+        <value>${jdbc.url}</value> 
+    </property> 
+    <property name="driverClassName"> 
+        <value>${jdbc.driver}</value> 
+    </property> 
+    <property name="username"> 
+        <value>${jdbc.username}</value> 
+    </property> 
+    <property name="password"> 
+        <value>${jdbc.password}</value> 
+    </property> 
+    ... 
 </bean>
 ```
-不过，这些自定义的对象销毁逻辑，在对象实例初始化完成并注册了相关的回调方法之后，并不
-会马上执行。回调方法注册后，返回的对象实例即处于使用状态，只有该对象实例不再被使用的时候，
-才会执行相关的自定义销毁逻辑，此时通常也就是Spring容器关闭的时候。但Spring容器在关闭之前，
-不会聪明到自动调用这些回调方法。所以，需要我们告知容器，在哪个时间点来执行对象的自定义销
-毁方法。
-对于BeanFactory容器来说。我们需要在独立应用程序的主程序退出之前，或者其他被认为是合
-适的情况下（依照应用场景而定），如代码清单4-57所示，调用ConfigurableBeanFactory提供的
-destroySingletons()方法销毁容器中管理的所有singleton类型的对象实例。
+
+不过，这些自定义的对象销毁逻辑，在对象实例初始化完成并注册了相关的回调方法之后，并不会马上执行。回调方法注册后，返回的对象实例即处于使用状态，只有该对象实例不再被使用的时候，才会执行相关的自定义销毁逻辑，此时通常也就是Spring容器关闭的时候。但Spring容器在关闭之前，不会聪明到自动调用这些回调方法。所以，需要我们告知容器，在哪个时间点来执行对象的自定义销毁方法。
+
+对于 **BeanFactory 容器**来说。我们需要在独立应用程序的主程序退出之前，或者其他被认为是合适的情况下（依照应用场景而定），如代码清单4-57所示，调用ConfigurableBeanFactory提供的destroySingletons()方法销毁容器中管理的所有singleton类型的对象实例。
 
 代码清单4-57 使用ConfigurableBeanFactory的destroySingletons()方法触发销毁对象行为
 
@@ -2845,15 +2777,10 @@ public class ApplicationLauncher
  } 
 } 
 ```
-如果不能在合适的时机调用destroySingletons()，那么所有实现了DisposableBean接口的对
-象实例或者声明了destroy-method的bean定义对应的对象实例，它们的自定义对象销毁逻辑就形同
-虚设，因为根本就不会被执行！ 3 
-对于ApplicationContext容器来说。道理是一样的。但AbstractApplicationContext为我们
-提供了registerShutdownHook()方法，该方法底层使用标准的Runtime类的addShutdownHook()方
-式来调用相应bean对象的销毁逻辑，从而保证在Java虚拟机退出之前，这些singtleton类型的bean对象
-实例的自定义销毁逻辑会被执行。当然AbstractApplicationContext注册的shutdownHook不只是
-调用对象实例的自定义销毁逻辑，也包括ApplicationContext相关的事件发布等，代码清单4-58演
-示了该方法的使用。
+
+如果不能在合适的时机调用destroySingletons()，那么所有实现了DisposableBean接口的对象实例或者声明了destroy-method的bean定义对应的对象实例，它们的自定义对象销毁逻辑就形同虚设，因为根本就不会被执行！
+
+对于ApplicationContext容器来说。道理是一样的。但AbstractApplicationContext为我们提供了registerShutdownHook()方法，该方法底层使用标准的Runtime类的addShutdownHook()方式来调用相应bean对象的销毁逻辑，从而保证在Java虚拟机退出之前，这些singtleton类型的bean对象实例的自定义销毁逻辑会被执行。当然AbstractApplicationContext注册的shutdownHook不只是调用对象实例的自定义销毁逻辑，也包括ApplicationContext相关的事件发布等，代码清单4-58演示了该方法的使用。
 
 代码清单4-58 使用registerShutdownHook()方法注册并触发对象销毁逻辑回调行为
 
@@ -2877,14 +2804,8 @@ public class ApplicationLauncher
 
 ## 4.5 小结
 
-Spring的IoC容器主要有两种，即BeanFactory和ApplicationContext。本章伊始，首先对这两
-种容器做了总体上的介绍，然后转入本章的重点，也就是Spring的BeanFactory基础容器。 13 
-14 
-我们从对比使用BeanFactory开发前后的差别开始，阐述了BeanFactory作为一个具体的IoC 
-Service Provider，它是如何支持各种对象注册以及依赖关系绑定的。XML自始至终都是Spring的IoC容
-器支持最完善的Configuration Metadata提供方式。所以，我们接着从XML入手，深入挖掘了
-BeanFactory（以及ApplicationContext）的各种潜力。 15 
-对于充满好奇心的我们，不会只停留在会使用BeanFactory进行开发这一层面。所以，最后我们
-又一起探索了BeanFactory（当然，也是ApplicationContext）实现背后的各种奥秘。BeanFactory
-是Spring提供的基础IoC容器，但并不是Spring提供的唯一IoC容器。ApplicationContext构建于
-BeanFactory之上，提供了许多BeanFactory之外的特性。下一章，我们将一起走入ApplicationContext的世界。
+Spring的IoC容器主要有两种，即BeanFactory和ApplicationContext。本章伊始，首先对这两种容器做了总体上的介绍，然后转入本章的重点，也就是Spring的BeanFactory基础容器。
+
+我们从对比使用BeanFactory开发前后的差别开始，阐述了BeanFactory作为一个具体的IoC Service Provider，它是如何支持各种对象注册以及依赖关系绑定的。XML自始至终都是Spring的IoC容器支持最完善的Configuration Metadata提供方式。所以，我们接着从XML入手，深入挖掘了BeanFactory（以及ApplicationContext）的各种潜力。
+
+对于充满好奇心的我们，不会只停留在会使用BeanFactory进行开发这一层面。所以，最后我们又一起探索了BeanFactory（当然，也是ApplicationContext）实现背后的各种奥秘。BeanFactory 是Spring提供的基础IoC容器，但并不是Spring提供的唯一IoC容器。ApplicationContext构建于BeanFactory之上，提供了许多BeanFactory之外的特性。下一章，我们将一起走入ApplicationContext的世界。
