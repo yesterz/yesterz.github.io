@@ -66,7 +66,7 @@ img_path: /assets/images/
 
 ## 1. 练习通配符
 
-```sh
+```console
 [yuchao-linux-242 root /tmp]#mkdir /test ;cd /test
 [yuchao-linux-242 root /test]#
 [yuchao-linux-242 root /test]#touch yuchao.txt yuc.txt cc.txt yuchao01.log yuyu.log cc.sh
@@ -78,48 +78,48 @@ Asterisk
 
 找出所有txt结尾的文件
 
-```sh
+```console
 [yuchao-linux-242 root /test]#ls *.txt
 cc.txt  yuchao.txt  yuc.txt
 ```
 
 查看以sh结尾的文件
 
-```sh
+```console
 [yuchao-linux-242 root /test]#ls *.sh
 cc.sh
 ```
 
 查看以yu开头、txt结尾的文件
 
-```sh
+```console
 [yuchao-linux-242 root /test]#ls yu*.txt
 yuchao.txt  yuc.txt
 ```
 
 查看以yu开头、log结尾的文件
 
-```sh
+```console
 [yuchao-linux-242 root /test]#ls yu*.log
 yuchao01.log  yuyu.log
 ```
 
 查看所有以yu开头的文件
 
-```sh
+```console
 [yuchao-linux-242 root /test]#ls yu*
 yuchao01.log  yuchao.txt  yuc.txt  yuyu.log
 ```
 
 找出以c开头的文件
-```sh
+```console
 [yuchao-linux-242 root /test]#ls c*
 cc.sh  cc.txt
 ```
 
 ### ? 匹配任意一个字符（用得少）
 
-```sh
+```console
 [yuchao-linux-242 root /test]#ls ?.sh
 ls: cannot access ?.sh: No such file or directory
 ```
@@ -128,7 +128,7 @@ ls: cannot access ?.sh: No such file or directory
 
 除非你去创建一个
 
-```sh
+```console
 [yuchao-linux-242 root /test]#touch c.sh
 [yuchao-linux-242 root /test]#ls ?.sh
 c.sh
@@ -138,14 +138,14 @@ c.sh
 
 如何查找特定字符数量的文件？
 比如找出sh脚本文件
-```sh
+```console
 [yuchao-linux-242 root /test]#ls *.sh
 cc.sh  c.sh
 ```
 
 你只能多写几个问号
 
-```sh
+```console
 [yuchao-linux-242 root /test]#ls ?.sh
 c.sh
 [yuchao-linux-242 root /test]#
@@ -155,7 +155,7 @@ cc.sh
 
 再比如找出所有txt
 
-```sh
+```console
 [yuchao-linux-242 root /test]#ls ??.txt
 cc.txt
 [yuchao-linux-242 root /test]#ls ??????.txt
@@ -169,7 +169,7 @@ yuc.txt
 
 创建测试数据，如
 
-```sh
+```console
 [yuchao-linux-242 root /test]#touch {a..g}.log
 [yuchao-linux-242 root /test]#ls
 a.log  b.log  cc.sh  cc.txt  c.log  c.sh  d.log  e.log  f.log  g.log  yuchao01.log  yuchao.txt  yuc.txt  yuyu.log
@@ -178,7 +178,7 @@ a.log  b.log  cc.sh  cc.txt  c.log  c.sh  d.log  e.log  f.log  g.log  yuchao01.l
 
 找出文件名是a-z之间任意一个字符的txt
 
-```sh
+```console
 [yuchao-linux-242 root /test]#ls [a-z].txt
 ls: cannot access [a-z].txt: No such file or directory
 ```
@@ -188,21 +188,21 @@ ls: cannot access [a-z].txt: No such file or directory
 
 找出a-z之间任意一个字符的log
 
-```sh
+```console
 [yuchao-linux-242 root /test]#ls [a-z].log
 a.log  b.log  c.log  d.log  e.log  f.log  g.log
 ```
 
 找出a-c之间任意一个字符的log
 
-```sh
+```console
 [yuchao-linux-242 root /test]#ls [a-c].log
 a.log  b.log  c.log
 ```
 
 创建测试数据
 
-```sh
+```console
 [yuchao-linux-242 root /test]#touch yu{1..5}.log
 [yuchao-linux-242 root /test]#touch yc{1..5}.log
 [yuchao-linux-242 root /test]#
@@ -214,21 +214,21 @@ b.log  cc.txt  c.sh   e.log  g.log  yc2.log  yc4.log  yu1.log  yu3.log  yu5.log 
 
 找出以yu1  yu2 yu3 相关的log文件
 
-```sh
+```console
 [yuchao-linux-242 root /test]#ls yu[1-3].log
 yu1.log  yu2.log  yu3.log
 ```
 
 找出以y开头相关的log
 
-```sh
+```console
 [yuchao-linux-242 root /test]#ls y*.log
 yc1.log  yc2.log  yc3.log  yc4.log  yc5.log  yu1.log  yu2.log  yu3.log  yu4.log  yu5.log  yuchao01.log  yuyu.log
 ```
 
 只找出文件名是三个字母的log文件
 
-```sh
+```console
 [yuchao-linux-242 root /test]#ls [a-z][a-z][a-z0-9].log
 yc1.log  yc2.log  yc3.log  yc4.log  yc5.log  yu1.log  yu2.log  yu3.log  yu4.log  yu5.log
 [yuchao-linux-242 root /test]#
@@ -236,7 +236,7 @@ yc1.log  yc2.log  yc3.log  yc4.log  yc5.log  yu1.log  yu2.log  yu3.log  yu4.log 
 
 ### [!abcd]   取反方括号的内容
 
-```sh
+```console
 [yuchao-linux-242 root /test]#ls
 a.log  cc.sh   c.log  d.log  f.log  yc1.log  yc3.log  yc5.log  yu2.log  yu4.log  yuchao01.log  yuc.txt
 b.log  cc.txt  c.sh   e.log  g.log  yc2.log  yc4.log  yu1.log  yu3.log  yu5.log  yuchao.txt    yuyu.log
@@ -244,34 +244,34 @@ b.log  cc.txt  c.sh   e.log  g.log  yc2.log  yc4.log  yu1.log  yu3.log  yu5.log 
 
 找出除了以abcd开头的log文件
 
-```sh
+```console
 [yuchao-linux-242 root /test]#ls [!abcd]*.log
 e.log  f.log  g.log  yc1.log  yc2.log  yc3.log  yc4.log  yc5.log  yu1.log  yu2.log  yu3.log  yu4.log  yu5.log  yuchao01.log  yuyu.log
 ```
 
 作用同上，必须是连续的数字
 
-```sh
+```console
 [yuchao-linux-242 root /test]#ls [!a-d]*.log
 ```
 
 找出除了abcd开头的单个字母的log文件
 
-```sh
+```console
 [yuchao-linux-242 root /test]#ls [!abcd].log
 e.log  f.log  g.log
 ```
 
 排除所有名字里包含y和u的文件
 
-```sh
+```console
 [yuchao-linux-242 root /test]#ls [!yu]*
 a.log  b.log  cc.sh  cc.txt  c.log  c.sh  d.log  e.log  f.log  g.log
 ```
 
 排除所有名字里包含y和u的sh文件
 
-```sh
+```console
 [yuchao-linux-242 root /test]#ls [!yu]*.sh
 cc.sh  c.sh
 ```
@@ -280,7 +280,7 @@ cc.sh  c.sh
 
 搜索/etc下所有包含hosts相关字符的文件
 
-```sh
+```console
 [lamp-server root ~]$find /etc/ -type f -name '*hosts*'
 /etc/hosts
 /etc/hosts.allow
@@ -289,7 +289,7 @@ cc.sh  c.sh
 
 搜索/etc下的以ifcfg开头的文件（网卡配置文件）
 
-```sh
+```console
 [lamp-server root ~]$find /etc/ -type f -name 'ifcfg*'
 /etc/sysconfig/network-scripts/ifcfg-lo
 /etc/sysconfig/network-scripts/ifcfg-ens33
@@ -297,14 +297,14 @@ cc.sh  c.sh
 
 只查找以数字结尾的网卡配置文件
 
-```sh
+```console
 [lamp-server root ~]$find /etc/ -type f -name 'ifcfg*[0-9]'
 /etc/sysconfig/network-scripts/ifcfg-ens33
 ```
 
 找到系统中的第一块到第四块磁盘，注意磁盘的语法命名
 
-```sh
+```console
 [yuchao-linux01 root ~]$find /dev -name  'sd[a-d]'
 /dev/sdd
 /dev/sdc
@@ -314,7 +314,7 @@ cc.sh  c.sh
 
 找找sdb硬盘有几个分区，多种写法
 
-```sh
+```console
 [yuchao-linux01 root ~]$ls /dev/sdb?
 /dev/sdb1  /dev/sdb2  /dev/sdb3  /dev/sdb4  /dev/sdb5  /dev/sdb6  /dev/sdb7
 
@@ -324,7 +324,7 @@ cc.sh  c.sh
 
 注意*是和上面不同的
 
-```sh
+```console
 [yuchao-linux01 root ~]$ls /dev/sdb*
 /dev/sdb  /dev/sdb1  /dev/sdb2  /dev/sdb3  /dev/sdb4  /dev/sdb5  /dev/sdb6  /dev/sdb7
 ```
@@ -333,7 +333,7 @@ cc.sh  c.sh
 
 测试数据源准备
 
-```sh
+```console
 [yuchao-linux01 root ~/test_shell]$touch {a..h}.log
 [yuchao-linux01 root ~/test_shell]$touch {1..10}.txt
 [yuchao-linux01 root ~/test_shell]$ls
@@ -344,42 +344,42 @@ cc.sh  c.sh
 
 找出a到e的log文件
 
-```sh
+```console
 [yuchao-linux01 root ~/test_shell]$ls [a-e].log
 a.log  b.log  c.log  d.log  e.log
 ```
 
 找出除了3到5的txt文件
 
-```sh
+```console
 [yuchao-linux01 root ~/test_shell]$ls [!3-5].txt
 1.txt  2.txt  6.txt  7.txt  8.txt  9.txt
 ```
 
 找出除了2,5,8,9的txt文件
 
-```sh
+```console
 [yuchao-linux01 root ~/test_shell]$ls [!2,5,8,9].txt
 1.txt  3.txt  4.txt  6.txt  7.txt
 ```
 
 同理写法
 
-```sh
+```console
 [yuchao-linux01 root ~/test_shell]$ls [^2,5,8,9].txt
 1.txt  3.txt  4.txt  6.txt  7.txt
 ```
 
 找出除了a,e,f的log文件
 
-```sh
+```console
 [yuchao-linux01 root ~/test_shell]$ls [!a,e,f].log
 b.log  c.log  d.log  g.log  h.log
 ```
 
 同理写法
 
-```sh
+```console
 [yuchao-linux01 root ~/test_shell]$ls [^a,e,f].log
 b.log  c.log  d.log  g.log  h.log
 ```
@@ -404,7 +404,7 @@ b.log  c.log  d.log  g.log  h.log
 
 ### 引号相关
 
-```sh
+```console
 '' 单引号、所见即所得
 "" 双引号、可以解析变量及引用命令
 `` 反引号、可以解析命令
@@ -413,7 +413,7 @@ b.log  c.log  d.log  g.log  h.log
 
 ### 重定向符号
 
-```sh
+```console
 >          stdout覆盖重定向
 >>         stdout追加重定向
 
@@ -425,7 +425,7 @@ b.log  c.log  d.log  g.log  h.log
 
 ### 命令执行
 
-```sh
+```console
 command1 && command2      #  command1成功后执行command2
 command1 || command2      #  command1失败后执行command2
 command1 ; command2         #  无论command1成功还是失败、后执行command2
@@ -444,7 +444,7 @@ $()            # 执行小括号里的命令
 
 单引号是无法识别date命令的
 
-```sh
+```console
 [yuchao-linux01 root ~/test_shell]$date
 Sat Apr  2 17:06:01 CST 2022
 [yuchao-linux01 root ~/test_shell]$
@@ -460,7 +460,7 @@ $(date)
 
 反引号中的linux命令是可以执行的，且反引号中只能写可执行的命令
 
-```shell
+```console
 # 依然是date命令
 
 [yuchao-linux01 root ~/test_shell]$date
@@ -481,7 +481,7 @@ Sat Apr 2 17:32:59 CST 2022
 
 ### 双引号
 
-```shell
+```console
 [yuchao-linux01 root ~/test_shell]$echo "date"
 date
 [yuchao-linux01 root ~/test_shell]$echo "`date`"
@@ -510,7 +510,7 @@ Sat Apr  2 17:39:52 CST 2022
 
 没有引号、很难确定字符串的边界，很容易出现各种故障
 
-```sh
+```console
 [yuchao-linux01 root ~/test_shell]$echo 于超老师的外号是 $name
 于超老师的外号是 超哥
 
@@ -537,7 +537,7 @@ Sat Apr  2 17:39:52 CST 2022
 - 多个命令之间的分隔符
 - 某些配置文件的注释符
 
-```sh
+```console
 [yuchao-linux01 root ~/test_shell]$pwd;mkdir hehe;cd hehe;pwd
 /root/test_shell
 /root/test_shell/hehe
@@ -549,7 +549,7 @@ Sat Apr  2 17:39:52 CST 2022
 注释符号
 如命令的注释
 
-```sh
+```console
 [yuchao-linux01 root ~/test_shell/hehe]$# hello super man
 [yuchao-linux01 root ~/test_shell/hehe]$
 [yuchao-linux01 root ~/test_shell/hehe]$# ls /opt
@@ -557,7 +557,7 @@ Sat Apr  2 17:39:52 CST 2022
 
 如配置文件的注释符
 
-```sh
+```console
 # nginx.conf
 
 #user  nobody;
@@ -576,7 +576,7 @@ worker_processes  1;
 
 Linux管道符 | 用于传输数据，对linux命令的处理结果再次处理，直到得到最终结果
 
-```sh
+```console
 [yuchao-linux01 root ~/test_shell/hehe]$ifconfig |grep inet
         inet 192.168.0.240  netmask 255.255.255.0  broadcast 192.168.0.255
         inet6 fe80::4913:8ad0:3a1:c439  prefixlen 64  scopeid 0x20<link>
@@ -595,7 +595,7 @@ tcp6       0      0 :::22                   :::*                    LISTEN      
 
 创建目录成功后，才执行后面的命令
 
-```sh
+```console
 [yuchao-linux01 root ~/test_shell/hehe]$mkdir /chaoge_data && cd /chaoge_data
 [yuchao-linux01 root /chaoge_data]$
 [yuchao-linux01 root /chaoge_data]$
@@ -605,14 +605,14 @@ mkdir: cannot create directory ‘/chaoge_data’: File exists
 
 如果前面命令失败，后面命令不执行
 
-```sh
+```console
 [yuchao-linux01 root /chaoge_data]$mkdir /chaoge_data && pwd
 mkdir: cannot create directory ‘/chaoge_data’: File exists
 ```
 
 只有前面成功，后面才执行
 
-```sh
+```console
 [yuchao-linux01 root /chaoge_data]$mkdir /chaoge_data2 && pwd
 /chaoge_data
 ```
@@ -621,7 +621,7 @@ mkdir: cannot create directory ‘/chaoge_data’: File exists
 
 只有前面命令失败、才执行后面命令
 
-```sh
+```console
 [yuchao-linux01 root /chaoge_data]$mkdir /chaoge_data ||  pwd
 mkdir: cannot create directory ‘/chaoge_data’: File exists
 /chaoge_data
@@ -629,7 +629,7 @@ mkdir: cannot create directory ‘/chaoge_data’: File exists
 
 前面成功了，后面不执行
 
-```sh
+```console
 [yuchao-linux01 root /chaoge_data]$mkdir /chaoge_data222 ||  pwd
 ```
 
@@ -637,7 +637,7 @@ mkdir: cannot create directory ‘/chaoge_data’: File exists
 
 引用系统时间，创建文件名，脚本常见做法
 
-```sh
+```console
 [yuchao-linux01 root /chaoge_data]$touch nginx_access_$(date +%F).log
 [yuchao-linux01 root /chaoge_data]$
 [yuchao-linux01 root /chaoge_data]$ll
@@ -647,13 +647,13 @@ total 0
 
 找到当前的txt文件，然后删掉
 
-```sh
+```console
 [yuchao-linux01 root ~/test_shell]$rm -f $(find . -name '*.txt')
 ```
 
 等同写法
 
-```sh
+```console
 [yuchao-linux01 root ~/test_shell]$rm -f `find . -name '*.log'`
 ```
 
@@ -661,7 +661,7 @@ total 0
 
 生成连续的数字序列
 
-```sh
+```console
 [yuchao-linux01 root ~/test_shell]$echo {1..30}
 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30
 ```
@@ -669,14 +669,14 @@ total 0
 
 生成字母序列
 
-```sh
+```console
 [yuchao-linux01 root ~/test_shell]$echo {a..z}
 a b c d e f g h i j k l m n o p q r s t u v w x y z
 ```
 
 特殊用法，拷贝文件的简写
 
-```sh
+```console
 [yuchao-linux01 root ~/test_shell]$ll /etc/sysconfig/network-scripts/ifcfg-ens33*
 -rw------- 1 root root 408 Mar 19 14:59 /etc/sysconfig/network-scripts/ifcfg-ens33
 -rw-r--r-- 1 root root 408 Apr  2 18:17 /etc/sysconfig/network-scripts/ifcfg-ens33.bak
@@ -684,7 +684,7 @@ a b c d e f g h i j k l m n o p q r s t u v w x y z
 
 作为变量的分隔符
 
-```sh
+```console
 [yuchao-linux01 root ~/test_shell]$touch ${name}_`date +%F`.log
 [yuchao-linux01 root ~/test_shell]$ll
 total 0
