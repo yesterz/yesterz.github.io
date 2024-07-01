@@ -39,16 +39,16 @@ img_path: /assets/images/
 
     编译时引入 Lombok 对`User.java`进行编译后，再通过 javap 查看 class 文件可看到自动生成了`public String getUsername()`方法。
 
-此功能基于 JSR 269 ，在Sun JDK 6中提供了支持，在 Annotation Processing 进行后，再次进入 Parse and Enter 步骤。
+    此功能基于 JSR 269 ，在Sun JDK 6中提供了支持，在 Annotation Processing 进行后，再次进入 Parse and Enter 步骤。
 
 3. 语义分析和生成 class 文件（Analyse and Generate）
 
     Analyse 步骤基于抽象语法树进行一系列的语义分析，包括将语法树中的名字、表达式等元素与变量、方法、类型等联系到一起；检查变量使用前是否已声明；推导泛型方法的类型参数；检查类型匹配性；进行常量折叠；检查所有语句都可到达；检查所有 checked exception 都被捕获或抛出；检查变量的确定性赋值（例如有返回值的方法必须确定有返回值）；检查变量的确定性不重复赋值（例如声明为 final 的变量等）；解除语法糖（消除`if(false) {…}`形式的无用代码；将泛型 Java 转为普通 Java；将含有语法糖的语法树改为含有简单语言结构的语法树，例如 foreach 循环、自动装箱/拆箱等）等。
 
     在完成了语义分析后，开始生成 class 文件（com.sun.tools.javac.jvm.Gen），生成的步骤为：
-    * 首先将实例成员初始化器收集到构造器中，将静态成员初始化器收集为`<clinit>()`；
-    * 接着将抽象语法树生成字节码，采用的方法为后序遍历语法树，并进行最后的少量代码转换（例如 String 相加转变为 StringBuilder 操作）；
-    * 最后从符号表生成 class 文件。
+        * 首先将实例成员初始化器收集到构造器中，将静态成员初始化器收集为`<clinit>()`；
+        * 接着将抽象语法树生成字节码，采用的方法为后序遍历语法树，并进行最后的少量代码转换（例如 String 相加转变为 StringBuilder 操作）；
+        * 最后从符号表生成 class 文件。
 
     上面简单介绍了基于javac如何将java源码编译为class文件 ，除javac外，还可通过ECJ（Eclipse Compiler for Java） 或Jikes 等编译器来将Java源码编译为class文件。
 
@@ -69,38 +69,38 @@ img_path: /assets/images/
 
 ### 类加载机制
 
-源码编译为 class 文件后，即可放入 JVM 中执行。执行时 JVM 首先要做的是装载 class 文件，这个机制通常称为类加载机制。
+    源码编译为 class 文件后，即可放入 JVM 中执行。执行时 JVM 首先要做的是装载 class 文件，这个机制通常称为类加载机制。
 
-类加载机制是指 .class 文件加载到 JVM，并形成 Class 对象的机制，之后应用就可对 Class 对象进行实例化并调用，类加载机制可在运行时动态加载外部的类、远程网络下载过来的 class 文件等。除了该动态化的优点外，还可通过 JVM 的类加载机制来达到类隔离的效果，例如 Application Server 中通常要避免两个应用的类互相干扰。
+    类加载机制是指 .class 文件加载到 JVM，并形成 Class 对象的机制，之后应用就可对 Class 对象进行实例化并调用，类加载机制可在运行时动态加载外部的类、远程网络下载过来的 class 文件等。除了该动态化的优点外，还可通过 JVM 的类加载机制来达到类隔离的效果，例如 Application Server 中通常要避免两个应用的类互相干扰。
 
-JVM 将类加载过程划分为三个步骤：装载、链接和初始化。装载和链接过程完成后，即将二进制的字节码转换为Class 对象；初始化过程不是加载类时必须触发的，但最迟必须在初次主动使用对象前执行，其所作的动作为给静态变量赋值、调用`<clinit>()`等。
+    JVM 将类加载过程划分为三个步骤：装载、链接和初始化。装载和链接过程完成后，即将二进制的字节码转换为Class 对象；初始化过程不是加载类时必须触发的，但最迟必须在初次主动使用对象前执行，其所作的动作为给静态变量赋值、调用`<clinit>()`等。
 
-在完成将 class 文件信息加载到 JVM 并产生 Class 对象后，就可执行 Class 对象的静态方法或实例化对象进行调用了。在源码编译阶段将源码编译为 JVM 字节码，JVM 字节码是一种中间代码的方式，要由 JVM 在运行期对其进行解释并执行，这种方式称为字节码解释执行方式。
+    在完成将 class 文件信息加载到 JVM 并产生 Class 对象后，就可执行 Class 对象的静态方法或实例化对象进行调用了。在源码编译阶段将源码编译为 JVM 字节码，JVM 字节码是一种中间代码的方式，要由 JVM 在运行期对其进行解释并执行，这种方式称为字节码解释执行方式。
 
 #### 1-装载（Load）
 
-装载过程负责找到二进制字节码并加载至 JVM 中，JVM 通过类的全限定名（com.bluedavy.HelloWorld）及类加载器（ClassLoaderA实例）完成类的加载，同样，也采用以上两个元素来标识一个被加载了的类：类的全限定名+ClassLoader 实例 ID。类名的命名方式如下：
+    装载过程负责找到二进制字节码并加载至 JVM 中，JVM 通过类的全限定名（com.bluedavy.HelloWorld）及类加载器（ClassLoaderA实例）完成类的加载，同样，也采用以上两个元素来标识一个被加载了的类：类的全限定名+ClassLoader 实例 ID。类名的命名方式如下：
 
-1. 对于接口或非数组型的类，其名称即为类名，此种类型的类由所在的 ClassLoader 负责加载；
-2. 对于数组型的类，其名称为"["+（基本类型或L+引用类型类名;），例如`byte[] bytes=new byte[512]`，该bytes 的类名为：`[B; Object[] bjects=new Object[10]`，objects的类名则为：`[Ljava.lang.Object;`，数组型类中的元素类型由所在的 ClassLoader 负责加载，但数组类则由 JVM 直接创建。
+        1. 对于接口或非数组型的类，其名称即为类名，此种类型的类由所在的 ClassLoader 负责加载；
+        2. 对于数组型的类，其名称为"["+（基本类型或L+引用类型类名;），例如`byte[] bytes=new byte[512]`，该bytes 的类名为：`[B; Object[] bjects=new Object[10]`，objects的类名则为：`[Ljava.lang.Object;`，数组型类中的元素类型由所在的 ClassLoader 负责加载，但数组类则由 JVM 直接创建。
 
 #### 2-链接（Link）
 
-**链接过程负责对二进制字节码的格式进行校验、初始化装载类中的静态变量及解析类中调用的接口、类。**
+    **链接过程负责对二进制字节码的格式进行校验、初始化装载类中的静态变量及解析类中调用的接口、类。**
 
-二进制字节码的格式校验遵循 Java Class File Format（具体请参见 JVM 规范）规范，如果格式不符合，则抛出 VerifyError；校验过程中如果碰到要引用到其他的接口和类，也会进行加载；如果加载过程失败，则会抛出 NoClassDefFoundError。
+    二进制字节码的格式校验遵循 Java Class File Format（具体请参见 JVM 规范）规范，如果格式不符合，则抛出 VerifyError；校验过程中如果碰到要引用到其他的接口和类，也会进行加载；如果加载过程失败，则会抛出 NoClassDefFoundError。
 
-在完成了校验后，JVM 初始化类中的静态变量，并将其值赋为默认值。
+    在完成了校验后，JVM 初始化类中的静态变量，并将其值赋为默认值。
 
-最后对类中的所有属性、方法进行验证，以确保其要调用的属性、方法存在，以及具备相应的权限（例如 public、private 域权限等）。如果这个阶段失败，可能会造成 NoSuchMethodError、NoSuchFieldError 等错误信息。
+    最后对类中的所有属性、方法进行验证，以确保其要调用的属性、方法存在，以及具备相应的权限（例如 public、private 域权限等）。如果这个阶段失败，可能会造成 NoSuchMethodError、NoSuchFieldError 等错误信息。
 
 #### 3-初始化（Initialize）
 
 初始化过程即执行类中的静态初始化代码、构造器代码及静态属性的初始化，在以下四种情况下初始化过程会被触发执行：
-1. 调用了new；
-2. 反射调用了类中的方法；
-3. 子类调用了初始化；
-4. JVM启动过程中指定的初始化类。
+    1. 调用了new；
+    2. 反射调用了类中的方法；
+    3. 子类调用了初始化；
+    4. JVM启动过程中指定的初始化类。
 
 在执行初始化过程之前，首先必须完成链接过程中的校验和准备阶段，解析阶段则不强制。
 
@@ -110,19 +110,19 @@ JVM 的类加载通过 ClassLoader 及其子类来完成，分为`Bootstrap Clas
 
 1. Bootstrap ClassLoader
 
-Sun JDK 采用 C++ 实现了此类，此类并非 ClassLoader 的子类，在代码中没有办法拿到这个对象，Sun JDK 启动时会初始化此 ClassLoader，并由 ClassLoader 完成`$JAVA_HOME`中`jre/lib/rt.jar`里所有 class 文件的加载，jar 中包含了 Java 规范定义的所有接口及实现。
+    Sun JDK 采用 C++ 实现了此类，此类并非 ClassLoader 的子类，在代码中没有办法拿到这个对象，Sun JDK 启动时会初始化此 ClassLoader，并由 ClassLoader 完成`$JAVA_HOME`中`jre/lib/rt.jar`里所有 class 文件的加载，jar 中包含了 Java 规范定义的所有接口及实现。
 
 2. Extension ClassLoader
 
-JVM 用此 ClassLoader 来加载扩展功能的一些 jar 包，例如 Sun JDK 中目录下有 dns 工具 jar 包等，在Sun JDK 中 ClassLoader 对应的类名为 ExtClassLoader。
+    JVM 用此 ClassLoader 来加载扩展功能的一些 jar 包，例如 Sun JDK 中目录下有 dns 工具 jar 包等，在Sun JDK 中 ClassLoader 对应的类名为 ExtClassLoader。
 
 3. System ClassLoader
 
-JVM 用此 ClassLoader 来加载启动参数中指定的 Classpath 中的 jar 包及目录，在 Sun JDK 中 ClassLoader 对应的类名 为AppClassLoader。
+    JVM 用此 ClassLoader 来加载启动参数中指定的 Classpath 中的 jar 包及目录，在 Sun JDK 中 ClassLoader 对应的类名为 AppClassLoader。
 
 4. User-Defined ClassLoader
 
-`User-Defined ClassLoader`是Java开发人员继承 ClassLoader 抽象类自行实现的 ClassLoader，基于自定义的 ClassLoader 可用于加载非 Classpath 中（例如从网络上下载的 jar 或二进制）的 jar 及目录、还可以在加载之前对 class 文件做一些动作，例如解密等。
+    `User-Defined ClassLoader`是Java开发人员继承 ClassLoader 抽象类自行实现的 ClassLoader，基于自定义的 ClassLoader 可用于加载非 Classpath 中（例如从网络上下载的 jar 或二进制）的 jar 及目录、还可以在加载之前对 class 文件做一些动作，例如解密等。
 
 JVM 的 ClassLoader 采用的是树形结构，除`BootstrapClassLoader`外，其他的 ClassLoader 都会有 parent ClassLoader，`User-Defined ClassLoader`默认的 parent ClassLoader 为`System ClassLoader`。加载类时通常按照树形结构的原则来进行，也就是说，首先应从 parent ClassLoader 中尝试进行加载，当 parent 中无法加载时，应再尝试从`System ClassLoader`中进行加载，`System ClassLoader`同样遵循此原则，在找不到的情况下会自动从其 parent ClassLoader 中进行加载。值得注意的是，由于 JVM 是采用类名加 Classloader 的实例来作为 Class 加载的判断的，因此加载时不采用上面的顺序也是可以的，例如加载时不去 parent ClassLoader 中寻找，而只在当前的 ClassLoader 中寻找，会造成树上多个不同的 ClassLoader 中都加载了某 Class，并且这些 Class 的实例对象都不相同，JVM 会保证同一个 ClassLoader 实例对象中只能加载一次同样名称的 Class，因此可借助此来实现类隔离的需求，但有时也会带来困惑，例如 ClassCastException。因此在加载类的顺序上要根据需求合理把握，尽量保证从根到最下层的 ClassLoader 上的 Class 只加载了一次。
 
@@ -130,50 +130,117 @@ ClassLoader 抽象类提供了几个关键的方法：
 
 * loadClass
 
-此方法负责加载指定名字的类，ClassLoader 的实现方法为先从已经加载的类中寻找，如没有，则继续从 parent ClassLoader 中寻找；如仍然没找到，则从 System ClassLoader 中寻找，最后再调用 findClass 方法来寻找，如果要改变类的加载顺序，则可覆盖此方法；如果加载顺序相同，则可通过覆盖 findClass 来做特殊的处理，例如解密、固定路径寻找等。当通过寻找类的过程仍然未获取 Class 对象时，则抛出 ClassNotFoundExcepiton。
+    此方法负责加载指定名字的类，ClassLoader 的实现方法为先从已经加载的类中寻找，如没有，则继续从 parent ClassLoader 中寻找；如仍然没找到，则从 System ClassLoader 中寻找，最后再调用 findClass 方法来寻找，如果要改变类的加载顺序，则可覆盖此方法；如果加载顺序相同，则可通过覆盖 findClass 来做特殊的处理，例如解密、固定路径寻找等。当通过寻找类的过程仍然未获取 Class 对象时，则抛出 ClassNotFoundExcepiton。
 
-如果类需要 resolve，则调用 resolveClass 进行链接。
+    如果类需要 resolve，则调用 resolveClass 进行链接。
 
 * findLoadedClass
 
-此方法负责从当前 ClassLoader 实例对象的缓存中寻找已加载的类，调用的为 native 的方法。
+    此方法负责从当前 ClassLoader 实例对象的缓存中寻找已加载的类，调用的为 native 的方法。
 
 * findClass
 
-此方法直接抛出 ClassNotFoundException，因此需要通过覆盖 loadClass 或此方法来以自定义的方式加载相应的类。
+    此方法直接抛出 ClassNotFoundException，因此需要通过覆盖 loadClass 或此方法来以自定义的方式加载相应的类。
 
 * findSystemClass
 
-此方法负责从`System ClassLoader`中寻找类，如未找到，则继续从`Bootstrap ClassLoader`中寻找，如仍然未找到，则返回 null。
+    此方法负责从`System ClassLoader`中寻找类，如未找到，则继续从`Bootstrap ClassLoader`中寻找，如仍然未找到，则返回 null。
 
 * defineClass
 
-此方法负责将二进制的字节码转换为Class对象。
+    此方法负责将二进制的字节码转换为Class对象。
 
 * resolveClass
 
-此方法负责完成Class对象的链接，如已链接过，则会直接返回。
+    此方法负责完成Class对象的链接，如已链接过，则会直接返回。
 
 根据上面的描述，在实际的应用中，JVM 类加载过程会抛出这样那样的异常，这些情况下掌握各种异常产生的原因是最为重要的，下面来看类加载方面的常见异常。
 
 1. ClassNotFoundException
+
+    这是最常见的异常，产生这个异常的原因为在当前的ClassLoader 中加载类时未找到类文件，对位于System ClassLoader的类很容易判断，只要加载的类不在Classpath中，而对位于 User-DefinedClassLoader 的类则麻烦些，要具体查看这个 ClassLoader加载类的过程，才能判断此 ClassLoader 要从什么位置加载到此类。
+    
+    例如直接在代码中执行 Class.forName(“com.bluedavy.A”)，而当前类的 classloader 下根本就没有该类所在的jar或没有该class 文件，就会抛出ClassNotFoundException。
+
 2. NoClassDefFoundError
+
+    该异常较之 ClassNotFoundException更难处理一些,造成此异常的主要原因是加载的类中引用到的另外的类不存在，例如要加载A，而A中调用了B，B不存在或当前ClassLoader 没法加载B，就会抛出这个异常。
+
+    例如有一段这样的代码：
+
+    ```java
+    public class A {
+        private B b = new B();
+    }
+    ```
+
+    当采用Class.forName加载A时，虽能找到A.class，但此时B.class不存在，则会抛出NoClassDefFoundError。
+    
+    因此，对于这个异常，须先查看是加载哪个类时报出的，然后再确认该类中引用的类是否存在于当前ClassLoader能加载到的位置。
+
 3. LinkageError
+
+    该异常在自定义 ClassLoader 的情况下更容易出现，主要原因是此类已经在 ClassLoader 加载过了重复地加载会造成该异常，因此要注意避免在并发的情况下出现这样的问题。
+
+    由于JVM 的这个保护机制，使得在JVM中没办法直接更新一个已经 load 的 Class，只能创建一个新的 ClassLoader来加载更新的Class,然后将新的请求转入该ClassLoader 中来获取类,这也是JVM中不好实现动态更新的原因之一，而其他更多的原因是对象状态的复制、依赖的设置等。
+
 4. ClassCastException
+
+    该异常有多种原因，在JDK5支持泛型后，合理使用泛型可相对减少此异常的触发。这些原因中比较难查的是两个A对象由不同的ClassLoader 加载的情况,这时如果将其中某个A对象造型成另外一个A对象，也会报出ClassCastException。
 
 ### 类执行机制
 
-在完成将 class 文件信息加载到JVM 并产生 Class 对象后，就可执行 Class 对象的静态方法或实例化对象进行调用了。在源码编译阶段将源码编译为 JVM 字节码，JVM 字节码是一种中问代码的方式，要由 JVM 在运行期对其进行解释并执行，这种方式称为字节码解释执行方式。
+    在完成将 class 文件信息加载到JVM 并产生 Class 对象后，就可执行 Class 对象的静态方法或实例化对象进行调用了。在源码编译阶段将源码编译为 JVM 字节码，JVM 字节码是一种中问代码的方式，要由 JVM 在运行期对其进行解释并执行，这种方式称为字节码解释执行方式。
 
 #### 字节码解释执行
 
 由于采用的为中间码的方式，JVM 有一套自己的指令，对于面向对象的语言而言，最重要的是执行方法的指令，JVM 采用了 invokestatic、invokevirtual、invokeinterface 和 invokespecial 四个指令来执行不同的方法调用。invokestatic对应的是调用static方法，invokevirual 对应的是调用对象实例的方法,invokeinterface 对应的是调用接口的方法，invokespecial 对应的是调用 private 方法和编译源码后生成的<init>方法，此方法为对象实例化时的初始化方法，例如下面一段代码：
 
-通过javac 编译上面的代码后，使用javap-cDemo 查看其 execute 方法的字节码：
+```java
+public class Demo{
+
+    public void execute(){
+        A.execute();
+        A a=new A();
+        a.bar();
+        IFoo bnew B();
+        b.bar();
+    }
+}
+
+class A{
+
+    public static int execute(){
+        return 1+2;
+    }
+
+    public int bar(){
+        return 1+2;
+    }
+}
+
+class B implements IFoo{
+
+    public int bar(){
+        return 1+2;
+    }
+    
+    public interface IFoo{
+        public int bar();
+    }
+}
+```
+
+通过javac 编译上面的代码后，使用javap -c Demo 查看其 execute 方法的字节码：
+
+```console
+```
 
 从以上例子可看到 invokestatic、invokespecial、invokevirtual及invokeinterface 四种指令对应调用方法的情况。
+
 Sun JDK 基于栈的体系结构来执行字节码，基于栈方式的好处为代码紧凑，体积小。
-线程在创建后，都会产生程序计数器(PC)(或称为PCregisters)和栈(Siack);PC存放了下条要执行的指令在方法内的偏移量:栈中存放了栈帧(StackFrame)，每个方法每次调用都会产生栈帧。栈帧主要分为局部变量区和操作数栈两部分，局部变量区用于存放方法中的局部变量和参数，操作数栈中用于存放方法执行过程中产生的中间结果，栈帧中还会有一些杂用空间，例如指向方法已解析的常量池的引用、其他一些 VM 内部实现需要的数据等，结构如图3.5所示。
+
+线程在创建后，都会产生程序计数器(PC)(或称为PCregisters)和栈(Siack)；PC存放了下条要执行的指令在方法内的偏移量；栈中存放了栈帧(StackFrame)，每个方法每次调用都会产生栈帧。栈帧主要分为局部变量区和操作数栈两部分，局部变量区用于存放方法中的局部变量和参数，操作数栈中用于存放方法执行过程中产生的中间结果，栈帧中还会有一些杂用空间，例如指向方法已解析的常量池的引用、其他一些 VM 内部实现需要的数据等，结构如图3.5所示。
 
 [] TODO
 
