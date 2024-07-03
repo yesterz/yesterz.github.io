@@ -12,10 +12,6 @@ img_path: /assets/images/
 
 ch2 Java 内存区域与内存溢出异常
 
-The Structure of the Java Virtual Machine <https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.5>
-
-Owner: better
-
 ## 这块到底讲了什么——两个事
 
 一个是（运行时数据区域）JVM 它使用的这块物理内存的数据区域是怎么划分的，每块区域是做什么的，放了什么，就是讲的 JVM 内存模型的情况。
@@ -26,7 +22,7 @@ Owner: better
 
 **Q: 什么是线程**
 
-Ans 线程是进程内的执行单元，是 CPU 调度的最小单位。一个进程可以有多个线程，它们共享进程的内存空间和系统资源。线程之间可以并发执行，提高了程序的效率。
+**Ans:** 线程是进程内的执行单元，是 CPU 调度的最小单位。一个进程可以有多个线程，它们共享进程的内存空间和系统资源。线程之间可以并发执行，提高了程序的效率。
 
 **这块内存区域规定了两类异常状态：**
 1. 如果线程请求的栈深度大于虚拟机所允许的深度，将抛出 **StackOverflowError** 异常；
@@ -73,15 +69,16 @@ Ans: 对象实例的元数据
 
 #### 堆 Heap
 
-Java 堆（Java Heap）这块是虚拟机管理的内存中最大的一块，在虚拟机启动时创建。此内存区域的唯一目的就是用来存放对象实例，**几乎**所有的对象实例数据都在堆分配内存（`new`操作创建的对象实例）。
+Java 堆（Java Heap）这块是虚拟机管理的内存中最大的一块，在虚拟机启动时创建。此内存区域的唯一目的就是用来存放对象实例，**几乎**所有的对象实例数据都在堆分配内存（`new`操作创建的对象实例）。堆对于一个JVM进程来说是唯一的，也就是一个进程只有一个JVM，但是进程包含多个线程，他们是共享同一堆空间的。
 
 > 《Java 虚拟机规范》中的原文：The heap is the runtime data area from which memory for all class instances and arrays is allocated.
+{: .prompt-tip }
 
 所有线程共享的 Java 堆中可以划分出多个线程私有的分配缓冲区（Thread Local Allocation Buffer，TLAB），来提升**对象分配**时的效率。
 
 **Q: 对象分配是啥意思**
 
-Ans: Object Allocation 新建一个对象，分配给它内存它要存储的地址
+**Ans:** Object Allocation 新建一个对象，分配给它内存它要存储的地址
 
 Java 堆既可以被实现成固定大小的，也可以是可扩展的，不过当前主流的 Java 虚拟机都是按照可扩展来实现的（通过参数 -Xmx 和 -Xms 设定）。如果在 Java 堆中没有内存完成实例分配，并且堆无法再扩展时，Java 虚拟机将会抛出 OutOfMemoryError 异常。
 
@@ -92,9 +89,23 @@ Java 堆既可以被实现成固定大小的，也可以是可扩展的，不过
 -Xmx<heap size>[unit]
 # For example, if we want to assign minimum 2 GB and maximum 5 GB to JVM, we need to write:
 -Xms2G -Xmx5G
+
+# Here, unit denotes the unit in which we’ll initialize the memory (indicated by heap size). We can mark units as ‘g’ for GB, ‘m’ for MB, and ‘k’ for KB.
 ```
 
-Here, unit denotes the unit in which we’ll initialize the memory (indicated by heap size). We can mark units as ‘g’ for GB, ‘m’ for MB, and ‘k’ for KB.
+Java 7及之前堆内存逻辑上分为三部分：新生区+老年区+永久区
+
+    1. Young Generation Space 新生区，又被划分为Eden区和Survivor区
+    2. Tenure generation space 老年区
+    3. Permanent Space 永久区
+
+Java 8及之后堆内存逻辑上分为三部分：新生区+老年区+元空间
+
+    1. Young Generation Space 新生区，又被划分为Eden区和Survivor区
+    2. Tenure generation space 老年区
+    3. Meta Space 元空间
+
+在Java8 中，永久代已经被移除，被一个称为“元数据区”（元空间）的区域所取代。元空间的本质和永久代类似，元空间与永久代之间最大的区别在于：**元空间并不在虚拟机中，而是使用本地内存。**因此，默认情况下，元空间的大小仅受本地内存限制。类的元数据放入 native memory, 字符串池和类的静态变量放入 java 堆中，这样可以加载多少类的元数据就不再由MaxPermSize控制，而由系统的实际可用空间来控制。
 
 #### 运行时常量池 Runtime Constant Pool
 
@@ -102,7 +113,7 @@ Here, unit denotes the unit in which we’ll initialize the memory (indicated by
 
 **Q: 字面量是啥？**
 
-Ans: ***字面量***是指由字母，数字等构成的字符串或者数值，它只能作为右值出现(右值是指等号右边的值，如：int a=123这里的a为左值，123为右值) 。
+**Ans:** **字面量**是指由字母，数字等构成的字符串或者数值，它只能作为右值出现(右值是指等号右边的值，如：int a=123这里的a为左值，123为右值) 。
 
 **Q: 符号引用又是啥？**
 
@@ -110,12 +121,13 @@ Ans: 编译时实际上不知道实际要访问的内存地址是什么，所有
 
 > 符号引用（Symbolic References）：符号引用以一组符号来描述所引用的目标，符号可以是任何形式的字面量，只要使用时能够无歧义的定位到目标即可。例如，在 Class 文件中它以CONSTANT_Class_info、CONSTANT_Fieldref_info、CONSTANT_Methodref_info等类型的常量出现。符号引用与虚拟机的内存布局无关，引用的目标并不一定加载到内存中。在 Java 中，一个java类将会编译成一个 class 文件。**在编译时，Java 类并不知道所引用的类的实际地址，因此只能使用符号引用来代替。**比如 org.simple.People 类引用了 org.simple.Language 类，在编译时 People 类并不知道 Language 类的实际内存地址，因此只能使用符号 org.simple.Language（假设是这个，当然实际中是由类似于 CONSTANT_Class_info 的常量来表示的）来表示 Language 类的地址。各种虚拟机实现的内存布局可能有所不同，但是它们能接受的符号引用都是一致的，因为符号引用的字面量形式明确定义在 Java 虚拟机规范的 Class 文件格式中。
 
-**Q: 直接引用时什么？**
+**Q: 直接引用是什么？**
 
-Ans:  直接引用可以是方法代码的入口地址
+**Ans:**  直接引用可以是方法代码的入口地址
   1. 直接指向目标的指针（比如，指向“类型”【Class对象】、类变量、类方法的直接引用可能是指向方法区的指针）
   2. 相对偏移量（比如，指向实例变量、实例方法的直接引用都是偏移量）
   3. 一个能间接定位到目标的句柄
+
 直接引用是和虚拟机的布局相关的，同一个符号引用在不同的虚拟机实例上翻译出来的直接引用一般不会相同。如果有了直接引用，那引用的目标必定已经被加载入内存中了。
 
 所以运行时常量池里面装的东西到底是啥 —> 符号引用和字面量
@@ -124,7 +136,7 @@ Ans:  直接引用可以是方法代码的入口地址
 
 #### 虚拟机栈 VM Stack
 
-虚拟机栈描述的是 Java 方法执行的线程内存模型：每个方法被执行的时候，Java 虚拟机都会同步创建一个栈帧（Stack Frame）用于存储局部变量表、操作数栈、动态连接、方法出口等信息。每一个方法被调用直至执行完毕的过程，就对应着一个栈帧在虚拟机栈中从入栈到出栈的过程。
+虚拟机栈描述的是 Java 方法执行的线程内存模型：每个方法被执行的时候，Java 虚拟机都会同步创建一个栈帧（Stack Frame）用于存储局部变量表、操作数栈、动态连接、方法出口等信息。每一个方法被调用直至执行完毕的过程，就对应着一个栈帧在虚拟机栈中从入栈到出栈的过程。栈帧中保存的是引用，这个引用指向对象或者数组在堆中的位置，在方法结束后，堆中的对象不会马上被移除，仅仅在垃圾收集的时候才会被移除。
 
 内存结构之栈区
 
@@ -135,13 +147,18 @@ Ans:  直接引用可以是方法代码的入口地址
 两种异常情况 一种是 StackOverflowError 另一种是 OutOfMemoryError
 
 1. 线程请求的栈深度超出 JVM 允许的深度抛出 StackOverflowError
-2. JVM栈容量能动态扩展的话，栈扩展申请不到足够的内存抛出 OutOfMemoryError
+2. JVM 栈容量能动态扩展的话，栈扩展申请不到足够的内存抛出 OutOfMemoryError
 
 也可以叫做线程栈，**栈帧：**
 1. 局部变量表
 2. 操作数栈
 3. 动态链接：符号引用转为直接引用
 4. 方法出口
+
+其中局部变量表存放了编译期可知的各种基本数据类型（boolean、byte、char、short、int、float、long、double）、对象引用（reference类型）和returnAddress类型（指向了一条字节码指令的地址）。其中64位长度的long和double会占用2个局部变量空间（Slot，一个32位），其余数据类型只占用1个。局部变量表所需的空间在编译期间完成分配，当进入一个方法时，其需要在帧中分配多大的局部变量空间是确定的，方法运行期间不会改变局部变量表的大小。
+
+> 当方法传递参数时实际上是一个方法将自己栈帧中局部变量表的副本传递给另一个方法栈帧中的局部变量表（注意是副本，而不是其本身），不管数据类型是什么（基本类型，引用类型）
+{: .prompt-info }
 
 **Q: 动态链接时什么意思啊？**
 
@@ -352,11 +369,11 @@ HotSpot 虚拟机默认的分配顺序为 longs/doubles、ints、shorts/chars、
 
 A 句柄访问
 
-堆中会划分出一块内存来做句柄池，reference中存储的是对象的句柄地址，句柄中包含对象实例数据地址和对象类型数据地址
+    堆中会划分出一块内存来做句柄池，reference中存储的是对象的句柄地址，句柄中包含对象实例数据地址和对象类型数据地址
 
 B 直接指针访问
 
-Java堆中对象的内存布局就必须考虑如何放置访问类型数据的相关信息，reference中存储的直接就是对象地址，如果只是访问对象本身的话，就不需要多⼀次间接访问的开销。
+    Java堆中对象的内存布局就必须考虑如何放置访问类型数据的相关信息，reference中存储的直接就是对象地址，如果只是访问对象本身的话，就不需要多⼀次间接访问的开销。
 
 
 优劣 Hotspot 虚拟机用的直接指针来访问
@@ -370,4 +387,5 @@ Java堆中对象的内存布局就必须考虑如何放置访问类型数据的�
 
 
 高阶资料：
-1. 高级诧言虚拟机圈子<https://hllvm-group.iteye.com/>
+1. 高级语言虚拟机圈子<https://hllvm-group.iteye.com/>
+2. The Structure of the Java Virtual Machine <https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-2.html#jvms-2.5>

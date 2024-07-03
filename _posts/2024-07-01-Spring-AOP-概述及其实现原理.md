@@ -120,3 +120,73 @@ return null;
 ```
 
 然后，我们就可以使用proxy类，根据RequestctrlInvocationHandler的逻辑，为ISubject和IRequestable两种类型生成相应的代理对象实例，见代码清单8-5。
+
+代码清单8-5 使用Proxy和Requestctzonnana1er创建不同类型目标对象的动态代理
+
+```java
+ISubject subject=(ISubject)Proxy.newProxyInstance(ProxyRunner.class.getClassLoader()new Class{]{ISubject.class}new RequestCtrlInvocationHandler(new SubjectImpl()));subject.request();
+IRequestable reguestable=(IRequestable)Proxy.newProxyInstance(ProxyRunner.class.getClassLoader()new Class!]{IRequestable.class}，new RequestCtrlInvocationHandler(new RequestableImpl()));requestable,recuest();
+```
+
+即使还有更多的日标对象类型,只要它们依然织入的横切逻辑相同,用ReguestctrlInvocation-Handler一个类并通过proxy为它们生成相应的动态代理实例就可以满足要求。当Proxy动态生成的代理对象上相应的接口方法被调用时，对应的InvocationHandler就会拦截相应的方法调用，并进行相应处理。
+
+InvocationHandler就是我们实现横切逻辑的地方，它是横切逻辑的载体，作用跟Advice是一样的。所以，在使用动态代理机制实现AOP的过程中，我们可以在InvocationHandler的基础上细化程序结构，并根据Advice的类型,分化出对应不同Advice类型的程序结构。我们将在稍后看到SpringAOF中的不同Advice类型实现以及结构规格。
+
+动态代理虽好，但不能满足所有的需求。因为动态代理机制只能对实现了相应Interface的类使用,如果某个类没有实现任何的Interface，就无法使用动态代理机制为其生成相应的动态代理对象。虽然面向接口编程应该是提倡的做法，但不排除其他的编程实践。对于没有实现任何Interface的目标对象，我们需要寻找其他方式为其动态的生成代理对象。
+
+默认情况下，如果Spring AOP发现目标对象实现了相应Interface，则采用动态代理机制为其生成代理对象实例。而如果目标对象没有实现任何Interface，SpringAOP会尝试使用一个称为CGLIB(Code Generation Library)的开源的动态字节码生成类库，为目标对象生成动态的代理对象实例。
+
+> 提示 你可以通过参考java.lang,reflect.Proxy和java,lang.reflect,InvocationHandler的Javadoc获取更多有关动态代理的信息。JavaReflectionInAction(Manning,2005)一书对Java的Reflection机制进行了详尽的阐述，其中有一章专门讲解了动态代理机制，不妨一读。
+{: .prompt-tip }
+
+### 8.2.3 动态字节码生成
+
+使用动态字节码生成技术扩展对象行为的原理是，我们可以对目标对象进行继承扩展，为其生成相应的子类，而子类可以通过覆写来扩展父类的行为，只要将横切逻辑的实现放到子类中，然后让系统使用扩展后的目标对象的子类，就可以达到与代理模式相同的效果了。subclassinstanceofSuperclass == true，不是吗?(图8-5演示了一个使用CGLIB进行对象行为扩展的示例。)
+
+但是，使用继承的方式来扩展对象定义，也不能像静态代理模式那样，为每个不同类型的目标对象都单独创建相应的扩展子类。所以，我们要借助于CGLIB这样的动态字节码生成库，在系统运行期间动态地为目标对象生成相应的扩展子类。
+
+为了演示CGLIB的使用以及最终可以达到的效果，我们定义的目标类如下所示:
+
+```java
+public class Requestablepublic void request(){
+    System.out.println("rq in Requestable""without implementint any interface")
+}
+```
+
+CGLB可以对实现了某种接口的类，或者没有实现任何接口的类进行扩展。但我们已经说过，可以使用动态代理机制来扩展实现了某种接口的目标类，所以，这里主要演示没有实现任何接口的目标类是如何使用CGLIB来进行扩展的。
+
+要对Reguestable类进行扩展，首先需要实现一个net.sf.cglib.proxy.Cal1back。不过更多的时候，我们会直接使用net.sf.cglib.proxy.MethodInterceptor接口(MethodInterceptor扩展了ca11back接口)。代码清单8-6给出了针对我们的Requestable所提供的Cal1back实现。
+
+代码清单8-6 RequestCtrlCa11back类定义
+
+```java
+private static final og logger=
+public class RequestCtrlCallback implements MethodIntercepto
+LogFactory.getLog(RequestCtrlCallback.class);
+public Object intercept (Object object,Method method, Object[] args,MethodProxy proxy)throws Throwable(if(method.getName().equals("request"))
+TimeOfDay startTime =new TimeofDay(0,0,0);TimeOfDay endTimenew TimeOfDay(5,59,59);TimeOfDay currentTime=new TimefDay():if(currentTime.isAfter(startTime)&& currentTime.isBefore(endTime) )
+logger.warn("service is not available now.");return null;
+return proxy.invokeSuper(object,args);
+return null;
+```
+
+这样，ReguestctrlCallback就实现了对reguest()方法请求进行访问控制的逻辑。现在我们要通过CGLIB的Enhancer为目标对象动态地生成一个子类，并将Reguestctrlca1lback中的横切逻辑附加到该子类中，代码如下所示:
+
+```java
+Enhancer enhancer = new Enhancer();
+enhancer.setSuperclass(Requestable.class);enhancer.setCallback(new RequestCtrlCallback());
+Requestable proxy=(Requestable)enhancer.create();proxy.request();
+```
+
+通过为enhancer指定需要生成的子类对应的父类，以及ca11back实现，enhancer最终为我们生成了需要的代理对象实例。
+
+使用CGLIB对类进行扩展的唯一限制就是无法对final方法进行覆写。
+
+> 注意 有关CGLIB的更多信息，请参照CGLB的官方网站<http://cglib.sourceforge.net>。不过，能够找到的文档不是很多，这个应该算CGLIB的缺憾吧。我觉得读其代码或许更切实际一些。
+{: .prompt-info }
+
+## 8.3 小结
+
+在进入Spring AOP的腹地之前，我们先对SpringAOP的概况进行了介绍。接着，一起探索了SpringAOP的实现机制，包括最原始的代理模式，直至最终的动态代理与动态字节码生成。
+
+在了解这些内容之后，我们将深入了解Spring AOP的方方面面，先从Spring AOP的最初版本说起……….

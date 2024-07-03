@@ -31,11 +31,13 @@ Ans: 当需要排查各种内存溢出、内存泄漏问题时，当垃圾收集
 
 ## 到底哪些是垃圾？怎么判断？
 
-对象存活判定：
+对象存活判定的两种方法 1 引用计数法 2 可达性分析法
 
 ### 1. 引用计数法 Reference Counting
     
-引用计数法说的是判断一个对象是否需要回收看这个对象的引用计数，给每一个对象添加一个引用计数器，当有一个地方引用它的时候，计数器就加一；当一个计数器值为零的时候就是这个对象不再被使用了，就变成了垃圾。
+引用计数法说的是判断一个对象是否需要回收就去看这个对象的引用计数，给每一个对象添加一个引用计数器，当有一个地方引用它的时候，计数器就加一；当一个计数器值为零的时候就是这个对象不再被使用了，就变成了垃圾。
+
+这样的话就有一个缺点：难以解决循环引用问题，`objA.instance = objB`和`objB.instance = objA`；加了计数器就有了额外的内存占用。
     
 ### 2. 可达性分析法 Reachability Analysis
     
@@ -72,6 +74,17 @@ Ans: 从 GC Roots 出发，根据对象的引用关系向下搜索，搜索走�
 - **Java Stack Frame**: A Java stack frame, holding local variables. Only generated when the dump is parsed with the preference set to treat Java stack frames as objects.
 
 - **Unknown**: An object of unknown root type. Some dumps, such as IBM Portable Heap Dump files, do not have root information. For these dumps, the MAT parser marks objects which are have no inbound references or are unreachable from any other root as roots of this type. This ensures that MAT retains all the objects in the dump.
+
+在Java语言里，可作为GC Roots对象的包括如下几种：
+    a.虚拟机栈(栈桢中的本地变量表)中的引用的对象；
+    b.方法区中的类静态属性引用的对象；
+    c.方法区中的常量引用的对象；
+    d.本地方法栈中JNI（即一般说的Native方法）的引用的对象。
+
+**Q: 为什么选择这几个作为GC Roots？**
+
+**Ans:** 首先要保证被选作GC Roots的对象是存活的，静态变量的声明周期长，而栈中引用的对象肯定是正在使用的对象（是存活的），因为调用方法时才会压栈。
+
 
 ### 再谈引用
 
@@ -116,34 +129,50 @@ JVM 将堆分成了二个大区新生代（Young）和老年代（Old），新�
 
 **Q:** 为什么 Survivor 区分成两个？
 
-**Ans** The reason for the HotSpot JVM's two survivor spaces is to reduce the need to deal with fragmentation. New objects are allocated in eden space. All well and good. When that's full, you need a GC, so kill stale objects and move live ones to a survivor space, where they can mature for a while before being promoted to the old generation. Still good so far. The next time we run out of eden space, though, we have a conundrum. The next GC comes along and clears out some space in both eden and our survivor space, but the spaces aren't contiguous.[^ref_2]
+**Ans:** The reason for the HotSpot JVM's two survivor spaces is to reduce the need to deal with fragmentation. New objects are allocated in eden space. All well and good. When that's full, you need a GC, so kill stale objects and move live ones to a survivor space, where they can mature for a while before being promoted to the old generation. Still good so far. The next time we run out of eden space, though, we have a conundrum. The next GC comes along and clears out some space in both eden and our survivor space, but the spaces aren't contiguous.[^ref_2]
 
----
-
-* **部分收集（Partial GC） ：**指目标不是完整收集整个 Java 堆的垃圾收集，其中又分为：
+**部分收集（Partial GC） ：**指目标不是完整收集整个 Java 堆的垃圾收集，其中又分为：
     - **新生代收集（Minor GC/Young GC）：**指目标只是新生代的垃圾收集。
     - **老年代收集（Major GC/Old GC）：**指目标只是老年代的垃圾收集。目前只有 CMS 收集器会有单独收集老年代的行为。另外请注意“Major GC”这个说法现在有点混淆，在不同资料上常有不同所指，读者需按上下文区分到底是指老年代的收集还是整堆收集。
     - **混合收集（Mixed GC）：**指目标是收集整个新生代以及部分老年代的垃圾收集。目前只有 G1 收集器会有这种行为。
-* **整堆收集（Full GC）：**收集整个 Java 堆和方法区的垃圾收集。
 
----
-    
+**整堆收集（Full GC）：**收集整个 Java 堆和方法区的垃圾收集。
+
+下面来看垃圾收集的一些具体算法
 
 ### 1 标记 - 清楚算法 Mark-Sweep
 
 - 具体解释为标记清楚两个阶段。首先标记出来所有需要回收的对象（标记过程就是判定为垃圾的过程），标记完成后，统一回收掉所有被标记的对象，也可以反过来，标记存活的对象，统一回收所有未被标记的对象。
 - 两个缺点：1 执行效率不稳定 2 内存空间碎片化
 
+内存碎片化严重，后续可能发生大对象不能找到可利用空间的问题。
 
 ### 2 标记 - 复制算法 Semispace Copying
 
 - 为了解决 Mark-Sweep 算法面对大量可回收对象的执行效率低，将可用内存按容量划分为大小相等的两块，每次只是用其中的一块。当这块空间用完后，将还存活的对象复制到另一块去，然后把用过的这块一次性清理掉。
 - 对于多数对象都是**存活**的情况，会产生大量的内存间复制的开销
 - 对于多数对象都是**可回收**的情况，仅需复制少量存活对象，移动堆顶指针，按顺序分配。
-- 一个缺点：可用空间缩小为了原来的一半，很浪费。
+- **一个缺点：**可用空间缩小为了原来的一半，很浪费。
 
+### 3 标记 - 整理算法 Mark-Compact
 
-JVM实际实现中，则是将内存分为一块较大的 Eden 区和两块较小的 Survivor 空间，每次使用 Eden 和一块 Survivor，回收时，把存活的对象复制到另一块 Survivor
+- 标记过程与标记清除算法一样，但后续步骤不是可回收对象进行清理，而是让所有的存活对象向内存空间一端移动，然后**清理掉边界以外的内存。**
+
+对象移动操作**必须全程暂停用户应用程序才能进行即Stop-The-World**
+
+- STW是Java中一种全局暂停的现象，多半由于GC引起的。所谓全局暂停，就是所有的Java代码停止运行，Native代码可以执行，但不能和JVM交互
+- 危害：长时间服务停止无响应；对于HA系统，可能引起主备切换，严重危害生产环境。
+
+### 4 分代收集算法
+
+分代收集法是目前大部分 JVM 所采用的方法，其核心思想是根据对象存活的不同生命周期将内存划分为不同的域，一般情况下将 GC 堆划分为老生代(Tenured/Old Generation)和新生代(Young Generation)。老生代的特点是每次垃圾回收时只有少量对象需要被回收，新生代的特点是每次垃圾回收时都有大量垃圾需要被回收，因此可以根据不同区域选择不同的算法。
+
+#### 新生代 & 复制算法
+
+JVM实际实现中，则是将新生代分为一块较大的 Eden 区和两块较小的 Survivor 空间，每次使用 Eden 和一块 Survivor，回收时，把存活的对象复制到另一块 Survivor
+
+目前大部分 JVM 的 GC 对于新生代都采取 Copying 算法，因为新生代中每次垃圾回收都要回收大部分对象，即要复制的操作比较少，但通常并不是按照 1：1 来划分新生代。一般将新生代划分为一块较大的 Eden 空间和两个较小的 Survivor 空间(From Space, To Space)，每次使用Eden 空间和其中的一块 Survivor 空间，当进行回收时，将该两块空间中还存活的对象复制到另一块 Survivor 空间中。
+
 
 - 复制算法：HotSpot 默认的 Eden : Survivor = 8 : 1，也就是每次能用90%的新生空间；如果 Survivor 空间不够，就要依赖老年代进行分配担保，把放不下的对象直接进入老年代。
 - 分配担保：当新生代进行垃圾回收后，新生代的存活区刚补下，需要把这些对象放到老年代去的策略，换句话说是老年代为新生代的GC做空间分配担保，步骤如下：
@@ -152,17 +181,15 @@ JVM实际实现中，则是将内存分为一块较大的 Eden 区和两块较�
     3. 如果大于，则尝试进行一次 MinorGC
     4. 如果不大于，则改做一次Full GC
 
-### 3 标记 - 整理算法 Mark-Compact
+#### 老年代 & 标记整理
 
-- 标记过程与标记清除算法一样，但后续步骤不是可回收对象进行清理，而是让所有的存活对象向内存空间一端移动，然后**清理掉边界以外的内存。**
-
-
-对象移动操作**必须全程暂停用户应用程序才能进行 Stop-The-World**
-
-- STW是Java中一种全局暂停的现象，多半由于GC引起的。所谓全局暂停，就是所有的Java代码停止运行，Native代码可以执行，但不能和JVM交互
-- 危害：长时间服务停止无响应；对于HA系统，可能引起主备切换，严重危害生产环境。
-
----
+而老年代因为每次只回收少量对象，因而采用 Mark-Compact 算法。
+    1. JAVA 虚拟机提到过的处于方法区的永生代(Permanet Generation)，它用来存储 class 类，常量，方法描述等。对永生代的回收主要包括废弃常量和无用的类。
+    2. 对象的内存分配主要在新生代的 Eden Space 和 Survivor Space 的 From Space(Survivor 目前存放对象的那一块)，少数情况会直接分配到老年代。
+    3. 当新生代的 Eden Space 和 From Space 空间不足时就会发生一次 GC，进行 GC 后，Eden Space 和 From Space 区的存活对象会被挪到 To Space，然后将 Eden Space 和 From Space 进行清理。
+    4. 如果 To Space 无法足够存储某个对象，则将这个对象存储到老生代。
+    5. 在进行 GC 后，使用的便是 Eden Space 和 To Space 了，如此反复循环。
+    6. 当对象在 Survivor 区躲过一次 GC 后，其年龄就会+1。默认情况下年龄到达 15 的对象会被移到老生代中。
 
 ## HotSpot 的算法细节实现
 
@@ -218,12 +245,9 @@ A --> G[并发的可达性分析]
 
 HotSpot 虚拟机包含的所有的收集器：
 
-
-
 ### Serial 收集器
 
 在新生代。单线程工作的收集器，他进行垃圾收集的时候，必须暂停其他所有工作线程，直到它收集结束。Stop The World
-
 
 简单高效，是所有收集器里额外内存消耗（Memory Footprint）最小的。
 
@@ -253,8 +277,6 @@ Ans 就是处理器用于运行用户代码时间与处理器总消耗时间的�
 Serial 收集器的老年代版本，单线程收集器，使用标记-整理算法。这个收集器的意义在于提供客户端模式下的 HotSpot 虚拟机使用。
 
 如果是在服务端模式下，它也有两种用途，一个是在jdk5之前的版本中与 Parallel Scavenge 收集器搭配使用。另一种则是作为 CMS 收集器发生失败时的后备预案，在并发收集发生 Concurrent Mode Failure 时使用。
-
-
 
 ### Parallel Old 收集器
 
@@ -301,6 +323,10 @@ G1 收集器运行过程的四个步骤：
 4. **筛选回归 Live Data Counting and Evacuation**
     
     负责更新 Region 的统计数据，对各个 Region 的回收价值和成本进⾏排序，根据⽤户所期望的停顿时间来制定回收计划，可以⾃由选择任意多个 Region 构成回收集，然后把决定回收的那⼀部分 Region 的存活对象复制到空的 Region 中，再清理掉整个旧 Region 的全部空间。这⾥的操作涉及存活对象的移动，是必须暂停⽤户线程，由多条收集器线程并⾏完成的。
+
+### ZGC 收集器
+
+
 
 ## 收集器的权衡
 
