@@ -48,13 +48,14 @@ mermaid: true
 - [x] 页面的总体自适应宽屏幕（这个还没有头绪怎么，是不是要改CSS）
 - [x] 跑通流程 GitHub Pages 博客站点，提交并同步远程仓库
 - [x] 图片显示问题，用这种方式`![有帮助的截图]({{ site.url }}/assets/screenshot.jpg)`来引用显示
-  + [x] Meimaid渲染出流
+  - [x] Meimaid渲染出流
 
 ## Quick Access
 
-1. Google Search Console <https://search.google.com/search-console?resource_id=https%3A%2F%2Fyesterz.github.io%2F>
+1. 6
 2. collabedit(simple collaborative text) <https://collabedit.com/>
 3. Google Analytics <https://analytics.google.com/>
 
 ## Others
+
 1. 
