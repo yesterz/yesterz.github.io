@@ -879,18 +879,192 @@ System.out.println(proxyObject.getClass());
 
 现在，我们可以直接将代理对象强制转型为MockTask类型，并且，从输出结果也可以看到，最终的代理对象是基于CGLIB的，而不是动态代理的：
 
+```console
+task executed.
+311 [main] INFO  ...PerformanceMethodInterceptor  - 0:00:00.000
+class  ...MockTask$$EnhancerByCGLIB$$4bf6056
+```
 
+除此之外，如果将proxyFactory的optimize属性设定为true的话，ProxyFactory也会采用基于类的代理机制。关于optimize属性的更多信息，我们将在后面给出。
 
+总地来说，如果满足以下列出的三种情况中的任何一种，ProxyFactory将对目标类进行基于类的代理。
+
+- 如果目标类没有实现任何接口，不管proxyTargetclass的值是什么，ProxyFactory会采用基于类的代理。
+- 如果ProxyFactory的proxyTargetclass属性值被设置为true，ProxyFactory会采用基于类的代理。
+- 如果ProxyFactory的optimize属性值被设置为true，ProxyFactory会采用基于类的代理。
 
 #### 3. Introduction的织入
 
+之所以将Introduction的织入单独列出，是因为Introduction型Advice比较特殊，如下所述。
 
+- Introduction可以为已经存在的对象类型添加新的行为，只能应用于对象级别的拦截，而不是通常Advice的方法级别的拦截，所以，进行mtroduction的织入过程中，不需要指定Pointcut，而只需要指定目标接口类型。
+- Spring的Introduction支持只能通过接口定义为当前对象添加新的行为，所以，我们需要在织入的时机，指定新织入的接口类型。
+
+鉴于以上两点，使用ProxyFactory进行Introduction的织入代码示例如代码消单9-24所示。
+
+代码清单9-24，使用eroxyEactory进行Introduction的织入过程示例
+
+```java
+ProxyFactory weaver= new ProxyFactory(new Developer());
+weaver.setInterfaces(new Clase [] {IDeveloper.class, ITester.class});
+TesterFeatureIntroductionInterceptor advice = new TesterFeatureIntroductionInterceptor();
+weaver.addndvice(advice);
+// DefaultIntroductionAdvisor advisor = new DefaultIntroductionAdvisor(advice, advice);
+// weaver.addadvisorladvisor);
+
+Obiect proxy = weaver.getProxy();
+((ITestex)proxy).teetSoftware();
+((IDeveloper)proxy).developsoftwara();
+```
+
+如果我们不使用Advisor而直接为ProxyFactory指定Advice的话，还记得ProxyFactory会如何处理的嘛?ProxyFactory会在自身内部构建相应的Advisor来使用，对吧?因为TesterFeature-IntroductionInterceptor是IntroductionInfo的子类，所以，ProxyFactory内部会创建一个默认的DefaultIntroductionAdvisor实例，就跟我们注释掉的两行代码效果一样。
+
+对Introduction进行织入，与基于接口的代理形式有点像，但有少许差异。对Introduction进行织入新添加的接口类型必须是通过setInterfaces指定的，而原来的目标对象，是采用基于接口的代理形式还是采用基于类的代理形式，完全是可以自由选择的。上面我们通过setInterfaces同时指定了目标对象实现的接口和新添加的接口类型，在进行Imntroduction织入的同时使用了基于接口的代理形式。我们同样可以在织入Introduction的同时，使用基于类的代理形式(见代码清单9-25)。
+
+代码清单9-25、使用proxvEactory进行基于类的代理方式的Itoduction织入过程示例
+
+```java
+ProxyFactory weaver = new ProxyFactory(new Developer());
+weaver.setProxyTargetClass(true)
+weaver.setInterfaceg(new Class[] {ITegter.class});
+TesterFeatureIntroductionInterceptor advice = new TesterFeatureIntroductionInterceptor();
+weaver.addndvice(advice):
+// DefaultIntroductionÃdvisor advisor = new DefaultIntroductionAdvisor(advice, advice);
+// weaver.addAdvisorladvisor)
+
+Object proxy = weaver.getProxy();
+((ITester)proxy).testSoftware();
+((Developer)proxy).developSoftware();
+```
+
+我们通过weaver.setProxyTargetclass(true);强制使用了基于类的代理，所以，现在得将代理对象转型为Developer而不是IDeveloper。
+
+从介绍Advice类型到介绍Advisor类型,针对Introduction的部分都是单独陈述的，或许你已经猜到，Introduction的Advice以及Advisor是不能跟其他Advice和Advisor混用的，要织入Introduction，你只能使用Introductionadvisor或者其子类，而不能使用其他的组合。
 
 ### 9.5.2 看清ProxyFactory 的本质
 
+知其表而不知其里，充其量你只能算一个画匠，而不是画师；只懂得如何使用API，而不知道这些API为何如此设计，使你迈不出从“画匠”到“画师”的那一步，如果你想迈出这一步，那不妨随我看一下这ProxyFactory内部到底有何“猫腻儿”，何如？
+
+认识proxyFactory的本质，不仅可以让我们清楚它如何实现，帮助我们在以后的系统设计中吸取宝贵的经验，而且可以进一步帮助我们更好地使用ProxyFactory。
+
+> 注意 因为本节剩下的内容涉及的都是ProxyFactory或者Spring AOP框架的实现，所以，大部分类全部来自org.springframework.aop.framework包。
+{: .prompt-tip }
+
+要了解ProxyFactory，我们得先从它的“根”说起，即org.springframework.aop.framework.AopProxy，该接口定义如下:
+
+```java
+package org.springframework.aop.framework;
+
+import org.springframework.lang.Nullable;
+
+public interface AopProxy {
+    Object getProxy();
+    Object getProxy(@Nullable ClassLoader classLoader);
+    Class<?> getProxyClass(@Nullable ClassLoader classLoader);
+}
+```
+
+SpringAOP框架内使用AopProxy对使用的不同的代理实现机制进行了适度的抽象,针对不同的代理实现机制提供相应的AopProxy子类实现。目前，SpringAOP框架内提供了针对JDK的动态代理和CGLIB两种机制的AopProxy实现(见图9-10)。
+
+当前，AopProxy有cg1ib2AopProxy和JdkDynamicAopProxy两种实现。因为动态代理需要通过InvocationHandler提供调用拦截，所以，JdkDynamicAopProxy同时实现了InvocationHandler接口。不同AopProxy实现的实例化过程采用工厂模式(确切地说是抽象工厂模式)进行封装，即通过org.springframework,aop,framework.AopProxyFactory进行。AopProxyFactory接口的定义如下所示：
+
+```java
+package org.springframework.aop.framework;
+
+public interface AopProxyFactory {
+    AopProxy createAopProxy(AdvisedSupport config) throws AopConfigException;
+}
+```
+
+AopProxyFactory根据传入的Adviseasupport实例提供的相关信息，来决定生成什么类型的AopProxy。不过，具体工作会转交给AopProxyFactory的具体实现类。而实际上这个AopProxyFactory实现类现在就一个，即org.springframework.aop.framework.DefaultAopProxyFactory。
+
+Defau1tAopProxyFactory的实现逻辑很简单，如以下伪代码所示:
+
+```java
+if (config.isOptimize() || config.isProxyTargetClass() || hasNoUserSuppliedProxyInterfaces(config)) {
+// 创建Cglib2AopProxy实例，并返回;
+} else {
+// 创建JdkDynamicAopProxy实例，并返回;
+}
+```
+
+也就是说，如果传入的Advisedsupport实例config的isOptimize或者isProxyTargetclass方法返回true，或者目标对象没有实现任何接口，则采用CGLIB生成代理对象，否则使用动态代理。还记得ProxyFactory会采用基于类的代理形式生成代理对象需要满足的条件吗?这里是一个关键点，但是走到这里，你还是无法理解为什么proxyFactory会有这种好像偶然的行为。别急，我们接着看！
+
+AopProxyFactory需要根据createhopProxy方法传入的Advisedsupport实例信息，来构建相应的AopProxy。下面我们要看看这个Advisedsupport到底是何方神圣。
+
+说得简单一点儿，adviseasupport其实就是一个生成代理对象所需要的信息的载体，该类相关的类层次图，见图9-11。
+
+Advisedsupport所承载的信息可以划分为两类，一类以org.springframework.aop.frameworkProxyConfig为统领,记载生成代理对象的控制信息;一类以org.springframework.aop.frameworkAdvisea为旗帜，承载生成代理对象所需要的必要信息，如相关目标类、Advice、Advisor等。ProxyConfig其实就是一个普通的JavaBean，它定义了5个boolean型的属性，分别控制在生成代理对象的时候，应该采取哪些行为措施，下面是这5个属性的详细情况。
+
+- proxyTargetclass。在9.5.1节的第2小节中已经提到过这个属性，如果proxyTargetclass属性设置为true，则ProxyFactory将会使用CGLIB对目标对象进行代理，默认值为false。
+- optimize。该属性的主要用于告知代理对象是否需要采取进一步的优化措施，如代理对象生0成之后，即使为其添加或者移除了相应的Advice，代理对象也可以忽略这种变动。另外，我们也曾经提到，当该属性为true时，ProxyFactory会使用CGLIB进行代理对象的生成。默认情况下，该属性为false。更多信息参照Spring的Javadoc以及参考文档。
+- opague。该属性用于控制生成的代理对象是否可以强制转型为Advised，默认值为fa1se，表示任何生成的代理对象都可强制转型为Aavised，我们可以通过Advisea查询代理对象的一些状态。
+- exposeProxy。设置exposeProxy，可以让SpringAOP框架在生成代理对象时，将当前代理对象绑定到IhreadLoca1。如果目标对象需要访问当前代理对象，可以通过AopContextcurrentProxy()取得。该属性的用途将在后文中详细讲述。出于性能方面考虑，该属性默认值为false。
+- frozen。如果将frozen设置为true，那么一旦针对代理对象生成的各项信息配置完成，则不容许更改。比如，如果ProxyFactory的设置完毕，并且fronzen为true，则不能对Advice进行任何变动，这样可以优化代理对象生成的性能。默认情况下，该值为fa1se。
+
+要生成代理对象，只有proxyConfig提供的控制信息还不够，我们还需要生成代理对象的一些具体信息，比如，要针对哪些目标类生成代理对象，要为代理对象加入何种横切逻辑等，这些信息可以通过org.springframework.aop.framework.Advised设置或者查询。默认情况下，SpringAOP框架返回的代理对象都可以强制转型为Advised，以查询代理对象的相关信息。Advised的接口定义代码太长，我们就不在此罗列了，你可以参照它的Javadoc。简单点儿说，我们可以使用Advisea接口访问相应代理对象所持有的Advisor，进行添加Advisor、移除Advisor等相关动作。即使代理对象已经生成完毕，也可对其进行这些操作。直接操作Advised，更多时候用于测试场景，可以帮助我们检查生成的代理对象是否如所期望的那样。(有关advisea的更多信息，请参照Spring的参考文档，因为与我们的主题相关性不大，这里不进行详细讲述。)
+
+回到之前的Advisedsupport话题，Advisedsupport继承了ProxyConfig，我们可以通过Advisedsupport设置代理对象生成的一些控制属性。Advisedsupport同时实现了Advised接口，我们也可以通过Advisedsupport设置生成代理对象相关的目标类、Advice等必要信息。这样，具体的AopProxy实现在生成代理对象时，可以从Advisedsupport这里取得所有这些必要信息。
+
+现在回到主题ProxyFactory。AopProxy、Advisedsupport与ProxyFactory是什么关系呢？先看图9-12。
+
+ProxyFactory集AopProxy和AdvisedSupport于一身，所以，可以通过proxyFactory设置生成代理对象所需要的相关信息，也可以通过ProxyFactory取得最终生成的代理对象。前者是Advisedsupport的职责，后者是AopProxy的职责。
+
+为了重用相关逻辑，Spring AOP框架在实现的时候，将一些公用的逻辑抽取到了org.springframework.aop.framework.ProxyCreatorSupport中，它自身就继承了Advisedsupport，所以，生成代理对象的必要信息从其自身就可以搞到。为了简化子类生成不同类型opProxy的工作，Proxycreatorsupport内部持有一个opProxyFactory实例，默认采用的是DefaultAopProxyFactory(也可以通过构造方法或者setter方法设置其他实现，如果有的话)。DefaultAopProxyFactory的默认行为前面已经讲述过了。ProxyFactory作为一个proxyCreatorsupport自然继承了这种行为，从它的使用中我们已经领略过了。
+
+前面已经说过了，ProxyFactory只是SpringAOP中最基本的织入器实现。实际上，ProxyFactory还有几个“兄弟”，这从ProxyCreatorsupport的继承类图(图9-13)中可以看到。
+
+后文中将详细讲述AspectJProxyFactory。当前，我们还是先来看看ProxyFactoryBean。
 
 ### 9.5.3 容器中的织入器--ProxyFactoryBean
 
+虽然使用ProxyFactory，可以让我们能够独立于Spring的IoC容器之外来使用Spring的AOP支持但是，将SpringAOP与Spring的IoC容器支持相结合，才是发挥SpringAOP更大作用的最佳途径。通过结合Spring的IoC容器，我们可以在容器中对Pointcut和Advice等进行管理，即使它们依赖于其他业务对象，也可以很容易地注入其中。
+
+在IOC容器中，使用org.springframework.aop.framework.ProxyFactoryBean作为织入器，它的使用与ProxyFactory无太大差别。不过在演示ProxyFactoryBean的使用之前，我们有必要在看消了ProxyFactory本质的前提下，进一步弄明白ProxyFactoryBean的本质。
+
+#### 1. ProxyractoryBean的本质
+
+对于proxyFactoryBean，我们应该这样断词，即Proxy+FactoryBean，而不是ProxyFactory+ Bean。也就是说，ProxyFactoryBean本质上是一个用来生产proxy的FactoryBean。还记得I0C容器中的FactoryBean的作用吧?如果容器中的某个对象持有某个FactoryBean的引用，它取得的不是FactoryBean本身，而是FactoryBean的getobject()方法所返回的对象。所以，如果容器中某个对象依赖于ProxyFactoryBean，那么它将会使用到ProxyFactoryBean的getObject()方法所返回的代理对象，这就是ProxyFactryBean得以在容器中游刃有余的原因。
+
+要让ProxyFactoryBean的getObject()方法返回相应目标对象类的代理对象其实很简单。因为ProxyFactoryBean继承了与ProxyFactory共有的父类ProxyCreatorSupport，而ProxyCreatorsupport基本上已经把要做的事情（如设置目标对象、配置其他部件、生成对应的AopProxy等）全部完成了。我们只需在ProxyFactoryBean的getObject()方法中通过父类的createAopProxy()取得相应的AopProxy，然后“return AopProxy.getProxy()”即可。
+
+因为涉及FactoryBean，所以在实现getobject()时，逻辑上还得点缀一下。我们来看ProxyFactoryBean的getobject()定义(见代码清单9-26)。
+
+代码清单9-26 ProxyEactorxBean的getobject()方法逻辑
+
+```java
+public Object getObject() throws BeansException {
+    initializeAdvisorChain();
+    if (isSingleton()) {
+    return getsingletonInstance();
+    } else {
+    if (this.targetName == null) {
+        logger.warn ("Using non-singleton proxies with singleton targets is often undesirable." +
+        "Enable prototype proxies by setting the 'targetName' property.");
+    }
+    return new PrototypeInstance();
+    }
+}
+```
+
+FactoryBean定义中要求标明返回的对象是以singleton的scope返回，还是以prototype的scope返回。
+所以，得针对这两种情况分别返回不同的代理对象，以满足pactoryBean的issingleton()方法的语义。
+
+如果将ProxyFactoryBean的singleton属性设置为true，则proxyFactoryBean在第一次生成代理对象之后，会通过内部实例变量singletonInstance(Obiect类型)缓存生成的代理对象。之后，所有的谐求将会返回这一缓存实例，从而满足singleton的语义。反之，如果将ProxyFactoryBean的singleton属性设置为false，那么，ProxyFactoryBean每次都会重新检测各项设置，并为当前调用准备一套新的环境，然后再根据最新的环境数据，返回一个新的代理对象。因此，如果singleton属性为fa1se,在生成代理对象的性能上存在损失。如果非要这么做,请确保有充足的理由。singleton默认值为true，即返回同一个代理对象实例。
+
+如果对ProxyFactoryBean的细节感兴趣，可以读一下proxyFactoryBean的代码。
+
+#### 2. ProxyFactoryBean的使用
+
+与ProxyFactory一样，通过ProxyFactoryBean，我们可以在生成目标对象的代理对象的时候，指定使用基于接口的代理还是基于类的代理方式，而且，因为它们全部继承自同一个父类，大部分可设置项目都相同。不过，ProxyFactoryBean在继承了父类proxyCreatorsupport的所有配置属性之外，还添加了几个自己独有的，如下所示。
+
+- proxyInterfaces。如果我们要采用基于接口的代理方式，那么需要通过该属性配置相应的接口类型，这是一个Collection类型实例，所以我们可以通过配置元素\<list>来指定一个或者多个接口类型。实际上，这与通过Interfaces属性指定接口类型是等效的，我们完全可以随个人喜好来使用，虽然使用proxyInterfaces可以保持使用上的统一风格。另外，如果目标对象实现了某个或者多个接口，即使我们不通过该属性指定要代理的接口类型，ProxyFactroyBean也可以自动检测到目标对象所实现的接口，并对其进行基于接口的代理因为ProxyFactoryBean有一个autodetectInterfaces属性，该属性默认值为true，即如果没有明确指定要代理的接口类型，ProxyFactoryBean会自动检测目标对象所实现的接口类型并进行代理。
+- interceptorNames。通过该属性，我们可以指定多个将要织入到目标对象的Advice、拦截器以及Advisor,而再也不用通过ProxyFactory那样的addAdvice或者addadvisor方法一个一个地添加了。因为该属性属于Collection类型，所以通常我们会使用配置元素\<list>添加需要的拦截器名称。该属性有两个特性需要提及，如以下所述。
+
+  - 如果没有通过相应的设置目标对象的方法明确为ProxyFactoryBean设置目标对象，那么可以在interceptorNames的最后一个元素位置，放置目标对象的bean定义名称。这是个特例，大部分情况下，还是建议明确指定目标对象，而避免这种配置方式。
+  - 通过在指定的interceptorNames某个元素名称之后添加*通配符，可以让ProxyFactoryBean在容器中搜寻符合条件的所有的Advisor并应用到目标对象。这些符合条件的Advisor，Spring参考文档中称之为global advisor。代码清单9-27给出了这种用法的示例。
+
+- singleton。因为ProxyFactoryBean本质上是一个FactoryBean，所以我们可以通过singleton属性，指定每次getobject调用是返回同一个代理对象，还是返回一个新的。通常情况下是返回同一个代理对象，即singieton为true。只有在需要返回有状态的代理对象的情况下，才会将singleton设置为false，如使用Introduction的场合。
 
 ### 9.5.4 加快织入的自动化进程
 
@@ -903,8 +1077,28 @@ System.out.println(proxyObject.getClass());
 
 ### 9.6.2 自定义TargetSource
 
+说了这么多可以使用的Targetsource实现，大部分情况下应该够用了。不过，永远也不能排除特殊情况，我们还得做好实现自定义Targetsource的准备。
 
-## 9.2 小结
+要实现自定义的Targetsource，我们可以直接扩展Targetsource接口，好在这个接口定义的方法不多，如下所示:
+
+```java
+public interface TargetSource extends TargetClassAware {
+    Class getTargetClass()boolean isStatic();
+    Object getTarget() throws Exception;
+    void releaseTarget(Object target) throws Exception;
+}
+```
+
+从下面的方法名称上，我估计各位就能猜出个大概了。
+
+- getTargetClass()方法返回目标对象类型；
+- isStatic()用于表明是否要返回同一个目标对象实例，singletonTargetSource的这个方法肯定是返回true，其他的实现根据情况，通常返回false；
+- getTarget()是核心，要返回哪个目标对象实例，完全由它说了算；
+- 具体调用过程的结束，如果isstatic()为false，则会调用releaserarget()以释放当前调用的目标对象。但是否需要释放，完全是由实现的需要决定的，大部分时候，该方法可以空着不实现。
+
+为了演示Targetsource的特性以及如何实现一个argetSource，我实现了一个简单的Alterna-tiveTargetsource。它内部有一个计数器，当计数器为奇数的时候，TargetSource将针对当前调用返回第一个目标对象实例；否则，返回第二个目标对象实例。Alternativerargetsource的定义如代码清单9-45所示。
+
+## 9.7 小结
 
 本章我们详尽剖析了Spring AOP中的各种概念和实现原理，这些概念和实现原理是Spring AOP发布之初就确定的，是整个框架的基础。纵使框架版本如何升级，甚至为SpringAOP加入更多的特性，在升级和加入更多更多特性的过程中，也将一直秉承SpringAOP的这些理念。
 
