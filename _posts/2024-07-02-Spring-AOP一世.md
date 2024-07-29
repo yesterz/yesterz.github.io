@@ -2,7 +2,7 @@
 title: ch9 Spring AOP 一世
 date: 2024-07-02 10:20:00 +0800
 author: 
-categories: [Cafe baby]
+categories: []
 tags: [Spring]
 pin: false
 math: true
