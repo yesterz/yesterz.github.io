@@ -92,26 +92,29 @@ Maven 还为全世界的 Java 开发者提供了一个免费的中央仓库，�
 
 5. 检查Maven是否安装正确
 
-	```
-	C:\Users\Administrator>mvn -v
-	Apache Maven 3.8.2 (ea98e05a04480131370aa0c110b8c54cf726c06f)
-	Maven home: D:\devsoft\apache-maven-3.8.2
-	Java version: 1.8.0_161, vendor: Oracle Corporation, runtime: D:\devsoft\Java\jdk1.8.0_161\jre
-	Default locale: zh_CN, platform encoding: GBK
-	OS name: "windows 10", version: "10.0", arch: "amd64", family: "windows"
-	```
+```shell
+C:\Users\Administrator>mvn -v
+Apache Maven 3.8.2 (ea98e05a04480131370aa0c110b8c54cf726c06f)
+Maven home: D:\devsoft\apache-maven-3.8.2
+Java version: 1.8.0_161, vendor: Oracle Corporation, runtime: D:\devsoft\Java\jdk1.8.0_161\jre
+Default locale: zh_CN, platform encoding: GBK
+OS name: "windows 10", version: "10.0", arch: "amd64", family: "windows"
+```
 
-	
+```shell
+➜  ~ mvn -v
+Apache Maven 3.6.3
+Maven home: /usr/share/maven
+Java version: 17.0.12, vendor: Ubuntu, runtime: /usr/lib/jvm/java-17-openjdk-amd64
+Default locale: zh_CN, platform encoding: UTF-8
+OS name: "linux", version: "5.15.153.1-microsoft-standard-wsl2", arch: "amd64", family: "unix"
+```
 
 ### 2.2 IDEA整合Maven
 
 #### 2.2.1 IDEA下载安装和破解
 
 IDEA下载：https://www.jetbrains.com/idea/download/#section=windows
-
-​              或使用 软件/ideaIU-2021.2.1.exe (使用该版本，后续配置将和教程一样)
-
-IDEA破解：https://tech.souyunku.com/?p=49115
 
 **注意安装时将老版本先卸载掉。**
 
