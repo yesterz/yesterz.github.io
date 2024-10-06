@@ -12,8 +12,6 @@ img_path: /assets/images/Learning-SSH/
 
 # SSH远程安全登录
 
-
-
 ![image-20220421180411182](image-20220421180411182.png)
 
 * 机器准备
