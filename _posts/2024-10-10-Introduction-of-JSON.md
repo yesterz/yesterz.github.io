@@ -38,6 +38,95 @@ JSON-text = object / array
 
 
 
+### 2.1 Values
+
+JSON的值必须是对象（object），数组（array），字符串（string）或者这三个其中之一：`false`，`null`，`true`。
+
+1. 必须是三者之一：`false`、`null`、`true`；
+2. 必须是小写。
+
+value = false / null / true / object / array / number / string
+
+### 2.2 Objects
+
+一个JSON对象的表示是由一对话括号（a pair of curly brackets）包裹的0或多个键值对。一个键就是一个字符串，然后每个键后面跟着一个英文冒号（a single colon），英文冒号是用来分隔键和值的。键的名字在对象中应该唯一（unique）。
+
+This is a JSON object:
+
+```json
+{
+  "Image": {
+      "Width":  800,
+      "Height": 600,
+      "Title":  "View from 15th Floor",
+      "Thumbnail": {
+          "Url":    "http://www.example.com/image/481989943",
+          "Height": 125,
+          "Width":  "100"
+      },
+      "IDs": [116, 943, 234, 38793]
+              }
+}
+```
+
+Its Image member is an object whose Thumbnail member is an object and whose IDs member is an array of numbers.
+
+### 2.3 Arrays
+
+一个数组的结构由一对方括号（square brackets）组成，并且里面有0到多个值（或者叫元素）。值（或者元素）之间由逗号分隔（commas）。
+
+This is a JSON array containing two objects:
+
+```json
+[
+  {
+     "precision": "zip",
+     "Latitude":  37.7668,
+     "Longitude": -122.3959,
+     "Address":   "",
+     "City":      "SAN FRANCISCO",
+     "State":     "CA",
+     "Zip":       "94107",
+     "Country":   "US"
+  },
+  {
+     "precision": "zip",
+     "Latitude":  37.371991,
+     "Longitude": -122.026020,
+     "Address":   "",
+     "City":      "SUNNYVALE",
+     "State":     "CA",
+     "Zip":       "94085",
+     "Country":   "US"
+  }
+]
+```
+
+### 2.4 Numbers
+
+数字的表示和大多数编程语言差不多，都类似。它可以包括负号、小数点和指数符号等。
+
+* 小数点（ decimal-point）：`.`
+* 数字1到9（digit1-9）：`1`，`2`等等，不列了
+* 指数（e）：大写`E`或者小写`e`
+* 指数表示（exp）：e [ minus / plus ] 1*DIGIT
+* 分数（frac）：decimal-point 1*DIGIT
+* 减号（minus）：`-`
+* 加号（plus）：`+`
+* 零（zero）：`0`
+
+### 2.5 Strings
+
+
+
+
+
+
+
+
+
+
+
 ## JSON
 
 JSON 格式（JavaScript Object Notation 的缩写）是一种用于数据交换的文本格式，2001年由 Douglas Crockford 提出，目的是取代繁琐笨重的 XML 格式。
@@ -95,5 +184,5 @@ JSON对象可以任意嵌套，以创建更复杂的对象：
 
 ## References
 
-1. The JavaScript Object Notation (JSON) Data Interchange Format  <datatracker.ietf.org/doc/html/rfc8259>
+1. The JavaScript Object Notation (JSON) Data Interchange Format  <https://datatracker.ietf.org/doc/html/rfc8259>
 2. RFC4627:  The application/json Media Type for JavaScript Object Notation (JSON) <https://datatracker.ietf.org/doc/html/rfc4627>
