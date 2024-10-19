@@ -90,7 +90,20 @@ telnet://192.0.2.16:80/
 urn:oasis:names:specification:docbook:dtd:xml:4.1.2
 ```
 
-### 绝对 URI 的格式
+## HTTP 的 URL 格式
+
+URI 定义了一个互联网资源，通常解析为服务器根目录的相对路径。因此，通常用“/”符号打头。
+
+URL 是 URI 的一个具体类型（详见<https://www.rfc-editor.org/rfc/rfc2396>）。
+
+通常，HTTP 的 URL 格式如下：
+
+```plaintext
+protocol://[host.]domain[:port][/context][/resource][?query string | path variable]
+protocol://IP Address[:port][/context][/resource][?query string | path variable]
+```
+
+其中，方括号中的内容是可选项。
 
 ```plaintext
 http://user:pass@www.example.jp:80/dir/index.htm?uid=1#ch1
@@ -108,3 +121,19 @@ http://user:pass@www.example.jp:80/dir/index.htm?uid=1#ch1
 
 > [0:0:0:0:0:0:0:1]是一种 IPv6 地址，在浏览器上访问 IPv6 的地址需要加中括号`[]`
 {: .prompt-tip }
+
+URL 中的 host 部分用来表示在互联网或内网中一个唯一的地址。
+
+例如，<http://yahoo.com>（没有 host）访问的地址完全不同于 <http://mail.yahoo.com>（有 host）。
+
+多年以来，作为最受欢迎的主机名，www 是默认的主机名。通常，<http://www.domainName> 会映射到 <http://domainName>。
+
+HTTP的默认端口是80端口，因此，对于采用80端口的Web服务器，无需输入端口号。有时，Web服务器并未运行在80端口上，此时必须输入相应的端口号。例如，Tomcat囗服务器的默认端口号是8080，为了能正确访问，必须提供输入端口号。
+
+<http://localhost:8080/index.html>
+
+localhost作为一个保留关键字，用于指向本机。
+
+URL 中的 context 部分用来代表应用名称，该部分也是可选的。一台Web服务器可以运行多个上下文(应用)，其中一一个可以配置为默认上下文。若访问默认上下文中的资源，可以跳过context部分。
+
+最后，一个context可以有一一个或多个默认资源(通常为index.html、 index.htm或者defaulthtm)。一个没有带资源名称的URL通常指向默认资源。当存在多个默认资源时，其中最高优先级的资源将被返回给客户端。资源名后可以有一个或多个査询语句或者路径参数。査询语句是一个KeNaue 组，多个査询语句间用“&”符号分隔。路径参数类似于查询语句，但只有value部分，多个value部分用“"符号分隔。
