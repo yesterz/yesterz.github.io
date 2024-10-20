@@ -75,7 +75,10 @@ URI Uniform Resource Identifier 统一资源标识符 vs. URL Uniform Resource L
 
 标准的 URI 协议方案有 30 种左右，由隶属于国际互联网资源管理的非营利社团 ICANN（Internet Corporation for Assigned Names and Numbers，互联网名称与数字地址分配机构）的 IANA（Internet Assigned Numbers Authority，互联网号码分配局）管理颁布。IANA - Uniform Resource Identifier (URI) SCHEMES（统一资源标识符方案）-> <http://www.iana.org/assignments/uri-schemes>
 
-**区别：**URI 用字符串标识某一互联网资源，而 URL 表示资源的地点（互联网上所处的位置）。可见 URL 是 URI 的子集。
+**区别：**URI 用字符串标识某一互联网资源，而 URL 表示资源的地点（互联网上所处的位置）。可见 URL 是 URI 的子集（网上都这么说，我查了文档）。
+
+> URI, URL, and URN from <https://www.rfc-editor.org/rfc/rfc2396> <br> A URI can be further classified as a locator, a name, or both.  The term "Uniform Resource Locator" (URL) refers to the subset of URI that identify resources via a representation of their primary access mechanism (e.g., their network "location"), rather han identifying the resource by name or by some other attribute(s) of that resource. The term "Uniform Resource Name" (URN) refers to the subset of URI that are required to remain globally unique and persistent even when the resource ceases to exist or becomes unavailable.
+{: .prompt-tip }
 
 “RFC3986：统一资源标识符（URI）通用语法”中列举了几种 URI 例子，如下所示。
 
@@ -119,7 +122,7 @@ http://user:pass@www.example.jp:80/dir/index.htm?uid=1#ch1
 | **查询字符串**        | 附加参数到已指定的文件路径内资源。可选项。                                                | `?uid=1`                              |
 | **片段标识符**        | 标记出已获取资源中的子资源或文档内的特定位置。可选项。                                    | `#ch1`                                |
 
-> [0:0:0:0:0:0:0:1]是一种 IPv6 地址，在浏览器上访问 IPv6 的地址需要加中括号`[]`
+> [0:0:0:0:0:0:0:1]是一种 IPv6 地址，在浏览器上访问 IPv6 的地址需要加中括号[]
 {: .prompt-tip }
 
 URL 中的 host 部分用来表示在互联网或内网中一个唯一的地址。
