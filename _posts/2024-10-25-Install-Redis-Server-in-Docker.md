@@ -44,6 +44,9 @@ ae603439ff6f   redis     "docker-entrypoint.s…"   4 seconds ago   Up 2 seconds
 root@ae603439ff6f:/data# redis-cli
 127.0.0.1:6379> ping
 PONG
+➜  ~ docker exec -it rds /usr/local/bin/redis-cli
+127.0.0.1:6379> ping
+PONG
 127.0.0.1:6379>
 
 ```
