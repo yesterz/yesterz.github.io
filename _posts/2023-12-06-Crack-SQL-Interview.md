@@ -833,7 +833,6 @@ where rk = 1
 
 ### [534. 游戏玩法分析 III](https://leetcode-cn.com/problems/game-play-analysis-iii/)
 
-难度中等20收藏分享切换为英文关注反馈
 
 SQL架构
 
@@ -911,7 +910,6 @@ group by 1,2;
 
 ### [550. 游戏玩法分析 IV](https://leetcode-cn.com/problems/game-play-analysis-iv/)
 
-难度中等17收藏分享切换为英文关注反馈
 
 SQL架构
 
@@ -1313,7 +1311,6 @@ where bonus<1000 or bonus is null
 
 ### [578. 查询回答率最高的问题](https://leetcode-cn.com/problems/get-highest-answer-rate-question/)
 
-难度中等3收藏分享切换为英文关注反馈
 
 SQL架构
 
@@ -1535,7 +1532,6 @@ order by student_number desc
 
 ### [584. 寻找用户推荐人](https://leetcode-cn.com/problems/find-customer-referee/)
 
-难度简单9收藏分享切换为英文关注反馈
 
 SQL架构
 
@@ -1582,7 +1578,6 @@ SELECT name FROM customer WHERE referee_id != 2 OR referee_id IS NULL;
 
 ### [585. 2016年的投资](https://leetcode-cn.com/problems/investments-in-2016/)
 
-难度中等14收藏分享切换为英文关注反馈
 
 SQL架构
 
@@ -1830,7 +1825,7 @@ having count(distinct student)>=5
 
 ### [597. 好友申请 I ：总体通过率](https://leetcode-cn.com/problems/friend-requests-i-overall-acceptance-rate/)
 
-难度简单21收藏分享切换为英文关注反馈
+
 
 SQL架构
 
@@ -1896,7 +1891,7 @@ round(
 
 ### [601. 体育馆的人流量](https://leetcode-cn.com/problems/human-traffic-of-stadium/)
 
-难度困难113收藏分享切换为英文关注反馈
+
 
 SQL架构
 
@@ -2699,7 +2694,6 @@ FROM
 
 ### [620. 有趣的电影](https://leetcode-cn.com/problems/not-boring-movies/)
 
-难度简单86收藏分享切换为英文关注反馈
 
 SQL架构
 
@@ -4485,7 +4479,6 @@ group by activity_date
 
 ### [1142. 过去30天的用户活动 II](https://leetcode-cn.com/problems/user-activity-for-the-past-30-days-ii/)
 
-难度简单7收藏分享切换为英文关注反馈
 
 SQL架构
 
@@ -4554,7 +4547,7 @@ where activity_date > date_add('2019-07-27',INTERVAL -1 MONTH)
 
 ### [1148. 文章浏览 I](https://leetcode-cn.com/problems/article-views-i/)
 
-难度简单3收藏分享切换为英文关注反馈
+
 
 SQL架构
 
@@ -4614,7 +4607,7 @@ order by id
 
 ### [1149. 文章浏览 II](https://leetcode-cn.com/problems/article-views-ii/)
 
-难度中等4收藏分享切换为英文关注反馈
+
 
 SQL架构
 
@@ -6699,7 +6692,7 @@ where lg is not null
 
 ### [1322. 广告效果](https://leetcode-cn.com/problems/ads-performance/)
 
-难度简单8收藏分享切换为英文关注反馈
+
 
 SQL架构
 

@@ -9,7 +9,10 @@ math: false
 mermaid: false
 ---
 
-## ch5 共享模型之内存
+## 5 共享模型之内存
+
+1. 共享变量在多线程间的“可见性”问题；
+2. 多条指令执行时的“有序性”问题。
 
 ## Java 内存模型
 
@@ -17,9 +20,9 @@ JMM 即 Java Memory Model，它定义了主存，工作内存抽象概念，底�
 
 JMM 体现在以下几个方面
 
-- 原子性 - 保证指令不会受到线程上下文切换的影响
-- 可见性 - 保证指令不会受 CPU 缓存影响
-- 有序性 - 保证指令不会受 CPU 指令并行优化的影响
+- 原子性 - 保证指令不会受到线程上下文切换的影响；
+- 可见性 - 保证指令不会受 CPU 缓存影响；
+- 有序性 - 保证指令不会受 CPU 指令并行优化的影响；
 
 ## 可见性
 
@@ -28,30 +31,62 @@ JMM 体现在以下几个方面
 main 线程对 run 变量的修改对于 t 线程不可见，导致了 t 线程无法停止：
 
 ```java
-static boolean run = true;
-public static void main(String[] args) {
-		Thread t = new Thread(() -> {
-				while(run) {
-						// ....
-				}
-		});
-		t.start();
-		sleep(1);
-		run = false; // 线程 t 不会如预想的停下来
+package wiki.yesterz;
+
+import java.util.concurrent.TimeUnit;
+
+public class ThreadDemo {
+    static boolean run = true;
+    public static void main(String[] args) throws InterruptedException {
+        Thread t = new Thread(() -> {
+            while(run) {
+                // ....
+                System.out.println("Hello Thread");
+            }
+        });
+        t.start();
+        TimeUnit.SECONDS.sleep(2);
+        run = false; // 线程 t 不会如预想的停下来
+    }
 }
+
 ```
 
 **分析原因：**
 
-1. 初始状态，t 线程刚开始从主内存读取了 run 的值到工作内存
-2. 因为 t 线程要频繁从主内存读取 run 的值，JIT 编译器会将 run 的值缓存至自己工作中的高速缓存中，减少对主存中 run 的访问，提高效率
-3. 1 秒之后，main 线程修改了 run 的值，并同步至主存，而 t 是从自己工作内存中的高速缓存中读取这个变量的值，结果永远是旧值
+1. 初始状态，t 线程刚开始从主内存读取了 run 的值到工作内存；
+2. 因为 t 线程要频繁从主内存读取 run 的值，JIT 编译器会将 run 的值缓存至自己工作中的高速缓存中，减少对主存中 run 的访问，提高效率；
+3. 1 秒之后，main 线程修改了 run 的值，并同步至主存，而 t 是从自己工作内存中的高速缓存中读取这个变量的值，结果永远是旧值。
 
 **解决办法：**
 
 使用 `volatile` 关键字
 
-它用来修饰成员变量和静态成员变量，他可以避免线程从自己的工作缓存中查找变量的值，必须到主存中获取它的值，线程操作 volatile 变量都是之间操作主存
+它用来修饰成员变量和静态成员变量，他可以避免线程从自己的工作缓存中查找变量的值，必须到主存中获取它的值，线程操作 volatile 变量都是之间操作主存。
+
+```java
+package wiki.yesterz;
+
+import java.util.concurrent.TimeUnit;
+
+public class ThreadDemo {
+    static volatile boolean run = true;
+    public static void main(String[] args) throws InterruptedException {
+        Thread t = new Thread(() -> {
+            while(run) {
+                // ....
+                System.out.println("Hello Thread");
+                System.out.println("run is " + run);
+            }
+        });
+        t.start();
+        TimeUnit.SECONDS.sleep(2);
+        // Thread t will stop after 2 seconds.
+        run = false;
+    }
+}
+
+```
 
 ### 可见性 VS 原子性
 
@@ -83,7 +118,7 @@ putstatic i // 线程2-将修改后的值存入静态变量i 静态变量i=-1
 > **注意** synchronized 语句块既可以保证代码块的原子性，也同时保证代码块内变量的可见性。但缺点是 synchronized 是属于重量级操作，性能相对更低
 > 
 
-**Q** 如果在前面示例的死循环中加入 System.out.pringln() 会发现即使不加 volatile 修饰符，线程 t 也能正确看到对 run 变量修改了，想一想为什么？
+**Q** 如果在前面示例的死循环中加入 System.out.println() 会发现即使不加 volatile 修饰符，线程 t 也能正确看到对 run 变量修改了，想一想为什么？
 
 **Ans** 
 
@@ -99,17 +134,14 @@ putstatic i // 线程2-将修改后的值存入静态变量i 静态变量i=-1
 
 #### CPU 缓存结构
 
-![Untitled](/assets/images/MemoryImages/Untitled.png)
+![Untitled](/assets/images/MemoryImages/Untitled.jpg)
 
 查看 CPU 缓存 `lscpu`
 
-![黑马老师提供的](/assets/images/MemoryImages/Untitled%201.png)
-
-黑马老师提供的
+> lscpu - display information about the CPU architecture
+{: .prompt-info }
 
 ![自己电脑的wsl](/assets/images/MemoryImages/Untitled%202.png)
-
-自己电脑的wsl
 
 速度比较
 
@@ -171,11 +203,11 @@ MESI 协议
 Memory Barrier（Memory Fence）
 
 - 可见性
-    - 写屏障（sfence）保证在该屏障之前的，对共享变量的改动，都同步到主存中
-    - 而读屏障（lfence）保证在该屏障之后，对共享变量的读取，加载的是主存中最新数据
+  - 写屏障（sfence）保证在该屏障之前的，对共享变量的改动，都同步到主存中；
+  - 而读屏障（lfence）保证在该屏障之后，对共享变量的读取，加载的是主存中最新数据；
 - 有序性
-    - 写屏障会确保指令重排序时，不会将写屏障之前的代码排在写屏障之后
-    - 读屏障会确保指令重排序时，不会将读屏障之后的代码排在读屏障之前
+  - 写屏障会确保指令重排序时，不会将写屏障之前的代码排在写屏障之后；
+  - 读屏障会确保指令重排序时，不会将读屏障之后的代码排在读屏障之前；
 
 ![Untitled](/assets/images/MemoryImages/Untitled%207.png)
 
@@ -212,7 +244,7 @@ i = ...;
 
 ### volatile 修饰的变量，可以禁用指令重排
 
-### 原理之 volatile
+### volatile 原理
 
 volatile 的底层实现原理是内存屏障，Memory Barrier（Memory Fence）
 
@@ -224,24 +256,24 @@ volatile 的底层实现原理是内存屏障，Memory Barrier（Memory Fence）
 写屏障（sfence）保证在该屏障之前的，对共享变量的改动，都同步到主存当中
 
 ```java
-public void actor2(I_Result r) {
-		num = 2;
-		ready = true; // ready 是 volatile 赋值带写屏障
-		// 写屏障
-}
+    public void actor2(I_Result r) {
+        num = 2;
+        ready = true; // ready 是 volatile 赋值带写屏障
+        // 写屏障
+    }
 ```
 
 而读屏障（lfence）保证在该屏障之后，对共享变量的读取，加载的是主存中最新数据
 
 ```java
 public void actor1(I_Result r) {
-		// 读屏障
-		// ready 是 volatile 读取值带读屏障
-		if(ready) {
-				r.r1 = num + num;
-		} else {
-				r.r1 = 1;
-		}
+        // 读屏障
+        // ready 是 volatile 读取值带读屏障
+        if(ready) {
+                r.r1 = num + num;
+        } else {
+                r.r1 = 1;
+        }
 }
 ```
 
@@ -253,9 +285,9 @@ public void actor1(I_Result r) {
 
 ```java
 public void actor2(I_Result r) {
-		num = 2;
-		ready = true; // ready 是 volatile 赋值带写屏障
-		// 写屏障
+        num = 2;
+        ready = true; // ready 是 volatile 赋值带写屏障
+        // 写屏障
 }
 ```
 
@@ -263,13 +295,13 @@ public void actor2(I_Result r) {
 
 ```java
 public void actor1(I_Reasult) {
-		// 读屏障
-		// ready 是 volatile 读取值带读屏障
-		if(ready) {
-				r.r1 = num + num;
-		} else {
-				r.r1 = 1;
-		}
+        // 读屏障
+        // ready 是 volatile 读取值带读屏障
+        if(ready) {
+                r.r1 = num + num;
+        } else {
+                r.r1 = 1;
+        }
 }
 ```
 
@@ -282,7 +314,7 @@ public void actor1(I_Reasult) {
 
 ![Untitled](/assets/images/MemoryImages/Untitled%2010.png)
 
-#### dcl问题 (double-check locking)
+#### DCL 问题 (double-check locking)
 
 以著名的 double-checked locking 单例模式为例
 
@@ -336,7 +368,7 @@ public final class Singleton {
 
 字节码上看不出来 volatile 指令的效果
 
-```java
+```plaintext
 // -------------------------------------> 加入对 INSTANCE 变量的读屏障
 0: getstatic #2 // Field INSTANCE:Lcn/itcast/n5/Singleton;
 3: ifnonnull 37
@@ -366,12 +398,12 @@ public final class Singleton {
 如上面的注释内容所示，读写 volatile 变量时会加入内存屏障（Memory Barrier（Memory Fence）），保证下面两点：
 
 1. 可见性
-    1. 写屏障（sfence）保证在该屏障之前的 t1 对共享变量的改动，都同步到主存当中
-    2. 而读屏障（lfence）保证在该屏障之后 t2 对共享变量的读取，加载的是主存中最新数据
+    1. 写屏障（sfence）保证在该屏障之前的 t1 对共享变量的改动，都同步到主存当中；
+    2. 而读屏障（lfence）保证在该屏障之后 t2 对共享变量的读取，加载的是主存中最新数据；
 2. 有序性
-    1. 写屏障会确保指令重排序时，不会将写屏障之前的代码排在写屏障之后
-    2. 读屏障会确保指令重排序时，不会将读屏障之后的代码排在读屏障之前
-3. 更底层是读写变量时使用 lock 指令来多核 CPU 之间的可见性与有序性
+    1. 写屏障会确保指令重排序时，不会将写屏障之前的代码排在写屏障之后；
+    2. 读屏障会确保指令重排序时，不会将读屏障之后的代码排在读屏障之前；
+3. 更底层是读写变量时使用 lock 指令来多核 CPU 之间的可见性与有序性；
 
 ![Untitled](/assets/images/MemoryImages/Untitled%2011.png)
 
@@ -386,15 +418,15 @@ static int x;
 static object m = new Object();
 
 new Thread(() -> {
-		synchronized(m) {
-				x = 10;
-		}
+        synchronized(m) {
+                x = 10;
+        }
 }, "t1").start();
 
 new Thread(() -> {
-		synchronized(m) {
-				System.out.println(x);
-		}
+        synchronized(m) {
+                System.out.println(x);
+        }
 }, "t2").start();
 ```
 
@@ -404,11 +436,11 @@ new Thread(() -> {
 volatile static int x;
 
 new Thread(() -> {
-		x = 10;
+        x = 10;
 }, "t1").start();
 
 new Thread(() -> {
-		System.out.println(x);
+        System.out.println(x);
 }, "t2").start();
 ```
 
@@ -418,7 +450,7 @@ new Thread(() -> {
 static int x;
 x = 10;
 new Thread(() -> {
-		System.out.println(x);
+        System.out.println(x);
 }, "t2").start();
 ```
 
@@ -427,7 +459,7 @@ new Thread(() -> {
 ```java
 static int x;
 Thread t1 = new Thread(() -> {
-		x = 10;
+        x = 10;
 }, "t1");
 t1.start();
 t1.join();
@@ -439,25 +471,25 @@ System.out.println(x);
 ```java
 static int x;
 public static void main(String[] args) {
-		Thread t2 = new Thread(()->{
-				while(true) {
-						if(Thread.currentThread().isInterrupted()) {
-								System.out.println(x);
-								break;
-						} // end if
-				} // end while
-		},"t2");
-		t2.start();
-		new Thread(()->{
-				sleep(1);
-				x = 10;
-				t2.interrupt();
-		},"t1").start();
+        Thread t2 = new Thread(()->{
+                while(true) {
+                        if(Thread.currentThread().isInterrupted()) {
+                                System.out.println(x);
+                                break;
+                        } // end if
+                } // end while
+        },"t2");
+        t2.start();
+        new Thread(()->{
+                sleep(1);
+                x = 10;
+                t2.interrupt();
+        },"t1").start();
 
-		 while(!t2.isInterrupted()) {
-				 Thread.yield();
-		 } // end while
-		 System.out.println(x);
+         while(!t2.isInterrupted()) {
+                 Thread.yield();
+         } // end while
+         System.out.println(x);
 } // end main
 ```
 
@@ -469,13 +501,13 @@ volatile static int x;
 static int y;
 
 new Thread(() -> {
-		y = 10;
-		x = 20;
+        y = 10;
+        x = 20;
 },"t1").start();
 
 new Thread(() -> {
-		// x=20 对 t2 可见，同时 y=10 也对 t2 可见
-		System.out.println(x);
+        // x=20 对 t2 可见，同时 y=10 也对 t2 可见
+        System.out.println(x);
 },"t2").start();
 ```
 
@@ -484,9 +516,7 @@ new Thread(() -> {
 
 **Q** happens-before 规则，有什么
 
-**Ans** 
-
-happens-before 规则是一种在多线程编程中用于描述操作顺序和可见性的规则。它定义了对于不同线程执行的操作，哪些操作一定在另一些操作之前发生，并且哪些操作的结果对于另一些操作可见。
+**Ans** happens-before 规则是一种在多线程编程中用于描述操作顺序和可见性的规则。它定义了对于不同线程执行的操作，哪些操作一定在另一些操作之前发生，并且哪些操作的结果对于另一些操作可见。
 
 具体来说，以下是 happens-before 规则的几个关键点：
 
@@ -514,7 +544,7 @@ happens-before关系可以通过以下方式建立：
 
 1. 程序顺序规则：同一个线程中，按照程序的顺序，前一个操作 happens-before 后一个操作。
 2. 监视器锁规则：对一个监视器锁的解锁操作 happens-before 后续对同一个监视器锁的加锁操作。
-3. volatile变量规则：对一个 volatile 变量的写操作 happens-before 后续对同一个 volatile 变量的读操作。
+3. volatile 变量规则：对一个 volatile 变量的写操作 happens-before 后续对同一个 volatile 变量的读操作。
 4. 线程启动规则：线程的启动操作 happens-before 该线程中的任意操作。
 5. 线程终止规则：线程的所有操作 happens-before 其他线程检测到该线程已经终止。
 6. 中断规则：对线程 interrupt() 方法的调用 happens-before 被中断线程的代码检测到中断事件的发生。
@@ -522,7 +552,3 @@ happens-before关系可以通过以下方式建立：
 8. 传递性：如果事件 A hb→ 事件 B，并且事件 B hb→ 事件 C，则可以推断事件 A hb→ 事件 C。
 
 "happens-before" 关系是并发编程中的一个重要概念，它帮助我们理解和推断多线程程序中各个操作之间的顺序关系，以确保程序的正确性和可靠性。
-
-## ch5 章节小结 如图
-
-![Untitled](/assets/images/MemoryImages/Untitled%2012.png)
