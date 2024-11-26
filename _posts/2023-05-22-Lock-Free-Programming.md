@@ -20,16 +20,16 @@ mermaid: false
 那么它是如何实现的呢？
 
 ```java
-public void withdraw(Integer amount) {
-		while(true) {
-				while(true) {
-						int prev = balance.get();
-						int next = prev - amount;
-						if (balance.compareAndSet(prev, next))
-								break;
-				} // end while
-		} // end while
-} // end withdraw
+    public void withdraw(Integer amount) {
+        while (true) {
+            while (true) {
+                int prev = balance.get();
+                int next = prev - amount;
+                if (balance.compareAndSet(prev, next))
+                    break;
+            } // end while
+        } // end while
+    } // end withdraw
 ```
 
 其中的关键是 compareAndSet，它的简称就是 CAS （也有 Compare And Swap 的说法），它必须是原子操作。
@@ -42,7 +42,7 @@ public void withdraw(Integer amount) {
 > 在多核状态下，某个核执行到带 lock 的指令时，CPU 会让总线锁住，当这个核把此指令执行完毕，再开启总线。这个过程中不会被线程的调度机制所打断，保证了多个线程对内存操作的准确性，是原子的。
 > 
 
-### ****************volatile****************
+### volatile 关键字
 
 获取共享变量时，为了保证该变量的可见性，需要使用 volatile 修饰。
 
@@ -70,6 +70,12 @@ CAS 必须借助 volatile 才能读取到共享变量的最新值来实现 【�
 3. CAS 体现的是无锁并发、无阻塞并发，请仔细体会这两句话的意思
     1. 因为没有使用 synchronized ，所以线程不会陷入阻塞，这时效率提升的因素之一
     2. 但如果竞争激烈，可以想到重试必然频繁发生，反而效率会受影响
+
+### 高性能 CAS 处理机制
+
+1. compareAndSet()数据修改操作方法在 J.U.C 中被称为CAS机制，CAS(Compare-And-swap)是一条 CPU 并发原语(是CPU 的原生指令，是直接写在 CPU 内部的程序代码)。它的功能是判断内存某个位置的值是否为预期值，如果是则更改为新的值反之则不进行修改，这个过程属于原子性操作。
+2. 在多线程进行数据修改时，为了保证数据修改的正确性，常规的做法就是使用synchronized 同步锁，但是这种锁属于“悲观锁(Pessimistic Lock)”，每一个线程都需要在操作之前锁定当前的内存区域，而后才可以进行处理，这样一来在高并发环境下就会严重影响到程序的处理性能。
+3. 而 CAS 采用的是一种“乐观锁"(Optimistic Lock)机制,其最大的操作特点是不进行强制性的同步处理(没有 synchronized)而为了保证数据修改的正确性，添加了一些比较的数据(例如:compareAndset()在修改之前需要进行数据的比较)，采用的是-种冲突重试的处理机制，这样可以有效的避免线程阻塞问题的出现。在并发竟争不是很激烈的情况下，可以获得较好的处理性能,而在 JDK 1.9 后为了进一步提升 CAS 的操作性能，又追加了硬件处理指令集的支持，可以充分的发挥服务器硬件配置的优势，得到更好的处理性能。
 
 ## 原子整数
 
