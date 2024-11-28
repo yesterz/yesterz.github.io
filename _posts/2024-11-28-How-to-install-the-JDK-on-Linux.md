@@ -24,7 +24,7 @@ x86_64
 选择 Linux x64 Compressed Archive 版本，下载并校验文件完整性。
 
 ```shell
-wget https://download.oracle.com/java/17/archive/jdk-17.0.12_linux-x64_bin.tar.gz
+# wget https://download.oracle.com/java/17/archive/jdk-17.0.12_linux-x64_bin.tar.gz
 [root@iZ7xv0pw76zi75nqelv576Z ~]# wget https://download.oracle.com/java/17/archive/jdk-17.0.12_linux-x64_bin.tar.gz
 --2024-11-28 21:49:11--  https://download.oracle.com/java/17/archive/jdk-17.0.12_linux-x64_bin.tar.gz
 正在解析主机 download.oracle.com (download.oracle.com)... 23.48.228.98
