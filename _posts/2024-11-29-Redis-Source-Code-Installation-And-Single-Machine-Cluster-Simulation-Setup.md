@@ -51,7 +51,8 @@ make[1]: Leaving directory `/root/redis-6.2.7/src'
 
 ```shell
 [root@iZ7xv0pw76zi75nqelv576Z redis-6.2.7]# ls
-00-RELEASENOTES  BUGS  CONDUCT  CONTRIBUTING  COPYING  deps  INSTALL  Makefile  MANIFESTO  README.md  redis.conf  runtest  runtest-cluster  runtest-moduleapi  runtest-sentinel  sentinel.conf  src  tests  TLS.md  utils
+00-RELEASENOTES  BUGS  CONDUCT  CONTRIBUTING  COPYING  deps  INSTALL  Makefile  MANIFESTO  README.md
+redis.conf  runtest  runtest-cluster  runtest-moduleapi  runtest-sentinel  sentinel.conf  src  tests  TLS.md  utils
 [root@iZ7xv0pw76zi75nqelv576Z redis-6.2.7]# make install PREFIX=/opt/redis
 cd src && make install
 make[1]: Entering directory `/root/redis-6.2.7/src'
@@ -67,12 +68,9 @@ make[1]: Leaving directory `/root/redis-6.2.7/src'
 
 ```
 
-
-
 ## 单机模拟搭建集群
 
 * master: 0, 1, 2
-
 * slave: 3, 4, 5
 
 ```shell
@@ -313,4 +311,3 @@ Cluster Manager Options:
 [root@iZ7xv0pw76zi75nqelv576Z ~]#
 
 ```
-
