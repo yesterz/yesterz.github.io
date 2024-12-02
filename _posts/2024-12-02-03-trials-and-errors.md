@@ -1,3 +1,14 @@
+---
+title: 3. 生学硬练
+author: 李笑来
+date: 2024-12-02 11:17:03 +0800
+categories: [self-training from lixiaolai]
+tags: [Self-training]
+pin: false
+math: true
+mermaid: true
+---
+
 # 3. 生学硬练
 
 无论我们做什么事情，大脑都要协调很多的器官才能够完成，它不仅要协调大脑外的各种器官，它还要协调自身内部的多个部位。无论是大脑外部的种种器官还是内部的各个部位，对大脑来说，都是大脑自身内部无数个**局域网**的联动……
