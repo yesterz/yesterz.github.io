@@ -1,7 +1,7 @@
 ---
 title: "List differences: DTO, VO, Entity, Domain, Model"
 author: 
-date: 2024-12-02 11:17:06 +0800
+date: 2025-01-16 09:05:06 +0800
 categories: [Uncategorized]
 tags: [Uncategorized]
 pin: false
