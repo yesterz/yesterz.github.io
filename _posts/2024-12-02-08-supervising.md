@@ -1,6 +1,6 @@
 ---
 title: 8. 自我监督
-author: 李笑来
+author: Xiaolai
 date: 2024-12-02 11:17:08 +0800
 categories: [self-training from lixiaolai]
 tags: [Self-training]
@@ -8,8 +8,6 @@ pin: false
 math: true
 mermaid: true
 ---
-
-# 8. 自我监督
 
 保证工作成效的一个重要关键在于，到最后总得有个**验收**。复杂的任务可以被拆分成可处理的小任务，而每个小任务都可以有它自己的验收环节 —— 为了这个不可或缺的环节真正发挥作用，还得为它配上足够系统完善的**验收标准**。而所谓的**验收标准**，说穿了倒也非常简单，只不过是**分得清好坏**。
 

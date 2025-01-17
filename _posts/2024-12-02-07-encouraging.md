@@ -1,6 +1,6 @@
 ---
 title: 7. 自我鼓励
-author: 李笑来
+author: Xiaolai
 date: 2024-12-02 11:17:07 +0800
 categories: [self-training from lixiaolai]
 tags: [Self-training]
@@ -8,8 +8,6 @@ pin: false
 math: true
 mermaid: true
 ---
-
-# 7. 自我鼓励
 
 自我驱动很好。一旦启动，我们就好像正在行驶的汽车一样。遇到颠簸、遇到弯道，它可能需要放慢速度，遇到陡坡的时候它可能需要加大马力，甚至，它也有可能半路抛锚，需要重新启动…… 而这一切，总是需要我们自己完成，虽然借助外力并不是不可以，但，靠自己总是更有效率。
 
