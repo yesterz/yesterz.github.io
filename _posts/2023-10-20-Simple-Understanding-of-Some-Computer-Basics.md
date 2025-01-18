@@ -35,8 +35,6 @@ mermaid: false
 
 ![img](\assets\images\Oct20Images\img10-1.png)
 
-
-
 每条信号线传输一个比特，以高电压表示信号“1”，低电压表示信号“0”，如图7-1 所示。
 
 ![img](\assets\images\Oct20Images\img7-1.png)
