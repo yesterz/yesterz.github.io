@@ -65,7 +65,7 @@ if (jedis.setnx(lockKey, val) == 1) {
 
 Redis 客户端为了**获取锁，**向 Redis 节点发送如下命令：
 
-```
+```redis
   SET lockKey requestId NX PX 30000
 ```
 
@@ -76,7 +76,7 @@ Redis 客户端为了**获取锁，**向 Redis 节点发送如下命令：
 
 在 Java 中使用 jedis 包的调用方法是：
 
-```
+```java
 String result = jedis.set(lockKey, requestId, "NX", "PX", expireTime)
 ```
 
@@ -88,7 +88,7 @@ String result = jedis.set(lockKey, requestId, "NX", "PX", expireTime)
 
 如果按照如下方式加锁：
 
-```
+```java
 String result = jedis.set(lockKey, requestId, "NX", "PX", expireTime);
 if ("OK".equals(result)) {
     return true;
@@ -107,7 +107,7 @@ return false;
 
 如何释放锁呢？Java 代码里在 finally 中释放锁，即无论代码执行成功或者失败，都要释放锁。
 
-```
+```java
 try{
     String result = jedis.set(lockKey, requestId, "NX", "PX", expireTime);
     if ("OK".equals(result)) {
@@ -123,9 +123,9 @@ try{
 
 上面那个 unlock(lockKey)代码释放锁有什么问题？**可能会出现释放别人的锁的问题。**
 
-有的同学可能会反驳：线程 A 获取了锁之后，它要是没有释放锁，这个时候别的线程假如线程 B、C……根本不可能获取到锁，何来释放别人锁之说？   
+有的同学可能会反驳：线程 A 获取了锁之后，它要是没有释放锁，这个时候别的线程假如线程 B、C……根本不可能获取到锁，何来释放别人锁之说？
 
-![Image](640.png) 
+![Image](640.png)
 
 1. 客户端 1 获取锁成功。
 2. 客户端 1 在某个操作上阻塞了很长时间。
@@ -138,11 +138,11 @@ try{
 
 前面使用 set 命令加锁的时候，除了使用 lockKey 锁标识之外，还使用了一个 requestId，这个 requestId 的作用是什么呢？
 
-> requestId 是在释放锁的时候用的！！！ 
+> requestId 是在释放锁的时候用的！！！
 
 伪代码如下：
 
-```
+```java
 if (jedis.get(lockKey).equals(requestId)) {
     jedis.del(lockKey);
     return true;
@@ -158,7 +158,7 @@ return false;
 
 ### 释放锁的问题：非原子操作
 
-```
+```java
 if (jedis.get(lockKey).equals(requestId)) {
     jedis.del(lockKey);
     return true;
@@ -187,7 +187,7 @@ return false;
 
 正确的释放锁姿势——锁的判断和删除都在服务端（Redis），使用 lua 脚本保证原子性：
 
-```
+```lua
   if redis.call("get",KEYS[1]) == ARGV[1] then
       return redis.call("del",KEYS[1])
   else
@@ -209,7 +209,7 @@ return false;
 
 如何解决这种问题？---- **续期，**Java 里我们可以使用 TimerTask 类来实现自动续期的功能，伪代码如下：
 
-```
+```java
 Timer timer = new Timer();
 timer.schedule(new TimerTask() {
     @Override
@@ -252,7 +252,7 @@ WAIT numreplicas timeout
 
 WAIT 命令作用：WAIT 命令阻塞当前客户端，直到所有先前的写入命令成功传输，并且由至少指定数量的副本（slave）确认。在主从、sentinel 和 Redis 群集故障转移中， WAIT 能够**增强（仅仅是增强，但不是保证）**数据的安全性。
 
-官方文档：https://redis.io/commands/wait
+官方文档：<https://redis.io/commands/wait>
 
 ![redis.io-commands-wait](redis.io-commands-wait.png)
 
@@ -260,9 +260,7 @@ WAIT 命令作用：WAIT 命令阻塞当前客户端，直到所有先前的写�
 
 ### Redlock 算法
 
-针对上面的问题，Redis 之父 antirez 设计了 Redlock 算法，Redlock 的算法描述就放在 Redis 的官网上：
-
-- https://redis.io/topics/distlock
+针对上面的问题，Redis 之父 antirez 设计了 Redlock 算法，Redlock 的算法描述就放在 Redis 的官网上：<https://redis.io/topics/distlock>
 
 在 Redlock 之前，很多人对于分布式锁的实现都是基于单个 Redis 节点的。而 Redlock 是基于多个 Redis 节点（都是 Master）的一种实现。前面基于单 Redis 节点的算法是 Redlock 的基础。
 
@@ -346,13 +344,13 @@ Redis 之父 Antirez 实现 Redlock 算法之后。有一天，Martin Kleppmann 
 
 ![image-20231205210348988](image-20231205210348988.png)
 
-- https://redis.io/topics/distlock
-- https://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html
-- http://antirez.com/news/101
+- <https://redis.io/topics/distlock>
+- <https://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html>
+- <http://antirez.com/news/101>
 
 Martin Kleppmann 在 2016-02-08 这一天发表了一篇 blog，名字叫“How to do distributed locking”，地址如下：
 
-- https://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html
+- <https://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html>
 
 Martin 在这篇文章中谈及了分布式系统的很多基础性的问题（特别是分布式计算的异步模型），对分布式系统的从业者来说非常值得一读。这篇文章大体可以分为两大部分：
 
