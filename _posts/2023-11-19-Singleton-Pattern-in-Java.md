@@ -78,7 +78,6 @@ public final class Singleton {
 
 满足了懒加载，又能保证`instance`实例的唯一性，但是`synchronized`关键字天生的排他性导致了`getInstance`方法只能在同一时刻被一个线程访问，性能差。
 
-
 ## Double-Check Lock(DCL)
 
 It's thread-safe.
@@ -158,7 +157,7 @@ public final class Singleton {
 ```java
 public class Singleton {
 
-    private byte[] date = new byte[1024];
+    private byte[] data = new byte[1024];
 
     private Singleton() {}
 
