@@ -2,8 +2,8 @@
 title: 显式锁的分类
 author: someone
 date: 2025-02-08 19:48:00 +0800
-categories: [Uncategorized]
-tags: [Uncategorized]
+categories: [Concurrent Programming]
+tags: [Concurrent Programming]
 pin: false
 math: false
 mermaid: false

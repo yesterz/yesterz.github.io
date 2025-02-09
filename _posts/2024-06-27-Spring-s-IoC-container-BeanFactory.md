@@ -1,33 +1,34 @@
+我们前面说过，Spring的IoC容器是一个IoC Service Provider，但是，这只是它被冠以IoC之名的部分原因，我们不能忽略的是“容器”。Spring的IoC容器是一个提供IoC支持的轻量级容器，除了基本的IoC支持，它作为轻量级容器还提供了IoC之外的支持。如在Spring的IoC容器之上，Spring还提供了相应的AOP框架支持、企业级服务集成等服务。Spring的IoC容器和IoC Service Provider所提供的服务之间存在一定的交集。
 
-我们前面说过，Spring 的 IoC 容器是一个 IoC Service Provider，但是，这只是它被冠以 IoC 之名的部分原因，我们不能忽略的是“容器”。Spring 的 IoC 容器是一个提供 IoC 支持的轻量级容器，除了基本的 IoC 支持，它作为轻量级容器还提供了 IoC 之外的支持。如在 Spring 的 IoC 容器之上，Spring 还提供了相应的 AOP 框架支持、企业级服务集成等服务。Spring 的 IoC 容器和 IoC Service Provider 所提供的服务之间存在一定的交集，二者的关系如图4-1所示。
+Spring 的 IoC 容器和 IoC Service Provider 之间的关系：
 
-[] Spring 的 IoC 容器和 IoC Service Provider 之间的关系
+Spring 的 IoC 容器：
 
-> 注意 本章将主要关注Spring的IoC容器提供的IoC相关支持以及衍生的部分高级特性。而IoC容器提供的其他服务将在后继章节中陆续阐述
-{: .prompt-danger }
+1. IoC Service Provider：对象创建管理、依赖注入服务；
+2. 对象生命周期管理；
+3. 线程管理；
+4. 企业服务集成；
+5. 查找服务；
+6. AOP支持；
+7. ……
 
 Spring 提供了两种容器类型：BeanFactory 和 ApplicationContext。
 
 * BeanFactory
 
-基础类型 IoC 容器，提供完整的 IoC 服务支持。如果没有特殊指定，默认采用延迟初始化策略（lazy-load）。只有当客户端对象需要访问容器中的某个受管对象的时候，才对该受管对象进行初始化以及依赖注入操作。所以，相对来说，容器启动初期速度较快，所需要的资源有限。对于资源有限，并且功能要求不是很严格的场景，BeanFactory 是比较合适的 IoC 容器选择。
+基础类型 IoC 容器，提供完整的 IoC 服务支持。如果没有特殊指定，默认采用延迟初始化策略（lazy-load）。只有当客户端对象需要访问容器中的某个受管对象的时候，才对该受管对象进行初始化以及依赖注入操作。所以，相对来说，容器启动初期速度较快，所需要的资源有限。对于资源有限，并且功能要求不是很严格的场景，BeanFactory是比较合适的IoC容器选择。
 
 * ApplicationContext
 
-ApplicationContext 在 BeanFactory 的基础上构建，是相对比较高级的容器实现，除了拥有 BeanFactory 的所有支持，ApplicationContext 还提供了其他高级特性，比如事件发布、国际化信息支持等，这些会在后面详述。ApplicationContext 所管理的对象，在该类型容器启动之后，默认全部初始化并绑定完成。所以，相对于 BeanFactory 来说，ApplicationContext 要求更多的系统资源，同时，因为在启动时就完成所有初始化，容器启动时间较之 BeanFactory 也会长一些。在那些系统资源充足，并且要求更多功能的场景中，ApplicationContext 类型的容器是比较合适的选择。
+ApplicationContext在BeanFactory的基础上构建，是相对比较高级的容器实现，除了拥有BeanFactory的所有支持，ApplicationContext还提供了其他高级特性，比如事件发布、国际化信息支持等，这些会在后面详述。ApplicationContext所管理的对象，在该类型容器启动之后，默认全部初始化并绑定完成。所以，相对于BeanFactory来说，ApplicationContext要求更多的系统资源，同时，因为在启动时就完成所有初始化，容器启动时间较之BeanFactory也会长一些。在那些系统资源充足，并且要求更多功能的场景中，ApplicationContext类型的容器是比较合适的选择。
 
-通过图 4-2，我们可以对 BeanFactory 和 ApplicationContext 之间的关系有一个更清晰的认识
+BeanFactory，顾名思义，就是生产Bean的工厂。当然，严格来说，这个“生产过程”可能不像说起来那么简单。既然Spring框架提倡使用POJO，那么把每个业务对象看作一个JavaBean对象，或许更容易理解为什么Spring的IoC基本容器会起这么一个名字。作为Spring提供的基本的IoC容器，BeanFactory可以完成作为IoC Service Provider的所有职责，包括业务对象的注册和对象间依赖关系的绑定。
 
-> 注意 ApplicationContext 间接继承自 BeanFactory，所以说它是构建于 BeanFactory 之上的 IoC 容器。此外，你应该注意到了，ApplicationContext 还继承了其他三个接口，它们之间的关系，我们将在第5章中详细说明。另外，在没有特殊指明的情况下，以 BeanFactory 为中心所讲述的内容同样适用于 ApplicationContext，这一点需要明确一下，二者有差别的地方会在合适的位置给出解释。
-{: .prompt-tip }
+BeanFactory就像一个汽车生产厂。你从其他汽车零件厂商或者自己的零件生产部门取得汽车零件送入这个汽车生产厂，最后，只需要从生产线的终点取得成品汽车就可以了。相似地，将应用所需的所有业务对象交给BeanFactory之后，剩下要做的，就是直接从BeanFactory取得最终组装完成并且可用的对象。至于这个最终业务对象如何组装，你不需要关心，BeanFactory会帮你搞定。
 
-BeanFactory，顾名思义，就是生产 Bean 的工厂。当然，严格来说，这个“生产过程”可能不像说起来那么简单。既然 Spring 框架提倡使用 POJO，那么把每个业务对象看作一个 JavaBean 对象，或许更容易理解为什么 Spring 的 IoC 基本容器会起这么一个名字。作为 Spring 提供的基本的 IoC 容器，BeanFactory 可以完成作为 IoC Service Provider 的所有职责，包括业务对象的注册和对象间依赖关系的绑定。
+所以，对于客户端来说，与BeanFactory打交道其实很简单。最基本地，BeanFactory肯定会公开一个取得组装完成的对象的方法接口，就像代码清单4-1中真正的BeanFactory的定义所展示的那样。
 
-BeanFactory 就像一个汽车生产厂。你从其他汽车零件厂商或者自己的零件生产部门取得汽车零件送入这个汽车生产厂，最后，只需要从生产线的终点取得成品汽车就可以了。相似地，将应用所需的所有业务对象交给 BeanFactory 之后，剩下要做的，就是直接从 BeanFactory 取得最终组装完成并且可用的对象。至于这个最终业务对象如何组装，你不需要关心，BeanFactory 会帮你搞定。
-
-所以，对于客户端来说，与 BeanFactory 打交道其实很简单。最基本地，BeanFactory 肯定会公开一个取得组装完成的对象的方法接口，就像代码清单 4-1 中真正的 BeanFactory 的定义所展示的那样。
-
-代码清单 16 4-1 BeanFactory 的定义
+代码清单4-1 BeanFactory 的定义
 
 ```java
 package org.springframework.beans.factory;
@@ -61,7 +62,9 @@ public interface BeanFactory {
 } 
 ```
 
-上面代码中的方法基本上都是查询相关的方法，例如，取得某个对象的方法（getBean）、查询某个对象是否存在于容器中的方法（containsBean），或者取得某个 bean 的状态或者类型的方法等。因为通常情况下，对于独立的应用程序，只有主入口类才会跟容器的API直接耦合。
+上面代码中的方法基本上都是查询相关的方法，例如，取得某个对象的方法（getBean）、查询某个对象是否存在于容器中的方法（containsBean），或者取得某个bean的状态或者类型的方法等。
+
+因为通常情况下，对于独立的应用程序，只有主入口类才会跟容器的API直接耦合。
 
 ## 4.1 拥有 BeanFactory 之后的生活
 
@@ -190,21 +193,18 @@ public static BeanFactory bindViaCode(BeanDefinitionRegistry registry) {
 > 在Spring的术语中，把BeanFactory需要使用的对象注册和依赖绑定信息称为Configuration Metadata。我们这里所展示的，实际上就是组织这些Configuration Metadata的各种方式。因此这个标题才这么长
 {: .prompt-warning }
 
-BeanFactory 只是一个接口，我们最终需要一个该接口的实现来进行实际的Bean的管理，efaultListableBeanFactory 就是这么一个比较通用的 BeanFactory 实现类。DefaultListableBeanFactory除了间接地实现了 BeanFactory 接口，还实现了 BeanDefinitionRegistry 接口，该接口才是在BeanFactory的实现中担当Bean注册管理的角色。基本上，BeanFactory接口只定义如何访问容器内管理的Bean的方法，各个BeanFactory的具体实现类负责具体Bean的注册以及管理工作。BeanDefinitionRegistry接口定义抽象了Bean的注册逻辑。通常情况下，具体的BeanFactory实现类会实现这个接口来管理Bean的注册。
+BeanFactory只是一个接口，我们最终需要一个该接口的实现来进行实际的Bean的管理，DefaultListableBeanFactory就是这么一个比较通用的BeanFactory实现类。DefaultListableBeanFactory除了间接地实现了BeanFactory接口，还实现了BeanDefinitionRegistry接口，该接口才是在BeanFactory的实现中担当Bean注册管理的角色。基本上，BeanFactory接口只定义如何访问容器内管理的Bean的方法，各个BeanFactory的具体实现类负责具体Bean的注册以及管理工作。
 
-它们之间的关系如图4-3所示。
+BeanDefinitionRegistry接口定义抽象了Bean的注册逻辑。通常情况下，具体的BeanFactory实现类会实现这个接口来管理Bean的注册。
 
-打个比方说，BeanDefinitionRegistry就像图书馆的书架，所有的书是放在书架上的。虽然你还书或者借书都是跟图书馆（也就是BeanFactory，或许BookFactory可能更好些）打交道，但书架才是图书馆存放各类图书的地方。所以，书架相对于图书馆来说，就是它的“BookDefinitionRegistry”。 11 每一个受管的对象，在容器中都会有一个BeanDefinition的实例（instance）与之相对应，该BeanDefinition的实例负责保存对象的所有必要信息，包括其对应的对象的class类型、是否是抽象类、构造方法参数以及其他属性等。当客户端向BeanFactory请求相应对象的时候，BeanFactory会通过这些信息为客户端返回一个完备可用的对象实例。RootBeanDefinition和ChildBeanDefinition是BeanDefinition的两个主要实现类。
+打个比方说，BeanDefinitionRegistry就像图书馆的书架，所有的书是放在书架上的。虽然你还书或者借书都是跟图书馆（也就是BeanFactory，或许BookFactory可能更好些）打交道，但书架才是图书馆存放各类图书的地方。所以，书架相对于图书馆来说，就是它的“BookDefinitionRegistry”。
+
+每一个受管的对象，在容器中都会有一个BeanDefinition的实例（instance）与之相对应，该BeanDefinition的实例负责保存对象的所有必要信息，包括其对应的对象的class类型、是否是抽象类、构造方法参数以及其他属性等。当客户端向BeanFactory请求相应对象的时候，BeanFactory会通过这些信息为客户端返回一个完备可用的对象实例。RootBeanDefinition和ChildBeanDefinition是BeanDefinition的两个主要实现类。
 
 现在，我们再来看这段绑定代码，应该就有“柳暗花明”的感觉了。
 
-在 main 方法中，首先构造一个 DefaultListableBeanFactory 作为 BeanDefinitionRegistry，然后将其交给bindViaCode方法进行具体的对象注册和相关依赖管理，然后通过bindViaCode返回的BeanFactory取得需要的对象，最后执行相应逻辑。在我们的实例里，当
-然就是取得FXNewsProvider进行新闻的处理。
-
-在bindViaCode方法中，首先针对相应的业务对象构造与其相对应的BeanDefinition，使用了 RootBeanDefinition 作 为 BeanDefinition 的实现类。构造完成后，将这些BeanDefinition注册到通过方法参数传进来的BeanDefinitionRegistry中。之后，因为我们的FXNewsProvider是采用的构造方法注入，所以，需要通过ConstructorArgumentValues为其注入相关依赖。在这里为了同时说明setter方法注入，也同时展示了在Spring中如何使用代码实现setter方法注入。如果要运行这段代码，需要把setter方法注入部分的4行代码注释掉。最后，以BeanFactory的形式返回已经注册并绑定了所有相关业务对象的BeanDefinitionRegistry实例
-
-> 小心 最后一行的强制类型转换是有特定场景的。因为传入的DefaultListableBeanFactory同时实现了BeanFactory和BeanDefinitionRegistry接口，所以，这样做强制类型转换不会出现问题。但需要注意的是，单纯的BeanDefinitionRegistry是无法强制转换到BeanFactory类型的！
-{: .prompt-warning}
+* 在main方法中，首先构造一个DefaultListableBeanFactory作为BeanDefinitionRegistry，然后将其交给bindViaCode方法进行具体的对象注册和相关依赖管理，然后通过bindViaCode返回的BeanFactory取得需要的对象，最后执行相应逻辑。在我们的实例里，当然就是取得FXNewsProvider进行新闻的处理。
+* 在bindViaCode方法中，首先针对相应的业务对象构造与其相对应的BeanDefinition，使用了RootBeanDefinition作为BeanDefinition的实现类。构造完成后，将这些BeanDefinition注册到通过方法参数传进来的BeanDefinitionRegistry中。之后，因为我们的FXNewsProvider是采用的构造方法注入，所以，需要通过ConstructorArgumentValues为其注入相关依赖。在这里为了同时说明setter方法注入，也同时展示了在Spring中如何使用代码实现setter方法注入。如果要运行这段代码，需要把setter方法注入部分的4行代码注释掉。最后，以BeanFactory的形式返回已经注册并绑定了所有相关业务对象的BeanDefinitionRegistry实例。
 
 ### 4.2.2 外部配置文件方式
 
@@ -406,7 +406,7 @@ public static void main(String[] args) {
     newsProvider.getAndPersistNews(); 
 }
 ```
- 
+
 本章最后将详细讲解Spring 2.5新引入的“基于注解的依赖注入”。当前的内容只是让我们先从总体上有一个大概的印象，所以，不必强求自己现在就完全理解它们。
 
 > 注意 Google Guice是一个完全基于注解方式、提供依赖注入服务的轻量级依赖注入框架，可以 从Google Guice的站点获取有关这个框架的更多信息。
@@ -608,7 +608,7 @@ public class MockBusinessObject {
 如果从BeanFactory取得该对象并调用toString()查看的话，我们会发现Spring调用的是第一个构造方法，因为输出是如下内容：
 
 ..MockBusinessObject@f73c1[dependency1=111111,dependency2=0] 
- 
+
 但是，如果我们想调用的却是第二个传入int类型参数的构造方法，又该如何呢？可以使用type属性，通过指定构造方法的参数类型来解决这一问题，配置内容如下代码所示：
 
 ```xml
@@ -657,7 +657,7 @@ public class MockBusinessObject {
     <constructor-arg value="11111"/> 
     <constructor-arg value="22222"/> 
 </bean>
-``` 
+```
 
 那么，我们可以得到如下对象：
 
@@ -845,7 +845,7 @@ local、parent和bean的区别在于：
 ```
 
 这样，该对象实例就只有当前的djNewsProvider可以使用，其他对象无法取得该对象的引用。
- 
+
 > **注意** 因为就只有当前对象引用内部\<bean>所指定的对象，所以，内部\<bean>的id不是必须的。当然，如果你愿意指定id，那也是无所谓的。
 {: .prompt-info }
 
@@ -1422,7 +1422,7 @@ XSD:
 为prototype的scope的bean定义类型，都是一些有状态的，比如保存每个顾客信息的对象。 11 
 从Spring 参考文档上的这幅图片（见图4-6），你可以再次了解一下拥有prototype scope的bean定
 义，在实例化对象并注入依赖的时候，它的具体语意是个什么样子。 12 
- 
+
 52 Spring 的 IoC 容器
 图4-6 prototype scope 
 你用以下形式来指定某个bean定义的scope为prototype类型，效果是一样的： 
@@ -1481,7 +1481,7 @@ public class ThreadScope implements Scope {
  } 13 
 14 
  }; 
- 
+
  public Object get(String name, ObjectFactory objectFactory) { 
  Map scope = (Map) threadScope.get(); 
  Object object = scope.get(name); 
@@ -1668,7 +1668,7 @@ FactoryBean是Spring容器提供的一种可以扩展容器对象实例化逻辑
 的对付这种情况的“制式装备”①哦！ 15 
 17 
 16 
- 
+
 要实现并使 用自己的 FactoryBean其实很简单， org.springframework.beans.factory. 
 FactoryBean只定义了三个方法，如以下代码所示： 
 public interface FactoryBean { 
@@ -1704,7 +1704,7 @@ public class NextDayDateFactoryBean implements FactoryBean {
  <ref bean="nextDayDate"/> 
  </property> 
 </bean> 
- 
+
 <bean id="nextDayDate" class="...NextDayDateFactoryBean"> 
 </bean> 
 配置上看不出与平常的bean定义有何不同，不过，只有当我们看到NextDayDateDisplayer的定
@@ -1756,7 +1756,7 @@ FXNewsBean实例后的情况。这样，我们就有了代码清单4-35所展示
 代码清单4-35 MockNewsPersister的定义以及相关配置
 public class MockNewsPersister implements IFXNewsPersister { 
  private FXNewsBean newsBean; 
- 
+
 public void persistNews(FXNewsBean bean) { 
  persistNewes(); 15 
  } 
@@ -1846,7 +1846,7 @@ void setBeanFactory(BeanFactory beanFactory) throws BeansException; 11
 14 
 public class MockNewsPersister implements IFXNewsPersister,BeanFactoryAware { 
 private BeanFactory beanFactory; 
- 
+
 public void setBeanFactory(BeanFactory bf) throws BeansException { 
  this.beanFactory = bf; 
  } 
@@ -1881,7 +1881,7 @@ MockNewsPersister实现声明。
 代码清单4-37 使用ObjectFactory的MockNewsPersister定义
 public class MockNewsPersister implements IFXNewsPersister { 
 private ObjectFactory newsBeanFactory; 
- 
+
  public void persistNews(FXNewsBean bean) { 
  persistNews(); 
  } 
@@ -1949,14 +1949,14 @@ private static final transient Log logger =
  LogFactory.getLog(FXNewsProviderMethodReplacer.class); 
 13 
 14 
- 
+
 public Object reimplement(Object target, Method method, Object[] args)  
  throws Throwable { 
  logger.info("before executing method["+method.getName()+ 
  "] on Object["+target.getClass().getName()+"]."); 
- 
+
  System.out.println("sorry,We will do nothing this time."); 
- 
+
  logger.info("end of executing method["+method.getName()+  15 
  "] on Object["+target.getClass().getName()+"]."); 
  return null; 
@@ -1988,17 +1988,17 @@ public Object reimplement(Object target, Method method, Object[] args)
 771 [main] INFO ..FXNewsProviderMethodReplacer 
  - before executing method[getAndPersistNews] 
  on Object[..FXNewsProvider$$EnhancerByCGLIB$$3fa709d3]. 
-sorry,We will do nothing this time. 
-771 [main] INFO ..FXNewsProviderMethodReplacer 
+ sorry,We will do nothing this time. 
+ 771 [main] INFO ..FXNewsProviderMethodReplacer 
  - end of executing method[getAndPersistNews] 
  on Object[..FXNewsProvider$$EnhancerByCGLIB$$3fa709d3]. 
-我们把FXNewsProvider的getAndPersistNews方法逻辑给完全替换掉了。现在该方法基本上什
-么也没做，哇……
-最后需要强调的是，这种方式刚引入的时候执行效率不是很高。而且，当你充分了解并应用Spring 
-AOP之后，我想你也不会再回头求助这个特色功能。不过，怎么说这也是一个选择，场景合适的话，
-为何不用呢？ 
-哦，如果要替换的方法存在参数，或者对象存在多个重载的方法，可以在\<replaced-method>内
-部通过\<arg-type>明确指定将要替换的方法参数类型。祝“替换”愉快！ 
+ 我们把FXNewsProvider的getAndPersistNews方法逻辑给完全替换掉了。现在该方法基本上什
+ 么也没做，哇……
+ 最后需要强调的是，这种方式刚引入的时候执行效率不是很高。而且，当你充分了解并应用Spring 
+ AOP之后，我想你也不会再回头求助这个特色功能。不过，怎么说这也是一个选择，场景合适的话，
+ 为何不用呢？ 
+ 哦，如果要替换的方法存在参数，或者对象存在多个重载的方法，可以在\<replaced-method>内
+ 部通过\<arg-type>明确指定将要替换的方法参数类型。祝“替换”愉快！ 
 
 ## 4.4 容器背后的秘密
 
@@ -2075,7 +2075,7 @@ propertyPostProcessor.postPro 4 cessBeanFactory(beanFactory);
  ... 
 </beans>
 ```
- 
+
 下面让我们看一下Spring提供的这几个BeanFactoryPostProcessor实现都可以完成什么功能。
 
 #### 1. PropertyPlaceholderConfigurer
@@ -2172,7 +2172,7 @@ pool-adjustment.properties中没有提供的配置项将继续使用原来XML配
 当容器中配置的多个PropertyOverrideConfigurer对同一个bean定义的同一个property值进行处理的时候，最后一个将会生效。
 
 配置在properties文件中的信息通常都以明文表示，PropertyOverrideConfigurer的父类PropertyResourceConfigurer提供了一个protected类型的方法convertPropertyValue，允许子类覆盖这个方法对相应的配置项进行转换，如对加密后的字符串解密之后再覆盖到相应的bean定义中。当然，既然PropertyPlaceholderConfigurer也同样继承了PropertyResourceConfigurer，我们也可以针对PropertyPlaceholderConfigurer应用类似的功能。
- 
+
 #### 3. CustomEditorConfigurer
 
 其他两个BeanFactoryPostProcessor都是通过对BeanDefinition中的数据进行变更以达到某种目的。与它们有所不同，CustomEditorConfigurer是另一种类型的BeanFactoryPostProcessor实现，它只是辅助性地将后期会用到的信息注册到容器，对BeanDefinition没有做任何变动。
@@ -2321,7 +2321,7 @@ is.propertyEditor = propertyEditor;
 清单4-47 DatePropertyEditorRegistrar定义
 public class DatePropertyEditorRegistrar i
  private PropertyEditor propertyEditor; 
- 
+
  public void registerCustomEditors(PropertyEditorRegistry peRegistry) { 
  pe
  } 
@@ -2330,12 +2330,12 @@ public class DatePropertyEditorRegistrar i
 } 
  public void setPropertyEditor(PropertyEdi
  th
- 
+
 } 
 这样，2.0之后所提倡的注册自定义PropertyEditor的方式，如代码清单4-48所示。
 } 
 代码清单4-48 通过CustomEditorConfigurer的propertyEditorRegistrars注册自定义
- 
+
 onfig.CustomEditorConfigurer"> 
 me="propertyEditorRegistrars"> 
 n="datePropertyEditorRegistrar"/> 
@@ -2764,8 +2764,8 @@ public class ApplicationLauncher
  // 应用程序退出，容器关闭
  } 
 }
-``` 
- 
+```
+
 同样的道理，在 Spring 2.0引入了自定义scope之后，使用自定义scope的相关对象实例的销毁逻辑，也应该在合适的时机被调用执行。不过，所有这些规则不包含prototype类型的bean实例，因为 prototype 对象实例在容器实例化并返回给请求方之后，容器就不再管理这种类型对象实例的生命周期了。 
 
 至此，bean走完了它在容器中“光荣”的一生。 

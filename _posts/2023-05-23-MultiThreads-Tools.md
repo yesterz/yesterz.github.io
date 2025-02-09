@@ -1,5 +1,5 @@
 ---
-title: 共享模型之工具
+title: 线程池，工具类
 author: someone
 date: 2023-05-23 11:33:00 +0800
 categories: [Concurrent Programming]
@@ -9,7 +9,7 @@ math: false
 mermaid: false
 ---
 
-# 共享模型之工具
+
 
 ## 线程池
 
@@ -264,13 +264,81 @@ boolean awaitTermination(long timeout, TimeUnit unit) throws InterruptedExceptio
 
 ### Fork/Join 【略】
 
-## J.U.C  Java.util.concurrent
+J.U.C  Java.util.concurrent
 
-### AQS 原理
+## AQS 原理
 
 ### 概述
 
-全称是 AbstractQueuedSynchronizer ，是阻塞式锁和相关的同步器工具的框架
+全称是 AbstractQueuedSynchronizer ，是阻塞式锁和相关的同步器工具的框架。
+
+AQS（AbstractQueuedSynchronizer）是 Java 并发包 `java.util.concurrent` 中的一个基础组件，用于构建锁和其他同步器。AQS 内部使用了一个整数（state）表示同步状态，以及一个先进先出的队列（CLH 队列）来存储那些获取锁失败的线程。以下是一个 ASCII 图来描述 AQS 的内部结构：
+
+```
++-----------------------------+
+|         AQS Structure       |
++-----------------------------+
+|  State (int)                |  <- 表示锁的状态，例如 0 表示未锁定，1 表示已锁定
++-----------------------------+
+|  Head (Node)                |  <- 队列的头节点，表示当前正在等待的线程
++-----------------------------+
+|  Tail (Node)                |  <- 队列的尾节点，表示最近加入等待的线程
++-----------------------------+
+|  Queue (CLH Queue)          |  <- FIFO 队列，存储等待获取锁的线程
++-----------------------------+
+|  Node1 (Thread1)            |
+|  Node2 (Thread2)            |
+|  Node3 (Thread3)            |
+|  ...                        |
+|  NodeN (ThreadN)            |
++-----------------------------+
+```
+
+### 详细说明：
+
+1. **State**：
+   - `state` 是一个整数，表示锁的状态。例如，对于 ReentrantLock，`state` 为 0 表示锁未被占用，`state` 为 1 表示锁被占用。
+2. **Head 和 Tail**：
+   - `Head` 是队列的头节点，表示当前正在等待的线程。
+   - `Tail` 是队列的尾节点，表示最近加入等待的线程。
+   - 队列是双向链表结构，每个节点（Node）包含线程引用和状态信息。
+3. **CLH 队列**：
+   - CLH（Craig, Landin, and Hagersten）队列是一种无锁队列，用于存储那些尝试获取锁但失败的线程。
+   - 每个节点（Node）包含以下信息：
+     - `thread`：等待的线程。
+     - `waitStatus`：节点的状态，可以是以下几种值：
+       - `CANCELLED`：线程被取消。
+       - `SIGNAL`：当前节点的线程需要被唤醒。
+       - `CONDITION`：线程在条件队列中等待。
+       - `PROPAGATE`：释放锁时需要传播信号。
+       - `0`：默认状态。
+
+假设一个线程尝试获取锁但失败，它会被包装成一个 `Node` 并加入到队列中。队列的结构如下：
+
+```
++-----------------------------+
+|         AQS Structure       |
++-----------------------------+
+|  State (int) = 1            |
++-----------------------------+
+|  Head (Node)                |
++-----------------------------+
+|  Tail (Node)                |
++-----------------------------+
+|  Queue (CLH Queue)          |
++-----------------------------+
+|  Node1 (Thread1)            | <- Head
+|  Node2 (Thread2)            |
+|  Node3 (Thread3)            |
+|  ...                        |
+|  NodeN (ThreadN)            | <- Tail
++-----------------------------+
+```
+
+- `Node1` 是头节点，表示当前正在等待的线程。
+- `NodeN` 是尾节点，表示最近加入等待的线程。
+
+当锁被释放时，AQS 会唤醒头节点的线程（`Node1`），尝试将锁传递给它。如果 `Node1` 获取锁成功，它会从队列中移除；如果失败，它会继续等待。
 
 特点：
 
@@ -308,7 +376,7 @@ if (tryRelease(arg)) {
 }
 ```
 
-### 实现不可重入锁
+## 显式锁的分类
 
 不可重入锁是指一种只允许一个线程在任意时刻获得该锁的锁实现。这意味着如果一个线程已经获得了该锁，在该线程释放锁之前，任何其他线程都无法获得该锁。
 
@@ -316,35 +384,38 @@ if (tryRelease(arg)) {
 
 ```java
 final class MySync extends AbstractQueuedSynchronizer {
- @Override
- protected boolean tryAcquire(int acquires) {
- if (acquires == 1){
- if (compareAndSetState(0, 1)) {
- setExclusiveOwnerThread(Thread.currentThread());
- return true;
- }
- }
- return false;
- }
- @Override
- protected boolean tryRelease(int acquires) {
- if(acquires == 1) {
- if(getState() == 0) {
- throw new IllegalMonitorStateException();
- }
- setExclusiveOwnerThread(null);
- setState(0);
- return true;
- }
- return false;
- }
- protected Condition newCondition() {
- return new ConditionObject();
- }
- @Override
- protected boolean isHeldExclusively() {
- return getState() == 1;
-}
+    @Override
+    protected boolean tryAcquire(int acquires) {
+        if (acquires == 1) {
+            if (compareAndSetState(0, 1)) {
+                setExclusiveOwnerThread(Thread.currentThread());
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    protected boolean tryRelease(int acquires) {
+        if (acquires == 1) {
+            if (getState() == 0) {
+                throw new IllegalMonitorStateException();
+            }
+            setExclusiveOwnerThread(null);
+            setState(0);
+            return true;
+        }
+        return false;
+    }
+
+    protected Condition newCondition() {
+        return new ConditionObject();
+    }
+
+    @Override
+    protected boolean isHeldExclusively() {
+        return getState() == 1;
+    }
 }
 ```
 
@@ -526,28 +597,190 @@ state 仍为 1，失败
 true
 6. 进入 parkAndCheckInterrupt， Thread-1 park（灰色表示）
 
-### 读写锁
-
-[并发编程_原理.pdf](https://www.notion.so/_-pdf-c40276fb9049463d93687e9a60848a9b?pvs=21) 
+## JUC的同步工具类
 
 ### Semaphore
 
 [ˈsɛməˌfɔr] 信号量，用来限制能同时访问共享资源的线程上限。
 
+`Semaphore` 是 Java 并发包中的一个同步工具，用于控制同时访问某个资源的线程数量。它通过维护一个许可（permit）的数量来实现这一点。线程可以通过 `acquire()` 方法获取一个许可，通过 `release()` 方法释放一个许可。
+
+以下是一个使用 `Semaphore` 的简单示例代码，模拟多个线程访问一个有限资源的场景：
+
+```java
+import java.util.concurrent.Semaphore;
+
+public class SemaphoreExample {
+    public static void main(String[] args) {
+        // 创建一个Semaphore实例，初始许可数量为3
+        Semaphore semaphore = new Semaphore(3);
+
+        // 创建10个线程，模拟10个任务
+        for (int i = 0; i < 10; i++) {
+            int taskNumber = i + 1;
+            new Thread(() -> {
+                try {
+                    // 获取一个许可
+                    semaphore.acquire();
+                    System.out.println("Task " + taskNumber + " is running.");
+                    // 模拟任务执行时间
+                    Thread.sleep((long) (Math.random() * 3000));
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } finally {
+                    // 释放一个许可
+                    semaphore.release();
+                    System.out.println("Task " + taskNumber + " has finished.");
+                }
+            }).start();
+        }
+    }
+}
+```
+
+* 代码说明
+
+1. **创建 `Semaphore`**：
+   - `Semaphore semaphore = new Semaphore(3);` 创建了一个 `Semaphore` 实例，初始许可数量为 3。这意味着最多允许 3 个线程同时访问资源。
+2. **获取许可**：
+   - `semaphore.acquire();` 用于获取一个许可。如果当前没有可用的许可，线程会阻塞，直到有许可可用。
+3. **释放许可**：
+   - `semaphore.release();` 用于释放一个许可。释放许可后，其他等待的线程可以获取许可并继续运行。
+4. **线程执行**：
+   - 每个线程模拟一个任务，通过 `Thread.sleep()` 模拟任务的执行时间。
+   - 在任务执行完成后，释放许可并打印任务完成的信息。
+
 ### CountdownLatch
 
 用来进行线程同步协作，等待所有线程完成倒计时。
 
-其中构造参数用来初始化等待计数值，await() 用来等待计数归零，countDown() 用来让计数减一
+其中构造参数用来初始化等待计数值，await() 用来等待计数归零，countDown() 用来让计数减一。
+
+`CountDownLatch` 是 Java 并发包中的一个同步工具，用于让一个或多个线程等待其他线程完成操作后再继续执行。它通过一个计数器来实现，当计数器的值减到零时，等待的线程会被唤醒并继续执行。
+
+以下是一个使用 `CountDownLatch` 的示例代码，模拟多个线程完成任务后，主线程等待它们全部完成再继续执行的场景。
+
+* 示例代码
+
+```java
+import java.util.concurrent.CountDownLatch;
+
+public class CountDownLatchExample {
+    public static void main(String[] args) {
+        // 创建一个CountDownLatch实例，初始计数为3
+        CountDownLatch latch = new CountDownLatch(3);
+
+        // 创建3个线程，模拟3个任务
+        for (int i = 0; i < 3; i++) {
+            int taskNumber = i + 1;
+            new Thread(() -> {
+                System.out.println("Task " + taskNumber + " is starting.");
+                try {
+                    // 模拟任务执行时间
+                    Thread.sleep((long) (Math.random() * 3000));
+                    System.out.println("Task " + taskNumber + " has finished.");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } finally {
+                    // 任务完成，计数器减1
+                    latch.countDown();
+                }
+            }).start();
+        }
+
+        System.out.println("Main thread is waiting for all tasks to complete.");
+        try {
+            // 主线程等待计数器归零
+            latch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("All tasks are completed. Main thread continues.");
+    }
+}
+```
+
+* 代码说明
+
+1. **创建 `CountDownLatch`**：
+   - `CountDownLatch latch = new CountDownLatch(3);` 创建了一个 `CountDownLatch` 实例，初始计数为 3。这意味着主线程会等待 3 个任务完成。
+2. **任务线程**：
+   - 每个任务线程模拟一个任务，通过 `Thread.sleep()` 模拟任务的执行时间。
+   - 任务完成时，调用 `latch.countDown()`，将计数器减 1。
+3. **主线程等待**：
+   - 主线程调用 `latch.await()`，等待计数器归零。如果计数器归零，主线程会继续执行。
 
 ### CyclicBarrier
 
 [ˈsaɪklɪk ˈbæriɚ] 循环栅栏，用来进行线程协作，等待线程满足某个计数。构造时设置『计数个数』，每个线程执行到某个需要“同步”的时刻调用 await() 方法进行等待，当等待的线程数满足『计数个数』时，继续执行
 
 > 注意 CyclicBarrier 与 CountDownLatch 的主要区别在于 CyclicBarrier 是可以重用的 CyclicBarrier 可以被比喻为『人满发车』
-> 
 
-### 线程安全集合类概述
+以下是 Java 官方文档中提供的 `CyclicBarrier` 示例代码：
+
+```java
+class Solver {
+    final int N;
+    final float[][] data;
+    final CyclicBarrier barrier;
+
+    class Worker implements Runnable {
+        int myRow;
+        Worker(int row) { myRow = row; }
+        public void run() {
+            while (!done()) {
+                processRow(myRow);
+
+                try {
+                    barrier.await();
+                } catch (InterruptedException ex) {
+                    return;
+                } catch (BrokenBarrierException ex) {
+                    return;
+                }
+            }
+        }
+    }
+
+    public Solver(float[][] matrix) {
+        data = matrix;
+        N = matrix.length;
+        Runnable barrierAction = () -> mergeRows(...);
+        barrier = new CyclicBarrier(N, barrierAction);
+
+        List<Thread> threads = new ArrayList<>(N);
+        for (int i = 0; i < N; i++) {
+            Thread thread = new Thread(new Worker(i));
+            threads.add(thread);
+            thread.start();
+        }
+
+        // wait until done
+        for (Thread thread : threads)
+            try {
+                thread.join();
+            } catch (InterruptedException ex) { }
+    }
+}
+```
+
+* 示例说明
+
+1. **`Solver` 类**：
+   - 用于解决一个并行计算问题，将矩阵的每一行分配给一个线程进行处理。
+   - `data` 是需要处理的矩阵，`N` 是矩阵的行数。
+   - `barrier` 是一个 `CyclicBarrier` 对象，用于同步所有线程。
+2. **`Worker` 类**：
+   - 实现了 `Runnable` 接口，每个线程处理矩阵的一行。
+   - 在每次处理完一行后，调用 `barrier.await()` 等待其他线程。
+3. **`CyclicBarrier` 的使用**：
+   - 在构造函数中，`CyclicBarrier` 被初始化为 `N`，表示需要 `N` 个线程到达屏障点后才会继续执行。
+   - `barrierAction` 是一个可选的 `Runnable`，在所有线程到达屏障点后执行，用于合并结果。
+4. **线程同步**：
+   - 每个线程在完成自己的任务后调用 `barrier.await()`，等待其他线程完成。
+   - 当所有线程都到达屏障点后，`barrierAction` 被执行，然后所有线程继续执行后续任务。
+
+## 线程安全集合类概述
 
 ![Untitled](/assets/images/ToolsImages/Untitled%209.png)
 
@@ -651,8 +884,3 @@ CopyOnWriteArraySet 是它的马甲 底层实现采用了 写入时拷贝 的思
 get 弱一致性
 
 ![Untitled](/assets/images/ToolsImages/Untitled%2010.png)
-
-## 总结
-
-- 线程池
-- JUC
