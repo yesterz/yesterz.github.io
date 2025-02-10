@@ -10,7 +10,7 @@ mermaid: false
 media_subpath: /assets/images/
 ---
 
-# 1.6.	MySQL中的锁
+# 1.6. MySQL中的锁
 
 InnoDB中锁非常多，总的来说，可以如下分类：
 

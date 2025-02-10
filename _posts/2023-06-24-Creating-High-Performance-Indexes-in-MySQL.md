@@ -7,7 +7,7 @@ tags: [MySQL, Database]
 pin: false
 math: false
 mermaid: false
-image: /assets/images/2023-06-24-Creating-High-Performance-Indexes-in-MySQL
+media_subpath: /assets/images/2023-06-24-Creating-High-Performance-Indexes-in-MySQL
 ---
 
 ch5 创建高性能的索引

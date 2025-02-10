@@ -10,7 +10,7 @@ mermaid: false
 media_subpath: /assets/images/
 ---
 
-# 1.7.	MySQL8.0新特性
+# 1.7. MySQL8.0新特性
 
 对于 MySQL 5.7 版本，其将于 2023年 10月31日 停止支持。后续官方将不再进行后续的代码维护。
 

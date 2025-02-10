@@ -10,7 +10,7 @@ mermaid: false
 media_subpath: /assets/images/
 ---
 
-# 1.3.MySQL调优
+1.3.MySQL调优
 
 ## 1.3.1.MySQL调优金字塔
 

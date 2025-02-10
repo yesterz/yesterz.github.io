@@ -36,7 +36,7 @@ roll_pointer：每次对某条聚簇索引记录进行改动时，都会把旧�
 
 为了说明这个问题，我们创建一个演示表
 
-```
+```sql
 CREATE TABLE teacher (
 number INT,
 name VARCHAR(100),
@@ -75,17 +75,27 @@ INSERT INTO teacher VALUES(1, '李瑾', 'JVM系列');
 对于使用READ UNCOMMITTED隔离级别的事务来说，由于可以读到未提交事务修改过的记录，所以直接读取记录的最新版本就好了（**所以就会出现脏读、不可重复读、幻读**）。
 
 ![image.png](./TransactionsAndIsolationLevels/5e3918aac91a4ee8b6a2de3011021922.png)
-对于使用SERIALIZABLE隔离级别的事务来说，InnoDB使用加锁的方式来访问记录（**也就是所有的事务都是串行的，当然不会出现脏读、不可重复读、幻读**）。
+对于使用SERIALIZABLE隔离级别的事务来说，InnoDB使用加锁的方式来访问记录（**也就是所有的事务都是串行的，当然不会出现脏读、不可重复读、幻读**)。
 
-![image.png](./TransactionsAndIsolationLevels/82450615bb5b4612aaccdd7008280f5e.png)
+| 隔离级别                   | 脏读 | 不可重复读 | 幻读 |
+| :------------------------- | ---- | ---------- | ---- |
+| READ UNCOMMITTED 未提交读  | 可能 | 可能       | 可能 |
+| READ COMMITTED   已提交读  | -    | 可能       | 可能 |
+| REPEATABLE READ   可重复读 | -    | -          | -    |
+| SERIALIZABLE      可串行化 | -    | -          | -    |
+
+InnoDB和XtraDB存储引擎通过多版本并发控制(MVCC，Multiversion Concurrency Control)解决了幻读的问题。可重复读是MySOL的默认事务隔离级别。
+
 对于使用READ COMMITTED和REPEATABLE READ隔离级别的事务来说，都必须保证读到已经提交了的事务修改过的记录，也就是说假如另一个事务已经修改了记录但是尚未提交，是不能直接读取最新版本的记录的，核心问题就是：READ COMMITTED和REPEATABLE READ隔离级别在不可重复读和幻读上的区别是从哪里来的，其实结合前面的知识，这两种隔离级别关键**是需要判断一下版本链中的哪个版本是当前事务可见的**。
+
 **为此，InnoDB提出了一个ReadView的概念（作用于SQL查询语句），**
 
 这个ReadView中主要包含4个比较重要的内容：
-**m_ids：**表示在生成ReadView时当前系统中活跃的读写事务的事务id列表。
-**min_trx_id：**表示在生成ReadView时当前系统中活跃的读写事务中最小的事务id，也就是m_ids中的最小值。
-**max_trx_id：**表示生成ReadView时系统中应该分配给下一个事务的id值。注意max_trx_id并不是m_ids中的最大值，事务id是递增分配的。比方说现在有id为1，2，3这三个事务，之后id为3的事务提交了。那么一个新的读事务在生成ReadView时，m_ids就包括1和2，min_trx_id的值就是1，max_trx_id的值就是4。
-**creator_trx_id：**表示生成该ReadView的事务的事务id。
+
+1. **m_ids：**表示在生成ReadView时当前系统中活跃的读写事务的事务id列表。
+2. **min_trx_id：**表示在生成ReadView时当前系统中活跃的读写事务中最小的事务id，也就是m_ids中的最小值。
+3. **max_trx_id：**表示生成ReadView时系统中应该分配给下一个事务的id值。注意max_trx_id并不是m_ids中的最大值，事务id是递增分配的。比方说现在有id为1，2，3这三个事务，之后id为3的事务提交了。那么一个新的读事务在生成ReadView时，m_ids就包括1和2，min_trx_id的值就是1，max_trx_id的值就是4。
+4. **creator_trx_id：**表示生成该ReadView的事务的事务id。
 
 ### 1.5.1.4.READ COMMITTED
 
@@ -214,10 +224,10 @@ REPEATABLE READ —— 在第一次读取数据时生成一个ReadView
 
 比方说现在系统里有两个事务id分别为80、120的事务在执行：Transaction 80
 
-```
+```sql
 UPDATE teacher  SET name = '马' WHERE number = 1;
 UPDATE teacher  SET name = '连' WHERE number = 1;
-...
+-- ...
 ```
 
 此刻，表teacher 中number为1的记录得到的版本链表如下所示：
@@ -228,8 +238,8 @@ UPDATE teacher  SET name = '连' WHERE number = 1;
 
 ![image.png](./TransactionsAndIsolationLevels/ce38f77cc7814319b8b8b8e6bf1c7997.png)
 
-```
-使用READ COMMITTED隔离级别的事务
+```sql
+-- 使用READ COMMITTED隔离级别的事务
 
 BEGIN;
 SELECE1：Transaction 80、120未提交
@@ -249,12 +259,12 @@ ReadView的m_ids列表的内容就是[80, 120]，min_trx_id为80，max_trx_id为
 
 ![image.png](./TransactionsAndIsolationLevels/352c5da6030041ef820ba4408c670362.png)
 
-```
+```sql
 Transaction120
 
 BEGIN;
 
-更新了一些别的表的记录
+# 更新了一些别的表的记录
 
 UPDATE teacher  SET name = '严' WHERE number = 1;
 UPDATE teacher  SET name = '晁' WHERE number = 1;
@@ -269,17 +279,16 @@ UPDATE teacher  SET name = '晁' WHERE number = 1;
 
 使用READ COMMITTED隔离级别的事务
 
-```
+```sql
 BEGIN;
 
-SELECE1：Transaction 80、120均未提交
+# SELECE1：Transaction 80、120均未提交
 
 SELECT * FROM teacher WHERE number = 1; # 得到的列name的值为'李瑾'
 
-SELECE2：Transaction 80提交，Transaction 120未提交
+# SELECE2：Transaction 80提交，Transaction 120未提交
 
 SELECT * FROM teacher WHERE number = 1; # 得到的列name的值为'李瑾'
-
 ```
 
 这个SELECE2的执行过程如下：
@@ -314,14 +323,14 @@ SELECT * FROM teacher WHERE number = 1; # 得到的列name的值为'李瑾'
 
 我们首先在事务T1中：
 
-```
+```sql
 select * from teacher where number = 30;
 ```
 
 很明显，这个时候是找不到number = 30的记录的。
 我们在事务T2中，执行：
 
-```
+```sql
 insert into teacher values(30,'豹','数据湖');
 ```
 
@@ -330,7 +339,7 @@ insert into teacher values(30,'豹','数据湖');
 通过执行insert into teacher values(30,'豹','数据湖');，我们往表中插入了一条number = 30的记录。
 此时回到事务T1，执行：
 
-```
+```sql
 update teacher set domain='RocketMQ' where number=30;
 select * from teacher where number = 30;
 ```
