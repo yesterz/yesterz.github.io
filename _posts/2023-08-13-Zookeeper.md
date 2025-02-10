@@ -5,7 +5,7 @@ categories:
 tags:
   - 分布式
 toc: true
-img_path: /assets/images/
+media_subpath: /assets/images/
 ---
 
 ## 一、ZooKeeper基础

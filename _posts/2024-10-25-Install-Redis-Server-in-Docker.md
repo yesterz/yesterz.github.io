@@ -3,7 +3,7 @@ title: Docker 安装 Redis
 categories: [Uncategorized]
 tags: [Uncategorized]
 toc: true
-img_path: 
+media_subpath: 
 ---
 
 官方镜像库地址：<https://hub.docker.com/_/redis?tab=tags>

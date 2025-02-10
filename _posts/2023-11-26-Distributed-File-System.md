@@ -7,7 +7,7 @@ tags: [System Design]
 pin: false
 math: false
 mermaid: false
-img_path: /assets/images/HDFSImages/
+media_subpath: /assets/images/HDFSImages/
 ---
 
 ## 一、ITB大文件操作的思考(理解)

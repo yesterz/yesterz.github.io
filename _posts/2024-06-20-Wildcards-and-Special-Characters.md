@@ -7,7 +7,7 @@ tags: [Linux]
 pin: false
 math: true
 mermaid: false
-img_path: /assets/images/
+media_subpath: /assets/images/
 ---
 
 # 通配符和特殊符号

@@ -7,7 +7,7 @@ tags: [Algorithms Note]
 pin: false
 math: true
 mermaid: false
-img_path: /assets/images/BinaryTreeAndDivideConquer/
+media_subpath: /assets/images/BinaryTreeAndDivideConquer/
 ---
 
 ## Outline

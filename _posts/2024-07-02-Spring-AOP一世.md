@@ -7,7 +7,7 @@ tags: [Spring]
 pin: false
 math: true
 mermaid: false
-img_path: /assets/images/Learning-SSH/
+media_subpath: /assets/images/Learning-SSH/
 ---
 
 在动态代理和CGLIB的支持下，SpringAOP框架的实现经过了两代。从Spring的AOP框架第一次发布，到Spring2.0发布之前的AOP实现，是Spring第一代AOP实现。Spring2.0发布后的AOP实现是第二代。不过划分归划分，SpringAOP的底层实现机制却一直没变。唯一改变的，是各种AOP概念实体的表现形式以及Spring AOP的使用方式。

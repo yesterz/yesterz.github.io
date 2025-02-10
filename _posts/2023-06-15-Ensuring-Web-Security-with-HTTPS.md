@@ -7,7 +7,7 @@ tags: [Computer Networking]
 pin: false
 math: false
 mermaid: false
-img_path: /assets/images/2023-06-15-Ensuring-Web-Security-with-HTTPS
+media_subpath: /assets/images/2023-06-15-Ensuring-Web-Security-with-HTTPS
 ---
 
 ## HTTP 的缺点

@@ -3,7 +3,7 @@ title: Linux 环境变量
 categories: [Uncategorized]
 tags: [Uncategorized]
 toc: true
-img_path: 
+media_subpath: 
 ---
 
 ## 一. 环境变量的概念

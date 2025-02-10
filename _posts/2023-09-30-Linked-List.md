@@ -7,7 +7,7 @@ tags: [Linked List]
 pin: false
 math: true
 mermaid: false
-img_path: /assets/images/LinkedListImages/
+media_subpath: /assets/images/LinkedListImages/
 ---
 
 链表只是一个载体，实际上是让你实现一些其他题目。

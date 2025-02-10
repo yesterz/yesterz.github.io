@@ -3,7 +3,7 @@ title: Java 中的线程
 categories: [Concurrent Programming]
 tags: [Concurrent Programming]
 toc: true
-img_path: /assets/images/
+media_subpath: /assets/images/
 ---
 
 ## 1 创建和运行线程

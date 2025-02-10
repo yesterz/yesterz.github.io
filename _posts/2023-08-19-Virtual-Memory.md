@@ -6,7 +6,7 @@ tags: [Operating System]
 pin: false
 math: false
 mermaid: false
-img_path: /assets/images/
+media_subpath: /assets/images/
 ---
 
 快速了解一些计算机系统的基本概念。今天先来讲讲 Virtual Memory。

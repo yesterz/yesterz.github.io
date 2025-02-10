@@ -7,7 +7,7 @@ tags: [Operating System]
 pin: false
 math: false
 mermaid: false
-img_path: /assets/images/2024-04-11-Complete-apt-Command-Guide-for-Ubuntu
+media_subpath: /assets/images/2024-04-11-Complete-apt-Command-Guide-for-Ubuntu
 ---
 
 ## 安装软件包

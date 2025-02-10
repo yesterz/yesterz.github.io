@@ -3,7 +3,7 @@ title: Python 虚拟环境
 categories: [Uncategorized]
 tags: [Uncategorized]
 toc: true
-img_path: 
+media_subpath: 
 ---
 
 ```shell

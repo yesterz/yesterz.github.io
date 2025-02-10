@@ -7,7 +7,7 @@ tags: [Linux]
 pin: false
 math: true
 mermaid: false
-img_path: /assets/images/What-is-RegEx/
+media_subpath: /assets/images/What-is-RegEx/
 ---
 
 ## 正则表达式和三剑客

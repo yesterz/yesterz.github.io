@@ -7,7 +7,7 @@ tags: [JVM]
 pin: false
 math: false
 mermaid: true
-img_path: /assets/images/
+media_subpath: /assets/images/
 ---
 
 ```mermaid

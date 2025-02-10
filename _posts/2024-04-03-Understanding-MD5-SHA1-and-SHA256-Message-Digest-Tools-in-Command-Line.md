@@ -7,7 +7,7 @@ tags: [Operating System]
 pin: false
 math: false
 mermaid: false
-img_path: 
+media_subpath: 
 ---
 
 | md5sum    | md5sum - compute and check MD5 message digestPrint or check MD5 (128-bit) checksums. |

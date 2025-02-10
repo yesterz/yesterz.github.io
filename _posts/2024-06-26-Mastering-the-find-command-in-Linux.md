@@ -7,7 +7,7 @@ tags: [Linux]
 pin: false
 math: true
 mermaid: false
-img_path: /assets/images/IntroductionToDPImages/
+media_subpath: /assets/images/IntroductionToDPImages/
 ---
 
 Linux 中的 find命令是一个非常强大的工具，可基于各种条件搜索文件系统中的文件和目录。

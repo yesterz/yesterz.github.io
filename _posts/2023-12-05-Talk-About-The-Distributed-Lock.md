@@ -7,7 +7,7 @@ tags: [System Design]
 pin: false
 math: false
 mermaid: false
-img_path: /assets/images/DistributedLockImages
+media_subpath: /assets/images/DistributedLockImages
 ---
 
 Original 林坚 [字节跳动技术团队](javascript:void(0);) *2022-07-15 12:00* *Posted on 北京*

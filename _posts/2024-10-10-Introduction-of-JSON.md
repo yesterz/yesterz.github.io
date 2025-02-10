@@ -3,7 +3,7 @@ title: 关于 JSON
 categories: [Uncategorized]
 tags: [Uncategorized]
 toc: true
-img_path: 
+media_subpath: 
 ---
 
 ## 摘要

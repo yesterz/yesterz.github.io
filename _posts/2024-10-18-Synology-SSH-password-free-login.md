@@ -3,7 +3,7 @@ title: 群晖NAS 怎么配置 SSH 公钥免密登录
 categories: [Uncategorized]
 tags: [Uncategorized]
 toc: true
-img_path: 
+media_subpath: 
 ---
 
 控制面板 -> 用户与群组 -> 高级设置 -> 家目录

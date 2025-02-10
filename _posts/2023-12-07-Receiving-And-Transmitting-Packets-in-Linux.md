@@ -7,7 +7,7 @@ tags: [System Design]
 pin: false
 math: false
 mermaid: false
-img_path: /assets/images/RecieveAndSendImages
+media_subpath: /assets/images/RecieveAndSendImages
 ---
 
 Linux 网络发包流程：<https://www.cnblogs.com/edisonfish/p/17637507.html>

@@ -7,7 +7,7 @@ tags: [Computer Networking]
 pin: false
 math: false
 mermaid: false
-img_path: /assets/images/2023-07-24-UNIX-Network-programming
+media_subpath: /assets/images/2023-07-24-UNIX-Network-programming
 ---
 
 ## OSI模型

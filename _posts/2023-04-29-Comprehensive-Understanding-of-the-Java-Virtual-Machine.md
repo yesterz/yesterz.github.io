@@ -7,7 +7,7 @@ tags: [JVM]
 pin: false
 math: false
 mermaid: true
-img_path: /assets/images/
+media_subpath: /assets/images/
 ---
 
 ![The Standard Structure of the Java Virtual Machine (JVM)](Comprehensive-Understanding-of-the-Java-Virtual-Machine/The-Standard-Structure-of-the-Java-Virtual-Machine.png)

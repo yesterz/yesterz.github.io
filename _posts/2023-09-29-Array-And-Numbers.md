@@ -7,7 +7,7 @@ tags: [Array]
 pin: false
 math: true
 mermaid: false
-img_path: /assets/images/LinkedListImages/
+media_subpath: /assets/images/LinkedListImages/
 ---
 
 ## Outline

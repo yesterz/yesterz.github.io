@@ -7,7 +7,7 @@ tags: [MySQL, Database]
 pin: false
 math: false
 mermaid: false
-img_path: /assets/images/
+media_subpath: /assets/images/
 ---
 
 ch4 Schema 与数据类型优化

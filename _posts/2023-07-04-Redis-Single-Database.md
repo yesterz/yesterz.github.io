@@ -4,7 +4,7 @@ categories: [Cache, Redis]
 tags: [Cache]
 toc: true
 mermaid: true
-img_path: /assets/images/2023-07-04-Redis-Single-Database/
+media_subpath: /assets/images/2023-07-04-Redis-Single-Database/
 ---
 
 ## 数据库

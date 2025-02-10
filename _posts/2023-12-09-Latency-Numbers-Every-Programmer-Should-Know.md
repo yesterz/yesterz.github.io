@@ -7,7 +7,7 @@ tags: [System Design]
 pin: false
 math: false
 mermaid: false
-img_path: 
+media_subpath: 
 ---
 
 from <https://gist.github.com/jboner/2841832>

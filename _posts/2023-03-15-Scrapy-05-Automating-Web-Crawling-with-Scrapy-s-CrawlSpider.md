@@ -7,7 +7,7 @@ tags: [Python, Web Crawler]
 pin: false
 math: true
 mermaid: false
-img_path: 
+media_subpath: 
 ---
 
 * 学习目标：

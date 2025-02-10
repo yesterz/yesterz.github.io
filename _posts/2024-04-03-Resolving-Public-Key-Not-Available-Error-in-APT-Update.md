@@ -7,7 +7,7 @@ tags: [Operating System]
 pin: false
 math: false
 mermaid: false
-img_path: 
+media_subpath: 
 ---
 
 执行 apt update 时，会出现

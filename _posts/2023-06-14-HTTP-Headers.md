@@ -7,7 +7,7 @@ tags: [Computer Networking]
 pin: false
 math: false
 mermaid: false
-img_path: /assets/images/2023-06-14-HTTP-Headers
+media_subpath: /assets/images/2023-06-14-HTTP-Headers
 ---
 
 ## HTTP 报文首部

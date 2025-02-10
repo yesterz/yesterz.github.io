@@ -7,7 +7,7 @@ tags: [Operating System]
 pin: false
 math: false
 mermaid: false
-img_path: 
+media_subpath: 
 ---
 
 ## free ：观察内存使用情况

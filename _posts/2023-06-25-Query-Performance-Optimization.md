@@ -7,7 +7,7 @@ tags: [MySQL, Database]
 pin: false
 math: false
 mermaid: false
-img_path: /assets/images/
+media_subpath: /assets/images/
 ---
 
 ch6 查询性能优化

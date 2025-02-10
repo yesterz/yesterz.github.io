@@ -3,7 +3,7 @@ title: Cron 表达式和 crontab 命令
 categories: [Uncategorized]
 tags: [Uncategorized]
 toc: true
-img_path: 
+media_subpath: 
 ---
 
 CRON表达式是一个用于设置计划任务的字符串，其由几个字段组成，每个字段代表任务在相应时间、日期或时间间隔执行的规则。CRON表达式最初是在类Unix操作系统中使用的，而现在它已经被广泛地应用于各种操作系统和编程语言中。

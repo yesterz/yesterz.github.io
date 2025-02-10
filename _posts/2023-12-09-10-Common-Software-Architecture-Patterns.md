@@ -7,7 +7,7 @@ tags: [System Design]
 pin: false
 math: false
 mermaid: false
-img_path: /assets/images/RecieveAndSendImages
+media_subpath: /assets/images/RecieveAndSendImages
 ---
 
 10 Common Software Architectural Patterns in a nutshell: <https://towardsdatascience.com/10-common-software-architectural-patterns-in-a-nutshell-a0b47a1e9013>

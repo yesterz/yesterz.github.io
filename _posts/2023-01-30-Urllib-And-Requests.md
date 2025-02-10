@@ -7,7 +7,7 @@ tags: [Python, Web Crawler]
 pin: false
 math: true
 mermaid: false
-img_path: /assets/images/
+media_subpath: /assets/images/
 ---
 
 ## 一、urllib 的学习

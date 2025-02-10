@@ -7,7 +7,7 @@ tags: [JVM]
 pin: false
 math: false
 mermaid: true
-img_path: /assets/images/
+media_subpath: /assets/images/
 ---
 
 ch2 Java 内存区域与内存溢出异常

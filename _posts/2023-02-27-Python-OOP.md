@@ -7,7 +7,7 @@ tags: [Python]
 pin: false
 math: true
 mermaid: false
-img_path: /assets/images/
+media_subpath: /assets/images/
 ---
 
 ## 一、面向对象基础

@@ -3,7 +3,7 @@ title: 关于 iptables
 categories: [Linux]
 tags: [iptables]
 toc: true
-img_path: /assets/images/2024-09-22-Exploring-iptables-Firewall-Fundamentals-and-Practical-Applications/
+media_subpath: /assets/images/2024-09-22-Exploring-iptables-Firewall-Fundamentals-and-Practical-Applications/
 ---
 
 ## 一、iptables防火墙安全

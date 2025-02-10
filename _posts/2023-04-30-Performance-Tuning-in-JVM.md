@@ -7,7 +7,7 @@ tags: [JVM]
 pin: false
 math: false
 mermaid: true
-img_path: /assets/images/
+media_subpath: /assets/images/
 ---
 
 - [ ] 调优步骤 P192

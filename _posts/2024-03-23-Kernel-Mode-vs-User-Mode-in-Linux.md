@@ -7,7 +7,7 @@ tags: [System]
 pin: false
 math: true
 mermaid: false
-img_path: /assets/images/
+media_subpath: /assets/images/
 ---
 
 要了解用户态和内核态需要先了解Linux系统的体系架构：

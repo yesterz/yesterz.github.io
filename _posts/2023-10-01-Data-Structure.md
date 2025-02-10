@@ -7,7 +7,7 @@ tags: [Data Structure]
 pin: false
 math: true
 mermaid: false
-img_path: /assets/images/DataStructureImages/
+media_subpath: /assets/images/DataStructureImages/
 ---
 
 ## Outline

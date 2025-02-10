@@ -7,7 +7,7 @@ tags: [Multithreading]
 pin: false
 math: true
 mermaid: false
-img_path: /assets/images/
+media_subpath: /assets/images/
 ---
 
 ## Overview

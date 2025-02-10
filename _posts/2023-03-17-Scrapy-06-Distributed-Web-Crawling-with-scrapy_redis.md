@@ -7,7 +7,7 @@ tags: [Python, Web Crawler]
 pin: false
 math: true
 mermaid: false
-img_path: /assets/images/2023-03-17-Scrapy-06-Distributed-Web-Crawling-with-scrapy_redis
+media_subpath: /assets/images/2023-03-17-Scrapy-06-Distributed-Web-Crawling-with-scrapy_redis
 ---
 
 # scrapy_redis

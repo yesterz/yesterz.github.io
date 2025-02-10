@@ -7,7 +7,7 @@ tags: [Python, Web Crawler]
 pin: false
 math: true
 mermaid: false
-img_path: /assets/images/
+media_subpath: /assets/images/
 ---
 
 # 抓取m3u8视频

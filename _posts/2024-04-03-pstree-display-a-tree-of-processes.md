@@ -7,7 +7,7 @@ tags: [Operating System]
 pin: false
 math: false
 mermaid: false
-img_path: 
+media_subpath: 
 ---
 
 ```bash

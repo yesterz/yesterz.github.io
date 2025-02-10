@@ -7,7 +7,7 @@ tags: [Dynamic Programming]
 pin: false
 math: true
 mermaid: false
-img_path: /assets/images/IntroductionToDPImages/
+media_subpath: /assets/images/IntroductionToDPImages/
 ---
 
 

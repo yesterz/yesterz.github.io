@@ -7,7 +7,7 @@ tags: [SSH]
 pin: false
 math: true
 mermaid: false
-img_path: /assets/images/Learning-SSH-in-Advanced/
+media_subpath: /assets/images/Learning-SSH-in-Advanced/
 ---
 
 ## SSH进阶使用

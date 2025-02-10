@@ -7,7 +7,7 @@ tags: [System Design]
 pin: false
 math: false
 mermaid: false
-img_path: 
+media_subpath: 
 ---
 
 > https://leetcode-cn.com/problemset/database/

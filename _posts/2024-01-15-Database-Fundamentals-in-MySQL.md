@@ -7,7 +7,7 @@ tags: [Database]
 pin: false
 math: true
 mermaid: false
-img_path: /assets/images/
+media_subpath: /assets/images/
 ---
 
 ## 1.1.数据库基础知识

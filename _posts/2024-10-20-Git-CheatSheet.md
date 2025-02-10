@@ -3,7 +3,7 @@ title: Git CheatSheet
 categories: [Uncategorized]
 tags: [Uncategorized]
 toc: true
-img_path: 
+media_subpath: 
 ---
 
 ## SETUP

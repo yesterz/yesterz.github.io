@@ -7,7 +7,7 @@ tags: [SSH]
 pin: false
 math: true
 mermaid: false
-img_path: /assets/images/Learning-SSH/
+media_subpath: /assets/images/Learning-SSH/
 ---
 
 # SSH远程安全登录

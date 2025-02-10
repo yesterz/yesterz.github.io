@@ -7,7 +7,7 @@ tags: [framework]
 pin: false
 math: true
 mermaid: false
-img_path: /assets/images/
+media_subpath: /assets/images/
 ---
 
 ## 学习目标

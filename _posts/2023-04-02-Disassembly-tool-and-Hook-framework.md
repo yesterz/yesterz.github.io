@@ -7,7 +7,7 @@ tags: [Python, Reverse Engineering]
 pin: false
 math: true
 mermaid: false
-img_path: /assets/images/
+media_subpath: /assets/images/
 ---
 
 ## 一 反编译工具

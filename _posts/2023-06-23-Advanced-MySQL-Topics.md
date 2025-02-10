@@ -4,7 +4,7 @@ categories: [Database]
 tags: [MySQL, Database]
 toc: true
 mermaid: true
-img_path: /assets/images/2023-06-23-Advanced-MySQL-Topics
+media_subpath: /assets/images/2023-06-23-Advanced-MySQL-Topics
 ---
 
 ch1 MySQL架构

@@ -7,7 +7,7 @@ tags: [Operating System]
 pin: false
 math: false
 mermaid: false
-img_path: /assets/images/2024-04-07-tcpdump-and-wireshark
+media_subpath: /assets/images/2024-04-07-tcpdump-and-wireshark
 ---
 
 找到一个网站 <https://www.tcpdump.org/>

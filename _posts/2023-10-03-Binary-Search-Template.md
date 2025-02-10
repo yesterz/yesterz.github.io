@@ -7,7 +7,7 @@ tags: [Search]
 pin: false
 math: true
 mermaid: false
-img_path: /assets/images/GraphAndSearchImages/
+media_subpath: /assets/images/GraphAndSearchImages/
 ---
 
 ## Outline

@@ -7,7 +7,7 @@ tags: [Computer Networking]
 pin: false
 math: false
 mermaid: true
-img_path: /assets/images/2024-04-04-Network-Layering-Model-and-Network-Troubleshooting-Tools
+media_subpath: /assets/images/2024-04-04-Network-Layering-Model-and-Network-Troubleshooting-Tools
 ---
 
 ![image-20240403222020541](./assets/image-20240403222020541.png)

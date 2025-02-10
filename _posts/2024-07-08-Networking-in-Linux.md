@@ -7,7 +7,7 @@ tags: [Linux]
 pin: false
 math: true
 mermaid: false
-img_path: /assets/images/AboutNetworkingAssets/
+media_subpath: /assets/images/AboutNetworkingAssets/
 ---
 
 在确认好vmware上网模式后，centos已经有了正确的IP地址可以使用，下一步就是学习查看、管理网络信息。

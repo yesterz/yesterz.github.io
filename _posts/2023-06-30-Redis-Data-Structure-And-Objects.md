@@ -4,7 +4,7 @@ categories: [Cache]
 tags: [Cache]
 toc: true
 mermaid: true
-img_path: /assets/images/2023-06-30-Redis-Data-Structure-And-Objects
+media_subpath: /assets/images/2023-06-30-Redis-Data-Structure-And-Objects
 ---
 
 Redis 数据库里面的每个键值对（key-value pair）都是由对象（object）组成的，其中:

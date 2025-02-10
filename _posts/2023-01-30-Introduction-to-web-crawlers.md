@@ -7,7 +7,7 @@ tags: [Python, Web Crawler]
 pin: false
 math: true
 mermaid: false
-img_path: /assets/images/Introduction-to-web-crawlers
+media_subpath: /assets/images/Introduction-to-web-crawlers
 ---
 
 # 前情摘要
