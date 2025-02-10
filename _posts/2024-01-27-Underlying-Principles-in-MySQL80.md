@@ -7,7 +7,7 @@ tags: [Database]
 pin: false
 math: true
 mermaid: false
-img_path: /assets/images/
+media_subpath: /assets/images/
 ---
 
 # MySQL8新特性底层原理

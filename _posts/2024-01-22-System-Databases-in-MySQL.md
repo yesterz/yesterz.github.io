@@ -7,7 +7,7 @@ tags: [Database]
 pin: false
 math: true
 mermaid: false
-img_path: /assets/images/
+media_subpath: /assets/images/
 ---
 
 # 1.MySQL中的系统库

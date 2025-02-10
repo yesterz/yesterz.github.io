@@ -7,7 +7,7 @@ tags: [Database]
 pin: false
 math: true
 mermaid: false
-img_path: /assets/images/
+media_subpath: /assets/images/
 ---
 
 # 1.事务底层与高可用原理
