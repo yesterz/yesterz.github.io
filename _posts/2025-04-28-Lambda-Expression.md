@@ -16,3 +16,20 @@ Java 8 假如 Stream 1. 向方法传递代码的简洁技巧（方法引用、La
 
 函数式编程：将代码传递给方法，同时也能够返回代码并将其包含在数据结构中，同样被成为函数的代码。
 
+如果我想筛选出一个目录中的所有隐藏文件：
+
+```java
+File[] hiddenFiles = new File(".").listFiles(new FileFilter() {
+    public boolean accept(File file) {
+        return file.isHidden();
+    }
+})
+```
+
+Java 8 写法：
+
+```java
+File[] hiddenFiles = new File(".").listFiles(File::isHidden);
+```
+
+因此只需要用 Java 8 的方法引用`::`语法（即“把这个方法当作值”）将其传给`listFiles`方法。
