@@ -148,77 +148,7 @@ The following code defines an `Employee` in our system.
 
 下面的代码定义了我们系统中的一个 `Employee`（员工）。
 
-<details open="" style="box-sizing: inherit; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;"><summary class="title" style="box-sizing: inherit; word-break: break-word; color: rgb(54, 54, 54); font-size: 17px; font-weight: 700; line-height: 1.125; margin-bottom: 0.5rem; padding-top: 1.5rem;">nonrest/src/main/java/payroll/Employee.java</summary><slot id="details-content" pseudo="details-content" style="display: block;"><div class="content" style="box-sizing: inherit;"><div class="listingblock" style="box-sizing: inherit; margin: 1rem 0px;"><div class="content" style="box-sizing: inherit;"><pre class="prettyprint highlight" style="box-sizing: inherit; margin: 0px; padding: 10px; -webkit-font-smoothing: auto; font-family: Monaco, monospace; overflow-wrap: normal; background: rgb(255, 255, 255); color: rgb(74, 74, 74); font-size: 15px; overflow-x: auto; white-space: pre; border: 1px solid rgb(225, 225, 232); position: relative;"><code data-lang="java" class="hljs kotlin" style="box-sizing: inherit; -webkit-font-smoothing: auto; font-family: Monaco, monospace; color: rgb(51, 51, 51); font-size: 15px; font-weight: 400; padding: 0px; background: rgb(255, 255, 255); display: block; overflow-x: auto; border: none; white-space: pre-wrap; word-break: break-word;"><button aria-live="Copy" class="button is-spring is-copy" style="box-sizing: inherit; margin: 0px; font-family: BlinkMacSystemFont, -apple-system, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Fira Sans&quot;, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; align-items: center; appearance: none; border: 2px solid rgb(17, 17, 17); border-radius: 0px; box-shadow: none; display: inline-block; font-size: 9px; height: auto; justify-content: center; line-height: 20px; padding: 0px 5px; position: absolute; vertical-align: top; user-select: none; background: transparent; color: rgb(17, 17, 17); cursor: pointer; text-align: center; white-space: nowrap; font-weight: 700; overflow: hidden; text-transform: uppercase; transition: color 0.2s ease-in-out; z-index: 0; right: 5px; top: 5px;">Copy</button><span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">package</span> payroll;
-
-<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">import</span> java.util.Objects;
-
-<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">import</span> jakarta.persistence.Entity;
-<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">import</span> jakarta.persistence.GeneratedValue;
-<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">import</span> jakarta.persistence.Id;
-
-
-<span class="hljs-meta" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(150, 152, 150);">@Entity</span>
-<span class="hljs-class" style="box-sizing: inherit; font-style: inherit; font-weight: inherit;"><span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">class</span> <span class="hljs-title" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">Employee</span> </span>{
-
-  <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">private</span> <span class="hljs-meta" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(150, 152, 150);">@Id</span>
-  <span class="hljs-meta" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(150, 152, 150);">@GeneratedValue</span> <span class="hljs-built_in" style="box-sizing: inherit; font-style: inherit; font-weight: inherit;">Long</span> id;
-  <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">private</span> String name;
-  <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">private</span> String role;
-
-  Employee() {}
-
-  Employee(String name, String role) {
-
-    <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">this</span>.name = name;
-    <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">this</span>.role = role;
-  }
-
-  <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">public</span> <span class="hljs-built_in" style="box-sizing: inherit; font-style: inherit; font-weight: inherit;">Long</span> getId() {
-    <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">return</span> <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">this</span>.id;
-  }
-
-  <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">public</span> String getName() {
-    <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">return</span> <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">this</span>.name;
-  }
-
-  <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">public</span> String getRole() {
-    <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">return</span> <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">this</span>.role;
-  }
-
-  <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">public</span> void setId(<span class="hljs-built_in" style="box-sizing: inherit; font-style: inherit; font-weight: inherit;">Long</span> id) {
-    <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">this</span>.id = id;
-  }
-
-  <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">public</span> void setName(String name) {
-    <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">this</span>.name = name;
-  }
-
-  <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">public</span> void setRole(String role) {
-    <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">this</span>.role = role;
-  }
-
-  <span class="hljs-meta" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(150, 152, 150);">@Override</span>
-  <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">public</span> boolean equals(Object o) {
-
-    <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">if</span> (<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">this</span> == o)
-      <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">return</span> <span class="hljs-literal" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(0, 134, 179);">true</span>;
-    <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">if</span> (!(o instanceof Employee))
-      <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">return</span> <span class="hljs-literal" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(0, 134, 179);">false</span>;
-    Employee employee = (Employee) o;
-    <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">return</span> Objects.equals(<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">this</span>.id, employee.id) &amp;&amp; Objects.equals(<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">this</span>.name, employee.name)
-        &amp;&amp; Objects.equals(<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">this</span>.role, employee.role);
-  }
-
-  <span class="hljs-meta" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(150, 152, 150);">@Override</span>
-  <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">public</span> int hashCode() {
-    <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">return</span> Objects.hash(<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">this</span>.id, <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">this</span>.name, <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">this</span>.role);
-  }
-
-  <span class="hljs-meta" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(150, 152, 150);">@Override</span>
-  <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">public</span> String toString() {
-    <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">return</span> <span class="hljs-string" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(3, 47, 98);">"Employee{"</span> + <span class="hljs-string" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(3, 47, 98);">"id="</span> + <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">this</span>.id + <span class="hljs-string" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(3, 47, 98);">", name='"</span> + <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">this</span>.name + <span class="hljs-string" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(3, 47, 98);">'\''</span> + <span class="hljs-string" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(3, 47, 98);">", role='"</span> + <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">this</span>.role + <span class="hljs-string" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(3, 47, 98);">'\''</span> + <span class="hljs-string" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(3, 47, 98);">'}'</span>;
-  }
-}</code></pre></div></div></div></slot></details>
+* nonrest/src/main/java/payroll/Employee.java
 
 ```java
 package wiki.yesterz.payroll;
@@ -340,13 +270,9 @@ Spring 让访问数据变得很简单。通过声明下面的 `EmployeeRepositor
 
   查找员工（单个、全部，或按简单/复杂属性搜索）
 
-<details open="" style="box-sizing: inherit;"><summary class="title" style="box-sizing: inherit; word-break: break-word; color: rgb(54, 54, 54); font-size: 17px; font-weight: 700; line-height: 1.125; margin-bottom: 0.5rem; padding-top: 1.5rem;">nonrest/src/main/java/payroll/EmployeeRepository.java</summary><div class="content" style="box-sizing: inherit;"><div class="listingblock" style="box-sizing: inherit; margin: 1rem 0px;"><div class="content" style="box-sizing: inherit;"><pre class="prettyprint highlight" style="box-sizing: inherit; margin: 0px; padding: 10px; -webkit-font-smoothing: auto; font-family: Monaco, monospace; overflow-wrap: normal; background: rgb(255, 255, 255); color: rgb(74, 74, 74); font-size: 15px; overflow-x: auto; white-space: pre; border: 1px solid rgb(225, 225, 232); position: relative;"><code data-lang="java" class="hljs css" style="box-sizing: inherit; -webkit-font-smoothing: auto; font-family: Monaco, monospace; color: rgb(51, 51, 51); font-size: 15px; font-weight: 400; padding: 0px; background: rgb(255, 255, 255); display: block; overflow-x: auto; border: none; white-space: pre-wrap; word-break: break-word;"><button aria-live="Copy" class="button is-spring is-copy" style="box-sizing: inherit; margin: 0px; font-family: BlinkMacSystemFont, -apple-system, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Fira Sans&quot;, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; align-items: center; appearance: none; border: 2px solid rgb(17, 17, 17); border-radius: 0px; box-shadow: none; display: inline-block; font-size: 9px; height: auto; justify-content: center; line-height: 20px; padding: 0px 5px; position: absolute; vertical-align: top; user-select: none; background: transparent; color: rgb(17, 17, 17); cursor: pointer; text-align: center; white-space: nowrap; font-weight: 700; overflow: hidden; text-transform: uppercase; transition: color 0.2s ease-in-out; z-index: 0; right: 5px; top: 5px;">Copy</button><span class="hljs-selector-tag" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">package</span> <span class="hljs-selector-tag" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">payroll</span>;
 
-<span class="hljs-selector-tag" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">import</span> <span class="hljs-selector-tag" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">org</span><span class="hljs-selector-class" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">.springframework</span><span class="hljs-selector-class" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">.data</span><span class="hljs-selector-class" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">.jpa</span><span class="hljs-selector-class" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">.repository</span><span class="hljs-selector-class" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">.JpaRepository</span>;
 
-<span class="hljs-selector-tag" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">interface</span> <span class="hljs-selector-tag" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">EmployeeRepository</span> <span class="hljs-selector-tag" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">extends</span> <span class="hljs-selector-tag" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">JpaRepository</span>&lt;<span class="hljs-selector-tag" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">Employee</span>, <span class="hljs-selector-tag" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">Long</span>&gt; {
-
-}</code></pre></div></div></div></details>
+* nonrest/src/main/java/payroll/EmployeeRepository.java
 
 ```java
 package wiki.yesterz.payroll;
@@ -370,18 +296,9 @@ Believe it or not, this is enough to launch an application! A Spring Boot applic
 
 信不信由你，仅这些就足够启动一个应用了！一个 Spring Boot 应用，至少需要一个 `public static void main` 入口方法和 `@SpringBootApplication` 注解。这会告诉 Spring Boot 尽可能地帮你处理各种事务。
 
-<details open="" style="box-sizing: inherit;"><summary class="title" style="box-sizing: inherit; word-break: break-word; color: rgb(54, 54, 54); font-size: 17px; font-weight: 700; line-height: 1.125; margin-bottom: 0.5rem; padding-top: 1.5rem;">nonrest/src/main/java/payroll/PayrollApplication.java</summary><div class="content" style="box-sizing: inherit;"><div class="listingblock" style="box-sizing: inherit; margin: 1rem 0px;"><div class="content" style="box-sizing: inherit;"><pre class="prettyprint highlight" style="box-sizing: inherit; margin: 0px; padding: 10px; -webkit-font-smoothing: auto; font-family: Monaco, monospace; overflow-wrap: normal; background: rgb(255, 255, 255); color: rgb(74, 74, 74); font-size: 15px; overflow-x: auto; white-space: pre; border: 1px solid rgb(225, 225, 232); position: relative;"><code data-lang="java" class="hljs java" style="box-sizing: inherit; -webkit-font-smoothing: auto; font-family: Monaco, monospace; color: rgb(51, 51, 51); font-size: 15px; font-weight: 400; padding: 0px; background: rgb(255, 255, 255); display: block; overflow-x: auto; border: none; white-space: pre-wrap; word-break: break-word;"><button aria-live="Copy" class="button is-spring is-copy" style="box-sizing: inherit; margin: 0px; font-family: BlinkMacSystemFont, -apple-system, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Fira Sans&quot;, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; align-items: center; appearance: none; border: 2px solid rgb(17, 17, 17); border-radius: 0px; box-shadow: none; display: inline-block; font-size: 9px; height: auto; justify-content: center; line-height: 20px; padding: 0px 5px; position: absolute; vertical-align: top; user-select: none; background: transparent; color: rgb(17, 17, 17); cursor: pointer; text-align: center; white-space: nowrap; font-weight: 700; overflow: hidden; text-transform: uppercase; transition: color 0.2s ease-in-out; z-index: 0; right: 5px; top: 5px;">Copy</button><span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">package</span> payroll;
 
-<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">import</span> org.springframework.boot.SpringApplication;
-<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;
 
-<span class="hljs-meta" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(150, 152, 150);">@SpringBootApplication</span>
-<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">public</span> <span class="hljs-class" style="box-sizing: inherit; font-style: inherit; font-weight: inherit;"><span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">class</span> <span class="hljs-title" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">PayrollApplication</span> </span>{
-
-  <span class="hljs-function" style="box-sizing: inherit; font-style: inherit; font-weight: inherit;"><span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">public</span> <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">static</span> <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">void</span> <span class="hljs-title" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">main</span><span class="hljs-params" style="box-sizing: inherit; font-style: inherit; font-weight: inherit;">(String... args)</span> </span>{
-    SpringApplication.run(PayrollApplication<span class="hljs-class" style="box-sizing: inherit; font-style: inherit; font-weight: inherit;">.<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">class</span>, <span class="hljs-title" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">args</span>)</span>;
-  }
-}</code></pre></div></div></div></details>
+* nonrest/src/main/java/payroll/PayrollApplication.java
 
 ```java
 package wiki.yesterz.payroll;
@@ -408,28 +325,9 @@ An application with no data is not very interesting, so we preload that it has d
 
 没有数据的应用就没什么意思，所以我们预先加载一些数据。下面这个类会被 Spring 自动加载：
 
-<details open="" style="box-sizing: inherit;"><summary class="title" style="box-sizing: inherit; word-break: break-word; color: rgb(54, 54, 54); font-size: 17px; font-weight: 700; line-height: 1.125; margin-bottom: 0.5rem; padding-top: 1.5rem;">nonrest/src/main/java/payroll/LoadDatabase.java</summary><div class="content" style="box-sizing: inherit;"><div class="listingblock" style="box-sizing: inherit; margin: 1rem 0px;"><div class="content" style="box-sizing: inherit;"><pre class="prettyprint highlight" style="box-sizing: inherit; margin: 0px; padding: 10px; -webkit-font-smoothing: auto; font-family: Monaco, monospace; overflow-wrap: normal; background: rgb(255, 255, 255); color: rgb(74, 74, 74); font-size: 15px; overflow-x: auto; white-space: pre; border: 1px solid rgb(225, 225, 232); position: relative;"><code data-lang="java" class="hljs java" style="box-sizing: inherit; -webkit-font-smoothing: auto; font-family: Monaco, monospace; color: rgb(51, 51, 51); font-size: 15px; font-weight: 400; padding: 0px; background: rgb(255, 255, 255); display: block; overflow-x: auto; border: none; white-space: pre-wrap; word-break: break-word;"><button aria-live="Copy" class="button is-spring is-copy" style="box-sizing: inherit; margin: 0px; font-family: BlinkMacSystemFont, -apple-system, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Fira Sans&quot;, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; align-items: center; appearance: none; border: 2px solid rgb(17, 17, 17); border-radius: 0px; box-shadow: none; display: inline-block; font-size: 9px; height: auto; justify-content: center; line-height: 20px; padding: 0px 5px; position: absolute; vertical-align: top; user-select: none; background: transparent; color: rgb(17, 17, 17); cursor: pointer; text-align: center; white-space: nowrap; font-weight: 700; overflow: hidden; text-transform: uppercase; transition: color 0.2s ease-in-out; z-index: 0; right: 5px; top: 5px;">Copy</button><span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">package</span> payroll;
 
-<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">import</span> org.slf4j.Logger;
-<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">import</span> org.slf4j.LoggerFactory;
-<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">import</span> org.springframework.boot.CommandLineRunner;
-<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">import</span> org.springframework.context.annotation.Bean;
-<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">import</span> org.springframework.context.annotation.Configuration;
 
-<span class="hljs-meta" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(150, 152, 150);">@Configuration</span>
-<span class="hljs-class" style="box-sizing: inherit; font-style: inherit; font-weight: inherit;"><span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">class</span> <span class="hljs-title" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">LoadDatabase</span> </span>{
-
-  <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">private</span> <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">static</span> <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">final</span> Logger log = LoggerFactory.getLogger(LoadDatabase<span class="hljs-class" style="box-sizing: inherit; font-style: inherit; font-weight: inherit;">.<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">class</span>)</span>;
-
-  <span class="hljs-meta" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(150, 152, 150);">@Bean</span>
-  <span class="hljs-function" style="box-sizing: inherit; font-style: inherit; font-weight: inherit;">CommandLineRunner <span class="hljs-title" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">initDatabase</span><span class="hljs-params" style="box-sizing: inherit; font-style: inherit; font-weight: inherit;">(EmployeeRepository repository)</span> </span>{
-
-    <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">return</span> args -&gt; {
-      log.info(<span class="hljs-string" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(3, 47, 98);">"Preloading "</span> + repository.save(<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">new</span> Employee(<span class="hljs-string" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(3, 47, 98);">"Bilbo Baggins"</span>, <span class="hljs-string" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(3, 47, 98);">"burglar"</span>)));
-      log.info(<span class="hljs-string" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(3, 47, 98);">"Preloading "</span> + repository.save(<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">new</span> Employee(<span class="hljs-string" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(3, 47, 98);">"Frodo Baggins"</span>, <span class="hljs-string" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(3, 47, 98);">"thief"</span>)));
-    };
-  }
-}</code></pre></div></div></div></details>
+* nonrest/src/main/java/payroll/LoadDatabase.java
 
 ```java
 package wiki.yesterz.payroll;
@@ -500,69 +398,70 @@ To wrap your repository with a web layer, you must turn to Spring MVC. Thanks to
 
 要给你的仓库加上 Web 层，就需要用到 Spring MVC。多亏了 Spring Boot，你只需写很少的代码。这样，我们就可以专注于具体操作了：
 
-<details open="" style="box-sizing: inherit;"><summary class="title" style="box-sizing: inherit; word-break: break-word; color: rgb(54, 54, 54); font-size: 17px; font-weight: 700; line-height: 1.125; margin-bottom: 0.5rem; padding-top: 1.5rem;">nonrest/src/main/java/payroll/EmployeeController.java</summary><div class="content" style="box-sizing: inherit;"><div class="listingblock" style="box-sizing: inherit; margin: 1rem 0px;"><div class="content" style="box-sizing: inherit;"><pre class="prettyprint highlight" style="box-sizing: inherit; margin: 0px; padding: 10px; -webkit-font-smoothing: auto; font-family: Monaco, monospace; overflow-wrap: normal; background: rgb(255, 255, 255); color: rgb(74, 74, 74); font-size: 15px; overflow-x: auto; white-space: pre; border: 1px solid rgb(225, 225, 232); position: relative;"><code data-lang="java" class="hljs kotlin" style="box-sizing: inherit; -webkit-font-smoothing: auto; font-family: Monaco, monospace; color: rgb(51, 51, 51); font-size: 15px; font-weight: 400; padding: 0px; background: rgb(255, 255, 255); display: block; overflow-x: auto; border: none; white-space: pre-wrap; word-break: break-word;"><button aria-live="Copy" class="button is-spring is-copy" style="box-sizing: inherit; margin: 0px; font-family: BlinkMacSystemFont, -apple-system, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Fira Sans&quot;, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; align-items: center; appearance: none; border: 2px solid rgb(17, 17, 17); border-radius: 0px; box-shadow: none; display: inline-block; font-size: 9px; height: auto; justify-content: center; line-height: 20px; padding: 0px 5px; position: absolute; vertical-align: top; user-select: none; background: transparent; color: rgb(17, 17, 17); cursor: pointer; text-align: center; white-space: nowrap; font-weight: 700; overflow: hidden; text-transform: uppercase; transition: color 0.2s ease-in-out; z-index: 0; right: 5px; top: 5px;">Copy</button><span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">package</span> payroll;
-
-<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">import</span> java.util.List;
-
-<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">import</span> org.springframework.web.bind.<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">annotation</span>.DeleteMapping;
-<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">import</span> org.springframework.web.bind.<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">annotation</span>.GetMapping;
-<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">import</span> org.springframework.web.bind.<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">annotation</span>.PathVariable;
-<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">import</span> org.springframework.web.bind.<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">annotation</span>.PostMapping;
-<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">import</span> org.springframework.web.bind.<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">annotation</span>.PutMapping;
-<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">import</span> org.springframework.web.bind.<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">annotation</span>.RequestBody;
-<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">import</span> org.springframework.web.bind.<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">annotation</span>.RestController;
-
-<span class="hljs-meta" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(150, 152, 150);">@RestController</span>
-<span class="hljs-class" style="box-sizing: inherit; font-style: inherit; font-weight: inherit;"><span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">class</span> <span class="hljs-title" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">EmployeeController</span> </span>{
-
-  <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">private</span> <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">final</span> EmployeeRepository repository;
-
-  EmployeeController(EmployeeRepository repository) {
-    <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">this</span>.repository = repository;
-  }
 
 
-  <span class="hljs-comment" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(150, 152, 150);">// Aggregate root</span>
-  <span class="hljs-comment" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(150, 152, 150);">// tag::get-aggregate-root[]</span>
-  <span class="hljs-meta" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(150, 152, 150);">@GetMapping(<span class="hljs-meta-string" style="box-sizing: inherit; font-style: inherit; font-weight: inherit;">"/employees"</span>)</span>
-  List&lt;Employee&gt; all() {
-    <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">return</span> repository.findAll();
-  }
-  <span class="hljs-comment" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(150, 152, 150);">// end::get-aggregate-root[]</span>
+* nonrest/src/main/java/payroll/EmployeeController.java
 
-  <span class="hljs-meta" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(150, 152, 150);">@PostMapping(<span class="hljs-meta-string" style="box-sizing: inherit; font-style: inherit; font-weight: inherit;">"/employees"</span>)</span>
-  Employee newEmployee(<span class="hljs-meta" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(150, 152, 150);">@RequestBody</span> Employee newEmployee) {
-    <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">return</span> repository.save(newEmployee);
-  }
+```java
+package wiki.yesterz.payroll;
 
-  <span class="hljs-comment" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(150, 152, 150);">// Single item</span>
-  
-  <span class="hljs-meta" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(150, 152, 150);">@GetMapping(<span class="hljs-meta-string" style="box-sizing: inherit; font-style: inherit; font-weight: inherit;">"/employees/{id}"</span>)</span>
-  Employee one(<span class="hljs-meta" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(150, 152, 150);">@PathVariable</span> <span class="hljs-built_in" style="box-sizing: inherit; font-style: inherit; font-weight: inherit;">Long</span> id) {
-    
-    <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">return</span> repository.findById(id)
-      .orElseThrow(() -&gt; new EmployeeNotFoundException(id));
-  }
+import org.springframework.web.bind.annotation.*;
 
-  <span class="hljs-meta" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(150, 152, 150);">@PutMapping(<span class="hljs-meta-string" style="box-sizing: inherit; font-style: inherit; font-weight: inherit;">"/employees/{id}"</span>)</span>
-  Employee replaceEmployee(<span class="hljs-meta" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(150, 152, 150);">@RequestBody</span> Employee newEmployee, <span class="hljs-meta" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(150, 152, 150);">@PathVariable</span> <span class="hljs-built_in" style="box-sizing: inherit; font-style: inherit; font-weight: inherit;">Long</span> id) {
-    
-    <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">return</span> repository.findById(id)
-      .map(employee -&gt; {
-        employee.setName(newEmployee.getName());
-        employee.setRole(newEmployee.getRole());
-        <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">return</span> repository.save(employee);
-      })
-      .orElseGet(() -&gt; {
-        <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">return</span> repository.save(newEmployee);
-      });
-  }
+import java.util.List;
 
-  <span class="hljs-meta" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(150, 152, 150);">@DeleteMapping(<span class="hljs-meta-string" style="box-sizing: inherit; font-style: inherit; font-weight: inherit;">"/employees/{id}"</span>)</span>
-  void deleteEmployee(<span class="hljs-meta" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(150, 152, 150);">@PathVariable</span> <span class="hljs-built_in" style="box-sizing: inherit; font-style: inherit; font-weight: inherit;">Long</span> id) {
-    repository.deleteById(id);
-  }
-}</code></pre></div></div></div></details>
+@RestController
+public class EmployeeController {
+
+    private final EmployeeRepository repository;
+
+    EmployeeController(EmployeeRepository repository) {
+        this.repository = repository;
+    }
+
+    // Aggregate root
+    // tag::get-aggregate-root[]
+    @GetMapping("/employees")
+    List<Empolyee> all() {
+        return repository.findAll();
+    }
+    // end::get-aggregate-root[]
+
+    @PostMapping("/employees")
+    Empolyee newEmployee(@RequestBody Empolyee newEmployee) {
+        return repository.save(newEmployee);
+    }
+
+    // Single item
+
+    @GetMapping("/employees/{id}")
+    Empolyee one(@PathVariable Long id) {
+
+        return repository.findById(id)
+                .orElseThrow(() -> new EmployeeNotFoundException(id));
+    }
+
+    @PutMapping("/employees/{id}")
+    Empolyee replaceEmployee(@RequestBody Empolyee newEmployee, @PathVariable Long id) {
+
+        return repository.findById(id)
+                .map(employee -> {
+                    employee.setName(newEmployee.getName());
+                    employee.setRole(newEmployee.getRole());
+                    return repository.save(employee);
+                })
+                .orElseGet(() -> {
+                    return repository.save(newEmployee);
+                });
+    }
+
+    @DeleteMapping("/employees/{id}")
+    void deleteEmployee(@PathVariable Long id) {
+        repository.deleteById(id);
+    }
+
+}
+
+```
 
 - `@RestController` indicates that the data returned by each method is written straight into the response body instead of rendering a template.
 
@@ -580,14 +479,9 @@ To wrap your repository with a web layer, you must turn to Spring MVC. Thanks to
 
   `EmployeeNotFoundException` 是一个异常，用于表示查找员工时未找到的情况。
 
-<details open="" style="box-sizing: inherit;"><summary class="title" style="box-sizing: inherit; word-break: break-word; color: rgb(54, 54, 54); font-size: 17px; font-weight: 700; line-height: 1.125; margin-bottom: 0.5rem; padding-top: 1.5rem;">nonrest/src/main/java/payroll/EmployeeNotFoundException.java</summary><div class="content" style="box-sizing: inherit;"><div class="listingblock" style="box-sizing: inherit; margin: 1rem 0px;"><div class="content" style="box-sizing: inherit;"><pre class="prettyprint highlight" style="box-sizing: inherit; margin: 0px; padding: 10px; -webkit-font-smoothing: auto; font-family: Monaco, monospace; overflow-wrap: normal; background: rgb(255, 255, 255); color: rgb(74, 74, 74); font-size: 15px; overflow-x: auto; white-space: pre; border: 1px solid rgb(225, 225, 232); position: relative;"><code data-lang="java" class="hljs java" style="box-sizing: inherit; -webkit-font-smoothing: auto; font-family: Monaco, monospace; color: rgb(51, 51, 51); font-size: 15px; font-weight: 400; padding: 0px; background: rgb(255, 255, 255); display: block; overflow-x: auto; border: none; white-space: pre-wrap; word-break: break-word;"><button aria-live="Copy" class="button is-spring is-copy" style="box-sizing: inherit; margin: 0px; font-family: BlinkMacSystemFont, -apple-system, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Fira Sans&quot;, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; align-items: center; appearance: none; border: 2px solid rgb(17, 17, 17); border-radius: 0px; box-shadow: none; display: inline-block; font-size: 9px; height: auto; justify-content: center; line-height: 20px; padding: 0px 5px; position: absolute; vertical-align: top; user-select: none; background: transparent; color: rgb(17, 17, 17); cursor: pointer; text-align: center; white-space: nowrap; font-weight: 700; overflow: hidden; text-transform: uppercase; transition: color 0.2s ease-in-out; z-index: 0; right: 5px; top: 5px;">Copy</button><span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">package</span> payroll;
 
-<span class="hljs-class" style="box-sizing: inherit; font-style: inherit; font-weight: inherit;"><span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">class</span> <span class="hljs-title" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">EmployeeNotFoundException</span> <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">extends</span> <span class="hljs-title" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">RuntimeException</span> </span>{
 
-  EmployeeNotFoundException(Long id) {
-    <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">super</span>(<span class="hljs-string" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(3, 47, 98);">"Could not find employee "</span> + id);
-  }
-}</code></pre></div></div></div></details>
+* nonrest/src/main/java/payroll/EmployeeNotFoundException.java
 
 ```java
 package wiki.yesterz.payroll;
@@ -605,49 +499,78 @@ When an `EmployeeNotFoundException` is thrown, this extra tidbit of Spring MVC c
 
 当抛出 `EmployeeNotFoundException` 时，这段额外的 Spring MVC 配置会用来返回 **HTTP 404** 错误：
 
-<details open="" style="box-sizing: inherit;"><summary class="title" style="box-sizing: inherit; word-break: break-word; color: rgb(54, 54, 54); font-size: 17px; font-weight: 700; line-height: 1.125; margin-bottom: 0.5rem; padding-top: 1.5rem;">nonrest/src/main/java/payroll/EmployeeNotFoundAdvice.java</summary><div class="content" style="box-sizing: inherit;"><div class="listingblock" style="box-sizing: inherit; margin: 1rem 0px;"><div class="content" style="box-sizing: inherit;"><pre class="prettyprint highlight" style="box-sizing: inherit; margin: 0px; padding: 10px; -webkit-font-smoothing: auto; font-family: Monaco, monospace; overflow-wrap: normal; background: rgb(255, 255, 255); color: rgb(74, 74, 74); font-size: 15px; overflow-x: auto; white-space: pre; border: 1px solid rgb(225, 225, 232); position: relative;"><code data-lang="java" class="hljs css" style="box-sizing: inherit; -webkit-font-smoothing: auto; font-family: Monaco, monospace; color: rgb(51, 51, 51); font-size: 15px; font-weight: 400; padding: 0px; background: rgb(255, 255, 255); display: block; overflow-x: auto; border: none; white-space: pre-wrap; word-break: break-word;"><button aria-live="Copy" class="button is-spring is-copy" style="box-sizing: inherit; margin: 0px; font-family: BlinkMacSystemFont, -apple-system, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Fira Sans&quot;, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; align-items: center; appearance: none; border: 2px solid rgb(17, 17, 17); border-radius: 0px; box-shadow: none; display: inline-block; font-size: 9px; height: auto; justify-content: center; line-height: 20px; padding: 0px 5px; position: absolute; vertical-align: top; user-select: none; background: transparent; color: rgb(17, 17, 17); cursor: pointer; text-align: center; white-space: nowrap; font-weight: 700; overflow: hidden; text-transform: uppercase; transition: color 0.2s ease-in-out; z-index: 0; right: 5px; top: 5px;">Copy</button><span class="hljs-selector-tag" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">package</span> <span class="hljs-selector-tag" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">payroll</span>;
 
-<span class="hljs-selector-tag" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">import</span> <span class="hljs-selector-tag" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">org</span><span class="hljs-selector-class" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">.springframework</span><span class="hljs-selector-class" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">.http</span><span class="hljs-selector-class" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">.HttpStatus</span>;
-<span class="hljs-selector-tag" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">import</span> <span class="hljs-selector-tag" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">org</span><span class="hljs-selector-class" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">.springframework</span><span class="hljs-selector-class" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">.web</span><span class="hljs-selector-class" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">.bind</span><span class="hljs-selector-class" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">.annotation</span><span class="hljs-selector-class" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">.ExceptionHandler</span>;
-<span class="hljs-selector-tag" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">import</span> <span class="hljs-selector-tag" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">org</span><span class="hljs-selector-class" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">.springframework</span><span class="hljs-selector-class" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">.web</span><span class="hljs-selector-class" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">.bind</span><span class="hljs-selector-class" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">.annotation</span><span class="hljs-selector-class" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">.ResponseStatus</span>;
-<span class="hljs-selector-tag" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">import</span> <span class="hljs-selector-tag" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">org</span><span class="hljs-selector-class" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">.springframework</span><span class="hljs-selector-class" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">.web</span><span class="hljs-selector-class" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">.bind</span><span class="hljs-selector-class" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">.annotation</span><span class="hljs-selector-class" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">.RestControllerAdvice</span>;
 
-@<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">RestControllerAdvice</span>
-class EmployeeNotFoundAdvice {
+* nonrest/src/main/java/payroll/EmployeeNotFoundAdvice.java
 
-  @<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">ExceptionHandler</span>(<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">EmployeeNotFoundException</span>.<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">class</span>)
-  @ResponseStatus(HttpStatus.NOT_FOUND)
-  String employeeNotFoundHandler(EmployeeNotFoundException ex) {
-    <span class="hljs-selector-tag" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">return</span> <span class="hljs-selector-tag" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">ex</span><span class="hljs-selector-class" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">.getMessage</span>();
-  }
-}</code></pre></div></div></div></details>
+```java
+package wiki.yesterz.payroll;
+
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+
+@RestControllerAdvice
+public class EmployeeNotFoundAdvice {
+
+    @ExceptionHandler(EmployeeNotFoundException.class)
+    @ResponseStatus(NOT_FOUND)
+    String employeeNotFoundHandler(EmployeeNotFoundException ex) {
+        return ex.getMessage();
+    }
+}
+
+```
 
 - `@RestControllerAdvice` signals that this advice is rendered straight into the response body.
+
+  `@RestControllerAdvice` 表示这个 advice 会直接写入响应体。
+
 - `@ExceptionHandler` configures the advice to only respond when an `EmployeeNotFoundException` is thrown.
+
+  `@ExceptionHandler` 配置这个 advice，仅在抛出 `EmployeeNotFoundException` 时生效。
+
 - `@ResponseStatus` says to issue an `HttpStatus.NOT_FOUND` — that is, an **HTTP 404** error.
+
+  `@ResponseStatus` 指定返回 `HttpStatus.NOT_FOUND`，也就是 **HTTP 404** 错误。
+
 - The body of the advice generates the content. In this case, it gives the message of the exception.
+
+  advice 的主体负责生成内容，这里会返回异常的消息。
 
 To launch the application, you can right-click the `public static void main` in `PayRollApplication` and select **Run** from your IDE.
 
+要启动应用程序，你可以在 `PayRollApplication` 中右键点击 `public static void main`，然后在 IDE 中选择 **Run**。
+
 Alternatively, Spring Initializr creates a Maven wrapper, so you can run the following command:
 
-```
+或者，Spring Initializr 会创建一个 Maven 包装器，你可以运行以下命令：
+
+```shell
 $ ./mvnw clean spring-boot:run
 ```
 
 Alternatively, you can use your installed Maven version, as follows:
 
-```
+或者，你也可以使用自己安装的 Maven，命令如下：
+
+```shell
 $ mvn clean spring-boot:run
 ```
 
 When the app starts, you can immediately interrogate it, as follows:
 
-```
+当应用启动后，你可以立即对它进行测试，方法如下：
+
+```shell
 $ curl -v localhost:8080/employees
 ```
 
 Doing so yields the following:
+
+这样操作会得到如下结果：
 
 <details open="" style="box-sizing: inherit;"><summary class="title" style="box-sizing: inherit; word-break: break-word; color: rgb(54, 54, 54); font-size: 17px; font-weight: 700; line-height: 1.125; margin-bottom: 0.5rem; padding-top: 1.5rem;">Details</summary><div class="content" style="box-sizing: inherit;"><div class="listingblock" style="box-sizing: inherit; margin: 1rem 0px;"><div class="content" style="box-sizing: inherit;"><pre style="box-sizing: inherit; margin: 0px; padding: 10px; -webkit-font-smoothing: auto; font-family: Monaco, monospace; overflow-wrap: normal; background: rgb(255, 255, 255); color: rgb(74, 74, 74); font-size: 15px; overflow-x: auto; white-space: pre; border: 1px solid rgb(225, 225, 232); position: relative;">*   Trying ::1...
 * TCP_NODELAY set
@@ -667,6 +590,8 @@ Doing so yields the following:
 
 You can see the pre-loaded data in a compacted format.
 
+你可以看到以压缩格式显示的预加载数据。
+
 Now try to query a user that doesn’t exist, as follows:
 
 ```
@@ -674,6 +599,8 @@ $ curl -v localhost:8080/employees/99
 ```
 
 When you do so, you get the following output:
+
+现在试着查询一个不存在的用户，方法如下：
 
 <details open="" style="box-sizing: inherit;"><summary class="title" style="box-sizing: inherit; word-break: break-word; color: rgb(54, 54, 54); font-size: 17px; font-weight: 700; line-height: 1.125; margin-bottom: 0.5rem; padding-top: 1.5rem;">Details</summary><div class="content" style="box-sizing: inherit;"><div class="listingblock" style="box-sizing: inherit; margin: 1rem 0px;"><div class="content" style="box-sizing: inherit;"><pre style="box-sizing: inherit; margin: 0px; padding: 10px; -webkit-font-smoothing: auto; font-family: Monaco, monospace; overflow-wrap: normal; background: rgb(255, 255, 255); color: rgb(74, 74, 74); font-size: 15px; overflow-x: auto; white-space: pre; border: 1px solid rgb(225, 225, 232); position: relative;">*   Trying ::1...
 * TCP_NODELAY set
@@ -690,42 +617,59 @@ When you do so, you get the following output:
 &lt;
 * Connection #0 to host localhost left intact
 Could not find employee 99</pre></div></div></div></details>
-
 This message nicely shows an **HTTP 404** error with the custom message: `Could not find employee 99`.
+
+这个提示很直观，返回了一个 **HTTP 404** 错误，并带上了自定义消息：`Could not find employee 99`。
 
 It is not hard to show the currently coded interactions.
 
+展示目前已经编写好的交互并不难。
+
 If you use Windows command prompt to issue cURL commands, the following command probably does not work properly. You must either pick a terminal that support single-quoted arguments, or use double quotation marks and then escape the quotation marks inside the JSON.
+
+如果你在 **Windows 命令提示符** 中执行 `cURL` 命令，下列命令可能无法正常运行。 你必须选择一个支持 **单引号参数** 的终端，或者改用 **双引号** 并对 JSON 内部的引号进行转义。
 
 To create a new `Employee` record, use the following command in a terminal (the `$` at the beginning signifies that what follows it is a terminal command):
 
-```
+要创建一个新的 `Employee` 记录，可以在终端里运行如下命令（开头的 `$` 表示这是一个终端命令）：
+
+```shell
 $ curl -X POST localhost:8080/employees -H 'Content-type:application/json' -d '{"name": "Samwise Gamgee", "role": "gardener"}'
 ```
 
 Then it stores the newly created employee and sends it back to us:
 
-```
+然后它会把新创建的员工保存下来，并将其返回给我们：
+
+```shell
 {"id":3,"name":"Samwise Gamgee","role":"gardener"}
 ```
 
 You can update the user. For example, you can change the role:
 
-```
+你可以更新用户。例如，你可以修改其角色：
+
+```shell
 $ curl -X PUT localhost:8080/employees/3 -H 'Content-type:application/json' -d '{"name": "Samwise Gamgee", "role": "ring bearer"}'
 ```
 
 Now we can see the change reflected in the output:
 
-```
+现在我们可以在输出中看到修改已经生效：
+
+```shell
 {"id":3,"name":"Samwise Gamgee","role":"ring bearer"}
 ```
 
 The way you construct your service can have significant impacts. In this situation, we said **update**, but **replace** is a better description. For example, if the name was NOT provided, it would instead get nulled out.
 
+构建服务的方式会产生重要影响。在这个例子中，我们用了 **update（更新）**，但其实 **replace（替换）** 更贴切。 比如，如果没有提供名字，它就会被置为 `null`。
+
 Finally, you can delete users, as follows:
 
-```
+最后，你可以删除用户，方法如下：
+
+```shell
 $ curl -X DELETE localhost:8080/employees/3
 
 # Now if we look again, it's gone
@@ -735,75 +679,154 @@ Could not find employee 3
 
 This is all well and good, but do we have a RESTful service yet? (The answer is no.)
 
+这样做当然没问题，但我们现在有真正的 RESTful 服务了吗？（答案是否定的。）
+
 What’s missing?
+
+缺少了什么呢？
 
 ## What Makes a Service RESTful?
 
 So far, you have a web-based service that handles the core operations that involve employee data. However, that is not enough to make things "RESTful".
 
+到目前为止，你有了一个基于 Web 的服务，可以处理与员工数据相关的核心操作。不过，这还不足以让服务成为真正的 ‘RESTful’。
+
 - Pretty URLs, such as`/employees/3`, aren’t REST.
+
+  像 /employees/3 这样的漂亮 URL，并不是 REST。
+
 - Merely using `GET`, `POST`, and so on is not REST.
+
+  仅仅使用 GET、POST 等方法，也不算 REST。
+
 - Having all the CRUD operations laid out is not REST.
+
+  把所有 CRUD 操作都列出来，也不算 REST。
 
 In fact, what we have built so far is better described as **RPC** (**Remote Procedure Call**), because there is no way to know how to interact with this service. If you published this today, you wouldd also have to write a document or host a developer’s portal somewhere with all the details.
 
+实际上，到目前为止我们构建的服务更适合称为 **RPC（远程过程调用）**，因为没有办法知道如何与这个服务交互。如果你今天就发布它，还得写一份文档，或者在某个地方搭建开发者门户，把所有细节都提供出来。
+
 This statement of Roy Fielding’s may further lend a clue to the difference between **REST** and **RPC**:
+
+Roy Fielding 的这句话或许能进一步揭示 **REST** 与 **RPC** 之间的区别：
 
 > I am getting frustrated by the number of people calling any HTTP-based interface a REST API. Today’s example is the SocialSite REST API. That is RPC. It screams RPC. There is so much coupling on display that it should be given an X rating.
 >
+> 我对那么多人把任何基于 HTTP 的接口都叫 REST API 感到很无语。今天的例子是 SocialSite REST API。那其实是 RPC，完全是 RPC。耦合度太高了，简直可以打 X 级评分。
+>
 > What needs to be done to make the REST architectural style clear on the notion that hypertext is a constraint? In other words, if the engine of application state (and hence the API) is not being driven by hypertext, then it cannot be RESTful and cannot be a REST API. Period. Is there some broken manual somewhere that needs to be fixed?
-
-— Roy Fielding
-https://roy.gbiv.com/untangled/2008/rest-apis-must-be-hypertext-driven
+>
+> 要如何才能让 REST 架构风格明确一点，即超文本是它的约束条件呢？换句话说，如果应用状态的引擎（以及 API）不是由超文本驱动的，那它就不能算 RESTful，也不能叫 REST API。就是这样。难道哪里有一份破损的手册需要修正吗？
+>
+> — Roy Fielding
+> https://roy.gbiv.com/untangled/2008/rest-apis-must-be-hypertext-driven
 
 The side effect of nnot including hypermedia in our representations is that clients must hard-code URIs to navigate the API. This leads to the same brittle nature that predated the rise of e-commerce on the web. It signifies that our JSON output needs a little help.
+
+如果我们的资源表示中没有包含超媒体，客户端就必须硬编码 URI 来访问 API。这会导致和电子商务兴起前 Web 上一样的脆弱情况。这也说明，我们的 JSON 输出需要一些改进。
 
 ## Spring HATEOAS
 
 Now we can introduce [Spring HATEOAS](https://spring.io/projects/spring-hateoas), a Spring project aimed at helping you write hypermedia-driven outputs. To upgrade your service to being RESTful, add the following to your build:
 
+现在我们可以引入 [Spring HATEOAS](https://spring.io/projects/spring-hateoas)，这是一个帮助你生成超媒体驱动输出的 Spring 项目。要把你的服务升级为真正的 RESTful，只需在构建配置中添加以下内容：
+
 If you are following along in the [solution repository](https://github.com/spring-guides/tut-rest), the next section switches to the [rest module](https://github.com/spring-guides/tut-rest/tree/main/rest).
+
+如果你在跟着 [解决方案仓库](https://github.com/spring-guides/tut-rest) 操作，下一部分会切换到 [rest 模块](https://github.com/spring-guides/tut-rest/tree/main/rest)。
 
 <details open="" style="box-sizing: inherit;"><summary class="title" style="box-sizing: inherit; word-break: break-word; color: rgb(54, 54, 54); font-size: 17px; font-weight: 700; line-height: 1.125; margin-bottom: 0.5rem; padding-top: 1.5rem;">Adding Spring HATEOAS to<span>&nbsp;</span><code style="box-sizing: inherit; -webkit-font-smoothing: auto; font-family: Monaco, monospace; color: rgb(54, 54, 54); font-size: 15px; font-weight: 400; padding: 10px; background: rgb(255, 255, 255); border: 1px solid rgb(225, 225, 232); overflow-x: auto; white-space: nowrap;">dependencies</code><span>&nbsp;</span>section of<span>&nbsp;</span><code style="box-sizing: inherit; -webkit-font-smoothing: auto; font-family: Monaco, monospace; color: rgb(54, 54, 54); font-size: 15px; font-weight: 400; padding: 10px; background: rgb(255, 255, 255); border: 1px solid rgb(225, 225, 232); overflow-x: auto; white-space: nowrap;">pom.xml</code></summary><div class="content" style="box-sizing: inherit;"><div class="listingblock" style="box-sizing: inherit; margin: 1rem 0px;"><div class="content" style="box-sizing: inherit;"><pre class="prettyprint highlight" style="box-sizing: inherit; margin: 0px; padding: 10px; -webkit-font-smoothing: auto; font-family: Monaco, monospace; overflow-wrap: normal; background: rgb(255, 255, 255); color: rgb(74, 74, 74); font-size: 15px; overflow-x: auto; white-space: pre; border: 1px solid rgb(225, 225, 232); position: relative;"><code data-lang="xml" class="hljs twig" style="box-sizing: inherit; -webkit-font-smoothing: auto; font-family: Monaco, monospace; color: rgb(51, 51, 51); font-size: 15px; font-weight: 400; padding: 0px; background: rgb(255, 255, 255); display: block; overflow-x: auto; border: none; white-space: pre-wrap; word-break: break-word;"><button aria-live="Copy" class="button is-spring is-copy" style="box-sizing: inherit; margin: 0px; font-family: BlinkMacSystemFont, -apple-system, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Fira Sans&quot;, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; align-items: center; appearance: none; border: 2px solid rgb(17, 17, 17); border-radius: 0px; box-shadow: none; display: inline-block; font-size: 9px; height: auto; justify-content: center; line-height: 20px; padding: 0px 5px; position: absolute; vertical-align: top; user-select: none; background: transparent; color: rgb(17, 17, 17); cursor: pointer; text-align: center; white-space: nowrap; font-weight: 700; overflow: hidden; text-transform: uppercase; transition: color 0.2s ease-in-out; z-index: 0; right: 5px; top: 5px;">Copy</button><span class="xml" style="box-sizing: inherit; font-style: inherit; font-weight: inherit;"><span class="hljs-tag" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(51, 51, 51);">&lt;<span class="hljs-name" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(99, 163, 92);">dependency</span>&gt;</span>
 	<span class="hljs-tag" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(51, 51, 51);">&lt;<span class="hljs-name" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(99, 163, 92);">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(51, 51, 51);">&lt;/<span class="hljs-name" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(99, 163, 92);">groupId</span>&gt;</span>
 	<span class="hljs-tag" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(51, 51, 51);">&lt;<span class="hljs-name" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(99, 163, 92);">artifactId</span>&gt;</span>spring-boot-starter-hateoas<span class="hljs-tag" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(51, 51, 51);">&lt;/<span class="hljs-name" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(99, 163, 92);">artifactId</span>&gt;</span>
 <span class="hljs-tag" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(51, 51, 51);">&lt;/<span class="hljs-name" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(99, 163, 92);">dependency</span>&gt;</span></span></code></pre></div></div></div></details>
+```xml
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-hateoas</artifactId>
+</dependency>
+```
+
+
 
 This tiny library gives us the constructs that define a RESTful service and then render it in an acceptable format for client consumption.
 
+这个小型库为我们提供了定义 RESTful 服务的构件，然后以客户端可接受的格式呈现它。
+
 A critical ingredient to any RESTful service is adding [links](https://tools.ietf.org/html/rfc8288) to relevant operations. To make your controller more RESTful, add links like the following to the existing `one` method in `EmployeeController`:
 
-<details open="" style="box-sizing: inherit;"><summary class="title" style="box-sizing: inherit; word-break: break-word; color: rgb(54, 54, 54); font-size: 17px; font-weight: 700; line-height: 1.125; margin-bottom: 0.5rem; padding-top: 1.5rem;">Getting a single item resource</summary><div class="content" style="box-sizing: inherit;"><div class="listingblock" style="box-sizing: inherit; margin: 1rem 0px;"><div class="content" style="box-sizing: inherit;"><pre class="prettyprint highlight" style="box-sizing: inherit; margin: 0px; padding: 10px; -webkit-font-smoothing: auto; font-family: Monaco, monospace; overflow-wrap: normal; background: rgb(255, 255, 255); color: rgb(74, 74, 74); font-size: 15px; overflow-x: auto; white-space: pre; border: 1px solid rgb(225, 225, 232); position: relative;"><code data-lang="java" class="hljs kotlin" style="box-sizing: inherit; -webkit-font-smoothing: auto; font-family: Monaco, monospace; color: rgb(51, 51, 51); font-size: 15px; font-weight: 400; padding: 0px; background: rgb(255, 255, 255); display: block; overflow-x: auto; border: none; white-space: pre-wrap; word-break: break-word;"><button aria-live="Copy" class="button is-spring is-copy" style="box-sizing: inherit; margin: 0px; font-family: BlinkMacSystemFont, -apple-system, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Fira Sans&quot;, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; align-items: center; appearance: none; border: 2px solid rgb(17, 17, 17); border-radius: 0px; box-shadow: none; display: inline-block; font-size: 9px; height: auto; justify-content: center; line-height: 20px; padding: 0px 5px; position: absolute; vertical-align: top; user-select: none; background: transparent; color: rgb(17, 17, 17); cursor: pointer; text-align: center; white-space: nowrap; font-weight: 700; overflow: hidden; text-transform: uppercase; transition: color 0.2s ease-in-out; z-index: 0; right: 5px; top: 5px;">Copy</button><span class="hljs-meta" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(150, 152, 150);">@GetMapping(<span class="hljs-meta-string" style="box-sizing: inherit; font-style: inherit; font-weight: inherit;">"/employees/{id}"</span>)</span>
-EntityModel&lt;Employee&gt; one(<span class="hljs-meta" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(150, 152, 150);">@PathVariable</span> <span class="hljs-built_in" style="box-sizing: inherit; font-style: inherit; font-weight: inherit;">Long</span> id) {
+任何 RESTful 服务的关键元素之一是为相关操作添加 [链接](https://tools.ietf.org/html/rfc8288)。为了让你的控制器更符合 REST 风格，可以在 `EmployeeController` 中现有的 `one` 方法里添加如下链接：
 
-  Employee employee = repository.findById(id) <span class="hljs-comment" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(150, 152, 150);">//</span>
-      .orElseThrow(() -&gt; new EmployeeNotFoundException(id));
 
-  <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">return</span> EntityModel.of(employee, <span class="hljs-comment" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(150, 152, 150);">//</span>
-      linkTo(methodOn(EmployeeController<span class="hljs-class" style="box-sizing: inherit; font-style: inherit; font-weight: inherit;">.<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">class</span>).<span class="hljs-title" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">one</span></span>(id)).withSelfRel(),
-      linkTo(methodOn(EmployeeController<span class="hljs-class" style="box-sizing: inherit; font-style: inherit; font-weight: inherit;">.<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">class</span>).<span class="hljs-title" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">all</span></span>()).withRel(<span class="hljs-string" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(3, 47, 98);">"employees"</span>));
-}</code></pre></div></div></div></details>
+
+* Getting a single item resource
+
+```java
+@GetMapping("/employees/{id}")
+EntityModel<Employee> one(@PathVariable Long id) {
+
+  Employee employee = repository.findById(id) //
+      .orElseThrow(() -> new EmployeeNotFoundException(id));
+
+  return EntityModel.of(employee, //
+      linkTo(methodOn(EmployeeController.class).one(id)).withSelfRel(),
+      linkTo(methodOn(EmployeeController.class).all()).withRel("employees"));
+}
+
+```
+
+
 
 You also need to include new imports:
 
+你还需要添加新的导入语句：
+
 <details open="" style="box-sizing: inherit;"><summary class="title" style="box-sizing: inherit; word-break: break-word; color: rgb(54, 54, 54); font-size: 17px; font-weight: 700; line-height: 1.125; margin-bottom: 0.5rem; padding-top: 1.5rem;">Details</summary><div class="content" style="box-sizing: inherit;"><div class="listingblock" style="box-sizing: inherit; margin: 1rem 0px;"><div class="content" style="box-sizing: inherit;"><pre class="prettyprint highlight" style="box-sizing: inherit; margin: 0px; padding: 10px; -webkit-font-smoothing: auto; font-family: Monaco, monospace; overflow-wrap: normal; background: rgb(255, 255, 255); color: rgb(74, 74, 74); font-size: 15px; overflow-x: auto; white-space: pre; border: 1px solid rgb(225, 225, 232); position: relative;"><code data-lang="java" class="hljs css" style="box-sizing: inherit; -webkit-font-smoothing: auto; font-family: Monaco, monospace; color: rgb(51, 51, 51); font-size: 15px; font-weight: 400; padding: 0px; background: rgb(255, 255, 255); display: block; overflow-x: auto; border: none; white-space: pre-wrap; word-break: break-word;"><button aria-live="Copy" class="button is-spring is-copy" style="box-sizing: inherit; margin: 0px; font-family: BlinkMacSystemFont, -apple-system, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Fira Sans&quot;, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; align-items: center; appearance: none; border: 2px solid rgb(17, 17, 17); border-radius: 0px; box-shadow: none; display: inline-block; font-size: 9px; height: auto; justify-content: center; line-height: 20px; padding: 0px 5px; position: absolute; vertical-align: top; user-select: none; background: transparent; color: rgb(17, 17, 17); cursor: pointer; text-align: center; white-space: nowrap; font-weight: 700; overflow: hidden; text-transform: uppercase; transition: color 0.2s ease-in-out; z-index: 0; right: 5px; top: 5px;">Copy</button><span class="hljs-selector-tag" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">import</span> <span class="hljs-selector-tag" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">org</span><span class="hljs-selector-class" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">.springframework</span><span class="hljs-selector-class" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">.hateoas</span><span class="hljs-selector-class" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">.EntityModel</span>;
 <span class="hljs-selector-tag" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">import</span> <span class="hljs-selector-tag" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">static</span> <span class="hljs-selector-tag" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">org</span><span class="hljs-selector-class" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">.springframework</span><span class="hljs-selector-class" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">.hateoas</span><span class="hljs-selector-class" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">.server</span><span class="hljs-selector-class" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">.mvc</span><span class="hljs-selector-class" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">.WebMvcLinkBuilder</span>.*;</code></pre></div></div></div></details>
-
 This tutorial is based on Spring MVC and uses the static helper methods from `WebMvcLinkBuilder` to build these links. If you are using Spring WebFlux in your project, you must instead use `WebFluxLinkBuilder`.
+
+本教程基于 Spring MVC，并使用 `WebMvcLinkBuilder` 的静态辅助方法来构建这些链接。如果你的项目使用的是 Spring WebFlux，则必须使用 `WebFluxLinkBuilder`。
 
 This is very similar to what we had before, but a few things have changed:
 
+这和之前的情况非常相似，但有一些变化：
+
 - The return type of the method has changed from `Employee` to `EntityModel<Employee>`. `EntityModel<T>` is a generic container from Spring HATEOAS that includes not only the data but a collection of links.
+
+  方法的返回类型从 `Employee` 改为 `EntityModel<Employee>`。`EntityModel<T>` 是 Spring HATEOAS 提供的泛型容器，它不仅包含数据，还包含一组链接。
+
 - `linkTo(methodOn(EmployeeController.class).one(id)).withSelfRel()` asks that Spring HATEOAS build a link to the `one` method of `EmployeeController` and flag it as a [self](https://www.iana.org/assignments/link-relations/link-relations.xhtml) link.
+
+  `linkTo(methodOn(EmployeeController.class).one(id)).withSelfRel()` 会让 Spring HATEOAS 构建指向 `EmployeeController` 中 `one` 方法的链接，并将其标记为 [self](https://www.iana.org/assignments/link-relations/link-relations.xhtml) 链接。
+
 - `linkTo(methodOn(EmployeeController.class).all()).withRel("employees")` asks Spring HATEOAS to build a link to the aggregate root, `all()`, and call it "employees".
+
+  `linkTo(methodOn(EmployeeController.class).all()).withRel("employees")` 会让 Spring HATEOAS 构建指向聚合根 `all()` 方法的链接，并命名为 "employees"。
 
 What do we mean by "build a link?" One of Spring HATEOAS’s core types is `Link`. It includes a **URI** and a **rel** (relation). Links are what empower the web. Before the World Wide Web, other document systems would render information or links, but it was the linking of documents WITH this kind of relationship metadata that stitched the web together.
 
+构建一个链接’是什么意思呢？Spring HATEOAS 的核心类型之一是 `Link`。它包含一个 **URI** 和一个 **rel**（关系）。链接正是让 Web 发挥作用的关键。在万维网出现之前，其他文档系统也会显示信息或链接，但正是带有这种关系元数据的文档链接，把整个 Web 连接了起来。
+
 Roy Fielding encourages building APIs with the same techniques that made the web successful, and links are one of them.
+
+Roy Fielding 鼓励用那些让 Web 成功的技术来构建 API，而链接就是其中之一。
 
 If you restart the application and query the employee record of *Bilbo*, you get a slightly different response than earlier:
 
-Curling prettierWhen your curl output gets more complex it can become hard to read. Use this or [other tips](https://stackoverflow.com/q/27238411/5432315) to prettify the json returned by curl:`# The indicated part pipes the output to json_pp and asks it to make your JSON pretty. (Or use whatever tool you like!) #                                  v------------------v curl -v localhost:8080/employees/1 | json_pp`
+如果你重启应用程序并查询 *Bilbo* 的员工记录，你会得到比之前稍微不同的响应：
+
+> **Curling prettier**
+> When your curl output gets more complex it can become hard to read. Use this or [other tips](https://stackoverflow.com/q/27238411/5432315) to prettify the json returned by curl:
+> 当你的 curl 输出变得更复杂时，可能会难以阅读。可以使用这个方法或其他 技巧
+ 来美化 curl 返回的 JSON：
+> `json_pp`
+{: .prompt-tip }
+
+```shell
+# The indicated part pipes the output to json_pp and asks it to make your JSON pretty. (Or use whatever tool you like!)
+#                                  v------------------v
+curl -v localhost:8080/employees/1 | json_pp
+```
 
 <details open="" style="box-sizing: inherit;"><summary class="title" style="box-sizing: inherit; word-break: break-word; color: rgb(54, 54, 54); font-size: 17px; font-weight: 700; line-height: 1.125; margin-bottom: 0.5rem; padding-top: 1.5rem;">RESTful representation of a single employee</summary><div class="content" style="box-sizing: inherit;"><div class="listingblock" style="box-sizing: inherit; margin: 1rem 0px;"><div class="content" style="box-sizing: inherit;"><pre class="prettyprint highlight" style="box-sizing: inherit; margin: 0px; padding: 10px; -webkit-font-smoothing: auto; font-family: Monaco, monospace; overflow-wrap: normal; background: rgb(255, 255, 255); color: rgb(74, 74, 74); font-size: 15px; overflow-x: auto; white-space: pre; border: 1px solid rgb(225, 225, 232); position: relative;"><code data-lang="javascript" class="hljs json" style="box-sizing: inherit; -webkit-font-smoothing: auto; font-family: Monaco, monospace; color: rgb(51, 51, 51); font-size: 15px; font-weight: 400; padding: 0px; background: rgb(255, 255, 255); display: block; overflow-x: auto; border: none; white-space: pre-wrap; word-break: break-word;"><button aria-live="Copy" class="button is-spring is-copy" style="box-sizing: inherit; margin: 0px; font-family: BlinkMacSystemFont, -apple-system, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Fira Sans&quot;, &quot;Droid Sans&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; align-items: center; appearance: none; border: 2px solid rgb(17, 17, 17); border-radius: 0px; box-shadow: none; display: inline-block; font-size: 9px; height: auto; justify-content: center; line-height: 20px; padding: 0px 5px; position: absolute; vertical-align: top; user-select: none; background: transparent; color: rgb(17, 17, 17); cursor: pointer; text-align: center; white-space: nowrap; font-weight: 700; overflow: hidden; text-transform: uppercase; transition: color 0.2s ease-in-out; z-index: 0; right: 5px; top: 5px;">Copy</button>{
   <span class="hljs-attr" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">"id"</span>: <span class="hljs-number" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(0, 92, 197);">1</span>,
@@ -968,7 +991,7 @@ From here, you can use that assembler in the single-item employee method `one` t
 
 		Employee employee = repository.findById(id) //
 				.orElseThrow(() -&gt; new EmployeeNotFoundException(id));
-
+	
 		return assembler.toModel(employee);
 	}</pre></div></div></div></details>
 
@@ -1453,7 +1476,7 @@ With this in place, you can now define a basic `OrderController` with the requir
     List&lt;EntityModel&lt;Order&gt;&gt; orders = orderRepository.findAll().stream() <span class="hljs-comment" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(150, 152, 150);">//</span>
         .map(assembler::toModel) <span class="hljs-comment" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(150, 152, 150);">//</span>
         .collect(Collectors.toList());
-
+    
     <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">return</span> CollectionModel.of(orders, <span class="hljs-comment" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(150, 152, 150);">//</span>
         linkTo(methodOn(OrderController<span class="hljs-class" style="box-sizing: inherit; font-style: inherit; font-weight: inherit;">.<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">class</span>).<span class="hljs-title" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">all</span></span>()).withSelfRel());
   }
@@ -1463,7 +1486,7 @@ With this in place, you can now define a basic `OrderController` with the requir
 
     Order order = orderRepository.findById(id) <span class="hljs-comment" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(150, 152, 150);">//</span>
         .orElseThrow(() -&gt; new OrderNotFoundException(id));
-
+    
     <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">return</span> assembler.toModel(order);
   }
 
@@ -1472,7 +1495,7 @@ With this in place, you can now define a basic `OrderController` with the requir
 
     order.setStatus(Status.IN_PROGRESS);
     Order newOrder = orderRepository.save(order);
-
+    
     <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">return</span> ResponseEntity <span class="hljs-comment" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(150, 152, 150);">//</span>
         .created(linkTo(methodOn(OrderController<span class="hljs-class" style="box-sizing: inherit; font-style: inherit; font-weight: inherit;">.<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">class</span>).<span class="hljs-title" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">one</span></span>(newOrder.getId())).toUri()) <span class="hljs-comment" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(150, 152, 150);">//</span>
         .body(assembler.toModel(newOrder));
@@ -1514,18 +1537,18 @@ Having already embraced the concept of Spring HATEOAS `RepresentationModelAssemb
   <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">public</span> EntityModel&lt;Order&gt; toModel(Order order) {
 
     <span class="hljs-comment" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(150, 152, 150);">// Unconditional links to single-item resource and aggregate root</span>
-
+    
     EntityModel&lt;Order&gt; orderModel = EntityModel.of(order,
         linkTo(methodOn(OrderController<span class="hljs-class" style="box-sizing: inherit; font-style: inherit; font-weight: inherit;">.<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">class</span>).<span class="hljs-title" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">one</span></span>(order.getId())).withSelfRel(),
         linkTo(methodOn(OrderController<span class="hljs-class" style="box-sizing: inherit; font-style: inherit; font-weight: inherit;">.<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">class</span>).<span class="hljs-title" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">all</span></span>()).withRel(<span class="hljs-string" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(3, 47, 98);">"orders"</span>));
-
+    
     <span class="hljs-comment" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(150, 152, 150);">// Conditional links based on state of the order</span>
-
+    
     <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">if</span> (order.getStatus() == Status.IN_PROGRESS) {
       orderModel.add(linkTo(methodOn(OrderController<span class="hljs-class" style="box-sizing: inherit; font-style: inherit; font-weight: inherit;">.<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">class</span>).<span class="hljs-title" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">cancel</span></span>(order.getId())).withRel(<span class="hljs-string" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(3, 47, 98);">"cancel"</span>));
       orderModel.add(linkTo(methodOn(OrderController<span class="hljs-class" style="box-sizing: inherit; font-style: inherit; font-weight: inherit;">.<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">class</span>).<span class="hljs-title" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(111, 66, 193);">complete</span></span>(order.getId())).withRel(<span class="hljs-string" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(3, 47, 98);">"complete"</span>));
     }
-
+    
     <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">return</span> orderModel;
   }
 }</code></pre></div></div></div></details>
@@ -1601,18 +1624,19 @@ Let’s update `LoadDatabase` to pre-load some `Order` objectss along with the `
     <span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">return</span> args -&gt; {
       employeeRepository.save(<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">new</span> Employee(<span class="hljs-string" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(3, 47, 98);">"Bilbo"</span>, <span class="hljs-string" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(3, 47, 98);">"Baggins"</span>, <span class="hljs-string" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(3, 47, 98);">"burglar"</span>));
       employeeRepository.save(<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">new</span> Employee(<span class="hljs-string" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(3, 47, 98);">"Frodo"</span>, <span class="hljs-string" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(3, 47, 98);">"Baggins"</span>, <span class="hljs-string" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(3, 47, 98);">"thief"</span>));
-
+    
       employeeRepository.findAll().forEach(employee -&gt; log.info(<span class="hljs-string" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(3, 47, 98);">"Preloaded "</span> + employee));
 
-      
-      orderRepository.save(<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">new</span> Order(<span class="hljs-string" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(3, 47, 98);">"MacBook Pro"</span>, Status.COMPLETED));
-      orderRepository.save(<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">new</span> Order(<span class="hljs-string" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(3, 47, 98);">"iPhone"</span>, Status.IN_PROGRESS));
 
-      orderRepository.findAll().forEach(order -&gt; {
-        log.info(<span class="hljs-string" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(3, 47, 98);">"Preloaded "</span> + order);
-      });
-      
-    };
+​      
+​      orderRepository.save(<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">new</span> Order(<span class="hljs-string" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(3, 47, 98);">"MacBook Pro"</span>, Status.COMPLETED));
+​      orderRepository.save(<span class="hljs-keyword" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(215, 58, 73);">new</span> Order(<span class="hljs-string" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(3, 47, 98);">"iPhone"</span>, Status.IN_PROGRESS));
+​    
+​      orderRepository.findAll().forEach(order -&gt; {
+​        log.info(<span class="hljs-string" style="box-sizing: inherit; font-style: inherit; font-weight: inherit; color: rgb(3, 47, 98);">"Preloaded "</span> + order);
+​      });
+​      
+​    };
   }
 }</code></pre></div></div></div></details>
 
