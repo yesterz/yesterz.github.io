@@ -23,6 +23,12 @@ mermaid: true
 
 <span style="font-size: 2em; color: red; font-weight: bold;">Getting Things DONE</span>
 
+* 嵌入式显示PDF
+
+```html
+<embed src="/assets/pdf/yourfile.pdf" width="100%" height="600px" type="application/pdf">
+```
+
 ### Todo
 
 - [ ] 首页还需要设计

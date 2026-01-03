@@ -6,61 +6,94 @@ categories: [Linux]
 tags: [Linux]
 pin: false
 math: true
-mermaid: false
+mermaid: true
 media_subpath: /assets/images/What-is-RegEx/
 ---
 
-## 正则表达式和三剑客
+<h1 color='red' style='font-weight:bold'>What is RegEx?</h1>
 
-![image-20220403163240849](image-20220403163240849.png)
+## What is RegEx?
 
-## 什么是正则表达式
+```shell
+[root@server ~]# What is RegEx?
+[root@server ~]# /(Reg[Ex])?/
+```
 
-- 正则表达式就是为了`处理大量的字符串`而定义的一套规则和方法。
+- 正则表达式就是为了处理大量的字符串而定义的一套规则和方法。
 - 通过定义的这些特殊符号的辅助，系统管理员就可以快速过滤，替换或输出需要的字符串。
 - Linux 正则表达式一般以行为单位处理的。
 
-![image-20220405180916410](image-20220405180916410.png)
+```plaintext
++----------------+     +------------------+     +----------------+
+|                |     |                  |     |                |
+|    数据流       |---->|   正则表达式      |---->|   匹配的数据     |
+|                |     |                  |     |                |
++----------------+     +------------------+     +----------------+
+                             |
+                             |
+                             v
+                       +----------------+
+                       |                |
+                       |   滤掉的数据    |
+                       |                |
+                       +----------------+
+```
 
-## 如何用正则表达式
+1. **正则表达式定义**：
 
-通常Linux运维工作，都是面临大量带有字符串的内容，如
+   "正则表达式是你所定义的模式模板(pattern template)，Linux工具可以用它来过滤文本。"
 
-- 配置文件
-- 程序代码
-- 命令输出结果
-- 日志文件
+2. **工具用途**：
+
+   "Linux 工具（比如sed编辑器或gawk程序）能够在处理数据时使用正则表达式对数据进行模式匹配。"
+
+3. **匹配逻辑**：
+
+   "如果数据匹配模式，它就会被接受并进一步处理；如果数据不匹配模式，它就会被滤掉。"
+
+
+
+### 如何用正则表达式
+
+通常Linux运维工作，都是面临大量带有字符串的内容，比如配置文件、程序代码、命令输出结果、日志文件；
 
 且此类字符串内容，我们常会有特定的需要，查找出符合工作需要的特定的字符串，因此正则表达式就出现了
 
-- 正则表达式是一套规则和方法
-- 正则工作时以单位进行，一次处理一行
-- 正则表达式化繁为简，提高工作效率
-- linux仅受三剑客（sed、awk、grep）支持，其他命令无法使用
+- 正则表达式是一套规则和方法；
+- 正则工作时以单位进行，一次处理一行；
+- 正则表达式化繁为简，提高工作效率；
+- Linux仅受三剑客（sed、awk、grep）支持，其他命令无法使用。
 
-## 学正则的注意事项
+### 学正则的注意事项
 
-- 正则表达式应用非常广泛，很多编程语言都支持正则表达式，用于处理字符串提取数据。
-- Linux下普通命令无法使用正则表达式的，只能使用Linux下的三个命令，结合正则表达式处理。
+- 正则表达式应用非常广泛，很多编程语言都支持正则表达式，用于处理字符串提取数据；
+- Linux下普通命令无法使用正则表达式的，只能使用Linux下的三个命令，结合正则表达式处理；
   - sed
   - grep
   - awk
-- 通配符是大部分普通命令都支持的，用于查找文件或目录
-- 而正则表达式是通过三剑客命令在文件（数据流）中过滤内容的，注意区别
-- 以及注意字符集，需要设置`LC_ALL=C`，注意这一点很重要
+- 通配符是大部分普通命令都支持的，用于查找文件或目录；
+- 而正则表达式是通过三剑客命令在文件（数据流）中过滤内容的，注意区别；
+- 以及注意字符集，需要设置`LC_ALL=C`，注意这一点很重要；
 
 ### 关于字符集设置
 
 你会发现很多shell脚本里都有这么一个语句如下
 
-![image-20220403193453007](image-20220403193453007.png)
-
-作用是修改Linux的字符集，通过`locale`命令可以查看本地字符集设置
-
-Linux通过如下变量设置程序运行的不同语言环境，如中文、英文环境。
+```shell
+[gest@node-110 ~]$ grep -Ri 'LC_ALL=C' /etc/init.d/
+/etc/init.d/network:        LC_ALL=C sed -e "$__sed_discard_ignored_files" \
+/etc/init.d/network:        LC_ALL=C sort -k 1,1 -k 2n | \
+/etc/init.d/network:        LC_ALL=C sed 's/ //')
+[gest@node-110 ~]$
 
 ```
-[root@yuchao-tx-server ~]# locale
+
+作用是修改Linux的字符集。
+
+Linux通过`locale`命令可以查看本地字符集设置，通过如下变量设置程序运行的不同语言环境，如中文、英文环境。
+
+```shell
+[root@server ~]# locale
 LANG=en_US.UTF-8
 LC_CTYPE="zh_CN.UTF-8"
 LC_NUMERIC="zh_CN.UTF-8"
@@ -79,53 +112,82 @@ LC_ALL=zh_CN.UTF-8
 
 一般我们会使用`$LANG`变量来设置Linux的字符集，一般设置为我们所在的地区，如`zh_CN.UTF-8`
 
-```
-[root@yuchao-tx-server ~]# echo $LANG
+```shell
+[root@server ~]# echo $LANG
 en_US.UTF-8
 ```
 
-为了让系统能正确执行shell语句（由于自定义修改的不同语言环境，对一些特殊符号的处理区别，如中文输入法，英文输入法下的标点符号等，导致shell无法执行）
+```shell
+➜  ~ locale
+LANG=C.UTF-8
+LANGUAGE=
+LC_CTYPE="C.UTF-8"
+LC_NUMERIC="C.UTF-8"
+LC_TIME="C.UTF-8"
+LC_COLLATE="C.UTF-8"
+LC_MONETARY="C.UTF-8"
+LC_MESSAGES="C.UTF-8"
+LC_PAPER="C.UTF-8"
+LC_NAME="C.UTF-8"
+LC_ADDRESS="C.UTF-8"
+LC_TELEPHONE="C.UTF-8"
+LC_MEASUREMENT="C.UTF-8"
+LC_IDENTIFICATION="C.UTF-8"
+LC_ALL=
+➜  ~ echo $LANG
+C.UTF-8
+```
 
-我们会使用如下语句，恢复Linux的所有的本地化设置，恢复系统到初始化的语言环境。
+为了让系统能正确执行shell语句（由于自定义修改的不同语言环境，对一些特殊符号的处理区别，如中文输入法，英文输入法下的标点符号等，导致Shell无法执行），我们会使用如下语句，恢复Linux的所有的本地化设置，恢复系统到初始化的语言环境。
 
 ```
-[root@yuchao-tx-server ~]# export LC_ALL=C
+[root@server ~]# export LC_ALL=C
 ```
 
 ### 通配符和正则的区别
 
-1.从语法上就记住，只有awk、grep、sed才识别正则表达式符号、其他都是通配符
+1. 从语法上就记住，只有awk、grep、sed才识别正则表达式符号、其他都是通配符
 
-2.从用法上区分
+2. 从用法上区分
 
-- 表达式操作的是文件、目录名（属于是通配符）
-- 表达式操作的是文件内容（正则表达式）
+   - 表达式操作的是文件、目录名（属于是通配符）
 
-3.比如如下符号区别
-
-```plaintext
-通配符和正则表达式 都有  *  ?  [abcd] 符号
-通配符中，都是用来标识任意的字符
-如 ls *.log，可以找到a.log  b.log   ccc.log
+   - 表达式操作的是文件内容（正则表达式）
 
 
-正则中，都是用来表示这些符号前面的字符，出现的次数，如
+3. 比如如下符号区别
 
-grep 'a*'
-```
+   通配符和正则表达式 都有  `*`、`?`、 `[abcd]` 符号；
+   
+   - 通配符中，都是用来标识任意的字符， 如 ls *.log，可以找到a.log  b.log   ccc.log
+   - 正则中，都是用来表示这些符号前面的字符，出现的次数，如
+
+      ```shell
+      grep 'a*'
+      ```
 
 **实际案例**
 
-```plaintext
-通配符，一般用于对文件名的处理，查找文件
-如ls命令结合*
-意思是匹配任意字符
-[root@yuchao-tx-server test]# ls *.log
+​	通配符，一般用于对文件名的处理，查找文件，如`ls`命令结合`*`，意思是匹配任意字符
+
+```shell
+[root@server test]# ls *.log
 1.log  2.log  3.log  4.log  5.log
+```
 
+而三剑客，结合`*`符号，是处理文件内容，如`grep`此时的`*`作用就不一样了
 
-而三剑客，结合*符号，是处理文件内容，如grep
-此时的*作用就不一样了
+```shell
+➜  ~ cat example.log
+aaaa
+bbbb
+cccc
+abcd
+➜  ~ grep 'a*' example.log
+aaaa
+bbbb
+cccc
+abcd
 ```
 
 ![image-20220403164716418](image-20220403164716418.png)
@@ -136,24 +198,25 @@ grep 'a*'
 
 例如
 
-- 不同的编程语言使用正则（Python, Java）
-- Linux实用工具（sed、awk、grep）
-- 其他软件使用正则（MySQL、Nginx）
+- 不同的编程语言使用正则（Python, Java）；
+- Linux实用工具（sed、awk、grep）；
+- 其他软件使用正则（MySQL、Nginx）；
 
 正则表达式是通过正则表达式引擎（regular expression engine）实现的。正则表达式引擎是 一套底层软件，负责解释正则表达式模式并使用这些模式进行文本匹配。
 
-在Linux中，有两种流行的正则表达式引擎： 
+在Linux中，有两种流行的正则表达式引擎，基于UNIX标准下的正则表达式符号规则有两类：
 
-基于UNIX标准下的正则表达式符号规则有两类：
+* POSIX基础正则表达式（basic regular expression，BRE）引擎；
 
-* POSIX基础正则表达式（basic regular expression，BRE）引擎
+* POSIX扩展正则表达式（extended regular expression，ERE）引擎 ；
 
-* POSIX扩展正则表达式（extended regular expression，ERE）引擎 
 
-**解释POSIX**
-POSIX（Portable Operating System Interface）是Unix系统的一个设计标准。
 
-当年最早的Unix，源代码流传出去了，加上早期的Unix不够完善，于是之后出现了好些独立开发的与Unix基本兼容但又不完全兼容的OS，通称Unix-like OS
+解释POSIX
+
+* POSIX（Portable Operating System Interface）是Unix系统的一个设计标准。
+
+* 当年最早的Unix，源代码流传出去了，加上早期的Unix不够完善，于是之后出现了好些独立开发的与Unix基本兼容但又不完全兼容的OS，通称Unix-like OS
 
 #### 两类、正则表达式符号
 
@@ -161,34 +224,39 @@ Linux规范将正则表达式分为了两种
 
 - 基本正则表达式（BRE、basic regular expression）
 
-```
-BRE对应元字符有 
-^ $ . [ ] *
+  - BRE对应元字符有
 
-其他符号是普通字符
-; \
-```
+    ``` 
+    ^ $ . [ ] *
+    ```
+
+  - 其他符号是普通字符
+
+    ``` 
+    ; \
+    ```
+
 
 - 扩展正则表达式（ERE、extended regular expression）
 
-```
-ERE在在BRE基础上，增加了
-( ) { } ? + |  等元字符
-```
+  ERE在在BRE基础上，增加了
+
+  ``` 
+  ( ) { } ? + |
+  ```
+
+  等元字符。  
 
 - 转义符
 
-```
-反斜杠 \
-反斜杠用于在元字符前添加，使其成为普通字符
-```
+  反斜杠`\`，反斜杠用于在元字符前添加，使其成为普通字符。
 
 ## 基本正则表达式（BRE）
 
 测试文本数据
 
 ```bash
-[root@yuchao-tx-server test]# cat chaoge666.txt
+[root@server test]# cat chaoge666.txt
 I am teacher yuchao.
 I teach linux,python!
 
@@ -208,32 +276,42 @@ Good good study , day day up!
 
 ### grep与正则
 
-```语法
+```shell
+GREP(1)                                                 User Commands                                                GREP(1)
+
 NAME
-       grep, egrep, fgrep - print lines matching a pattern
+       grep, egrep, fgrep, rgrep - print lines that match patterns
 
 SYNOPSIS
-       grep [OPTIONS] PATTERN [FILE...]
-       grep [OPTIONS] [-e PATTERN | -f FILE] [FILE...]
+       grep [OPTION...] PATTERNS [FILE...]
+       grep [OPTION...] -e PATTERNS ... [FILE...]
+       grep [OPTION...] -f PATTERN_FILE ... [FILE...]
+
+DESCRIPTION
+       grep  searches for PATTERNS in each FILE.  PATTERNS is one or more patterns separated by newline characters, and grep
+       prints each line that matches a pattern.  Typically PATTERNS should be quoted when grep is used in a shell command.
+
+       A FILE of “-” stands for standard input.  If no FILE is given, recursive searches examine the working directory,  and
+       nonrecursive searches read standard input.
+
+       Debian  also  includes the variant programs egrep, fgrep and rgrep.  These programs are the same as grep -E, grep -F,
+       and grep -r, respectively.  These variants are deprecated upstream, but Debian provides for  backward  compatibility.
+       For  portability  reasons,  it  is  recommended  to  avoid the variant programs, and use grep with the related option
+       instead.
+
 ```
 
-例如传入的pattern（模式） ，我们可以统称你写的正则是`模式`
-
-`^m`，以m开头的行
+例如传入的pattern（模式） ，我们可以统称你写的正则是`模式`，比如`^m`，是以m开头的行；
 
 ```
-[root@yuchao-tx-server test]# grep  -i -n  '^m' chaoge666.txt
+[root@server test]# grep -i -n '^m' chaoge666.txt
 6:My website is http://yuchaoit.cn
 8:My qq num is 877348180
 ```
 
 ### ^ 尖角符
 
-```
-语法
-写于最左侧，如
-^yu 逐行匹配，找到以yu开头的内容
-```
+语法：写于最左侧，如`^yu` 逐行匹配，找到以`yu`开头的内容
 
 结合grep用法，-i 忽略大小写
 
@@ -503,7 +581,7 @@ a\{1,3\} 重复字符a，1到3次
 
 ```
 测试数据
-[root@yuchao-tx-server test]# cat chaoge666.txt
+[root@server test]# cat chaoge666.txt
 I am teacher yuchao.
 I teach linux,python!
 
@@ -645,7 +723,7 @@ grep默认不认识扩展正则{}，识别不到它的特殊作用，因此只�
 准备测试数据
 
 ```
-[root@yuchao-tx-server test]# cat god.log
+[root@server test]# cat god.log
 I am God, I need you to good good study and day day up, otherwise I will send you to see Gd,oh sorry, gooooooooood!
 ```
 
@@ -701,7 +779,7 @@ data     =                       bsize=4096   blocks=13107200, imaxpct=25
 测试数据
 
 ```
-[root@yuchao-tx-server test]# cat chaoge666.txt 
+[root@server test]# cat chaoge666.txt 
 I am teacher yuchao.
 I teach linux,python!
 
@@ -738,7 +816,7 @@ my qq num is not  87777773333344444888811188880000
 
 ```
 测试数据
-[root@yuchao-tx-server test]# cat god.log
+[root@server test]# cat god.log
 I am God, I need you to good good study and day day up, otherwise I will send you to see Gd,oh sorry, gooooooooood!
 I am glad to see you, god,you are a good god!
 ```
@@ -782,7 +860,7 @@ grep -iE "g(la|oo)d" god.log
 测试数据
 
 ```
-[root@yuchao-tx-server test]# cat lovers.log
+[root@server test]# cat lovers.log
 I like my lover.
 I love my lover.
 He likes his lovers.
@@ -816,7 +894,7 @@ love，可以写为l..e
 grep -Ei "[^:]+" /etc/passwd
 
 2. 使用\b匹配单词边界，提取出单词，示例用法，通常英文单词的边界是空格，标点符号
-[root@yuchao-tx-server test]# echo  'my name is chao,everyone call me chaoge' | grep -Ei "chao\b" -o
+[root@server test]# echo  'my name is chao,everyone call me chaoge' | grep -Ei "chao\b" -o
 chao
 
 3.继续提取用户文件，来确定第一个单词的边界
