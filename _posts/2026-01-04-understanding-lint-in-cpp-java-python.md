@@ -1,11 +1,9 @@
-```yaml
 ---
 title: 理解 Lint：C++、Java 与 Python 中的静态代码分析
 date: 2026-01-04 10:00:00 +0800
 categories: [编程, 软件工程]
 tags: [lint, 静态分析, cpp, java, python, 代码质量]
 ---
-```
 
 # 理解 Lint：C++、Java 与 Python 中的静态代码分析
 
