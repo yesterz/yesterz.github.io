@@ -1,11 +1,9 @@
-```yaml
 ---
 title: Jupyter Lab 常用命令速查指南
 date: 2026-01-07 09:30:00 +0800
 categories: [Programming, Python]
 tags: [jupyter, jupyter-lab, python, data-science, terminal]
 ---
-```
 
 # Jupyter Lab 常用命令速查指南
 
